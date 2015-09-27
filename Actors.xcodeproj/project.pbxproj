@@ -24,6 +24,7 @@
 		06E1D5441BB77D3500E07321 /* AccountsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* AccountsDemo.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D5461BB77F4F00E07321 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5451BB77F4F00E07321 /* Try.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5471BB84BDD00E07321 /* ActorContext.swift */; settings = {ASSET_TAGS = (); }; };
+		06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5491BB8A86000E07321 /* AppActorSystem.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		06E1D5431BB77D3500E07321 /* AccountsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsDemo.swift; sourceTree = "<group>"; };
 		06E1D5451BB77F4F00E07321 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		06E1D5471BB84BDD00E07321 /* ActorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorContext.swift; sourceTree = "<group>"; };
+		06E1D5491BB8A86000E07321 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = ../Actors/AppActorSystem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 		06E1D51F1BB76EE300E07321 /* Theater */ = {
 			isa = PBXGroup;
 			children = (
+				06E1D5491BB8A86000E07321 /* AppActorSystem.swift */,
 				06E1D5171BB76E2600E07321 /* Message.swift */,
 				06E1D5151BB769AA00E07321 /* Actor.swift */,
 				06E1D5451BB77F4F00E07321 /* Try.swift */,
@@ -392,6 +395,7 @@
 			files = (
 				06E1D5461BB77F4F00E07321 /* Try.swift in Sources */,
 				06E1D53C1BB76F0800E07321 /* Message.swift in Sources */,
+				06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */,
 				06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */,
 				06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */,
 			);

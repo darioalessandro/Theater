@@ -62,6 +62,24 @@ public class BankOpResult : Message {
     }
 }
 
+enum AccountEvent {
+    
+    case BalanceChange
+    
+    case DidDeposit
+    
+    case DidWithdraw
+    
+    var toString : String {
+        switch self {
+        case .DidWithdraw: return "DidWithdraw";
+        case .DidDeposit: return "DidDeposit";
+        case .BalanceChange: return "BalanceChange";
+        }
+    }
+    
+}
+
 public class Account : Actor {
     
     public func description() -> NSString {
@@ -70,7 +88,13 @@ public class Account : Actor {
     
     var number : String = ""
     
-    private var _balance : Double = 0
+    private var _balance : Double = 0 {
+        didSet {
+            if _balance != oldValue {
+                NSNotificationCenter.defaultCenter().postNotificationName(AccountEvent.BalanceChange.toString, object: this)
+            }
+        }
+    }
     
     public override func receive(msg: Message) {
         switch msg {
