@@ -45,15 +45,15 @@ public class ActorSystem  {
         self.name = name
     }
     
-    public func actorOf(clz : Actor.Type, name : String) -> Try<ActorRef> {
+    public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
         let actorClass  = clz
         let ref = ActorRef(context:self, path:ActorPath(path:name))
         let actorInstance : Actor = actorClass.init(context: self, ref: ref)
         dictionary[name] = actorInstance
-        return Success(value: ref)
+        return ref
     }
     
-    public func actorOf(clz : Actor.Type) -> Try<ActorRef> {
+    public func actorOf(clz : Actor.Type) -> ActorRef {
         let uuidString = NSUUID.init().UUIDString
         return actorOf(clz, name: uuidString)
     }

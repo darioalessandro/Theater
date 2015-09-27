@@ -23,16 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        let rich : Try<ActorRef> = system.actorOf(Account)
-        let ac1 : Try<ActorRef> = system.actorOf(Account)
-        let ac2 : Try<ActorRef> = system.actorOf(Account)
-        let ac3 : Try<ActorRef> = system.actorOf(Account)
-        
-        if ac1.isSuccess() && ac2.isSuccess() && ac3.isSuccess() && rich.isSuccess() {
-            let accountA = ac1.get()
-            let accountB = ac2.get()
-            let accountC = ac3.get()
-            let rico = rich.get()
+            let accountA = system.actorOf(Account)
+            let accountB = system.actorOf(Account)
+            let accountC = system.actorOf(Account)
+            let rico = system.actorOf(Account)
             
             system.tell(SetAccountNumber(accountNumber: "accountA", operationId: NSUUID.init()), recipient: accountA)
             system.tell(SetAccountNumber(accountNumber: "accountB", operationId: NSUUID.init()), recipient: accountB)
@@ -72,12 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("7")
                 accountC.tell(Withdraw(sender: rico, ammount: 33, operationId: NSUUID.init()))
             }*/
-            
-        } else {
-            
-        }
-        
-        
         return true
     }
 
