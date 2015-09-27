@@ -82,16 +82,16 @@ public class Account : Actor {
     func withdraw(amount : Double) -> Try<Double> {
         if _balance >= amount {
             _balance = _balance - amount
-            return Success<Double>(value : _balance)
+            return Success(value : _balance)
         } else {
-            return Failure<Double>(exception: NSError(domain: "Insufficient funds", code: 0, userInfo: nil))
+            return Failure(exception: NSError(domain: "Insufficient funds", code: 0, userInfo: nil))
         }
         
     }
     
     func deposit(amount : Double) -> Try<Double> {
         _balance = _balance + amount
-        return Success<Double>(value : _balance)
+        return Success(value : _balance)
     }
     
     func balance() -> Try<Double> {
