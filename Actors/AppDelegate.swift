@@ -12,6 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var opqueue = NSOperationQueue()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -24,15 +26,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let accountA : Account = Account(number: "2d")
         let accountB : Account = Account(number: "3d")
         let accountC : Account = Account(number: "4d")
-        
-        accountA.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
-        accountB.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
-        accountC.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        opqueue.addOperationWithBlock { () -> Void in
+            print("1")
+            accountA.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
+        }
+        opqueue.addOperationWithBlock { () -> Void in
+            print("2")
+            accountB.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
+        }
+        opqueue.addOperationWithBlock { () -> Void in
+            NSThread.sleepForTimeInterval(0.2)
+            print("3")
+            accountC.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
+        }
+        opqueue.addOperationWithBlock { () -> Void in
+            NSThread.sleepForTimeInterval(1)
+            print("4")
             accountC.send(Withdraw(sender: rich, ammount: 53, operationId: NSUUID.init()))
         }
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        opqueue.addOperationWithBlock { () -> Void in
+            print("5")
+            accountC.send(Withdraw(sender: rich, ammount: 33, operationId: NSUUID.init()))
+        }
+        opqueue.addOperationWithBlock { () -> Void in
+            print("6")
             accountC.send(Withdraw(sender: rich, ammount: 51, operationId: NSUUID.init()))
+        }
+        opqueue.addOperationWithBlock { () -> Void in
+            print("7")
+            accountC.send(Withdraw(sender: rich, ammount: 33, operationId: NSUUID.init()))
         }
         
         return true
