@@ -9,16 +9,32 @@
 import Foundation
 import Theater
 
-public class BankOp: Message {
-    
-    public let ammount : Double
-    
+public class MessageWithOperationId : Message {
     public let operationId : NSUUID
     
-    public init(sender: Actor, ammount : Double, operationId : NSUUID) {
-        self.ammount = ammount
+    public init(sender: Optional<ActorRef>, operationId : NSUUID) {
         self.operationId = operationId
-        super.init(sender: sender)
+        super.init(sender : sender)
+    }
+}
+
+public class BankOp: MessageWithOperationId {
+    
+    public let ammount : Double
+
+    public init(sender: Optional<ActorRef>, ammount : Double, operationId : NSUUID) {
+        self.ammount = ammount
+        super.init(sender: sender, operationId : operationId)
+    }
+}
+
+public class SetAccountNumber: Message {
+    
+    public let accountNumber : String
+    
+    public init(accountNumber : String, operationId : NSUUID) {
+        self.accountNumber = accountNumber
+        super.init(sender: Optional.None)
     }
     
 }
@@ -27,14 +43,19 @@ public class Withdraw: BankOp {}
 
 public class Deposit: BankOp {}
 
-public class Balance: BankOp {}
+public class PrintBalance: MessageWithOperationId {
+    public init(operationId : NSUUID) {
+        super.init(sender: Optional.None, operationId : operationId)
+    }
+}
 
 public class BankOpResult : Message {
     
     public let result : Try<Double>
+    
     public let operationId : NSUUID
     
-    public init(sender : Actor, operationId : NSUUID, result : Try<Double>) {
+    public init(sender : ActorRef, operationId : NSUUID, result : Try<Double>) {
         self.operationId = operationId
         self.result = result
         super.init(sender: sender)
@@ -47,28 +68,29 @@ public class Account : Actor {
         return " \(self.balance())"
     }
     
-    public let number : String
-    
-    public init(number : String) {
-        self.number = number
-        super.init()
-    }
+    var number : String = ""
     
     private var _balance : Double = 0
     
     public override func receive(msg: Message) {
         switch msg {
+            
+            case is SetAccountNumber:
+                let w = msg as! SetAccountNumber
+                self.number = w.accountNumber
+                print("account number \(self.number)")
+                break;
             case is Withdraw:
                 let w = msg as! Withdraw
-                self.sender!.send(BankOpResult(sender: self, operationId: w.operationId, result: self.withdraw(w.ammount)))
+                self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.withdraw(w.ammount)))
                 break;
             case is Deposit:
                 let w = msg as! Deposit
-                self.sender!.send(BankOpResult(sender: self, operationId: w.operationId, result: self.deposit(w.ammount)))
+                self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.deposit(w.ammount)))
                 break;
-            case is Balance:
-                let w = msg as! Balance
-                self.sender!.send(BankOpResult(sender: self, operationId: w.operationId, result: self.balance()))
+            case is PrintBalance:
+                print("Balance of \(number) is \(balance().get())")
+                //self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.balance()))
                 break;
             case is BankOpResult:
                 let w = msg as! BankOpResult

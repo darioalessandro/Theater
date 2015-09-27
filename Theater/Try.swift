@@ -21,7 +21,7 @@ public class Try<T> {
     
     /** Returns the value from this `Success` or throws the exception if this is a `Failure`.
     */
-    func get() -> T {return NSObject() as! T}
+    public func get() -> T {return NSObject() as! T}
     
     public func description() -> String {
         return "Try of \(self.get())"
@@ -38,7 +38,7 @@ public class Success<T> : Try<T> {
     
     override public func isSuccess() -> Bool { return true}
     
-    override func get() -> T {return self.value}
+    override public func get() -> T {return self.value}
     
     override public func description() -> String {
         return "Success : \(self.get())"
@@ -55,7 +55,7 @@ public class Failure<T> : Try<T> {
     
     override public func isSuccess() -> Bool { return false}
     
-    override func get() -> T {
+    override public func get() -> T {
         NSException.raise(self.exception.description, format: "", arguments: getVaList([""]))
         return NSObject() as! T
     }

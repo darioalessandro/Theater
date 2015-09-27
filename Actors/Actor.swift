@@ -12,11 +12,17 @@ public class Actor {
     
     private let mailbox : NSOperationQueue = NSOperationQueue()
     
-    public var sender : Optional<Actor>
+    public var sender : Optional<ActorRef>
     
-    public init() {
+    public let this : ActorRef
+    
+    private let context : ActorSystem
+    
+    required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         sender = Optional.None
+        self.context = context
+        self.this = ref
     }
     
     public func receive(msg : Message) -> Void {
@@ -26,10 +32,14 @@ public class Actor {
         }
     }
     
-    public func send (msg : Message) -> Void {
+    public func tell(msg : Message) -> Void {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
             self.receive(msg)
         }
+    }
+    
+    func dealloc() -> Void {
+        mailbox.cancelAllOperations()
     }
 }

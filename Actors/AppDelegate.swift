@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Theater
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,48 +16,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var opqueue = NSOperationQueue()
+    
+    var system = ActorSystem(name : "system")
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-/*        let ping = Ping()
-        let pong = Pong()
+
+        let rich : Try<ActorRef> = system.actorOf(Account)
+        let ac1 : Try<ActorRef> = system.actorOf(Account)
+        let ac2 : Try<ActorRef> = system.actorOf(Account)
+        let ac3 : Try<ActorRef> = system.actorOf(Account)
         
-        pong.send(SayHi(sender: ping, count: 0)) */
-        let rich : Account = Account(number: "1d")
-        let accountA : Account = Account(number: "2d")
-        let accountB : Account = Account(number: "3d")
-        let accountC : Account = Account(number: "4d")
-        opqueue.addOperationWithBlock { () -> Void in
-            print("1")
-            accountA.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
+        if ac1.isSuccess() && ac2.isSuccess() && ac3.isSuccess() && rich.isSuccess() {
+            let accountA = ac1.get()
+            let accountB = ac2.get()
+            let accountC = ac3.get()
+            let rico = rich.get()
+            
+            system.tell(SetAccountNumber(accountNumber: "accountA", operationId: NSUUID.init()), recipient: accountA)
+            system.tell(SetAccountNumber(accountNumber: "accountB", operationId: NSUUID.init()), recipient: accountB)
+            system.tell(SetAccountNumber(accountNumber: "accountC", operationId: NSUUID.init()), recipient: accountC)
+            system.tell(SetAccountNumber(accountNumber: "rico", operationId: NSUUID.init()), recipient: rico)
+            
+            opqueue.addOperationWithBlock { () -> Void in
+                print("1")
+                accountA.tell(Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
+                accountA.tell(PrintBalance(operationId: NSUUID.init()))
+                accountA.tell(Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
+                accountA.tell(PrintBalance(operationId: NSUUID.init()))
+            }
+            /*opqueue.addOperationWithBlock { () -> Void in
+                print("2")
+                accountB.tell(Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
+            }
+            opqueue.addOperationWithBlock { () -> Void in
+                NSThread.sleepForTimeInterval(0.2)
+                print("3")
+                accountC.tell(Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
+            }
+            opqueue.addOperationWithBlock { () -> Void in
+                NSThread.sleepForTimeInterval(1)
+                print("4")
+                accountC.tell(Withdraw(sender: rico, ammount: 53, operationId: NSUUID.init()))
+            }
+            opqueue.addOperationWithBlock { () -> Void in
+                print("5")
+                accountC.tell(Withdraw(sender: rico, ammount: 33, operationId: NSUUID.init()))
+            }
+            opqueue.addOperationWithBlock { () -> Void in
+                print("6")
+                accountC.tell(Withdraw(sender: rico, ammount: 51, operationId: NSUUID.init()))
+            }
+            opqueue.addOperationWithBlock { () -> Void in
+                print("7")
+                accountC.tell(Withdraw(sender: rico, ammount: 33, operationId: NSUUID.init()))
+            }*/
+            
+        } else {
+            
         }
-        opqueue.addOperationWithBlock { () -> Void in
-            print("2")
-            accountB.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
-        }
-        opqueue.addOperationWithBlock { () -> Void in
-            NSThread.sleepForTimeInterval(0.2)
-            print("3")
-            accountC.send(Deposit(sender: rich, ammount: 100, operationId: NSUUID.init()))
-        }
-        opqueue.addOperationWithBlock { () -> Void in
-            NSThread.sleepForTimeInterval(1)
-            print("4")
-            accountC.send(Withdraw(sender: rich, ammount: 53, operationId: NSUUID.init()))
-        }
-        opqueue.addOperationWithBlock { () -> Void in
-            print("5")
-            accountC.send(Withdraw(sender: rich, ammount: 33, operationId: NSUUID.init()))
-        }
-        opqueue.addOperationWithBlock { () -> Void in
-            print("6")
-            accountC.send(Withdraw(sender: rich, ammount: 51, operationId: NSUUID.init()))
-        }
-        opqueue.addOperationWithBlock { () -> Void in
-            print("7")
-            accountC.send(Withdraw(sender: rich, ammount: 33, operationId: NSUUID.init()))
-        }
+        
         
         return true
     }

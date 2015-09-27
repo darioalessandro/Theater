@@ -10,13 +10,13 @@ import Foundation
 
 public class Message {
     
-    public let sender : Actor
+    public let sender : Optional<ActorRef>
     
     public func description() -> String {
         return "Message"
     }
     
-    public init(sender : Actor) {
+    public init(sender : Optional<ActorRef>) {
         self.sender = sender
     }
 }

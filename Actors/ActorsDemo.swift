@@ -12,7 +12,7 @@ import Theater
 class SayHi : Message {
     private var count : NSInteger = 0
     
-    convenience init(sender : Actor, count : NSInteger) {
+    convenience init(sender : ActorRef, count : NSInteger) {
         self.init(sender : sender)
         self.count = count
     }
@@ -27,7 +27,7 @@ class Ping: Actor {
                 if hi.count > 10 {
                     print("The end")
                 } else {
-                    self.sender!.send(SayHi(sender: self, count: hi.count + 1))
+                    self.sender!.tell(SayHi(sender: this, count: hi.count + 1))
                 }
                 
                 break;
@@ -46,7 +46,7 @@ class Pong: Actor {
             if hi.count > 10 {
                 print("The end")
             } else {
-                self.sender!.send(SayHi(sender: self, count: hi.count + 1))
+                self.sender!.tell(SayHi(sender: this, count: hi.count + 1))
             }
             
             break;
