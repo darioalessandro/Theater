@@ -8,6 +8,13 @@
 
 import Foundation
 
+infix operator ! {associativity left precedence 130}
+
+public func !(actorRef : ActorRef, msg : Message) -> Void {
+    actorRef.tell(msg)
+}
+
+
 public class Actor {
     
     private let mailbox : NSOperationQueue = NSOperationQueue()
