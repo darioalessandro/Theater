@@ -82,7 +82,7 @@ enum AccountEvent {
 
 public class Account : Actor {
     
-    public func description() -> NSString {
+    override public var description  : String {
         return " \(self.balance())"
     }
     

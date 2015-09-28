@@ -23,6 +23,8 @@ public class ReactiveViewController : Actor {
     
     var ctrl : Optional<ViewController> = Optional.None
     
+    let central : ActorRef
+    
     private func addListeners(ctrl : ViewController) -> Void {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
             ctrl.label.text = "changed text from actor"
@@ -37,7 +39,10 @@ public class ReactiveViewController : Actor {
     }
     
     required public init(context : ActorSystem, ref : ActorRef) {
+        self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
+        self.central ! AddListener(sender: this)
+        self.central ! StartScanning()
     }
     
     override public func receive(msg: Message) {
@@ -49,8 +54,13 @@ public class ReactiveViewController : Actor {
             self.addListeners(self.ctrl!)
             break;
             
+        case is DeviceFound:
+            let w : DeviceFound = msg as! DeviceFound
+            print("Device Found \(w.device.identifier) \(w.RSSI)")
+            break;
         default:
-            super.receive(msg)
+            print("Message not handled \(msg.description())")
+            //super.receive(msg)
             
         }
     }

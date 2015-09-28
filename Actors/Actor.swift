@@ -15,7 +15,7 @@ public func !(actorRef : ActorRef, msg : Message) -> Void {
 }
 
 
-public class Actor {
+public class Actor : NSObject {
     
     private let mailbox : NSOperationQueue = NSOperationQueue()
     
@@ -45,8 +45,5 @@ public class Actor {
             self.receive(msg)
         }
     }
-    
-    func dealloc() -> Void {
-        mailbox.cancelAllOperations()
-    }
+
 }
