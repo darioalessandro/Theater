@@ -1,1 +1,1 @@
-# Theater : Swift actor system implementation
+# Theater : Swift actor model implementation
