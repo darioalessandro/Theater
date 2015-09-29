@@ -15,6 +15,20 @@ public class StartScanning : Message {
     }
 }
 
+public class BLEPeripheral {
+    public let peripheral: CBPeripheral
+    public let advertisementData: [String : AnyObject]
+    public let RSSI: NSNumber
+    public let timestamp : NSDate
+    
+    init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : NSDate) {
+        self.peripheral = peripheral
+        self.advertisementData = advertisementData
+        self.RSSI = RSSI
+        self.timestamp = timestamp
+    }
+}
+
 public class AddListener : Message {}
 
 public class RemoveListener : Message {}
@@ -30,37 +44,33 @@ public class StateChanged : Message {
     }
 }
 
-public class DeviceFound : Message {
+public class DevicesObservationUpdate : Message {
+    public let devices : [String : [BLEPeripheral]]
     
-    public let device : CBPeripheral
-    
-    public let advertisementData: [String : AnyObject]
-    
-    public let RSSI: NSNumber
-    
-    init(sender: Optional<ActorRef>, device : CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        self.device = device
-        self.advertisementData = advertisementData
-        self.RSSI = RSSI
+    init(sender : Optional<ActorRef>, devices : [String : [BLEPeripheral]]) {
+        self.devices = devices
         super.init(sender: sender)
     }
 }
 
 public class BLECentral : Actor, CBCentralManagerDelegate {
     
-    let bleQueue = NSOperationQueue.init()
+    private var devices : [String : [BLEPeripheral]]
     
-    let central : CBCentralManager
+    private let bleQueue = NSOperationQueue.init()
+    
+    private let central : CBCentralManager
     
     public required init(context: ActorSystem, ref: ActorRef) {
         self.central = CBCentralManager.init(delegate: nil, queue: bleQueue.underlyingQueue)
+        self.devices = [String : [BLEPeripheral]]()
         super.init(context: context, ref: ref)
         self.central.delegate = self
     }
     
-    var listeners : [ActorRef] = []
+    private var listeners : [ActorRef] = []
     
-    var shouldScan : Bool = false
+    private var shouldScan : Bool = false
     
     private func addListener(sender : Optional<ActorRef>) {
         guard let listener = sender else {
@@ -134,10 +144,17 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     }
     
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+        let bleDevice = BLEPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
+        if var historyOfDevice = self.devices[peripheral.identifier.UUIDString] {
+            historyOfDevice.insert(bleDevice, atIndex: 0)
+            self.devices[peripheral.identifier.UUIDString] = historyOfDevice
+        } else {
+            self.devices[peripheral.identifier.UUIDString] = [bleDevice]
+        }
         
-            listeners.forEach { (listener) -> () in
-                listener ! DeviceFound(sender: this, device: peripheral, advertisementData:advertisementData, RSSI:RSSI)
-            }
+        listeners.forEach { (listener) -> () in
+            listener ! DevicesObservationUpdate(sender: this, devices: self.devices)
+        }
     }
     
     @objc public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {

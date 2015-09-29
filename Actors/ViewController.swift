@@ -54,9 +54,17 @@ public class ReactiveViewController : Actor {
             self.addListeners(self.ctrl!)
             break;
             
-        case is DeviceFound:
-            let w : DeviceFound = msg as! DeviceFound
-            print("Device Found \(w.device.identifier) \(w.RSSI)")
+        case is DevicesObservationUpdate:
+            let observation : DevicesObservationUpdate = msg as! DevicesObservationUpdate
+            print("on DevicesObservationUpdate ->")
+            observation.devices.forEach({ (identifier : String, observations : [BLEPeripheral]) -> () in
+                print("identifier \(identifier)")
+                observations.forEach({ (observation : BLEPeripheral) -> () in
+                    print("observation date \(observation.timestamp) : \(observation.RSSI)")
+                })
+            })
+            print("****")
+            
             break;
         default:
             print("Message not handled \(msg.description())")

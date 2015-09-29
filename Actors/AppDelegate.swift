@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var system = ActorSystem(name : "system")
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+            /*
             let accountA = system.actorOf(Account)
             let accountB = system.actorOf(Account)
             let accountC = system.actorOf(Account)
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 accountA ! (Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
                 accountA ! (PrintBalance(operationId: NSUUID.init()))
             }
-            /*opqueue.addOperationWithBlock { () -> Void in
+            opqueue.addOperationWithBlock { () -> Void in
                 print("2")
                 accountB.tell(Deposit(sender: rico, ammount: 100, operationId: NSUUID.init()))
             }

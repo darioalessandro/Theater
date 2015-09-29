@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		069FA81E1BBA2A0900B470FD /* DeviceListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* DeviceListController.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
 		06E1D4FB1BB7699800E07321 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4F91BB7699800E07321 /* Main.storyboard */; };
@@ -74,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		069FA81D1BBA2A0900B470FD /* DeviceListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceListController.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4F71BB7699700E07321 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +136,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06DE5A931BBA47FE00A22EE7 /* Not used */ = {
+			isa = PBXGroup;
+			children = (
+				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
+				06E1D5431BB77D3500E07321 /* AccountsDemo.swift */,
+				06E1D4F71BB7699700E07321 /* ViewController.swift */,
+			);
+			name = "Not used";
+			sourceTree = "<group>";
+		};
 		06E1D4E91BB7699700E07321 = {
 			isa = PBXGroup;
 			children = (
@@ -160,9 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
-				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
-				06E1D5431BB77D3500E07321 /* AccountsDemo.swift */,
-				06E1D4F71BB7699700E07321 /* ViewController.swift */,
+				069FA81D1BBA2A0900B470FD /* DeviceListController.swift */,
+				06DE5A931BBA47FE00A22EE7 /* Not used */,
 				06E1D4F91BB7699800E07321 /* Main.storyboard */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
@@ -381,6 +392,7 @@
 				06E1D5401BB76F4B00E07321 /* ActorsDemo.swift in Sources */,
 				06E1D5441BB77D3500E07321 /* AccountsDemo.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
+				069FA81E1BBA2A0900B470FD /* DeviceListController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
