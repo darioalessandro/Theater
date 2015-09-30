@@ -16,7 +16,7 @@ public func !(actorRef : ActorRef, msg : Message) -> Void {
 
 public class Actor : NSObject {
     
-    private let mailbox : NSOperationQueue = NSOperationQueue()
+    public let mailbox : NSOperationQueue = NSOperationQueue()
     
     public var sender : Optional<ActorRef>
     

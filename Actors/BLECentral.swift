@@ -55,6 +55,8 @@ public class DevicesObservationUpdate : Message {
 
 public class BLECentral : Actor, CBCentralManagerDelegate {
     
+    private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(bool: true)]
+    
     private var devices : [String : [BLEPeripheral]]
     
     private let bleQueue = NSOperationQueue.init()
@@ -62,7 +64,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     private let central : CBCentralManager
     
     public required init(context: ActorSystem, ref: ActorRef) {
-        self.central = CBCentralManager.init(delegate: nil, queue: bleQueue.underlyingQueue)
+        self.central = CBCentralManager.init(delegate: nil, queue: self.bleQueue.underlyingQueue)
         self.devices = [String : [BLEPeripheral]]()
         super.init(context: context, ref: ref)
         self.central.delegate = self
@@ -98,8 +100,9 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         switch (msg) {
             case is StartScanning:
                 shouldScan = true
+                shouldWait = false
                 if self.central.state == CBCentralManagerState.PoweredOn {
-                    self.central.scanForPeripheralsWithServices(nil, options: nil)
+                    self.central.scanForPeripheralsWithServices(nil, options: bleOptions)
                     print("Started")
                 }
                 break;
@@ -126,7 +129,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         switch(central.state) {
         case .PoweredOn:
             if self.shouldScan {
-                self.central.scanForPeripheralsWithServices(nil, options: nil)
+                self.central.scanForPeripheralsWithServices(nil, options: bleOptions)
             } else {
                 self.central.stopScan()
             }
@@ -144,14 +147,32 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         
     }
     
+    var shouldWait = false
+    
+    var threshold : Double = 5
+    
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+        
+        
         let bleDevice = BLEPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
-        if var historyOfDevice = self.devices[peripheral.identifier.UUIDString] {
-            historyOfDevice.insert(bleDevice, atIndex: 0)
-            self.devices[peripheral.identifier.UUIDString] = historyOfDevice
+        if var historyOfDevice = self.devices[peripheral.identifier.UUIDString], let lastObv = historyOfDevice.first {
+            let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20
+            let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSinceDate(lastObv.timestamp)) > threshold
+            if  areRSSIDifferent || isThereEnoughTimeBetweenSamples {
+                historyOfDevice.insert(bleDevice, atIndex: 0)
+                self.devices[peripheral.identifier.UUIDString] = historyOfDevice
+            }
         } else {
             self.devices[peripheral.identifier.UUIDString] = [bleDevice]
         }
+        
+        if shouldWait { return }
+        
+        shouldWait = true
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            self.shouldWait = false
+        })
         
         listeners.forEach { (listener) -> () in
             listener ! DevicesObservationUpdate(sender: this, devices: self.devices)

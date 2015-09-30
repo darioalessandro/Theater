@@ -59,6 +59,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             if tableView.isEqual(obsCtrl.tableView) {
                 let blePeripheral : BLEPeripheral = observations[indexPath.row]
                 cell.textLabel?.text = "\(blePeripheral.timestamp) : \(blePeripheral.RSSI)"
+                cell.detailTextLabel?.text = blePeripheral.advertisementData.debugDescription
             } else {
                 let identifier = self.identifiers[indexPath.row]
                 cell.textLabel?.text = self.identifiers[indexPath.row]
