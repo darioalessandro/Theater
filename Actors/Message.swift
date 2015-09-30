@@ -20,3 +20,11 @@ public class Message {
         self.sender = sender
     }
 }
+
+public class Harakiri : Message {
+    
+    public override init(sender: Optional<ActorRef>) {
+        super.init(sender: sender)
+    }
+}
+

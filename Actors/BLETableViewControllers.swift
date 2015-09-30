@@ -37,6 +37,7 @@ class DeviceListController: UITableViewController {
     
     deinit {
         reactive ! StopScanning(sender: Optional.None)
+        reactive ! Harakiri(sender: Optional.None)
     }
 }
 

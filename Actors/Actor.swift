@@ -14,7 +14,6 @@ public func !(actorRef : ActorRef, msg : Message) -> Void {
     actorRef.tell(msg)
 }
 
-
 public class Actor : NSObject {
     
     private let mailbox : NSOperationQueue = NSOperationQueue()
@@ -34,8 +33,11 @@ public class Actor : NSObject {
     
     public func receive(msg : Message) -> Void {
         switch msg {
-            default :
-                NSException.raise("message not handled", format: "%@", arguments : getVaList([msg.description()]))
+        case is Harakiri:
+            self.context.stop(this)
+            break;
+        default :
+            print("message not handled %@", [msg.description()])
         }
     }
     
@@ -44,6 +46,10 @@ public class Actor : NSObject {
             self.sender = msg.sender
             self.receive(msg)
         }
+    }
+    
+    deinit {
+        print("killing \(this.path.asString)")
     }
 
 }

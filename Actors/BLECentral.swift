@@ -170,4 +170,9 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         
     }
     
+    deinit {
+        self.central.delegate = nil
+        print("called deinit in BLECentral \(this.path.asString)")
+    }
+    
 }

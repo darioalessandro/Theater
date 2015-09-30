@@ -122,8 +122,13 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 }
             })
             break;
+        case is Harakiri:
+            central ! Harakiri(sender: this)
+            super.receive(msg)
+            break;
+            
         default:
-            print("Message not handled \(msg.description())")
+            super.receive(msg)
         }
     }
 }

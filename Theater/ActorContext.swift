@@ -45,6 +45,10 @@ public class ActorSystem  {
         self.name = name
     }
     
+    public func stop(actorRef : ActorRef) {
+        self.dictionary.removeValueForKey(actorRef.path.asString)
+    }
+    
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
         let actorClass  = clz
         let ref = ActorRef(context:self, path:ActorPath(path:name))
