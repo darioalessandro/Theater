@@ -29,6 +29,10 @@
 		06E1D54E1BB8BB1100E07321 /* BLECentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D54C1BB8B97C00E07321 /* BLECentral.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D31BBB7305005787AE /* BLEActors.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; settings = {ASSET_TAGS = (); }; };
+		06EEA7DA1BBB875A005787AE /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D91BBB875A005787AE /* WebSocketClient.swift */; settings = {ASSET_TAGS = (); }; };
+		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
+		06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +108,12 @@
 		06E1D54C1BB8B97C00E07321 /* BLECentral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLECentral.swift; path = ../Actors/BLECentral.swift; sourceTree = "<group>"; };
 		06EEA7D31BBB7305005787AE /* BLEActors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEActors.swift; sourceTree = "<group>"; };
 		06EEA7D61BBB7360005787AE /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEMessages.swift; sourceTree = "<group>"; };
+		06EEA7D91BBB875A005787AE /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
+		06EEA7DB1BBB87EE005787AE /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
+		06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSViewController.swift; sourceTree = "<group>"; };
+		27B79A6BB7E56A401AD5A495 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */,
+				613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +170,8 @@
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06E1D52D1BB76EE400E07321 /* TheaterTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
+				2B697B2D042E1A6218E1B076 /* Pods */,
+				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
+				06EEA7D81BBB84E2005787AE /* WebSockets */,
 				06EEA7D51BBB730B005787AE /* Bluetooth LE */,
 				06DE5A931BBA47FE00A22EE7 /* Not used */,
 				06E1D4F91BB7699800E07321 /* Main.storyboard */,
@@ -206,6 +221,7 @@
 				06E1D5201BB76EE300E07321 /* Theater.h */,
 				06E1D5221BB76EE300E07321 /* Info.plist */,
 				06E1D5471BB84BDD00E07321 /* ActorContext.swift */,
+				06EEA7D91BBB875A005787AE /* WebSocketClient.swift */,
 			);
 			path = Theater;
 			sourceTree = "<group>";
@@ -229,6 +245,32 @@
 			name = "Bluetooth LE";
 			sourceTree = "<group>";
 		};
+		06EEA7D81BBB84E2005787AE /* WebSockets */ = {
+			isa = PBXGroup;
+			children = (
+				06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */,
+			);
+			name = WebSockets;
+			sourceTree = "<group>";
+		};
+		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06EEA7DB1BBB87EE005787AE /* Starscream.framework */,
+				27B79A6BB7E56A401AD5A495 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B697B2D042E1A6218E1B076 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */,
+				766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -247,10 +289,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "Actors" */;
 			buildPhases = (
+				98D4B7229D75C4F8A6A27E42 /* Check Pods Manifest.lock */,
 				06E1D4EE1BB7699700E07321 /* Sources */,
 				06E1D4EF1BB7699700E07321 /* Frameworks */,
 				06E1D4F01BB7699700E07321 /* Resources */,
 				06E1D5381BB76EE400E07321 /* Embed Frameworks */,
+				95381510987EAA71A02041AE /* Embed Pods Frameworks */,
+				5F0D097C05278802B0D9A4DE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -397,6 +442,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5F0D097C05278802B0D9A4DE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95381510987EAA71A02041AE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98D4B7229D75C4F8A6A27E42 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		06E1D4EE1BB7699700E07321 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -404,6 +497,7 @@
 			files = (
 				06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */,
 				06E1D5401BB76F4B00E07321 /* ActorsDemo.swift in Sources */,
+				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
 				06E1D5441BB77D3500E07321 /* AccountsDemo.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
@@ -426,6 +520,7 @@
 			files = (
 				06E1D5461BB77F4F00E07321 /* Try.swift in Sources */,
 				06E1D54E1BB8BB1100E07321 /* BLECentral.swift in Sources */,
+				06EEA7DA1BBB875A005787AE /* WebSocketClient.swift in Sources */,
 				06E1D53C1BB76F0800E07321 /* Message.swift in Sources */,
 				06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */,
 				06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */,
@@ -571,6 +666,7 @@
 		};
 		06E1D5101BB7699800E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -583,6 +679,7 @@
 		};
 		06E1D5111BB7699800E07321 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -625,6 +722,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -644,6 +745,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -63,6 +63,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     private let central : CBCentralManager
     
+    private var shouldWait = false
+    
+    private var threshold : Double = 5
+    
     public required init(context: ActorSystem, ref: ActorRef) {
         self.central = CBCentralManager.init(delegate: nil, queue: self.bleQueue.underlyingQueue)
         self.devices = [String : [BLEPeripheral]]()
@@ -146,10 +150,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     @objc public func centralManager(central: CBCentralManager, willRestoreState dict: [String : AnyObject]) {
         
     }
-    
-    var shouldWait = false
-    
-    var threshold : Double = 5
     
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
