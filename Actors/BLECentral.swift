@@ -106,6 +106,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
             case is StopScanning:
                 shouldScan = false
                 self.central.stopScan()
+                print("stopped")
                 break;
             case is RemoveListener:
                 let m = msg as! RemoveListener
