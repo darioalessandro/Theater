@@ -42,7 +42,14 @@ public class SendMessage : OnMessage {}
 
 public class Disconnect : Message {}
 
-public class OnDisconnect : Message {}
+public class OnDisconnect : Message {
+    public let error : Optional<NSError>
+    
+    init(sender: Optional<ActorRef>, error :Optional<NSError>) {
+        self.error = error
+        super.init(sender: sender)
+    }
+}
 
 public class OnConnect : Message {}
 
@@ -59,7 +66,7 @@ public class WebSocketClient : Actor , WebSocketDelegate {
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         if let del = self.delegate {
-            del ! OnDisconnect(sender: this)
+            del ! OnDisconnect(sender: this, error: error)
         }
     }
     

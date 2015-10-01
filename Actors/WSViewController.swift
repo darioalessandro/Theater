@@ -23,6 +23,8 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
     
     let wsClient : ActorRef
     
+    var url : Optional<NSURL> = Optional.None
+    
     weak var ctrl : Optional<WSViewController> = Optional.None
     
     var receivedMessages : [(String, NSDate)] = [(String, NSDate)]()
@@ -53,11 +55,16 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
         case is Connect:
             let w = msg as! Connect
             wsClient ! Connect(url: w.url, delegate: this)
+            url = w.url
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.ctrl?.title = "Connecting"
+            })
             break;
             
         case is OnConnect:
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.ctrl?.title = "Connected"
+                self.ctrl?.navigationItem.prompt = nil
                 self.ctrl?.textField.becomeFirstResponder()
             })
             break;
@@ -80,9 +87,20 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             
         case is Disconnect:
             wsClient ! Disconnect(sender: this)
+            break;
+            
+        case is OnDisconnect:
+            let w = msg as! OnDisconnect
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 self.ctrl?.title = "Disconnected"
+                self.ctrl?.navigationItem.prompt = w.error?.localizedDescription
             })
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                if let url = self.url {
+                    self.this ! Connect(url: url, delegate: self.this)
+                }
+            })
+
             break;
             
         case is SetWSController:
