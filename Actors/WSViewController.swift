@@ -71,13 +71,20 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             
         case is SendMessage:
             let w = msg as! SendMessage
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
+                let i = self.receivedMessages.count - 1
+                let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
+                self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+            })
             wsClient ! SendMessage(sender: this, message: w.message)
             break;
             
         case is OnMessage:
             let w = msg as! OnMessage
-            self.receivedMessages.append((w.message, NSDate.init()))
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
                 let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
                 self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
