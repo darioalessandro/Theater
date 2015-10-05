@@ -16,8 +16,10 @@ public class Try<T> {
     
     public func isSuccess() -> Bool {e.raise(); return false}
     
-    public func hasValue() -> Optional<T> {return Optional.None}
-
+    public func toOptional() -> Optional<T> {
+        return  Optional.None
+    }
+    
     public func get() -> T { e.raise(); return NSObject() as! T}
     
     public func description() -> String {e.raise(); return "Try"}
@@ -47,14 +49,16 @@ public class Success<T> : Try<T> {
     
     override public func get() -> T {return self.value}
     
-    override public func hasValue() -> Optional<T> {return Optional.Some(self.value)}
-    
     override public func description() -> String {
         return "Success : \(self.get())"
     }
     
     override public func map<U>(f : (T) -> (U)) -> Try<U> {
         return Try<U>.gen(f(self.value))
+    }
+    
+    override public func toOptional() -> Optional<T> {
+        return  Optional.Some(self.value)
     }
     
 }

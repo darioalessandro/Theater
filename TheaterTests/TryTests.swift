@@ -70,18 +70,18 @@ class TryTests: XCTestCase {
     }
     
     func testConcatenation() {
-        let computation1 : Try<Int> = TryGenerator(n: 4).isItBiggerThan3()
-        let computation2 : Try<Int> = TryGenerator(n: 4).isItBiggerThan3()
-        let computation3 : Try<Int> = TryGenerator(n: 2).isItBiggerThan3()
+        let number1Try : Try<Int> = TryGenerator(n: 4).isItBiggerThan3()
+        let number2Try : Try<Int> = TryGenerator(n: 4).isItBiggerThan3()
+        let number3Try : Try<Int> = TryGenerator(n: 2).isItBiggerThan3()
         
-        if let c1 = computation1.hasValue(), c2 = computation2.hasValue(), c3 = computation3.hasValue() {
-            XCTAssertTrue(false, "\(c1), \(c2) \(c3)")
+        if let n1 = number1Try.toOptional(), n2 = number2Try.toOptional(), n3 = number3Try.toOptional() {
+            XCTAssertTrue(false, "\(n1), \(n2) \(n3)")
         } else {
             XCTAssertTrue(true)
         }
         
-        if let c1 = computation1.hasValue(), c2 = computation2.hasValue() {
-            XCTAssertTrue(true, "\(c1), \(c2)")
+        if let n1 = number1Try.toOptional(), n2 = number2Try.toOptional() {
+            XCTAssertEqual(n1 + n2, 8)
         } else {
              XCTAssertTrue(false)
         }

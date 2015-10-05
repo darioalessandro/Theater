@@ -34,6 +34,12 @@ public class ActorRef {
     
 }
 
+public class TestActorSystem : ActorSystem {
+    public override func actorForRef(ref : ActorRef) -> Optional<Actor> {
+        return super.actorForRef(ref)
+    }
+}
+
 public class ActorSystem  {
     
     var dictionary : Dictionary = [String : Actor]()
@@ -61,7 +67,7 @@ public class ActorSystem  {
         return actorOf(clz, name: uuidString)
     }
     
-    private func actorForRef(ref : ActorRef) -> Optional<Actor> {
+    func actorForRef(ref : ActorRef) -> Optional<Actor> {
         return self.dictionary[ref.path.asString]
     }
     

@@ -36,11 +36,13 @@ public class Account : Actor {
     var number : String = ""
     
     private var _balance : Double = 0 {
+        
         didSet {
             if _balance != oldValue {
                 NSNotificationCenter.defaultCenter().postNotificationName(AccountEvent.BalanceChange.toString, object: this)
             }
         }
+        
     }
     
     public override func receive(msg: Message) {
@@ -53,16 +55,31 @@ public class Account : Actor {
                 break;
             case is Withdraw:
                 let w = msg as! Withdraw
-                self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.withdraw(w.ammount)))
+                let op = self.withdraw(w.ammount)
+                if let sender = self.sender, _ = op.toOptional() {
+                    sender ! WithdrawResult(sender: this, operationId: w.operationId, result: Success(value: w.ammount))
+                }
                 break;
             case is Deposit:
                 let w = msg as! Deposit
-                self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.deposit(w.ammount)))
+                let r = self.deposit(w.ammount)
+                if let sender = self.sender {
+                    sender ! DepositResult(sender: this, operationId: w.operationId, result: r)
+                }
+                
                 break;
             case is PrintBalance:
                 print("Balance of \(number) is \(balance().get())")
                 //self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.balance()))
                 break;
+            
+            case is WithdrawResult:
+                let w = msg as! WithdrawResult
+                if let ammount = w.result.toOptional() {
+                    self.deposit(ammount)
+                }
+                break;
+            
             case is BankOpResult:
                 let w = msg as! BankOpResult
                 print("Account \(number) : \(w.operationId.UUIDString) \(w.result.description())")

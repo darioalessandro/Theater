@@ -52,3 +52,7 @@ public class BankOpResult : Message {
         super.init(sender: sender)
     }
 }
+
+public class WithdrawResult : BankOpResult {}
+
+public class DepositResult : BankOpResult {}
