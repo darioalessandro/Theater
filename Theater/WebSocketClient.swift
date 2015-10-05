@@ -61,12 +61,14 @@ public class WebSocketClient : Actor , WebSocketDelegate {
     public func websocketDidConnect(socket: WebSocket) {
         if let del = self.delegate {
             del ! OnConnect(sender: this)
+            self.become(connected)
         }
     }
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         if let del = self.delegate {
             del ! OnDisconnect(sender: this, error: error)
+            self.become(disconnected)
         }
     }
     
@@ -82,41 +84,57 @@ public class WebSocketClient : Actor , WebSocketDelegate {
         }
     }
     
-    override public func receive(msg: Message) {
-        
+    var disconnected  : Receive = { (me : Actor, msg : Message) in
+        let ws = me as! WebSocketClient
         switch (msg) {
+        case is Connect:
+            let c = msg as! Connect
+            ws.socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
+            ws.socket!.delegate = ws
+            ws.delegate = c.sender
+            ws.socket!.connect()
+            break;
             
+        case is Harakiri:
+            ws.this ! Disconnect(sender: Optional.None)
+            break;
+            
+        default:
+            print("not handled")
+            break;
+        }
+    }
+    
+    var connected : Receive = { (me : Actor, msg : Message) in
+        let ws = me as! WebSocketClient
+        switch(msg) {
             case is SendMessage:
                 let c = msg as! SendMessage
-                if let s = self.socket {
+                if let s = ws.socket {
                     s.writeString(c.message)
                 }
                 break;
-            
+                
             case is Disconnect:
-                if let s = self.socket {
+                if let s = ws.socket {
                     s.disconnect()
-                    self.socket!.delegate = nil
-                    self.socket = nil
+                    ws.socket!.delegate = nil
+                    ws.socket = nil
+                    ws.unbecome()
                 }
                 break;
             
-            case is Connect:
-                let c = msg as! Connect
-                self.socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
-                self.socket!.delegate = self
-                self.delegate = c.sender
-                self.socket!.connect()
-            break;
-            
             case is Harakiri:
-                this ! Disconnect(sender: Optional.None)
+                ws.this ! Disconnect(sender: Optional.None)
                 break;
             
             default:
-                super.receive(msg)
-                break;
+                print("ignore")
         }
-        
+    }
+    
+    override public func receive(msg : Message) {
+        become(disconnected)
+        this ! (msg)
     }
 }

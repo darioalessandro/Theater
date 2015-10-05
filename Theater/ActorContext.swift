@@ -32,7 +32,6 @@ public class ActorRef {
         self.context.tell(msg, recipient:self)
     }
     
-    
 }
 
 public class ActorSystem  {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		061C253E1BC2B3BC0049D6C9 /* ArrayAsStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C253D1BC2B3BC0049D6C9 /* ArrayAsStack.swift */; settings = {ASSET_TAGS = (); }; };
 		069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
@@ -81,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		061C253D1BC2B3BC0049D6C9 /* ArrayAsStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayAsStack.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLETableViewControllers.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				06E1D5221BB76EE300E07321 /* Info.plist */,
 				06E1D5471BB84BDD00E07321 /* ActorContext.swift */,
 				06EEA7D91BBB875A005787AE /* WebSocketClient.swift */,
+				061C253D1BC2B3BC0049D6C9 /* ArrayAsStack.swift */,
 			);
 			path = Theater;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				06E1D53C1BB76F0800E07321 /* Message.swift in Sources */,
 				06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */,
 				06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */,
+				061C253E1BC2B3BC0049D6C9 /* ArrayAsStack.swift in Sources */,
 				06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

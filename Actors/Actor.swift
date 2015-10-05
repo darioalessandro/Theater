@@ -14,7 +14,11 @@ public func !(actorRef : ActorRef, msg : Message) -> Void {
     actorRef.tell(msg)
 }
 
+public typealias Receive = ( Actor, Message) -> (Void)
+
 public class Actor : NSObject {
+    
+    private var statesStack : Stack<Receive> = Stack()
     
     public let mailbox : NSOperationQueue = NSOperationQueue()
     
@@ -22,30 +26,43 @@ public class Actor : NSObject {
     
     public let this : ActorRef
     
-    private let context : ActorSystem
+    public let context : ActorSystem
     
-    required public init(context : ActorSystem, ref : ActorRef) {
-        mailbox.maxConcurrentOperationCount = 1 //serial queue
-        sender = Optional.None
-        self.context = context
-        self.this = ref
+    public func become(state : Receive) -> Void  {
+        self.statesStack.push(state)
+    }
+    
+    public func unbecome() {
+        self.statesStack.pop()
     }
     
     public func receive(msg : Message) -> Void {
         switch msg {
-        case is Harakiri:
-            self.context.stop(this)
-            break;
-        default :
-            print("message not handled %@", [msg.description()])
+            case is Harakiri:
+                self.context.stop(self.this)
+                break;
+            default :
+                print("message not handled %@", [msg.description()])
         }
     }
     
     public func tell(msg : Message) -> Void {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
-            self.receive(msg)
+            print("Tell = \(self.sender?.path) \(msg) \(self.this.path) ")
+            if let state : Receive = self.statesStack.head() {
+                state(self,msg)
+            } else {
+                self.receive(msg)
+            }
         }
+    }
+    
+    required public init(context : ActorSystem, ref : ActorRef) {
+        mailbox.maxConcurrentOperationCount = 1 //serial queue
+        sender = Optional.None
+        self.context = context
+        self.this = ref
     }
     
     deinit {
