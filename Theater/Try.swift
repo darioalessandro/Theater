@@ -26,6 +26,14 @@ public class Try<T> {
     
     public func map<U>(f : (T) -> (U)) -> Try<U> {return Try<U>()}
     
+    public func getOrElse(d : (Void) -> T) -> T {
+        if self.isSuccess() {
+            return get()
+        }else{
+            return d()
+        }
+    }
+    
     class func gen(r: T) -> Try<T> {
         do {
             let s = Success(value : r)

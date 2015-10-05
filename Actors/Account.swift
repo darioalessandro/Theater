@@ -96,7 +96,6 @@ public class Account : Actor {
         } else {
             return Failure(exception: NSError(domain: "Insufficient funds", code: 0, userInfo: nil))
         }
-        
     }
     
     func deposit(amount : Double) -> Try<Double> {

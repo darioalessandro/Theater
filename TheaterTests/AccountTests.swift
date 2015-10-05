@@ -39,6 +39,7 @@ class AccountTests: XCTestCase {
         
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             acc1Ref ! Withdraw(sender: acc2Ref, ammount:1000, operationId: NSUUID())
+            acc3Ref ! Withdraw(sender: acc2Ref, ammount:1000, operationId: NSUUID())
         }
         
         let delayTime2 = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
@@ -50,8 +51,8 @@ class AccountTests: XCTestCase {
             
             if let a1b = acc1.balance().toOptional(), a2b = acc2.balance().toOptional(), a3b = acc3.balance().toOptional() {
                 XCTAssertEqual(a1b, 0000)
-                XCTAssertEqual(a2b, 3000)
-                XCTAssertEqual(a3b, 3000)
+                XCTAssertEqual(a2b, 4000)
+                XCTAssertEqual(a3b, 2000)
             } else {
                 XCTAssert(false)
             }

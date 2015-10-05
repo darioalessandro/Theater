@@ -85,7 +85,15 @@ class TryTests: XCTestCase {
         } else {
              XCTAssertTrue(false)
         }
-        
     }
     
+    
+    func testGetOrElse() {
+        let number1Try : Int = TryGenerator(n: 2).isItBiggerThan3().getOrElse { () -> Int in return 10 * 4 }
+        XCTAssertEqual(number1Try, 40)
+        
+        let number2Try : Int = TryGenerator(n: 5).isItBiggerThan3().getOrElse { () -> Int in return 10 * 4}
+        XCTAssertEqual(number2Try, 5)
+        
+    }
 }
