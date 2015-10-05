@@ -21,10 +21,9 @@ public class Stack<A> {
     }
     
     public func pop() -> Optional<A> {
-        if self.array.count > 0 {
-            let last = self.array.first
+        if let first = self.array.first {
             self.array.removeFirst()
-            return last
+            return first
         } else {
             return Optional.None
         }
