@@ -9,7 +9,6 @@
 import UIKit
 import Theater
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

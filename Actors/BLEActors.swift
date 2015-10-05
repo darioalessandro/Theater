@@ -82,31 +82,31 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             
         case is SetObservationsController:
             let w : SetObservationsController = msg as! SetObservationsController
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.observationsCtrl = w.ctrl
                 self.observationsCtrl?.tableView.delegate = self
                 self.observationsCtrl?.tableView.dataSource = self
                 self.observationsCtrl?.title = self.selectedIdentifier
                 self.observationsCtrl?.tableView.reloadData()
-            })
+            }
             break;
         case is RemoveObservationController:
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.observationsCtrl?.tableView.delegate = nil
                 self.observationsCtrl?.tableView.dataSource = nil
                 self.observationsCtrl = Optional.None
                 self.selectedIdentifier = Optional.None
-            })
+            }
             break;
             
         case is SetTableViewController :
             let w : SetTableViewController = msg as! SetTableViewController
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.ctrl = w.ctrl
                 self.ctrl?.tableView.delegate = self
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.reloadData()
-            })
+            }
             break;
             
         case is DevicesObservationUpdate:
@@ -114,14 +114,14 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             self.devices = observation.devices
             self.identifiers = Array(self.devices.keys)
             let sections = NSIndexSet(index: 0)
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 
                 self.ctrl?.tableView.reloadSections(sections, withRowAnimation: .None)
                 
                 if let obsCtrl = self.observationsCtrl, _ = self.selectedIdentifier {
                     obsCtrl.tableView.reloadSections(sections, withRowAnimation: .None)
                 }
-            })
+            }
             break;
         case is Harakiri:
             central ! Harakiri(sender: this)

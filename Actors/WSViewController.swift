@@ -56,40 +56,40 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             let w = msg as! Connect
             wsClient ! Connect(url: w.url, delegate: this)
             url = w.url
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.ctrl?.title = "Connecting"
-            })
+            }
             break;
             
         case is OnConnect:
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.ctrl?.title = "Connected"
                 self.ctrl?.navigationItem.prompt = nil
                 self.ctrl?.textField.becomeFirstResponder()
-            })
+            }
             break;
             
         case is SendMessage:
             let w = msg as! SendMessage
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
                 let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
                 self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
                 self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-            })
+            }
             wsClient ! SendMessage(sender: this, message: w.message)
             break;
             
         case is OnMessage:
             let w = msg as! OnMessage
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
                 let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
                 self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
                 self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-            })
+            }
             break;
             
         case is Disconnect:
@@ -98,10 +98,10 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             
         case is OnDisconnect:
             let w = msg as! OnDisconnect
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.ctrl?.title = "Disconnected"
                 self.ctrl?.navigationItem.prompt = w.error?.localizedDescription
-            })
+            }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                 if let url = self.url {
                     self.this ! Connect(url: url, delegate: self.this)
@@ -113,10 +113,10 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
         case is SetWSController:
             let w = msg as! SetWSController
             ctrl = w.ctrl
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            ^{ () -> Void in
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.delegate = self
-            })
+            }
             break;
             
         default:

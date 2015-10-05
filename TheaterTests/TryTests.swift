@@ -72,14 +72,17 @@ class TryTests: XCTestCase {
         let number2Try : Try<Int> = TryGenerator(n: 4).isItBiggerThan3()
         let number3Try : Try<Int> = TryGenerator(n: 2).isItBiggerThan3()
         
-        if let n1 = number1Try.toOptional(), n2 = number2Try.toOptional(), n3 = number3Try.toOptional() {
+        if let  n1 = number1Try.toOptional(),
+                n2 = number2Try.toOptional(),
+                n3 = number3Try.toOptional() {
             XCTAssertTrue(false, "\(n1), \(n2) \(n3)")
         } else {
             XCTAssertTrue(true)
         }
         
-        if let n1 = number1Try.toOptional(), n2 = number2Try.toOptional() {
-            XCTAssertEqual(n1 + n2, 8)
+        if let  op1 = TryGenerator(n: 5).isItBiggerThan3().toOptional(),
+                n2 = TryGenerator(n: op1 - 1).isItBiggerThan3().toOptional() {
+            XCTAssertEqual(n2, 4)
         } else {
              XCTAssertTrue(false)
         }
@@ -88,7 +91,7 @@ class TryTests: XCTestCase {
     
     func testGetOrElse() {
         
-        let elseClojure = {() -> Int in return 10 * 4}
+        let elseClojure : (Void) -> (Int) = {() -> Int in return 10 * 4}
         
         let number1Try : Int = TryGenerator(n: 2).isItBiggerThan3().getOrElse {elseClojure()}
         XCTAssertEqual(number1Try, 40)

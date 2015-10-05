@@ -26,14 +26,14 @@ public class ReactiveViewController : Actor {
     let central : ActorRef
     
     private func addListeners(ctrl : ViewController) -> Void {
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        ^{ () -> Void in
             ctrl.label.text = "changed text from actor"
             ctrl.button.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
         }
     }
     
     @objc func onClick(sender : UIButton!) {
-        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+        ^{ () -> Void in
             self.ctrl!.label.text = "changed: \(NSDate.init())"
         }
     }
