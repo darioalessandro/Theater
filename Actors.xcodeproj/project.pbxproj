@@ -9,19 +9,20 @@
 /* Begin PBXBuildFile section */
 		061C253E1BC2B3BC0049D6C9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C253D1BC2B3BC0049D6C9 /* Stack.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; settings = {ASSET_TAGS = (); }; };
-		061C25421BC2CF9C0049D6C9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
-		061C25441BC2D01F0049D6C9 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; settings = {ASSET_TAGS = (); }; };
-		061C25481BC3070E0049D6C9 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25471BC3070E0049D6C9 /* AccountTests.swift */; settings = {ASSET_TAGS = (); }; };
 		061C254A1BC30A670049D6C9 /* TestActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25491BC30A670049D6C9 /* TestActor.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC791BC335DE00694512 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC781BC335DE00694512 /* NSOperationQueue.swift */; settings = {ASSET_TAGS = (); }; };
+		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
+		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
+		0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25471BC3070E0049D6C9 /* AccountTests.swift */; settings = {ASSET_TAGS = (); }; };
+		0693BC7E1BC33C5100694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
+		0693BC7F1BC33C5400694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
 		06E1D4FB1BB7699800E07321 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4F91BB7699800E07321 /* Main.storyboard */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
 		06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */; };
-		06E1D50B1BB7699800E07321 /* ActorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D50A1BB7699800E07321 /* ActorsTests.swift */; };
 		06E1D5211BB76EE300E07321 /* Theater.h in Headers */ = {isa = PBXBuildFile; fileRef = 06E1D5201BB76EE300E07321 /* Theater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		06E1D5281BB76EE400E07321 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ASSET_TAGS = (); }; };
 		06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D52E1BB76EE400E07321 /* TheaterTests.swift */; };
@@ -88,9 +89,9 @@
 
 /* Begin PBXFileReference section */
 		061C253D1BC2B3BC0049D6C9 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountOps.swift; sourceTree = "<group>"; };
+		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
-		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTests.swift; sourceTree = "<group>"; };
+		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
 		061C25491BC30A670049D6C9 /* TestActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestActor.swift; sourceTree = "<group>"; };
 		0693BC781BC335DE00694512 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationQueue.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLETableViewControllers.swift; sourceTree = "<group>"; };
@@ -102,7 +103,6 @@
 		06E1D4FF1BB7699800E07321 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06E1D5011BB7699800E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D5061BB7699800E07321 /* ActorsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActorsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		06E1D50A1BB7699800E07321 /* ActorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorsTests.swift; sourceTree = "<group>"; };
 		06E1D50C1BB7699800E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D5151BB769AA00E07321 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = ../Actors/Actor.swift; sourceTree = "<group>"; };
 		06E1D5171BB76E2600E07321 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Actors/Message.swift; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		06E1D52E1BB76EE400E07321 /* TheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterTests.swift; sourceTree = "<group>"; };
 		06E1D5301BB76EE400E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActorsDemo.swift; path = ../Actors/ActorsDemo.swift; sourceTree = "<group>"; };
-		06E1D5431BB77D3500E07321 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = ../Actors/Account.swift; sourceTree = "<group>"; };
+		06E1D5431BB77D3500E07321 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		06E1D5451BB77F4F00E07321 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		06E1D5471BB84BDD00E07321 /* ActorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorContext.swift; sourceTree = "<group>"; };
 		06E1D5491BB8A86000E07321 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = ../Actors/AppActorSystem.swift; sourceTree = "<group>"; };
@@ -164,6 +164,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0693BC7C1BC33C1600694512 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
+				06E1D5431BB77D3500E07321 /* Account.swift */,
+			);
+			name = Accounts;
+			sourceTree = "<group>";
+		};
 		06DE5A931BBA47FE00A22EE7 /* Not used */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
+				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
 				06EEA7D51BBB730B005787AE /* Bluetooth LE */,
 				06DE5A931BBA47FE00A22EE7 /* Not used */,
@@ -214,7 +224,7 @@
 		06E1D5091BB7699800E07321 /* ActorsTests */ = {
 			isa = PBXGroup;
 			children = (
-				06E1D50A1BB7699800E07321 /* ActorsTests.swift */,
+				061C25471BC3070E0049D6C9 /* AccountTests.swift */,
 				06E1D50C1BB7699800E07321 /* Info.plist */,
 			);
 			path = ActorsTests;
@@ -241,11 +251,8 @@
 		06E1D52D1BB76EE400E07321 /* TheaterTests */ = {
 			isa = PBXGroup;
 			children = (
-				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
-				06E1D5431BB77D3500E07321 /* Account.swift */,
 				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
 				06E1D52E1BB76EE400E07321 /* TheaterTests.swift */,
-				061C25471BC3070E0049D6C9 /* AccountTests.swift */,
 				06E1D5301BB76EE400E07321 /* Info.plist */,
 				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
 				061C25491BC30A670049D6C9 /* TestActor.swift */,
@@ -515,9 +522,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */,
+				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
+				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */,
 			);
@@ -527,7 +536,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06E1D50B1BB7699800E07321 /* ActorsTests.swift in Sources */,
+				0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */,
+				0693BC7E1BC33C5100694512 /* Account.swift in Sources */,
+				0693BC7F1BC33C5400694512 /* AccountOps.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,9 +564,6 @@
 			files = (
 				061C254A1BC30A670049D6C9 /* TestActor.swift in Sources */,
 				061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */,
-				061C25481BC3070E0049D6C9 /* AccountTests.swift in Sources */,
-				061C25421BC2CF9C0049D6C9 /* Account.swift in Sources */,
-				061C25441BC2D01F0049D6C9 /* AccountOps.swift in Sources */,
 				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,
 				06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */,
 			);
