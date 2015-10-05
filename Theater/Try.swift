@@ -9,34 +9,26 @@
 import Foundation
 
 public class Try<T> {
-
-    /** Returns `true` if the `Try` is a `Failure`, `false` otherwise.
-    */
-    public func isFailure() -> Bool {return false}
     
-    /** Returns `true` if the `Try` is a `Success`, `false` otherwise.
-    */
-    public func isSuccess() -> Bool {return false}
+    private let e : NSException = NSException(name: "invalid usage", reason: "please do not use this class directly, use Success || Failure", userInfo: nil)
+
+    public func isFailure() -> Bool {e.raise(); return false}
+    
+    public func isSuccess() -> Bool {e.raise(); return false}
     
     public func hasValue() -> Optional<T> {return Optional.None}
 
-    /** Returns the value from this `Success` or throws the exception if this is a `Failure`.
-    */
-    public func get() -> T {return NSObject() as! T}
+    public func get() -> T { e.raise(); return NSObject() as! T}
     
-    public func description() -> String {
-        return "Try"
-    }
+    public func description() -> String {e.raise(); return "Try"}
     
-    public func map<U>(f : (T) -> (U)) -> Try<U> {
-        return Try<U>()
-    }
+    public func map<U>(f : (T) -> (U)) -> Try<U> {return Try<U>()}
     
     class func gen(r: T) -> Try<T> {
         do {
             let s = Success(value : r)
             return s
-        }catch let error as NSError {
+        } catch let error as NSError {
             return Failure(exception : error)
         }
         
