@@ -67,16 +67,16 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     private var threshold : Double = 5
     
+    private var listeners : [ActorRef] = []
+    
+    private var shouldScan : Bool = false
+    
     public required init(context: ActorSystem, ref: ActorRef) {
         self.central = CBCentralManager.init(delegate: nil, queue: self.bleQueue.underlyingQueue)
         self.devices = [String : [BLEPeripheral]]()
         super.init(context: context, ref: ref)
         self.central.delegate = self
     }
-    
-    private var listeners : [ActorRef] = []
-    
-    private var shouldScan : Bool = false
     
     private func addListener(sender : Optional<ActorRef>) {
         guard let listener = sender else {
@@ -100,35 +100,59 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         }
     }
     
-    override public func receive(msg : Message) -> Void {
+    var scanning : Receive = { (me : Actor, msg : Message) in
+        let central = me as! BLECentral
         switch (msg) {
-            case is StartScanning:
-                self.shouldScan = true
-                self.shouldWait = false
-                if self.central.state == CBCentralManagerState.PoweredOn {
-                    self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
-                    print("Started")
-                }
-                break;
-            case is StopScanning:
-                self.shouldScan = false
-                self.central.stopScan()
-                print("stopped")
-                break;
-            case is RemoveListener:
-                let m = msg as! RemoveListener
-                self.removeListener(m.sender)
-                break;
-            case is AddListener:
-                let m = msg as! AddListener
-                self.addListener(m.sender)
-                break;
-            case is Harakiri:
-                self.context.stop(self.this)
-                break;
-            default:
-                print("not handled")
+        case is StartScanning:
+            print("already scanning")
+            break;
+        case is StopScanning:
+            central.shouldScan = false
+            central.central.stopScan()
+            print("stopped")
+            central.become(central.notScanning)
+            break;
+        default:
+            central.notScanning(me,msg)
         }
+    }
+    
+    var notScanning : Receive = { (me : Actor, msg : Message) in
+        let central = me as! BLECentral
+        switch (msg) {
+        case is StartScanning:
+            central.shouldScan = true
+            central.shouldWait = false
+            if central.central.state == CBCentralManagerState.PoweredOn {
+                central.central.scanForPeripheralsWithServices(nil, options: central.bleOptions)
+                print("Started")
+                central.become(central.scanning)
+            }
+            break;
+        case is StopScanning:
+            print("not scanning")
+            break;
+        case is RemoveListener:
+            let m = msg as! RemoveListener
+            central.removeListener(m.sender)
+            break;
+        case is AddListener:
+            let m = msg as! AddListener
+            central.addListener(m.sender)
+            break;
+        case is Harakiri:
+            central.context.stop(central.this)
+            break;
+        default:
+            print("not handled")
+        }
+        
+    }
+    
+    override public func receive(msg : Message) -> Void {
+        self.become(self.notScanning)
+        self.this ! msg
+        
     }
     
     @objc public func centralManagerDidUpdateState(central: CBCentralManager) {

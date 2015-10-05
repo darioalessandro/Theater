@@ -100,7 +100,7 @@ public class WebSocketClient : Actor , WebSocketDelegate {
             break;
             
         default:
-            print("not handled")
+            print("ignoring \(msg)")
             break;
         }
     }
@@ -129,7 +129,7 @@ public class WebSocketClient : Actor , WebSocketDelegate {
                 break;
             
             default:
-                print("ignore")
+                print("ignoring \(msg)")
         }
     }
     
