@@ -10,7 +10,7 @@ import Foundation
 
 public class Stack<A> {
     
-    var array : [A] = [A]()
+    var array : [A] 
     
     public init() {
         self.array = [A]()

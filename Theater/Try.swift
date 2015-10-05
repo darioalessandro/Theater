@@ -17,14 +17,29 @@ public class Try<T> {
     /** Returns `true` if the `Try` is a `Success`, `false` otherwise.
     */
     public func isSuccess() -> Bool {return false}
-
     
+    public func hasValue() -> Optional<T> {return Optional.None}
+
     /** Returns the value from this `Success` or throws the exception if this is a `Failure`.
     */
     public func get() -> T {return NSObject() as! T}
     
     public func description() -> String {
-        return "Try of \(self.get())"
+        return "Try"
+    }
+    
+    public func map<U>(f : (T) -> (U)) -> Try<U> {
+        return Try<U>()
+    }
+    
+    class func gen(r: T) -> Try<T> {
+        do {
+            let s = Success(value : r)
+            return s
+        }catch let error as NSError {
+            return Failure(exception : error)
+        }
+        
     }
 }
 
@@ -40,9 +55,16 @@ public class Success<T> : Try<T> {
     
     override public func get() -> T {return self.value}
     
+    override public func hasValue() -> Optional<T> {return Optional.Some(self.value)}
+    
     override public func description() -> String {
         return "Success : \(self.get())"
     }
+    
+    override public func map<U>(f : (T) -> (U)) -> Try<U> {
+        return Try<U>.gen(f(self.value))
+    }
+    
 }
 
 public class Failure<T> : Try<T> {
@@ -63,5 +85,10 @@ public class Failure<T> : Try<T> {
     override public func description() -> String {
         return "Failure : \(self.exception)"
     }
+    
+    override public func map<U>(f : (T) -> (U)) -> Failure<U> {
+        return self as! Failure<U>
+    }
+
 }
 

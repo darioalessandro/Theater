@@ -28,3 +28,12 @@ public class Harakiri : Message {
     }
 }
 
+public class MessageWithOperationId : Message {
+    public let operationId : NSUUID
+    
+    public init(sender: Optional<ActorRef>, operationId : NSUUID) {
+        self.operationId = operationId
+        super.init(sender : sender)
+    }
+}
+

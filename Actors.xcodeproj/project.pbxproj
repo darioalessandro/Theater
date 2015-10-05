@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		061C253E1BC2B3BC0049D6C9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C253D1BC2B3BC0049D6C9 /* Stack.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; settings = {ASSET_TAGS = (); }; };
+		061C25421BC2CF9C0049D6C9 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
+		061C25441BC2D01F0049D6C9 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
+		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; settings = {ASSET_TAGS = (); }; };
 		069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
@@ -23,7 +26,6 @@
 		06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		06E1D53C1BB76F0800E07321 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5171BB76E2600E07321 /* Message.swift */; };
 		06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5151BB769AA00E07321 /* Actor.swift */; };
-		06E1D5441BB77D3500E07321 /* AccountsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* AccountsDemo.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D5461BB77F4F00E07321 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5451BB77F4F00E07321 /* Try.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5471BB84BDD00E07321 /* ActorContext.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5491BB8A86000E07321 /* AppActorSystem.swift */; settings = {ASSET_TAGS = (); }; };
@@ -83,6 +85,8 @@
 
 /* Begin PBXFileReference section */
 		061C253D1BC2B3BC0049D6C9 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountOps.swift; sourceTree = "<group>"; };
+		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLETableViewControllers.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,7 +107,7 @@
 		06E1D52E1BB76EE400E07321 /* TheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterTests.swift; sourceTree = "<group>"; };
 		06E1D5301BB76EE400E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActorsDemo.swift; path = ../Actors/ActorsDemo.swift; sourceTree = "<group>"; };
-		06E1D5431BB77D3500E07321 /* AccountsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsDemo.swift; sourceTree = "<group>"; };
+		06E1D5431BB77D3500E07321 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = ../Actors/Account.swift; sourceTree = "<group>"; };
 		06E1D5451BB77F4F00E07321 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
 		06E1D5471BB84BDD00E07321 /* ActorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorContext.swift; sourceTree = "<group>"; };
 		06E1D5491BB8A86000E07321 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = ../Actors/AppActorSystem.swift; sourceTree = "<group>"; };
@@ -157,7 +161,6 @@
 		06DE5A931BBA47FE00A22EE7 /* Not used */ = {
 			isa = PBXGroup;
 			children = (
-				06E1D5431BB77D3500E07321 /* AccountsDemo.swift */,
 				06E1D4F71BB7699700E07321 /* ViewController.swift */,
 			);
 			name = "Not used";
@@ -231,9 +234,12 @@
 		06E1D52D1BB76EE400E07321 /* TheaterTests */ = {
 			isa = PBXGroup;
 			children = (
+				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
+				06E1D5431BB77D3500E07321 /* Account.swift */,
 				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
 				06E1D52E1BB76EE400E07321 /* TheaterTests.swift */,
 				06E1D5301BB76EE400E07321 /* Info.plist */,
+				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
 			);
 			path = TheaterTests;
 			sourceTree = "<group>";
@@ -501,7 +507,6 @@
 			files = (
 				06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
-				06E1D5441BB77D3500E07321 /* AccountsDemo.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
@@ -537,6 +542,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */,
+				061C25421BC2CF9C0049D6C9 /* Account.swift in Sources */,
+				061C25441BC2D01F0049D6C9 /* AccountOps.swift in Sources */,
+				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,
 				06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
