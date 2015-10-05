@@ -7,50 +7,39 @@
 //
 
 import Foundation
+import XCTest
 import Theater
 
-class SayHi : Message {
-    private var count : NSInteger = 0
+public class TestPerformance : Message {
+    public let count : NSInteger
+    public let max : NSInteger
+    public let expectation : XCTestExpectation
+
     
-    convenience init(sender : ActorRef, count : NSInteger) {
-        self.init(sender : sender)
+    public init(sender : ActorRef, count : NSInteger, max : NSInteger, expectation : XCTestExpectation) {
         self.count = count
+        self.max = max
+        self.expectation = expectation
+        super.init(sender : sender)
     }
 }
 
-class Ping: Actor {
-    override func receive(msg : Message) -> Void {
+public class TestActor : Actor {
+    override public func receive(msg : Message) -> Void {
         switch msg {
-        case let n where n is SayHi:
-                let hi = msg as! SayHi
-                print("got message in Ping")
-                if hi.count > 10 {
+        case is TestPerformance:
+                let test = msg as! TestPerformance
+                print("got message in TestActor")
+                if test.count > test.max {
                     print("The end")
+                    test.expectation.fulfill()
                 } else {
-                    self.sender!.tell(SayHi(sender: this, count: hi.count + 1))
+                    if let sender = self.sender {
+                        sender ! TestPerformance(sender: this, count: test.count + 1, max: test.max, expectation: test.expectation)
+                    }
                 }
-                
                 break;
             default :
-            print("I do not know what you're talking about")
-        }
-    }
-}
-
-class Pong: Actor {
-    override func receive(msg : Message) -> Void {
-        switch msg {
-        case let n where n is SayHi:
-            let hi = msg as! SayHi
-            print("got message in Pong")
-            if hi.count > 10 {
-                print("The end")
-            } else {
-                self.sender!.tell(SayHi(sender: this, count: hi.count + 1))
-            }
-            
-            break;
-        default :
             print("I do not know what you're talking about")
         }
     }

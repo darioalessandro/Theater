@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Theater
 @testable import Theater
 
 class TheaterTests: XCTestCase {
@@ -21,15 +22,18 @@ class TheaterTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testTestSending2000Msg() {
+        let expectation = expectationWithDescription("Swift Expectations")
+        let system = AppActorSystem.shared
+        
+        let ping = system.actorOf(TestActor)
+        let pong = system.actorOf(TestActor)
+        
+        pong ! TestPerformance(sender: ping, count: 0, max: 2000, expectation: expectation)
+        
+        self.waitForExpectationsWithTimeout(10) { (error) -> Void in
+            print("error \(error)")
         }
     }
     
