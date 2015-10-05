@@ -31,11 +31,9 @@ class TryTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
@@ -89,11 +87,13 @@ class TryTests: XCTestCase {
     
     
     func testGetOrElse() {
-        let number1Try : Int = TryGenerator(n: 2).isItBiggerThan3().getOrElse { () -> Int in return 10 * 4 }
+        
+        let elseClojure = {() -> Int in return 10 * 4}
+        
+        let number1Try : Int = TryGenerator(n: 2).isItBiggerThan3().getOrElse {elseClojure()}
         XCTAssertEqual(number1Try, 40)
         
-        let number2Try : Int = TryGenerator(n: 5).isItBiggerThan3().getOrElse { () -> Int in return 10 * 4}
+        let number2Try : Int = TryGenerator(n: 5).isItBiggerThan3().getOrElse {elseClojure()}
         XCTAssertEqual(number2Try, 5)
-        
     }
 }
