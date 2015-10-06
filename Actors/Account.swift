@@ -30,7 +30,7 @@ enum AccountEvent {
 public class Account : Actor {
     
     func delay() -> Double {
-        return Double(arc4random_uniform(2))
+        return Double(arc4random_uniform(5))
     }
     
     
