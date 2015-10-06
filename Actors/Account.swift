@@ -9,23 +9,6 @@
 import Foundation
 import Theater
 
-enum AccountEvent {
-    
-    case BalanceChange
-    
-    case DidDeposit
-    
-    case DidWithdraw
-    
-    var toString : String {
-        switch self {
-        case .DidWithdraw: return "DidWithdraw";
-        case .DidDeposit: return "DidDeposit";
-        case .BalanceChange: return "BalanceChange";
-        }
-    }
-    
-}
 
 public class Account : Actor {
     
@@ -81,7 +64,6 @@ public class Account : Actor {
                 break;
             case is PrintBalance:
                 print("Balance of \(number) is \(balance().get())")
-                //self.sender!.tell(BankOpResult(sender: this, operationId: w.operationId, result: self.balance()))
                 break;
             
             case is WithdrawResult:

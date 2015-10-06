@@ -9,27 +9,14 @@
 import Foundation
 import Theater
 
-public class Transfer : BankOp {
-    let origin : ActorRef
-    let destination : ActorRef
-    init(origin : ActorRef, destination : ActorRef,
-        sender : ActorRef, ammount : Double) {
-        self.origin = origin
-        self.destination = destination
-        super.init(sender: sender, ammount: ammount, operationId: NSUUID())
-    }
-}
-
-public class TransferResult : BankOpResult {}
-
-public class WireTransferDrone : Actor {
+public class WireTransferWorker : Actor {
     
     var transfer : Optional<Transfer> = Optional.None
     var bank : Optional<ActorRef> = Optional.None
     
     var transfering : Receive = { (actor : Actor, msg : Message) in
         
-        let drone = actor as! WireTransferDrone
+        let drone = actor as! WireTransferWorker
         
         switch(msg) {
             case is WithdrawResult:
@@ -76,8 +63,8 @@ public class WireTransferDrone : Actor {
                 super.receive(msg)
         }
     }
-}
 
+}
 
 public class Bank : Actor {
     let accountA = AppActorSystem.shared.actorOf(Account)
@@ -95,35 +82,13 @@ public class Bank : Actor {
         this ! Transfer(origin: accountA, destination: accountB, sender: this, ammount: 1)
     }
     
-    @objc func accountBalanceChanged(notif : NSNotification) {
-        let account = notif.object as! Account
-        ^{
-            switch (account.this.path.asString) {
-            case self.accountA.path.asString:
-                account.balance().map({ (balance : Double) -> (Void) in
-                    self.accountALabel?.text =  String(balance)
-                })
-                break;
-            case self.accountB.path.asString:
-                account.balance().map({ (balance : Double) -> (Void) in
-                    self.accountBLabel?.text =  String(balance)
-                })
-            
-                break;
-            default:
-                print("account not found \(account.this.path.asString)")
-                
-            }
-        }
-    }
-    
     override public func receive(msg: Message) {
         switch(msg) {
             case is Transfer:
                 let w = msg as! Transfer
                 if self.transfers.keys.contains(w.operationId.UUIDString) == false {
                     self.transfers[w.operationId.UUIDString] = (w,Optional.None)
-                    let wireTransfer = context.actorOf(WireTransferDrone) //We need to add timeout
+                    let wireTransfer = context.actorOf(WireTransferWorker) //TODO: We need to add timeout
                     wireTransfer ! w
                 }
             break
@@ -190,14 +155,6 @@ public class Bank : Actor {
         }
         
     }
-    
-    @objc public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        print("got called")
-    }
-    
-    deinit {
-    }
-    
 }
 
 class HookupViewController: Message {

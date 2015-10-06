@@ -9,16 +9,6 @@
 import Foundation
 import Theater
 
-public class BankOp: MessageWithOperationId {
-    
-    public let ammount : Double
-    
-    public init(sender: Optional<ActorRef>, ammount : Double, operationId : NSUUID) {
-        self.ammount = ammount
-        super.init(sender: sender, operationId : operationId)
-    }
-}
-
 public class SetAccountNumber: Message {
     
     public let accountNumber : String
@@ -28,6 +18,16 @@ public class SetAccountNumber: Message {
         super.init(sender: Optional.None)
     }
     
+}
+
+public class BankOp: MessageWithOperationId {
+    
+    public let ammount : Double
+    
+    public init(sender: Optional<ActorRef>, ammount : Double, operationId : NSUUID) {
+        self.ammount = ammount
+        super.init(sender: sender, operationId : operationId)
+    }
 }
 
 public class Withdraw: BankOp {}
@@ -64,3 +64,16 @@ public class OnBalanceChanged : Message {
         super.init(sender: sender)
     }
 }
+
+public class Transfer : BankOp {
+    let origin : ActorRef
+    let destination : ActorRef
+    init(origin : ActorRef, destination : ActorRef,
+        sender : ActorRef, ammount : Double) {
+            self.origin = origin
+            self.destination = destination
+            super.init(sender: sender, ammount: ammount, operationId: NSUUID())
+    }
+}
+
+public class TransferResult : BankOpResult {}
