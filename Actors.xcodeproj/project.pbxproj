@@ -179,9 +179,9 @@
 			children = (
 				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
 				06E1D5431BB77D3500E07321 /* Account.swift */,
-				0693BC841BC3405100694512 /* AccountsViewController.swift */,
-				0694680D1BC45CA100C84503 /* WireTransferWorker.swift */,
 				069468101BC45D3D00C84503 /* Bank.swift */,
+				0694680D1BC45CA100C84503 /* WireTransferWorker.swift */,
+				0693BC841BC3405100694512 /* AccountsViewController.swift */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";

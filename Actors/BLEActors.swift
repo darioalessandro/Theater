@@ -78,7 +78,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             
         case is StopScanning:
             self.central ! StopScanning(sender: this)
-            break;
+            break
             
         case is SetObservationsController:
             let w : SetObservationsController = msg as! SetObservationsController
@@ -89,7 +89,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.observationsCtrl?.title = self.selectedIdentifier
                 self.observationsCtrl?.tableView.reloadData()
             }
-            break;
+            break
         case is RemoveObservationController:
             ^{ () -> Void in
                 self.observationsCtrl?.tableView.delegate = nil
@@ -97,7 +97,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.observationsCtrl = Optional.None
                 self.selectedIdentifier = Optional.None
             }
-            break;
+            break
             
         case is SetTableViewController :
             let w : SetTableViewController = msg as! SetTableViewController
@@ -107,7 +107,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.reloadData()
             }
-            break;
+            break
             
         case is DevicesObservationUpdate:
             let observation : DevicesObservationUpdate = msg as! DevicesObservationUpdate
@@ -122,11 +122,11 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                     obsCtrl.tableView.reloadSections(sections, withRowAnimation: .None)
                 }
             }
-            break;
+            break
         case is Harakiri:
             central ! Harakiri(sender: this)
             super.receive(msg)
-            break;
+            break
             
         default:
             super.receive(msg)

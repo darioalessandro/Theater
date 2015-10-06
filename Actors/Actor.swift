@@ -40,7 +40,7 @@ public class Actor : NSObject {
         switch msg {
             case is Harakiri:
                 self.context.stop(self.this)
-                break;
+                break
             default :
                 print("message not handled %@", [msg.description()])
         }

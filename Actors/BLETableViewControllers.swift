@@ -29,7 +29,7 @@ class DeviceListController: UITableViewController {
         switch(ctrl) {
             case is ObservationsViewController:
                 reactive ! SetObservationsController(ctrl: ctrl as! UITableViewController)
-            break;
+            break
             default :
                 print("I have nothing to do")
         }

@@ -51,7 +51,6 @@ public class Bank : Actor {
             }
             
             w.sender! ! Harakiri(sender: this)
-            
             break
             
         case is HookupViewController:
@@ -70,7 +69,7 @@ public class Bank : Actor {
             
             accountA ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
             accountB ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
-            break;
+            break
             
         case is OnBalanceChanged:
             let w = msg as! OnBalanceChanged
@@ -80,10 +79,10 @@ public class Bank : Actor {
                     switch (account.path.asString) {
                     case self.accountA.path.asString:
                         self.accountALabel?.text = w.balance.description
-                        break;
+                        break
                     case self.accountB.path.asString:
                         self.accountBLabel?.text = w.balance.description
-                        break;
+                        break
                     default:
                         print("account not found \(account.path.asString)")
                         
@@ -92,7 +91,7 @@ public class Bank : Actor {
                 
             }
             
-            break;
+            break
         default:
             super.receive(msg)
         }

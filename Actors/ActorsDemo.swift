@@ -38,7 +38,7 @@ public class TestActor : Actor {
                         sender ! TestPerformance(sender: this, count: test.count + 1, max: test.max, expectation: test.expectation)
                     }
                 }
-                break;
+                break
             default :
             print("I do not know what you're talking about")
         }

@@ -59,7 +59,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             ^{ () -> Void in
                 self.ctrl?.title = "Connecting"
             }
-            break;
+            break
             
         case is OnConnect:
             ^{ () -> Void in
@@ -67,7 +67,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.navigationItem.prompt = nil
                 self.ctrl?.textField.becomeFirstResponder()
             }
-            break;
+            break
             
         case is SendMessage:
             let w = msg as! SendMessage
@@ -79,7 +79,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
             }
             wsClient ! SendMessage(sender: this, message: w.message)
-            break;
+            break
             
         case is OnMessage:
             let w = msg as! OnMessage
@@ -90,11 +90,11 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
                 self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
             }
-            break;
+            break
             
         case is Disconnect:
             wsClient ! Disconnect(sender: this)
-            break;
+            break
             
         case is OnDisconnect:
             let w = msg as! OnDisconnect
@@ -108,7 +108,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 }
             })
 
-            break;
+            break
             
         case is SetWSController:
             let w = msg as! SetWSController
@@ -117,7 +117,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.delegate = self
             }
-            break;
+            break
             
         default:
             super.receive(msg)

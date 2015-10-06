@@ -42,7 +42,8 @@ public class Account : Actor {
                 let w = msg as! SetAccountNumber
                 self.number = w.accountNumber
                 print("account number \(self.number)")
-                break;
+                break
+            
             case is Withdraw:
                 let w = msg as! Withdraw
                 let op = self.withdraw(w.ammount)
@@ -51,7 +52,8 @@ public class Account : Actor {
                         sender ! WithdrawResult(sender: self.this, operationId: w.operationId, result: op)
                     })
                 }
-                break;
+                break
+            
             case is Deposit:
                 let w = msg as! Deposit
                 let r = self.deposit(w.ammount)
@@ -60,23 +62,24 @@ public class Account : Actor {
                         sender ! DepositResult(sender: self.this, operationId: w.operationId, result: r)
                     })
                 }
-                
-                break;
+                break
+            
             case is PrintBalance:
                 print("Balance of \(number) is \(balance().get())")
-                break;
+                break
             
             case is WithdrawResult:
                 let w = msg as! WithdrawResult
                 if let ammount = w.result.toOptional() {
                     self.deposit(ammount)
                 }
-                break;
+                break
             
             case is BankOpResult:
                 let w = msg as! BankOpResult
                 print("Account \(number) : \(w.operationId.UUIDString) \(w.result.description())")
-                break;
+                break
+            
             default:
                 print("Unable to handle message")
         }

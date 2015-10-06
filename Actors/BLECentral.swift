@@ -104,13 +104,13 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
             switch (msg) {
             case is StartScanning:
                 print("already scanning")
-                break;
+                break
             case is StopScanning:
                 self.shouldScan = false
                 self.central.stopScan()
                 print("stopped")
                 self.become(self.notScanning)
-                break;
+                break
             default:
                 self.notScanning(msg)
             }
@@ -126,21 +126,21 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
                 print("Started")
                 self.become(self.scanning)
             }
-            break;
+            break
         case is StopScanning:
             print("not scanning")
-            break;
+            break
         case is RemoveListener:
             let m = msg as! RemoveListener
             self.removeListener(m.sender)
-            break;
+            break
         case is AddListener:
             let m = msg as! AddListener
             self.addListener(m.sender)
-            break;
+            break
         case is Harakiri:
             self.context.stop(self.this)
-            break;
+            break
         default:
             print("not handled")
         }

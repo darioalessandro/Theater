@@ -52,7 +52,7 @@ public class ReactiveViewController : Actor {
             self.ctrl = w.ctrl
             print("set ctrl \(self.ctrl)")
             self.addListeners(self.ctrl!)
-            break;
+            break
             
         case is DevicesObservationUpdate:
             let observation : DevicesObservationUpdate = msg as! DevicesObservationUpdate
@@ -64,8 +64,8 @@ public class ReactiveViewController : Actor {
                 })
             })
             print("****")
+            break
             
-            break;
         default:
             print("Message not handled \(msg.description())")
             //super.receive(msg)

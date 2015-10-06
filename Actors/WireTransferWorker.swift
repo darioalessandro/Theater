@@ -25,8 +25,8 @@ public class WireTransferWorker : Actor {
                 self.bank! ! TransferResult(sender: self.this, operationId: self.transfer!.operationId, result: w.result)
                 self.unbecome()
             }
-            
             break
+            
         case is DepositResult:
             let w : DepositResult = msg as! DepositResult
             self.bank! ! TransferResult(sender: self.this, operationId: self.transfer!.operationId, result: w.result)
