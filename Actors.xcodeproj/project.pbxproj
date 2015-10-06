@@ -20,6 +20,7 @@
 		0693BC821BC33EA600694512 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 0693BC801BC33EA600694512 /* up.png */; settings = {ASSET_TAGS = (); }; };
 		0693BC831BC33EA600694512 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 0693BC811BC33EA600694512 /* down.png */; settings = {ASSET_TAGS = (); }; };
 		0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC841BC3405100694512 /* AccountsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0694680D1BC45CA100C84503 /* WireTransferWorker.swift */; settings = {ASSET_TAGS = (); }; };
 		069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
@@ -100,6 +101,7 @@
 		0693BC801BC33EA600694512 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		0693BC811BC33EA600694512 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		0693BC841BC3405100694512 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		0694680D1BC45CA100C84503 /* WireTransferWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireTransferWorker.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLETableViewControllers.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
 				06E1D5431BB77D3500E07321 /* Account.swift */,
 				0693BC841BC3405100694512 /* AccountsViewController.swift */,
+				0694680D1BC45CA100C84503 /* WireTransferWorker.swift */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
+				0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
 				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,

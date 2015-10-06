@@ -14,7 +14,7 @@ public func !(actorRef : ActorRef, msg : Message) -> Void {
     actorRef.tell(msg)
 }
 
-public typealias Receive = ( Actor, Message) -> (Void)
+public typealias Receive = (Message) -> (Void)
 
 public class Actor : NSObject {
     
@@ -51,7 +51,7 @@ public class Actor : NSObject {
             self.sender = msg.sender
             print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path) ")
             if let state : Receive = self.statesStack.head() {
-                state(self,msg)
+                state(msg)
             } else {
                 self.receive(msg)
             }

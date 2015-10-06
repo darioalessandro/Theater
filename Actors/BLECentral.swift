@@ -100,33 +100,31 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         }
     }
     
-    var scanning : Receive = { (me : Actor, msg : Message) in
-        let central = me as! BLECentral
-        switch (msg) {
-        case is StartScanning:
-            print("already scanning")
-            break;
-        case is StopScanning:
-            central.shouldScan = false
-            central.central.stopScan()
-            print("stopped")
-            central.become(central.notScanning)
-            break;
-        default:
-            central.notScanning(me,msg)
+    lazy var scanning : Receive = {[unowned self] (msg : Message) in
+            switch (msg) {
+            case is StartScanning:
+                print("already scanning")
+                break;
+            case is StopScanning:
+                self.shouldScan = false
+                self.central.stopScan()
+                print("stopped")
+                self.become(self.notScanning)
+                break;
+            default:
+                self.notScanning(msg)
+            }
         }
-    }
     
-    var notScanning : Receive = { (me : Actor, msg : Message) in
-        let central = me as! BLECentral
+    lazy var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
         case is StartScanning:
-            central.shouldScan = true
-            central.shouldWait = false
-            if central.central.state == CBCentralManagerState.PoweredOn {
-                central.central.scanForPeripheralsWithServices(nil, options: central.bleOptions)
+            self.shouldScan = true
+            self.shouldWait = false
+            if self.central.state == CBCentralManagerState.PoweredOn {
+                self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
                 print("Started")
-                central.become(central.scanning)
+                self.become(self.scanning)
             }
             break;
         case is StopScanning:
@@ -134,19 +132,18 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
             break;
         case is RemoveListener:
             let m = msg as! RemoveListener
-            central.removeListener(m.sender)
+            self.removeListener(m.sender)
             break;
         case is AddListener:
             let m = msg as! AddListener
-            central.addListener(m.sender)
+            self.addListener(m.sender)
             break;
         case is Harakiri:
-            central.context.stop(central.this)
+            self.context.stop(self.this)
             break;
         default:
             print("not handled")
         }
-        
     }
     
     override public func receive(msg : Message) -> Void {

@@ -9,63 +9,6 @@
 import Foundation
 import Theater
 
-public class WireTransferWorker : Actor {
-    
-    var transfer : Optional<Transfer> = Optional.None
-    var bank : Optional<ActorRef> = Optional.None
-    
-    var transfering : Receive = { (actor : Actor, msg : Message) in
-        
-        let drone = actor as! WireTransferWorker
-        
-        switch(msg) {
-            case is WithdrawResult:
-                let w : WithdrawResult = msg as! WithdrawResult
-                if w.result.isSuccess() {
-                    drone.transfer!.destination ! Deposit(sender: drone.this, ammount: drone.transfer!.ammount, operationId: NSUUID())
-                } else {
-                    drone.bank! ! TransferResult(sender: drone.this, operationId: drone.transfer!.operationId, result: w.result)
-                    drone.unbecome()
-                }
-                
-                break
-            case is DepositResult:
-                let w : DepositResult = msg as! DepositResult
-                drone.bank! ! TransferResult(sender: drone.this, operationId: drone.transfer!.operationId, result: w.result)
-                drone.unbecome()
-                break
-            
-            case is OnBalanceChanged:
-                if let transfer = drone.transfer {
-                    drone.bank! ! msg
-                }
-                break
-            
-            default:
-                print("busy, go away")
-        }
-    }
-    
-    override public func receive(msg: Message) {
-        switch (msg) {
-            case is Transfer:
-                if let _ = self.transfer {} else {
-                    self.transfer = Optional.Some(msg as! Transfer)
-                    self.bank = self.transfer!.sender
-                    become(transfering)
-                    if let transfer = self.transfer {
-                        transfer.origin ! Withdraw(sender: this, ammount: transfer.ammount, operationId: NSUUID())
-                    }
-                }
-                break
-            
-            default:
-                super.receive(msg)
-        }
-    }
-
-}
-
 public class Bank : Actor {
     let accountA = AppActorSystem.shared.actorOf(Account)
     let accountB = AppActorSystem.shared.actorOf(Account)
