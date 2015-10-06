@@ -87,7 +87,7 @@ public class Failure<T> : Try<T> {
     }
     
     override public func description() -> String {
-        return "Failure : \(self.exception)"
+        return "Failure : \(self.exception.debugDescription)"
     }
     
     override public func map<U>(f : (T) -> (U)) -> Failure<U> {

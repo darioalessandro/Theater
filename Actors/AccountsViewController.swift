@@ -80,12 +80,12 @@ public class WireTransferDrone : Actor {
 
 
 public class Bank : Actor {
-    
     let accountA = AppActorSystem.shared.actorOf(Account)
     let accountB = AppActorSystem.shared.actorOf(Account)
     var accountALabel : Optional<UILabel> = Optional.None
     var accountBLabel : Optional<UILabel> = Optional.None
-    var transfers : [String:(Transfer, Optional<TransferResult>)] = [String : (Transfer, Optional<TransferResult>)]()
+    
+    public var transfers : [String:(Transfer, Optional<TransferResult>)] = [String : (Transfer, Optional<TransferResult>)]()
     
     @objc func onClickBtoA(click: UIButton) {
         this ! Transfer(origin: accountB, destination: accountA, sender: this, ammount: 1)
@@ -117,7 +117,6 @@ public class Bank : Actor {
         }
     }
     
-    
     override public func receive(msg: Message) {
         switch(msg) {
             case is Transfer:
@@ -138,7 +137,8 @@ public class Bank : Actor {
                 
                 if w.result.isFailure() {
                     ^{
-                        UIAlertView(title: "ERROR", message: "Transaction error", delegate: nil, cancelButtonTitle: "ok").show()
+                        let v = self.transfers[uuid]!
+                        UIAlertView(title: "Transaction error from:\(v.0.origin.path.asString) to:\(v.0.destination.path.asString)", message: "\(w.result.description())", delegate: nil, cancelButtonTitle: "ok").show()
                     }
                 }
                 
@@ -189,6 +189,13 @@ public class Bank : Actor {
                 super.receive(msg)
         }
         
+    }
+    
+    @objc public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        print("got called")
+    }
+    
+    deinit {
     }
     
 }
