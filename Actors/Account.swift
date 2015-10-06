@@ -29,6 +29,11 @@ enum AccountEvent {
 
 public class Account : Actor {
     
+    func delay() -> Double {
+        return Double(arc4random_uniform(2))
+    }
+    
+    
     override public var description  : String {
         return " \(self.balance())"
     }
@@ -39,7 +44,9 @@ public class Account : Actor {
         
         didSet {
             if _balance != oldValue {
-                NSNotificationCenter.defaultCenter().postNotificationName(AccountEvent.BalanceChange.toString, object: this)
+                if let sender = sender {
+                    sender ! OnBalanceChanged(sender: this, balance:_balance)
+                }
             }
         }
         
@@ -56,15 +63,19 @@ public class Account : Actor {
             case is Withdraw:
                 let w = msg as! Withdraw
                 let op = self.withdraw(w.ammount)
-                if let sender = self.sender, _ = op.toOptional() {
-                    sender ! WithdrawResult(sender: this, operationId: w.operationId, result: Success(value: w.ammount))
+                if let sender = self.sender {
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                        sender ! WithdrawResult(sender: self.this, operationId: w.operationId, result: op)
+                    })
                 }
                 break;
             case is Deposit:
                 let w = msg as! Deposit
                 let r = self.deposit(w.ammount)
                 if let sender = self.sender {
-                    sender ! DepositResult(sender: this, operationId: w.operationId, result: r)
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                        sender ! DepositResult(sender: self.this, operationId: w.operationId, result: r)
+                    })
                 }
                 
                 break;

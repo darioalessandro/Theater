@@ -17,6 +17,9 @@
 		0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25471BC3070E0049D6C9 /* AccountTests.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7E1BC33C5100694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
 		0693BC7F1BC33C5400694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
+		0693BC821BC33EA600694512 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 0693BC801BC33EA600694512 /* up.png */; settings = {ASSET_TAGS = (); }; };
+		0693BC831BC33EA600694512 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 0693BC811BC33EA600694512 /* down.png */; settings = {ASSET_TAGS = (); }; };
+		0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC841BC3405100694512 /* AccountsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F71BB7699700E07321 /* ViewController.swift */; };
@@ -94,6 +97,9 @@
 		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
 		061C25491BC30A670049D6C9 /* TestActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestActor.swift; sourceTree = "<group>"; };
 		0693BC781BC335DE00694512 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationQueue.swift; sourceTree = "<group>"; };
+		0693BC801BC33EA600694512 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
+		0693BC811BC33EA600694512 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
+		0693BC841BC3405100694512 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLETableViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLETableViewControllers.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -169,6 +175,7 @@
 			children = (
 				061C25431BC2D01F0049D6C9 /* AccountOps.swift */,
 				06E1D5431BB77D3500E07321 /* Account.swift */,
+				0693BC841BC3405100694512 /* AccountsViewController.swift */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -216,6 +223,8 @@
 				06E1D4F91BB7699800E07321 /* Main.storyboard */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
+				0693BC801BC33EA600694512 /* up.png */,
+				0693BC811BC33EA600694512 /* down.png */,
 				06E1D5011BB7699800E07321 /* Info.plist */,
 			);
 			path = Actors;
@@ -440,7 +449,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
+				0693BC831BC33EA600694512 /* down.png in Resources */,
 				06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */,
+				0693BC821BC33EA600694512 /* up.png in Resources */,
 				06E1D4FB1BB7699800E07321 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +539,7 @@
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
+				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

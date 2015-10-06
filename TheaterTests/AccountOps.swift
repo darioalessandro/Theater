@@ -53,6 +53,14 @@ public class BankOpResult : Message {
     }
 }
 
-public class WithdrawResult : BankOpResult {}
+public class WithdrawResult : BankOpResult { }
 
-public class DepositResult : BankOpResult {}
+public class DepositResult : BankOpResult { }
+
+public class OnBalanceChanged : Message {
+    public let balance : Double
+    public init(sender : ActorRef, balance : Double) {
+        self.balance = balance
+        super.init(sender: sender)
+    }
+}
