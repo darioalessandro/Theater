@@ -49,6 +49,53 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
         cell.detailTextLabel?.text = s.1.description
         return cell
     }
+    
+    lazy var connected : Receive = {[unowned self](msg : Message) in
+        switch(msg) {
+        case is SendMessage:
+            let w = msg as! SendMessage
+            ^{ () -> Void in
+                self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
+                let i = self.receivedMessages.count - 1
+                let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
+                self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+            }
+            self.wsClient ! SendMessage(sender: self.this, message: w.message)
+            break
+            
+        case is OnMessage:
+            let w = msg as! OnMessage
+            ^{ () -> Void in
+                self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
+                let i = self.receivedMessages.count - 1
+                let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
+                self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+            }
+            break
+            
+        case is OnDisconnect:
+            self.onDisconnect(msg as! OnDisconnect)
+            break
+            
+        default:
+            self.receive(msg)
+        }
+    }
+    
+    func onDisconnect(msg : OnDisconnect) -> Void {
+        ^{ [unowned self] () -> Void in
+            self.ctrl?.title = "Disconnected"
+            self.ctrl?.navigationItem.prompt = msg.error?.localizedDescription
+            self.unbecome()
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            if let url = self.url {
+                self.this ! Connect(url: url, delegate: self.this)
+            }
+        })
+    }
 
     override public func receive(msg: Message) {
         switch(msg) {
@@ -66,48 +113,12 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.title = "Connected"
                 self.ctrl?.navigationItem.prompt = nil
                 self.ctrl?.textField.becomeFirstResponder()
-            }
-            break
-            
-        case is SendMessage:
-            let w = msg as! SendMessage
-            ^{ () -> Void in
-                self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
-                let i = self.receivedMessages.count - 1
-                let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
-                self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
-                self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-            }
-            wsClient ! SendMessage(sender: this, message: w.message)
-            break
-            
-        case is OnMessage:
-            let w = msg as! OnMessage
-            ^{ () -> Void in
-                self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
-                let i = self.receivedMessages.count - 1
-                let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
-                self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
-                self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
+                self.become(self.connected)
             }
             break
             
         case is Disconnect:
             wsClient ! Disconnect(sender: this)
-            break
-            
-        case is OnDisconnect:
-            let w = msg as! OnDisconnect
-            ^{ () -> Void in
-                self.ctrl?.title = "Disconnected"
-                self.ctrl?.navigationItem.prompt = w.error?.localizedDescription
-            }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-                if let url = self.url {
-                    self.this ! Connect(url: url, delegate: self.this)
-                }
-            })
-
             break
             
         case is SetWSController:
@@ -118,6 +129,8 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.delegate = self
             }
             break
+        case is OnDisconnect:
+            self.onDisconnect(msg as! OnDisconnect)
             
         default:
             super.receive(msg)
