@@ -11,6 +11,12 @@ import Theater
 
 public class LobbyViewController : UIViewController {
 
+    let showCamera : String = "showCamera"
+    
+    let showRemote : String = "showRemote"
+    
+    let presentPhonePicker : String = "presentPhonePicker"
+    
     @IBOutlet weak var remote: UIButton!
     @IBOutlet weak var camera: UIButton!
     
@@ -18,11 +24,28 @@ public class LobbyViewController : UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.remoteCamSession ! StartScanning()
+        self.remoteCamSession ! StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
     }
     
+    public func showPhonePickerViewController() {
+        self.performSegueWithIdentifier(presentPhonePicker, sender: self)
+    }
+    
+    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch(segue.identifier!) {
+            case presentPhonePicker:
+                let picker = segue.destinationViewController as! PhonePickerViewController
+                
+            break
+            
+            default:
+                print("do nothing")
+        }
+    }
+    
+    
     deinit {
-        
+        self.remoteCamSession ! Harakiri(sender: Optional.None)
     }
 
 }

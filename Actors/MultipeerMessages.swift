@@ -10,25 +10,43 @@ import Foundation
 import Theater
 import MultipeerConnectivity
 
+public class StartScanningWithLobbyViewController : Message {
+    
+    public let lobby : LobbyViewController
+    
+    public init(sender: Optional<ActorRef>, lobby : LobbyViewController) {
+        self.lobby = lobby
+        super.init(sender: sender)
+    }
+    
+}
+
 public class Disconnect : Message {}
 
 public class ConnectToDevice : Message {
-    let peer : MCPeerID
+    public let peer : MCPeerID
     
-    init(peer : MCPeerID, sender : Optional<ActorRef>) {
+    public init(peer : MCPeerID, sender : Optional<ActorRef>) {
         self.peer = peer
         super.init(sender: sender)
     }
 }
 
-public class BecomeCamera : Message {}
+public class BecomeDevice : Message {
+    
+    init(sender: ActorRef) {
+        super.init(sender: sender)
+    }
+}
 
-public class BecomeMonitor : Message {}
+public class BecomeCamera : BecomeDevice {}
+
+public class BecomeMonitor : BecomeDevice {}
 
 public class OnConnectToDevice : ConnectToDevice {}
 
 public class SendFrame : Message {
-    let data : NSData
+    public let data : NSData
     init(data : NSData, sender : Optional<ActorRef>) {
         self.data = data
         super.init(sender: sender)
@@ -36,9 +54,12 @@ public class SendFrame : Message {
 }
 
 public class OnFrame : Message {
-    let data : NSData
-    init(data : NSData, sender : Optional<ActorRef>) {
+    public let data : NSData
+    public let peerId : MCPeerID
+    
+    init(data : NSData, sender : Optional<ActorRef>, peerId : MCPeerID) {
         self.data = data
+        self.peerId = peerId
         super.init(sender: sender)
     }
 }

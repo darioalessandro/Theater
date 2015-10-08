@@ -10,4 +10,5 @@ import UIKit
 
 public class RemoteViewController : UIViewController {
     
+    @IBOutlet weak var imageView: UIImageView!
 }

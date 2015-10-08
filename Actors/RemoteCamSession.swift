@@ -10,23 +10,33 @@ import Foundation
 import Theater
 import MultipeerConnectivity
 
-public class RemoteCamSession : Actor, MCSessionDelegate {
+public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControllerDelegate {
     
-    var session : MCSession
+    var session : MCSession!
+    
+    let service : String = "RemoteCam"
+    
+    var lobby : LobbyViewController!
+    
+    let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     
     public required init(context: ActorSystem, ref: ActorRef) {
-        let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
-        self.session = MCSession(peer: peerID)
         super.init(context: context, ref: ref)
-        self.become(scanning)
-        self.session.delegate = self
+        become(self.idle)
     }
     
-    func camera(camViewController : UIViewController) -> Receive {
+    func camera(camera : ActorRef) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case let s as SendFrame:
-                    //TODO: include Paracon to mantain stream connection or send it through the session
+                    do {
+                        try self.session.sendData(s.data,
+                            toPeers: self.session.connectedPeers,
+                            withMode:.Unreliable)
+                    } catch let error as NSError {
+                        print("error \(error)")
+                    }
+                    
                 break
                 case is Disconnect:
                     self.unbecome()
@@ -36,30 +46,32 @@ public class RemoteCamSession : Actor, MCSessionDelegate {
                     self.receive(msg)
                 
             }
-    }
+        }
     }
     
-    lazy var monitor : Receive = {[unowned self] (msg : Message) in
-        switch(msg) {
-            case let s as OnFrame:
-                //TODO: include Paracon to mantain stream connection or send it through the session
-                break
-            case is Disconnect:
-                self.unbecome()
-                self.this ! msg
-                break
-            default:
-                self.receive(msg)
+    func monitor(monitor : ActorRef) -> Receive {
+        return {[unowned self] (msg : Message) in
+            switch(msg) {
+                case is OnFrame:
+                    monitor ! msg
+                    break
+                case is Disconnect:
+                    self.unbecome()
+                    self.this ! msg
+                    break
+                default:
+                    self.receive(msg)
+            }
         }
     }
     
     lazy var connected : Receive = {[unowned self] (msg : Message) in
         switch(msg) {
-            case let camera as BecomeCamera:
-                self.become(self.camera)
+            case let c as BecomeCamera:
+                self.become(self.camera(c.sender!))
                 break
-            case let monitor as BecomeMonitor:
-                self.become(self.monitor)
+            case let m as BecomeMonitor:
+                self.become(self.monitor(m.sender!))
                 break
             case is Disconnect:
                 self.unbecome()
@@ -69,27 +81,53 @@ public class RemoteCamSession : Actor, MCSessionDelegate {
         }
     }
     
-    lazy var scanning : Receive = {[unowned self] (msg : Message) in
+    func scanning(lobby : LobbyViewController) -> Receive {
+        
+        let browser = MCBrowserViewController(serviceType: service, session: self.session);
+        browser.delegate = self;
+        browser.minimumNumberOfPeers = 2
+        browser.maximumNumberOfPeers = 2
+        browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+        
+        return {[unowned self] (msg : Message) in
+            switch(msg) {
+                case let w as StartScanning:
+                    print("Already scanning")
+                    break
+                case let w as Disconnect:
+                    self.session.disconnect()
+                    self.unbecome()
+                    break
+                default:
+                    self.receive(msg)
+            }
+        }
+    }
+    
+    lazy var idle : Receive = {[unowned self] (msg : Message) in
         switch(msg) {
-            case let w as StartScanning:
-                print("Already scanning")
-                break
-            case let w as Disconnect:
-                self.session.disconnect()
-                self.unbecome()
+            case let w as StartScanningWithLobbyViewController:
+                self.lobby = w.lobby
+                self.session = MCSession(peer: self.peerID)
+                self.session.delegate = self
+                self.become(self.scanning(w.lobby))
                 break
             default:
                 self.receive(msg)
         }
     }
     
-    lazy var idle : Receive = {[unowned self] (msg : Message) in
-        switch(msg) {
-            case let w as StartScanning:
-                self.become(self.scanning)
-                break
-            default:
-                self.receive(msg)
+    //MCBrowser
+    
+    public func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
+        browserViewController.dismissViewControllerAnimated(true) { () -> Void in
+            
+        }
+    }
+    
+    public func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
+        browserViewController.dismissViewControllerAnimated(true) { () -> Void in
+            
         }
     }
     
@@ -98,6 +136,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate {
     public func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         switch state {
         case MCSessionState.Connected:
+            self.this ! OnConnectToDevice(peer : peerID, sender : this)
             print("Connected: \(peerID.displayName)")
             
         case MCSessionState.Connecting:
@@ -109,7 +148,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate {
     }
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        
+        this ! OnFrame(data: data, sender: Optional.None, peerId : peerID)
     }
     
     public func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
