@@ -56,7 +56,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate {
     lazy var connected : Receive = {[unowned self] (msg : Message) in
         switch(msg) {
             case let camera as BecomeCamera:
-                self.become(self.camera)
+                //self.become(self.camera)
                 break
             case let monitor as BecomeMonitor:
                 self.become(self.monitor)
