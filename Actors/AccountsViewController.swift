@@ -20,14 +20,13 @@ class HookupViewController: Message {
 
 public class AccountsViewController : UIViewController {
     
-    let  bank : ActorRef = AppActorSystem.shared.actorOf(Bank)
-    
     @IBOutlet weak var bToA: UIButton!
     @IBOutlet weak var accountABalance: UILabel!
     @IBOutlet weak var aToB: UIButton!
     @IBOutlet weak var accountBBalance: UILabel!
     
+    
     override public func viewDidLoad() {
-        bank ! HookupViewController(ctrl: self)
+        AppActorSystem.shared.actorOf(Bank.self, name: "Bank") ! HookupViewController(ctrl: self)
     }
 }

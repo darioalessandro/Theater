@@ -10,8 +10,10 @@ import Foundation
 import Theater
 
 public class Bank : Actor {
-    let accountA = AppActorSystem.shared.actorOf(Account)
-    let accountB = AppActorSystem.shared.actorOf(Account)
+
+    let accountA : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountA")
+    let accountB : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountB")
+    
     var accountALabel : Optional<UILabel> = Optional.None
     var accountBLabel : Optional<UILabel> = Optional.None
     
@@ -31,7 +33,7 @@ public class Bank : Actor {
             let w = msg as! Transfer
             if self.transfers.keys.contains(w.operationId.UUIDString) == false {
                 self.transfers[w.operationId.UUIDString] = (w,Optional.None)
-                let wireTransfer = context.actorOf(WireTransferWorker) //TODO: We need to add timeout
+                let wireTransfer = context.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
                 wireTransfer ! w
             }
             break
@@ -61,6 +63,7 @@ public class Bank : Actor {
                 self.accountALabel = w.ctrl.accountABalance
                 self.accountBLabel = w.ctrl.accountBBalance
             }
+            
             accountA ! SetAccountNumber(accountNumber: "AccountA", operationId: NSUUID())
             accountB ! SetAccountNumber(accountNumber: "AccountB", operationId: NSUUID())
             

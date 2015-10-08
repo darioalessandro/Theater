@@ -55,9 +55,8 @@ public class ActorSystem  {
     }
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
-        let actorClass  = clz
         let ref = ActorRef(context:self, path:ActorPath(path:name))
-        let actorInstance : Actor = actorClass.init(context: self, ref: ref)
+        let actorInstance : Actor = clz.init(context: self, ref: ref)
         dictionary[name] = actorInstance
         return ref
     }
