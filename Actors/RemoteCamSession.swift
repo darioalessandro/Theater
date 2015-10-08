@@ -16,8 +16,6 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     let service : String = "RemoteCam"
     
-    var lobby : LobbyViewController!
-    
     let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     
     public required init(context: ActorSystem, ref: ActorRef) {
@@ -25,7 +23,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         become(self.idle)
     }
     
-    func camera(camera : ActorRef) -> Receive {
+    func camera() -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case let s as SendFrame:
@@ -49,11 +47,15 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func monitor(monitor : ActorRef) -> Receive {
+    func monitor() -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case is OnFrame:
-                    monitor ! msg
+                    print("ignoring frame")
+                    break
+                case let m as AddMonitor:
+                    print("adding monitor")
+                    self.become(self.monitorWithMonitor(m.sender!))
                     break
                 case is Disconnect:
                     self.unbecome()
@@ -65,24 +67,44 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    lazy var connected : Receive = {[unowned self] (msg : Message) in
-        switch(msg) {
-            case let c as BecomeCamera:
-                self.become(self.camera(c.sender!))
-                break
-            case let m as BecomeMonitor:
-                self.become(self.monitor(m.sender!))
+    func monitorWithMonitor(monitor : ActorRef) -> Receive {
+        return {[unowned self] (msg : Message) in
+            switch(msg) {
+            case is OnFrame:
+                monitor ! msg
                 break
             case is Disconnect:
                 self.unbecome()
+                self.this ! msg
                 break
             default:
                 self.receive(msg)
+            }
+        }
+    }
+
+    
+    func connected(lobby : LobbyViewController, peer : MCPeerID) -> Receive {
+        return {[unowned self] (msg : Message) in
+            switch(msg) {
+                case let c as BecomeCamera:
+                    self.become(self.camera())
+                    break
+                case let m as BecomeMonitor:
+                    self.become(self.monitor())
+                    break
+                case is Disconnect:
+                    self.unbecome()
+                    break
+                default:
+                    self.receive(msg)
+            }
         }
     }
     
     
     func scanning(lobby : LobbyViewController) -> Receive {
+        let l : LobbyViewController = lobby
         ^{
             let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
             browser.delegate = self;
@@ -95,10 +117,13 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
         return {[unowned self] (msg : Message) in
             switch(msg) {
-                case let w as StartScanning:
+                case is StartScanning:
                     print("Already scanning")
                     break
-                case let w as Disconnect:
+                case let w as OnConnectToDevice:
+                    self.become(self.connected(l, peer: w.peer))
+                    break
+                case is Disconnect:
                     self.session.disconnect()
                     self.unbecome()
                     break
@@ -111,7 +136,6 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     lazy var idle : Receive = {[unowned self] (msg : Message) in
         switch(msg) {
             case let w as StartScanningWithLobbyViewController:
-                self.lobby = w.lobby
                 self.session = MCSession(peer: self.peerID)
                 self.session.delegate = self
                 self.become(self.scanning(w.lobby))
@@ -124,15 +148,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     //MCBrowser
     
     public func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
-        browserViewController.dismissViewControllerAnimated(true) { () -> Void in
-            
-        }
+        browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
     }
     
     public func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
-        browserViewController.dismissViewControllerAnimated(true) { () -> Void in
-            
-        }
+        browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
     }
     
     //MCSession delegate garbage

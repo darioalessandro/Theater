@@ -34,9 +34,6 @@ public class ConnectToDevice : Message {
 
 public class BecomeDevice : Message {
     
-    init(sender: ActorRef) {
-        super.init(sender: sender)
-    }
 }
 
 public class BecomeCamera : BecomeDevice {}

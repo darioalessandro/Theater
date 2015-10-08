@@ -11,11 +11,11 @@ import Theater
 
 public class LobbyViewController : UIViewController {
 
-    let showCamera : String = "showCamera"
+    let showCameraSegue : String = "showCamera"
     
-    let showRemote : String = "showRemote"
+    let showRemoteSegue : String = "showRemote"
     
-    let presentPhonePicker : String = "presentPhonePicker"
+    let presentPhonePickerSegue : String = "presentPhonePicker"
     
     @IBOutlet weak var remote: UIButton!
     @IBOutlet weak var camera: UIButton!
@@ -28,19 +28,23 @@ public class LobbyViewController : UIViewController {
     }
     
     public func showPhonePickerViewController() {
-        self.performSegueWithIdentifier(presentPhonePicker, sender: self)
+        self.performSegueWithIdentifier(presentPhonePickerSegue, sender: self)
     }
     
-    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        switch(segue.identifier!) {
-            case presentPhonePicker:
-                let picker = segue.destinationViewController as! PhonePickerViewController
-                
-            break
-            
-            default:
-                print("do nothing")
-        }
+    public func showCamera() {
+        self.performSegueWithIdentifier(showCameraSegue, sender: self)
+    }
+    
+    public func showRemote() {
+        self.performSegueWithIdentifier(showRemoteSegue, sender: self)
+    }
+    
+    @IBAction public func becomeMonitor(button : UIButton) -> Void {
+        self.remoteCamSession ! BecomeMonitor(sender: Optional.None)
+    }
+    
+    @IBAction public func becomeCamera(button : UIButton) -> Void {
+        self.remoteCamSession ! BecomeCamera(sender: Optional.None)
     }
     
     

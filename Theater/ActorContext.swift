@@ -69,6 +69,10 @@ public class ActorSystem  {
         return self.actors[ref.path.asString]
     }
     
+    public func selectActor(query : String) -> Optional<ActorRef>{
+        return self.actors[query].map({ (a : Actor) -> ActorRef in return a.this})
+    }
+    
     public func tell(msg : Message, recipient : ActorRef) -> Void {
         if let actor = actorForRef(recipient) {
             actor.tell(msg)
