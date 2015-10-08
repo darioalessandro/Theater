@@ -81,14 +81,18 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
+    
     func scanning(lobby : LobbyViewController) -> Receive {
-        
-        let browser = MCBrowserViewController(serviceType: service, session: self.session);
-        browser.delegate = self;
-        browser.minimumNumberOfPeers = 2
-        browser.maximumNumberOfPeers = 2
-        browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-        
+        ^{
+            let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
+            browser.delegate = self;
+            browser.minimumNumberOfPeers = 2
+            browser.maximumNumberOfPeers = 2
+            browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+            lobby.presentViewController(browser, animated: true, completion: { () -> Void in
+                
+            })
+        }
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case let w as StartScanning:
