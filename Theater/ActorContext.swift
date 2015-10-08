@@ -42,7 +42,7 @@ public class TestActorSystem : ActorSystem {
 
 public class ActorSystem  {
     
-    var dictionary : Dictionary = [String : Actor]()
+    var actors : Dictionary = [String : Actor]()
     
     let name : String
     
@@ -51,30 +51,31 @@ public class ActorSystem  {
     }
     
     public func stop(actorRef : ActorRef) {
-        self.dictionary.removeValueForKey(actorRef.path.asString)
+        self.actors.removeValueForKey(actorRef.path.asString)
     }
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
         let ref = ActorRef(context:self, path:ActorPath(path:name))
         let actorInstance : Actor = clz.init(context: self, ref: ref)
-        dictionary[name] = actorInstance
+        actors[name] = actorInstance
         return ref
     }
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        let uuidString = NSUUID.init().UUIDString
-        return actorOf(clz, name: uuidString)
+        return actorOf(clz, name: NSUUID.init().UUIDString)
     }
     
     func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return self.dictionary[ref.path.asString]
+        return self.actors[ref.path.asString]
     }
     
     public func tell(msg : Message, recipient : ActorRef) -> Void {
         if let actor = actorForRef(recipient) {
             actor.tell(msg)
+        } else if let sender = msg.sender {
+            sender ! DeadLetter(message: msg, sender:Optional.None, deadActor: recipient)
         } else {
-            print("Unable to send message")
+            print("Dropped message \(msg)")
         }
     }
 }

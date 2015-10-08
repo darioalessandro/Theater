@@ -29,8 +29,7 @@ public class Bank : Actor {
     
     override public func receive(msg: Message) {
         switch(msg) {
-        case is Transfer:
-            let w = msg as! Transfer
+            case let w as Transfer:
             if self.transfers.keys.contains(w.operationId.UUIDString) == false {
                 self.transfers[w.operationId.UUIDString] = (w,Optional.None)
                 let wireTransfer = context.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
@@ -38,15 +37,13 @@ public class Bank : Actor {
             }
             break
             
-        case is TransferResult:
-            let w = msg as! TransferResult
+            case let w as TransferResult:
             let uuid = w.operationId.UUIDString
             if let transfer = self.transfers[uuid] {
                 self.transfers[uuid] = (transfer.0, w)
             }
             
-            if w.result.isFailure() {
-                ^{
+            if w.result.isFailure() { ^{
                     let v = self.transfers[uuid]!
                     UIAlertView(title: "Transaction error from:\(v.0.origin.path.asString) to:\(v.0.destination.path.asString)", message: "\(w.result.description())", delegate: nil, cancelButtonTitle: "ok").show()
                 }
@@ -55,8 +52,7 @@ public class Bank : Actor {
             w.sender! ! Harakiri(sender: this)
             break
             
-        case is HookupViewController:
-            let w = msg as! HookupViewController
+            case let w as HookupViewController:
             ^{
                 w.ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)
                 w.ctrl.aToB.addTarget(self, action: "onClickAtoB:", forControlEvents: .TouchUpInside)
@@ -74,8 +70,7 @@ public class Bank : Actor {
             accountB ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
             break
             
-        case is OnBalanceChanged:
-            let w = msg as! OnBalanceChanged
+            case let w as OnBalanceChanged:
             ^{
                 if let account : ActorRef = w.sender {
                     print("account.path.asString \(account.path.asString)" )

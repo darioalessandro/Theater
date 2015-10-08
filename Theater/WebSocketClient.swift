@@ -106,8 +106,7 @@ public class WebSocketClient : Actor , WebSocketDelegate {
     
     lazy var connected : Receive = { [unowned self](msg : Message) in
         switch(msg) {
-        case is SendMessage:
-            let c = msg as! SendMessage
+        case let c as SendMessage:
             if let s = self.socket {
                 s.writeString(c.message)
             }

@@ -37,15 +37,12 @@ public class Account : Actor {
     
     public override func receive(msg: Message) {
         switch msg {
-            
-            case is SetAccountNumber:
-                let w = msg as! SetAccountNumber
+            case let w as SetAccountNumber:
                 self.number = w.accountNumber
                 print("account number \(self.number)")
                 break
             
-            case is Withdraw:
-                let w = msg as! Withdraw
+            case let w as Withdraw:
                 let op = self.withdraw(w.ammount)
                 if let sender = self.sender {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
@@ -54,8 +51,7 @@ public class Account : Actor {
                 }
                 break
             
-            case is Deposit:
-                let w = msg as! Deposit
+            case let w as Deposit:
                 let r = self.deposit(w.ammount)
                 if let sender = self.sender {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
@@ -68,15 +64,13 @@ public class Account : Actor {
                 print("Balance of \(number) is \(balance().get())")
                 break
             
-            case is WithdrawResult:
-                let w = msg as! WithdrawResult
+            case let w as WithdrawResult:
                 if let ammount = w.result.toOptional() {
                     self.deposit(ammount)
                 }
                 break
             
-            case is BankOpResult:
-                let w = msg as! BankOpResult
+            case let w as BankOpResult:
                 print("Account \(number) : \(w.operationId.UUIDString) \(w.result.description())")
                 break
             

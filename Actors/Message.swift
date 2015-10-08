@@ -37,3 +37,14 @@ public class MessageWithOperationId : Message {
     }
 }
 
+public class DeadLetter : Message {
+    public let deadActor : ActorRef
+    public let message : Message
+    
+    public init(message : Message, sender: Optional<ActorRef>, deadActor : ActorRef) {
+        self.deadActor = deadActor
+        self.message = message
+        super.init(sender: sender)
+    }
+}
+

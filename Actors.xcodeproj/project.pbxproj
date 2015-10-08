@@ -11,6 +11,14 @@
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; settings = {ASSET_TAGS = (); }; };
 		061C254A1BC30A670049D6C9 /* TestActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25491BC30A670049D6C9 /* TestActor.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6ECD1BC5F8D000B0F13D /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6ED11BC5F8E800B0F13D /* RemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6ED31BC5F92B00B0F13D /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */; settings = {ASSET_TAGS = (); }; };
+		064C6ED61BC5FB7E00B0F13D /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 064C6ED41BC5FB7E00B0F13D /* monitor.png */; settings = {ASSET_TAGS = (); }; };
+		064C6ED71BC5FB7E00B0F13D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 064C6ED51BC5FB7E00B0F13D /* camera.png */; settings = {ASSET_TAGS = (); }; };
+		064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC791BC335DE00694512 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC781BC335DE00694512 /* NSOperationQueue.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
@@ -98,6 +106,14 @@
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
 		061C25491BC30A670049D6C9 /* TestActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestActor.swift; sourceTree = "<group>"; };
+		064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteViewController.swift; sourceTree = "<group>"; };
+		064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Multipeer.storyboard; sourceTree = "<group>"; };
+		064C6ED41BC5FB7E00B0F13D /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
+		064C6ED51BC5FB7E00B0F13D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
+		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
 		0693BC781BC335DE00694512 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationQueue.swift; sourceTree = "<group>"; };
 		0693BC801BC33EA600694512 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		0693BC811BC33EA600694512 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
@@ -174,6 +190,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		064C6ECB1BC5F32600B0F13D /* Multipeer */ = {
+			isa = PBXGroup;
+			children = (
+				064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */,
+				064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */,
+				064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */,
+				064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */,
+				064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */,
+				064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */,
+			);
+			name = Multipeer;
+			sourceTree = "<group>";
+		};
 		0693BC7C1BC33C1600694512 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,12 +254,15 @@
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
 				06EEA7D51BBB730B005787AE /* Bluetooth LE */,
+				064C6ECB1BC5F32600B0F13D /* Multipeer */,
 				06DE5A931BBA47FE00A22EE7 /* Not used */,
 				06E1D4F91BB7699800E07321 /* Main.storyboard */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
 				0693BC801BC33EA600694512 /* up.png */,
 				0693BC811BC33EA600694512 /* down.png */,
+				064C6ED41BC5FB7E00B0F13D /* monitor.png */,
+				064C6ED51BC5FB7E00B0F13D /* camera.png */,
 				06E1D5011BB7699800E07321 /* Info.plist */,
 			);
 			path = Actors;
@@ -454,10 +486,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				064C6ED31BC5F92B00B0F13D /* Multipeer.storyboard in Resources */,
+				064C6ED61BC5FB7E00B0F13D /* monitor.png in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
 				0693BC831BC33EA600694512 /* down.png in Resources */,
 				06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */,
 				0693BC821BC33EA600694512 /* up.png in Resources */,
+				064C6ED71BC5FB7E00B0F13D /* camera.png in Resources */,
 				06E1D4FB1BB7699800E07321 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -540,13 +575,18 @@
 			files = (
 				06E1D4F81BB7699700E07321 /* ViewController.swift in Sources */,
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
+				064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
+				064C6ECD1BC5F8D000B0F13D /* LobbyViewController.swift in Sources */,
+				064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
+				064C6ED11BC5F8E800B0F13D /* RemoteViewController.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
 				0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
 				069468111BC45D3D00C84503 /* Bank.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
+				064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */,
 				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLETableViewControllers.swift in Sources */,
 			);

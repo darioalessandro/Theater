@@ -47,30 +47,28 @@ public class ReactiveViewController : Actor {
     
     override public func receive(msg: Message) {
         switch(msg) {
-        case is SetController :
-            let w : SetController = msg as! SetController
-            self.ctrl = w.ctrl
-            print("set ctrl \(self.ctrl)")
-            self.addListeners(self.ctrl!)
-            break
-            
-        case is DevicesObservationUpdate:
-            let observation : DevicesObservationUpdate = msg as! DevicesObservationUpdate
-            print("on DevicesObservationUpdate ->")
-            observation.devices.forEach({ (identifier : String, observations : [BLEPeripheral]) -> () in
-                print("identifier \(identifier)")
-                observations.forEach({ (observation : BLEPeripheral) -> () in
-                    print("observation date \(observation.timestamp) : \(observation.RSSI)")
+            case let w as SetController:
+                self.ctrl = w.ctrl
+                print("set ctrl \(self.ctrl)")
+                self.addListeners(self.ctrl!)
+                break
+                
+            case let observation as DevicesObservationUpdate:
+                print("on DevicesObservationUpdate ->")
+                observation.devices.forEach({ (identifier : String, observations : [BLEPeripheral]) -> () in
+                    print("identifier \(identifier)")
+                    observations.forEach({ (observation : BLEPeripheral) -> () in
+                        print("observation date \(observation.timestamp) : \(observation.RSSI)")
+                    })
                 })
-            })
-            print("****")
-            break
-            
-        default:
-            print("Message not handled \(msg.description())")
-            //super.receive(msg)
-            
-        }
+                print("****")
+                break
+                
+            default:
+                print("Message not handled \(msg.description())")
+                //super.receive(msg)
+                
+            }
     }
 }
 

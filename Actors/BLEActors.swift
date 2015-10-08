@@ -80,8 +80,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             self.central ! StopScanning(sender: this)
             break
             
-        case is SetObservationsController:
-            let w : SetObservationsController = msg as! SetObservationsController
+        case let w as SetObservationsController:
             ^{ () -> Void in
                 self.observationsCtrl = w.ctrl
                 self.observationsCtrl?.tableView.delegate = self
@@ -99,8 +98,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             }
             break
             
-        case is SetTableViewController :
-            let w : SetTableViewController = msg as! SetTableViewController
+        case let w as SetTableViewController:
             ^{ () -> Void in
                 self.ctrl = w.ctrl
                 self.ctrl?.tableView.delegate = self
@@ -109,8 +107,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             }
             break
             
-        case is DevicesObservationUpdate:
-            let observation : DevicesObservationUpdate = msg as! DevicesObservationUpdate
+        case let observation as DevicesObservationUpdate:
             self.devices = observation.devices
             self.identifiers = Array(self.devices.keys)
             let sections = NSIndexSet(index: 0)

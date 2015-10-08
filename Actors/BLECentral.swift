@@ -130,12 +130,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         case is StopScanning:
             print("not scanning")
             break
-        case is RemoveListener:
-            let m = msg as! RemoveListener
+        case let m where msg is RemoveListener:
             self.removeListener(m.sender)
             break
-        case is AddListener:
-            let m = msg as! AddListener
+        case let m where msg is AddListener:
             self.addListener(m.sender)
             break
         case is Harakiri:

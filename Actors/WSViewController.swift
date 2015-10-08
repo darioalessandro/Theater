@@ -52,8 +52,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
     
     lazy var connected : Receive = {[unowned self](msg : Message) in
         switch(msg) {
-        case is SendMessage:
-            let w = msg as! SendMessage
+        case let w as SendMessage:
             ^{ () -> Void in
                 self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
@@ -64,8 +63,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             self.wsClient ! SendMessage(sender: self.this, message: w.message)
             break
             
-        case is OnMessage:
-            let w = msg as! OnMessage
+        case let w as OnMessage:
             ^{ () -> Void in
                 self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
@@ -75,8 +73,8 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             }
             break
             
-        case is OnDisconnect:
-            self.onDisconnect(msg as! OnDisconnect)
+        case let w as OnDisconnect:
+            self.onDisconnect(w)
             break
             
         default:
@@ -99,8 +97,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
 
     override public func receive(msg: Message) {
         switch(msg) {
-        case is Connect:
-            let w = msg as! Connect
+        case let w as Connect:
             wsClient ! Connect(url: w.url, delegate: this)
             url = w.url
             ^{ () -> Void in
@@ -121,16 +118,15 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             wsClient ! Disconnect(sender: this)
             break
             
-        case is SetWSController:
-            let w = msg as! SetWSController
+        case let w as SetWSController:
             ctrl = w.ctrl
             ^{ () -> Void in
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.delegate = self
             }
             break
-        case is OnDisconnect:
-            self.onDisconnect(msg as! OnDisconnect)
+        case let d as OnDisconnect:
+            self.onDisconnect(d)
             
         default:
             super.receive(msg)

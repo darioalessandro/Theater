@@ -17,8 +17,7 @@ public class WireTransferWorker : Actor {
     
     lazy var transfering : Receive = {[unowned self](msg : Message) in
         switch(msg) {
-        case is WithdrawResult:
-            let w : WithdrawResult = msg as! WithdrawResult
+        case let w as WithdrawResult:
             if w.result.isSuccess() {
                 self.transfer!.destination ! Deposit(sender: self.this, ammount: self.transfer!.ammount, operationId: NSUUID())
             } else {
@@ -27,8 +26,7 @@ public class WireTransferWorker : Actor {
             }
             break
             
-        case is DepositResult:
-            let w : DepositResult = msg as! DepositResult
+        case let w as DepositResult:
             self.bank! ! TransferResult(sender: self.this, operationId: self.transfer!.operationId, result: w.result)
             self.unbecome()
             break
@@ -44,14 +42,12 @@ public class WireTransferWorker : Actor {
     
     override public func receive(msg: Message) {
         switch (msg) {
-        case is Transfer:
+        case let transfer as Transfer:
             if let _ = self.transfer {} else {
-                self.transfer = Optional.Some(msg as! Transfer)
+                self.transfer = Optional.Some(transfer)
                 self.bank = self.transfer!.sender
                 become(transfering)
-                if let transfer = self.transfer {
-                    transfer.origin ! Withdraw(sender: this, ammount: transfer.ammount, operationId: NSUUID())
-                }
+                transfer.origin ! Withdraw(sender: this, ammount: transfer.ammount, operationId: NSUUID())
             }
             break
             
