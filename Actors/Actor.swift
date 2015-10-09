@@ -49,7 +49,7 @@ public class Actor : NSObject {
     public func tell(msg : Message) -> Void {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
-            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path) ")
+            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
             if let state : Receive = self.statesStack.head() {
                 state(msg)
             } else {

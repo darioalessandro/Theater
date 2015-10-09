@@ -18,6 +18,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     let peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
     
+    var mcAdvertiserAssistant : MCAdvertiserAssistant!
+    
     public required init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
         become(self.idle)
@@ -89,9 +91,15 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             switch(msg) {
                 case let c as BecomeCamera:
                     self.become(self.camera())
+                    ^{
+                        lobby.showCamera()
+                    }
                     break
                 case let m as BecomeMonitor:
                     self.become(self.monitor())
+                    ^{
+                        lobby.showRemote()
+                    }
                     break
                 case is Disconnect:
                     self.unbecome()
@@ -100,6 +108,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     self.receive(msg)
             }
         }
+    }
+    
+    func startHosting() {
+        mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: service, discoveryInfo: nil, session: self.session)
+        mcAdvertiserAssistant.start()
     }
     
     
@@ -111,6 +124,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             browser.minimumNumberOfPeers = 2
             browser.maximumNumberOfPeers = 2
             browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+            self.startHosting()
             lobby.presentViewController(browser, animated: true, completion: { () -> Void in
                 
             })

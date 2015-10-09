@@ -1,4 +1,4 @@
-//
+    //
 //  CameraViewController.swift
 //  Actors
 //
@@ -9,11 +9,60 @@
 import UIKit
 import Theater
 import AVFoundation
+    
+public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+    let _sampleQueue : dispatch_queue_t = dispatch_queue_create("VideoSampleQueue", DISPATCH_QUEUE_SERIAL);
+    
+    lazy var remoteCamSession : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    
+    
+    public override init() {
+        super.init()
+        self.setSampleBufferDelegate(self, queue: _sampleQueue)
+    }
+    
+    func imageFromSampleBuffer(sampleBuffer : CMSampleBufferRef) -> UIImage {
+        let cvImage = CMSampleBufferGetImageBuffer(sampleBuffer);
+        
+        let cropRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(320, 320),
+            CGRectMake(0,0, CGFloat(CVPixelBufferGetWidth(cvImage!)),CGFloat(CVPixelBufferGetHeight(cvImage!))));
+        
+        let ciImage = CIImage(CVImageBuffer: cvImage!, options: nil)
+        
+        let croppedImage = ciImage.imageByCroppingToRect(cropRect)
+        
+        let scaleFilter = CIFilter(name: "CILanczosScaleTransform")
+        scaleFilter?.setValue(croppedImage, forKey: "inputImage")
+        scaleFilter?.setValue(Float(0.25), forKey: "inputScale")
+        scaleFilter?.setValue(Float(1.0), forKey: "inputAspectRatio")
+        let finalImage : CIImage = scaleFilter?.valueForKey("outputImage") as! CIImage
+        let cgBackedImage = self.cgImageBackedImageWithCIImage(finalImage)
+        
+        return cgBackedImage
+    }
+    
+    
+    public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
 
-public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+        let cgBackedImage = self.imageFromSampleBuffer(sampleBuffer)
+        let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
+        remoteCamSession ! SendFrame(data: imageData, sender: Optional.None)
+    }
+    
+    func cgImageBackedImageWithCIImage(ciImage : CIImage) -> UIImage  {
+        let  context = CIContext(options: Optional.None)
+        let ref = context.createCGImage(ciImage, fromRect: ciImage.extent)
+        let image = UIImage(CGImage: ref, scale: UIScreen.mainScreen().scale, orientation:.Right)
+        return image;
+    }
+}
+
+public class CameraViewController : UIViewController {
     
     var captureSession : Optional<AVCaptureSession> = Optional.None;
 
+    let output : ActorOutput = ActorOutput()
     
     lazy var remoteCamSession : ActorRef = AppActorSystem.shared.actorOf(RemoteCamSession.self, name: "RemoteCam Session")
     
@@ -32,9 +81,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
         captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         captureVideoPreviewLayer.frame = CGRectMake(0,0, 320, 320);
 
-        self.view.layer.addSublayer(captureVideoPreviewLayer)
-        
-        // Create video device input
+        self.view.layer.addSublayer(captureVideoPreviewLayer)        
         
         if let videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo),
             captureSession = captureSession {
@@ -42,16 +89,16 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
                 let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
                 captureSession.addInput(videoDeviceInput)
                 
-                
-                let multipeerVideoOutput = self as! AVCaptureOutput
                                 
-                captureSession.addOutput(multipeerVideoOutput)
+                captureSession.addOutput(output)
                 
-                self.setFrameRate(15,videoDevice:videoDevice)
                 
-               // [self setFrameRate:15 onDevice:videoDevice];
+                output.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
+                output.alwaysDiscardsLateVideoFrames = true
                 
-                //[_captureSession startRunning];
+                self.setFrameRate(10,videoDevice:videoDevice)
+                                
+                self.captureSession?.startRunning()
             } catch let error as NSError {
                 print("error \(error)")
             } catch {
@@ -59,8 +106,6 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
             }
         } else {
             print("error")
-            /*UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No video device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];*/
         }
     }
     
@@ -76,51 +121,4 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
             print("sdfsdf")
         }
     }
-
-    
-    func cgImageBackedImageWithCIImage(ciImage : CIImage) -> UIImage  {
-        let  context = CIContext(options: Optional.None)
-        let ref = context.createCGImage(ciImage, fromRect: ciImage.extent)
-        let image = UIImage(CGImage: ref, scale: UIScreen.mainScreen().scale, orientation:.Right)
-        return image;
-    }
-    
-    /*
-    
-    - (void) captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    
-    if (_session.connectedPeers.count) {
-    NSNumber* timestamp = @(CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer)));
-    
-    CVImageBufferRef cvImage = CMSampleBufferGetImageBuffer(sampleBuffer);
-    CGRect cropRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(320, 320), CGRectMake(0,0, CVPixelBufferGetWidth(cvImage),CVPixelBufferGetHeight(cvImage)) );
-    CIImage *ciImage = [[CIImage alloc] initWithCVPixelBuffer:cvImage];
-    CIImage* croppedImage = [ciImage imageByCroppingToRect:cropRect];
-    
-    CIFilter *scaleFilter = [CIFilter filterWithName:@"CILanczosScaleTransform"];
-    [scaleFilter setValue:croppedImage forKey:@"inputImage"];
-    [scaleFilter setValue:[NSNumber numberWithFloat:0.25] forKey:@"inputScale"];
-    [scaleFilter setValue:[NSNumber numberWithFloat:1.0] forKey:@"inputAspectRatio"];
-    CIImage *finalImage = [scaleFilter valueForKey:@"outputImage"];
-    UIImage* cgBackedImage = [self cgImageBackedImageWithCIImage:finalImage];
-    
-    NSData *imageData = UIImageJPEGRepresentation(cgBackedImage, 0.2);
-    
-    // maybe not always the correct input?  just using this to send current FPS...
-    AVCaptureInputPort* inputPort = connection.inputPorts[0];
-    AVCaptureDeviceInput* deviceInput = (AVCaptureDeviceInput*) inputPort.input;
-    CMTime frameDuration = deviceInput.device.activeVideoMaxFrameDuration;
-    NSDictionary* dict = @{
-    @"image": imageData,
-    @"timestamp" : timestamp,
-    @"framesPerSecond": @(frameDuration.timescale)
-    };
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dict];
-    
-    
-    [_session sendData:data toPeers:_session.connectedPeers withMode:MCSessionSendDataReliable error:nil];
-    }
-    }
-    */
-
 }
