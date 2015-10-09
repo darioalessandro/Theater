@@ -110,7 +110,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.title = "Connected"
                 self.ctrl?.navigationItem.prompt = nil
                 self.ctrl?.textField.becomeFirstResponder()
-                self.become(self.connected)
+                self.become("connected", state:self.connected)
             }
             break
             

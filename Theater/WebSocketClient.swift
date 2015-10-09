@@ -61,14 +61,14 @@ public class WebSocketClient : Actor , WebSocketDelegate {
     public func websocketDidConnect(socket: WebSocket) {
         if let del = self.delegate {
             del ! OnConnect(sender: this)
-            self.become(connected)
+            self.become("connected", state: connected)
         }
     }
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         if let del = self.delegate {
             del ! OnDisconnect(sender: this, error: error)
-            self.become(disconnected)
+            self.become("disconnected", state: disconnected)
         }
     }
     
@@ -131,7 +131,7 @@ public class WebSocketClient : Actor , WebSocketDelegate {
     }
     
     override public func receive(msg : Message) {
-        become(disconnected)
+        become("disconnected", state: disconnected)
         this ! (msg)
     }
 }

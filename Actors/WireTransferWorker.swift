@@ -46,7 +46,7 @@ public class WireTransferWorker : Actor {
             if let _ = self.transfer {} else {
                 self.transfer = Optional.Some(transfer)
                 self.bank = self.transfer!.sender
-                become(transfering)
+                become("transfering", state:transfering)
                 transfer.origin ! Withdraw(sender: this, ammount: transfer.ammount, operationId: NSUUID())
             }
             break

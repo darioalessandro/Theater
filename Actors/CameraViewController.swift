@@ -115,6 +115,7 @@ public class CameraViewController : UIViewController {
                     self.session ! RemoteCmd.TakePicResp(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
                 } else {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    self.session ! RemoteCmd.TakePicAck()
                     self.session ! RemoteCmd.TakePicResp(sender: Optional.None, pic:imageData)
                 }
             }

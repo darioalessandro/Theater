@@ -109,7 +109,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
                 self.shouldScan = false
                 self.central.stopScan()
                 print("stopped")
-                self.become(self.notScanning)
+                self.become("notscanning", state: self.notScanning)
                 break
             default:
                 self.notScanning(msg)
@@ -124,7 +124,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
             if self.central.state == CBCentralManagerState.PoweredOn {
                 self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
                 print("Started")
-                self.become(self.scanning)
+                self.become("scanning", state: self.scanning)
             }
             break
         case is StopScanning:
@@ -145,7 +145,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     }
     
     override public func receive(msg : Message) -> Void {
-        self.become(self.notScanning)
+        self.become("notscanning", state: self.notScanning)
         self.this ! msg
         
     }

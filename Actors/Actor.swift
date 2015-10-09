@@ -18,7 +18,7 @@ public typealias Receive = (Message) -> (Void)
 
 public class Actor : NSObject {
     
-    private var statesStack : Stack<Receive> = Stack()
+    private var statesStack : Stack<(String,Receive)> = Stack()
     
     public let mailbox : NSOperationQueue = NSOperationQueue()
     
@@ -28,12 +28,23 @@ public class Actor : NSObject {
     
     public let context : ActorSystem
     
-    public func become(state : Receive) -> Void  {
-        self.statesStack.push(state)
+    public func become(name : String, state : Receive) -> Void  {
+        self.statesStack.push((name, state))
     }
     
     public func unbecome() {
         self.statesStack.pop()
+    }
+    
+    public func popToState(name : String) {
+        if let (hName, _ ) = self.statesStack.head() {
+            if hName != name {
+                unbecome()
+                popToState(name)
+            }
+        } else {
+            print("unable to find state with name \(name)")
+        }
     }
     
     public func receive(msg : Message) -> Void {
@@ -50,7 +61,8 @@ public class Actor : NSObject {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
             print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
-            if let state : Receive = self.statesStack.head() {
+            if let (name,state) : (String,Receive) = self.statesStack.head() {
+                print("Sending message to state \(name)")
                 state(msg)
             } else {
                 self.receive(msg)

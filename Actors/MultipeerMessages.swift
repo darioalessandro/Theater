@@ -49,6 +49,32 @@ public class AddCameraController : Message {
 
 public class UnbecomeMonitor : Message {}
 
+public class PeerBecameCamera : Message , NSCoding {
+    
+    public init() {
+        super.init(sender : Optional.None)
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {}
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(sender: Optional.None)
+    }
+}
+
+public class PeerBecameMonitor : Message , NSCoding {
+    
+    public init() {
+        super.init(sender : Optional.None)
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {}
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(sender: Optional.None)
+    }
+}
+
 public class BecomeMonitor : BecomeDevice {}
 
 public class DisconnectPeer : OnConnectToDevice{}
@@ -104,6 +130,19 @@ public class RemoteCmd : Message {
             super.init(sender: Optional.None)
         }
         
+    }
+    
+    public class TakePicAck : Message, NSCoding {
+        
+        public init() {
+            super.init(sender : Optional.None)
+        }
+        
+        public func encodeWithCoder(aCoder: NSCoder) {}
+        
+        public required init?(coder aDecoder: NSCoder) {
+            super.init(sender: Optional.None)
+        }
     }
     
     public class TakePicResp : RemoteCmd, NSCoding {
