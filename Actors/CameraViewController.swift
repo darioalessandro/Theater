@@ -76,7 +76,7 @@ public class CameraViewController : UIViewController {
                 output.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
                 output.alwaysDiscardsLateVideoFrames = true
                 
-                self.setFrameRate(10,videoDevice:videoDevice)
+                self.setFrameRate(3,videoDevice:videoDevice)
                                 
                 self.captureSession?.startRunning()
             } catch let error as NSError {

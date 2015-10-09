@@ -50,7 +50,6 @@ public class MonitorActor : Actor {
                     if let imageView = self.imageView {
                         imageView.image = img
                     }
-                    
                 }
                 break
             
