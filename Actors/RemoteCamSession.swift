@@ -157,31 +157,19 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             print("Scanning")
             switch(msg) {
                 case is StartScanning:
-                    ^{lobby.navigationController?.popToViewController(lobby, animated: true)}
-                    ^{
-                        self.session = MCSession(peer: self.peerID)
-                        self.session.delegate = self
-                        let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
-                        browser.delegate = self;
-                        browser.minimumNumberOfPeers = 2
-                        browser.maximumNumberOfPeers = 2
-                        browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-                        self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
-                        self.mcAdvertiserAssistant.start()
-                        lobby.presentViewController(browser, animated: true, completion: { () -> Void in
-                            
-                        })
-                    }
-
+                    self.startScanning(lobby)
                     break
+                
                 case let w as OnConnectToDevice:
                     self.become(self.connected(lobby, peer: w.peer))
                     self.mcAdvertiserAssistant.stop()
                     break
+                
                 case is Disconnect:
                     self.session.disconnect()
                     self.unbecome()
                     break
+                
                 default:
                     self.receive(msg)
             }
@@ -197,6 +185,24 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 break
             default:
                 self.receive(msg)
+        }
+    }
+    
+    func startScanning(lobby : LobbyViewController) {
+        ^{lobby.navigationController?.popToViewController(lobby, animated: true)}
+        ^{
+            self.session = MCSession(peer: self.peerID)
+            self.session.delegate = self
+            let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
+            browser.delegate = self;
+            browser.minimumNumberOfPeers = 2
+            browser.maximumNumberOfPeers = 2
+            browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+            self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
+            self.mcAdvertiserAssistant.start()
+            lobby.presentViewController(browser, animated: true, completion: { () -> Void in
+                
+            })
         }
     }
     
