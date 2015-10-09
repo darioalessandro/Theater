@@ -31,7 +31,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             switch(msg) {
                 case let s as SendFrame:
                     do {
-                        try self.session.sendData(s.data,
+                        let data = NSKeyedArchiver.archivedDataWithRootObject(s)
+                        try self.session.sendData(data,
                             toPeers: self.session.connectedPeers,
                             withMode:.Unreliable)
                     } catch let error as NSError {
@@ -98,7 +99,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         return {[unowned self] (msg : Message) in
             print("monitorWithMonitor")
             switch(msg) {
-            case is OnFrame:
+            case is OnFrame:                
                 monitor ! msg
                 break
             case is UnbecomeMonitor:
@@ -235,7 +236,14 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        this ! OnFrame(data: data, sender: Optional.None, peerId : peerID)
+        switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
+            case let frame as SendFrame:
+                this ! OnFrame(data: frame.data, sender: Optional.None, peerId : peerID, fps:frame.fps)
+            break
+            default:
+                print("unable to unarchive")
+        }
+        
     }
     
     public func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

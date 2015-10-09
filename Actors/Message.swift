@@ -8,17 +8,14 @@
 
 import Foundation
 
-public class Message {
+@objc public class Message : NSObject {
     
     public let sender : Optional<ActorRef>
     
-    public func description() -> String {
-        return "Message"
-    }
-    
-    public init(sender : Optional<ActorRef>) {
+     public init(sender : Optional<ActorRef>) {
         self.sender = sender
     }
+    
 }
 
 public class Harakiri : Message {

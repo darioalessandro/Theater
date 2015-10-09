@@ -46,21 +46,37 @@ public class DisconnectPeer : OnConnectToDevice{}
 
 public class OnConnectToDevice : ConnectToDevice {}
 
-public class SendFrame : Message {
+public class SendFrame : Message, NSCoding {
     public let data : NSData
-    init(data : NSData, sender : Optional<ActorRef>) {
+    public let fps : NSInteger
+    init(data : NSData, sender : Optional<ActorRef>, fps : NSInteger) {
         self.data = data
+        self.fps = fps
+        
         super.init(sender: sender)
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeDataObject(self.data)
+        aCoder.encodeInteger(self.fps, forKey: "fps")
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        self.data = aDecoder.decodeDataObject()!
+        self.fps = aDecoder.decodeIntegerForKey("fps")
+        super.init(sender: Optional.None)
     }
 }
 
 public class OnFrame : Message {
     public let data : NSData
     public let peerId : MCPeerID
+    public let fps : NSInteger
     
-    init(data : NSData, sender : Optional<ActorRef>, peerId : MCPeerID) {
+    init(data : NSData, sender : Optional<ActorRef>, peerId : MCPeerID, fps:NSInteger) {
         self.data = data
         self.peerId = peerId
+        self.fps = fps
         super.init(sender: sender)
     }
 }

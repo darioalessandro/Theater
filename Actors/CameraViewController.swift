@@ -25,7 +25,8 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         let cgBackedImage = UIImage(fromSampleBuffer: sampleBuffer)
         let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
-        remoteCamSession ! SendFrame(data: imageData, sender: Optional.None)
+        let msg = SendFrame(data: imageData, sender: Optional.None, fps:3)        
+        remoteCamSession ! msg
     }
 
     
