@@ -42,14 +42,14 @@ public class Actor : NSObject {
                 self.context.stop(self.this)
                 break
             default :
-                print("message not handled %@", [msg.description()])
+                print("message not handled ", NSStringFromClass(msg.dynamicType))
         }
     }
     
     public func tell(msg : Message) -> Void {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
-            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path) ")
+            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
             if let state : Receive = self.statesStack.head() {
                 state(msg)
             } else {
