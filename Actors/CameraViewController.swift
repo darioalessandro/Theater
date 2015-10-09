@@ -28,11 +28,6 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
         let msg = SendFrame(data: imageData, sender: Optional.None, fps:3)        
         remoteCamSession ! msg
     }
-
-    
-    deinit {
-        
-    }
 }
 
 public class CameraViewController : UIViewController {

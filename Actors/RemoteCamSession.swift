@@ -10,18 +10,6 @@ import Foundation
 import Theater
 import MultipeerConnectivity
 
-struct States {
-    let scanning = "scanning"
-    let idle = "idle"
-    let connected = "connected"
-    let camera = "camera"
-    let monitor = "monitor"
-    let cameraTakingPic = "cameraTakingPic"
-    let cameraWithController = "cameraWithController"
-    let monitorTakingPicture = "monitorTakingPicture"
-    let monitorWithMonitor = "monitorWithMonitor"
-}
-
 public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControllerDelegate {
     
     let states = States()
@@ -131,7 +119,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func camera(peer : MCPeerID, lobby : RolePickerController) -> Receive {
+    func camera(peer : MCPeerID,
+               lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
 
             switch(msg) {
@@ -157,7 +146,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func monitor(peer : MCPeerID, lobby : RolePickerController) -> Receive {
+    func monitor(peer : MCPeerID,
+                lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case is OnFrame:
@@ -279,7 +269,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func connected(lobby : RolePickerController, peer : MCPeerID) -> Receive {
+    func connected(lobby : RolePickerController,
+                    peer : MCPeerID) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 
@@ -377,7 +368,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(message),
             toPeers: [peer],
             withMode:.Reliable)
-        } catch let error as NSError {
+        }
+        catch let error as NSError {
             print("error \(error)")
         }
     }

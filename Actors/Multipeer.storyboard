@@ -127,47 +127,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="oAg-qx-1pJ" kind="relationship" relationship="rootViewController" id="i1n-jP-5ft"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7eW-Ab-exz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="216" y="943"/>
         </scene>
-        <!--Phone Picker View Controller-->
-        <scene sceneID="0QY-Xe-1ZW">
-            <objects>
-                <tableViewController id="oAg-qx-1pJ" customClass="PhonePickerViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6b5-a0-sM3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6BM-Kg-ejS">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6BM-Kg-ejS" id="QbR-P4-gR5">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="oAg-qx-1pJ" id="XI6-1K-fTc"/>
-                            <outlet property="delegate" destination="oAg-qx-1pJ" id="jhj-aE-C9b"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="jsT-Xe-Hzs"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cyS-Xy-jz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="912" y="943"/>
-        </scene>
         <!--Monitor-->
         <scene sceneID="b7H-Ya-k2l">
             <objects>
-                <viewController title="Monitor" id="fzh-OB-Afg" customClass="RemoteViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Monitor" id="fzh-OB-Afg" customClass="MonitorViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mq2-8c-WTf"/>
                         <viewControllerLayoutGuide type="bottom" id="lub-Pv-toD"/>

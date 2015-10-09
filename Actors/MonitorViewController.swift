@@ -45,7 +45,6 @@ public class MonitorActor : Actor {
                 break
             
             case let f as OnFrame:
-                print("fps \(f.fps)")
                 let img = UIImage(data: f.data)
                 ^{
                     if let imageView = self.imageView {
@@ -62,7 +61,7 @@ public class MonitorActor : Actor {
 }
 
 
-public class RemoteViewController : UIViewController {
+public class MonitorViewController : UIViewController {
     
     let session = AppActorSystem.shared.selectActor("RemoteCam Session")!
     
