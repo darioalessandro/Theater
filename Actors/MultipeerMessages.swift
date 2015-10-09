@@ -32,13 +32,17 @@ public class ConnectToDevice : Message {
     }
 }
 
-public class BecomeDevice : Message {
-    
-}
+public class BecomeDevice : Message {}
+
+public class UnbecomeCamera : Message {}
 
 public class BecomeCamera : BecomeDevice {}
 
+public class UnbecomeMonitor : Message {}
+
 public class BecomeMonitor : BecomeDevice {}
+
+public class DisconnectPeer : OnConnectToDevice{}
 
 public class OnConnectToDevice : ConnectToDevice {}
 

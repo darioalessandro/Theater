@@ -39,6 +39,11 @@ public class MonitorActor : Actor {
                 self.imageView = i.imageView
                 break
             
+            case is UnbecomeMonitor:
+                let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
+                session! ! msg
+                break
+            
             case let f as OnFrame:
                 let img = UIImage(data: f.data)
                 ^{
@@ -61,10 +66,17 @@ public class RemoteViewController : UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    let monitor = AppActorSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        let monitor = AppActorSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
         monitor ! AddImageView(imageView: self.imageView)
-        
+    }
+    
+    override public func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
+            monitor ! UnbecomeMonitor(sender: Optional.None)
+        }
     }
 }

@@ -27,6 +27,14 @@ public class LobbyViewController : UIViewController {
         self.remoteCamSession ! StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
     }
     
+    override public func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
+            remoteCamSession ! Disconnect(sender:Optional.None)
+            remoteCamSession ! Harakiri(sender: Optional.None)
+        }
+    }
+    
     public func showPhonePickerViewController() {
         self.performSegueWithIdentifier(presentPhonePickerSegue, sender: self)
     }
@@ -49,7 +57,7 @@ public class LobbyViewController : UIViewController {
     
     
     deinit {
-        self.remoteCamSession ! Harakiri(sender: Optional.None)
+        
     }
 
 }

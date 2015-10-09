@@ -42,7 +42,7 @@ public class Actor : NSObject {
                 self.context.stop(self.this)
                 break
             default :
-                print("message not handled %@", [msg.description()])
+                print("message not handled ", NSStringFromClass(msg.dynamicType))
         }
     }
     

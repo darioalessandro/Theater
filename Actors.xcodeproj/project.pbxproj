@@ -20,6 +20,7 @@
 		064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; settings = {ASSET_TAGS = (); }; };
+		0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */; settings = {ASSET_TAGS = (); }; };
 		0693BC791BC335DE00694512 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC781BC335DE00694512 /* NSOperationQueue.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
@@ -116,6 +117,9 @@
 		064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
 		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
 		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
+		069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Actors-Bridging-Header.h"; sourceTree = "<group>"; };
+		0691835A1BC75CD800BE9B5C /* UIImage+ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageProcessing.h"; sourceTree = "<group>"; };
+		0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageProcessing.m"; sourceTree = "<group>"; };
 		0693BC781BC335DE00694512 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationQueue.swift; sourceTree = "<group>"; };
 		0693BC801BC33EA600694512 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		0693BC811BC33EA600694512 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
@@ -202,6 +206,9 @@
 				064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */,
 				064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */,
 				064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */,
+				0691835A1BC75CD800BE9B5C /* UIImage+ImageProcessing.h */,
+				0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */,
+				069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */,
 			);
 			name = Multipeer;
 			sourceTree = "<group>";
@@ -443,6 +450,7 @@
 		06E1D4EA1BB7699700E07321 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = dario;
 				TargetAttributes = {
@@ -584,6 +592,7 @@
 				064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				064C6ED11BC5F8E800B0F13D /* RemoteViewController.swift in Sources */,
+				0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
 				064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */,
 				0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */,
@@ -766,15 +775,18 @@
 			baseConfigurationReference = CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Actors/Actors-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -783,15 +795,17 @@
 			baseConfigurationReference = 766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Actors/Actors-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -833,7 +847,7 @@
 				);
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -857,7 +871,7 @@
 				);
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";

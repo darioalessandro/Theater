@@ -25,7 +25,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         become(self.idle)
     }
     
-    func camera() -> Receive {
+    func camera(peer : MCPeerID) -> Receive {
+        print("camera")
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case let s as SendFrame:
@@ -38,6 +39,9 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     }
                     
                 break
+                case is UnbecomeCamera:
+                    self.unbecome()
+                break
                 case is Disconnect:
                     self.unbecome()
                     self.this ! msg
@@ -49,7 +53,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func monitor() -> Receive {
+    func monitor(peer : MCPeerID) -> Receive {
+        print("monitor")
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 case is OnFrame:
@@ -58,6 +63,9 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 case let m as AddMonitor:
                     print("adding monitor")
                     self.become(self.monitorWithMonitor(m.sender!))
+                    break
+                case is UnbecomeMonitor:
+                    self.unbecome()
                     break
                 case is Disconnect:
                     self.unbecome()
@@ -70,10 +78,15 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     func monitorWithMonitor(monitor : ActorRef) -> Receive {
+        print("monitorWithMonitor")
         return {[unowned self] (msg : Message) in
             switch(msg) {
             case is OnFrame:
                 monitor ! msg
+                break
+            case is UnbecomeMonitor:
+                self.unbecome()
+                self.this ! msg
                 break
             case is Disconnect:
                 self.unbecome()
@@ -84,23 +97,29 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             }
         }
     }
-
     
     func connected(lobby : LobbyViewController, peer : MCPeerID) -> Receive {
+        print("Connected")
         return {[unowned self] (msg : Message) in
             switch(msg) {
-                case let c as BecomeCamera:
-                    self.become(self.camera())
+                case is BecomeCamera:
+                    self.become(self.camera(peer))
                     ^{
                         lobby.showCamera()
                     }
                     break
-                case let m as BecomeMonitor:
-                    self.become(self.monitor())
+                case is BecomeMonitor:
+                    self.become(self.monitor(peer))
                     ^{
                         lobby.showRemote()
                     }
                     break
+                case let c as DisconnectPeer:
+                    if (c.peer.displayName == peer.displayName) {
+                        self.unbecome()
+                    }
+                    break
+                
                 case is Disconnect:
                     self.unbecome()
                     break
@@ -110,13 +129,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func startHosting() {
-        mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: service, discoveryInfo: nil, session: self.session)
-        mcAdvertiserAssistant.start()
-    }
     
     
     func scanning(lobby : LobbyViewController) -> Receive {
+        print("Scanning")
         let l : LobbyViewController = lobby
         ^{
             let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
@@ -124,7 +140,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             browser.minimumNumberOfPeers = 2
             browser.maximumNumberOfPeers = 2
             browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-            self.startHosting()
+            self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
+            self.mcAdvertiserAssistant.start()
             lobby.presentViewController(browser, animated: true, completion: { () -> Void in
                 
             })
@@ -136,6 +153,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     break
                 case let w as OnConnectToDevice:
                     self.become(self.connected(l, peer: w.peer))
+                    self.mcAdvertiserAssistant.stop()
                     break
                 case is Disconnect:
                     self.session.disconnect()
@@ -148,6 +166,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     lazy var idle : Receive = {[unowned self] (msg : Message) in
+        print("idle")
         switch(msg) {
             case let w as StartScanningWithLobbyViewController:
                 self.session = MCSession(peer: self.peerID)
@@ -181,8 +200,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             print("Connecting: \(peerID.displayName)")
             
         case MCSessionState.NotConnected:
+            self.this ! DisconnectPeer(peer : peerID, sender : this)
             print("Not Connected: \(peerID.displayName)")
         }
+    
     }
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
