@@ -41,30 +41,47 @@ public class CameraViewController : UIViewController {
 
     let output : ActorOutput = ActorOutput()
     
-    lazy var remoteCamSession : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    var captureVideoPreviewLayer : AVCaptureVideoPreviewLayer!
+    
+    let stillImageOutput = AVCaptureStillImageOutput()
+    
+    var session : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupCamera()
+        session ! AddCameraController(sender: Optional.None, ctrl: self)
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
             captureSession?.stopRunning()
-            remoteCamSession ! UnbecomeCamera(sender : Optional.None)
+            session ! UnbecomeCamera(sender : Optional.None)
         }
     }
     
     func setupCamera() -> Void {
+        if let captureSession = self.captureSession {
+            captureSession.stopRunning()
+        }
         captureSession = AVCaptureSession()
+        captureSession!.sessionPreset = AVCaptureSessionPresetHigh
         
-        let captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        self.captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         
         captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        captureVideoPreviewLayer.frame = CGRectMake(0,0, 320, 320);
+        captureVideoPreviewLayer.frame = self.view.frame
 
         self.view.layer.addSublayer(captureVideoPreviewLayer)
+        
+        stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+        
+        if captureSession!.canAddOutput(stillImageOutput) {
+            captureSession!.addOutput(stillImageOutput)
+        }else {
+            print("did not setup output")
+        }
         
         if let videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo),
             captureSession = captureSession {
@@ -87,6 +104,20 @@ public class CameraViewController : UIViewController {
             }
         } else {
             print("error")
+        }
+    }
+    
+    func takePicture() -> Void {
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                (imageDataSampleBuffer, error) -> Void in
+                if imageDataSampleBuffer == nil {
+                    self.session ! RemoteCmd.TakePicResp(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
+                } else {
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    self.session ! RemoteCmd.TakePicResp(sender: Optional.None, pic:imageData)
+                }
+            }
         }
     }
     

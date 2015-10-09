@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Cdl-GO-JiS">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--RemoteCam Lobby-->
+        <!--Role Picker-->
         <scene sceneID="Ala-sd-eyX">
             <objects>
-                <viewController title="RemoteCam Lobby" id="Cdl-GO-JiS" customClass="LobbyViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Role Picker" id="Cdl-GO-JiS" customClass="RolePickerController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3YG-7e-pA4"/>
                         <viewControllerLayoutGuide type="bottom" id="pBT-Cj-HNH"/>
@@ -172,11 +173,11 @@
                         <viewControllerLayoutGuide type="bottom" id="lub-Pv-toD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="e55-V3-Mg1">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="59d-Ey-8pR">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -187,9 +188,20 @@
                             <constraint firstItem="59d-Ey-8pR" firstAttribute="leading" secondItem="e55-V3-Mg1" secondAttribute="leadingMargin" constant="-20" id="u1i-du-fzD"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N1u-wE-9Jx"/>
+                        <barButtonItem title="Take Picture" id="HeC-Dg-qIb">
+                            <connections>
+                                <action selector="onTakePicture:" destination="fzh-OB-Afg" id="Ia0-z9-6hh"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ZdC-PO-q2F"/>
+                    </toolbarItems>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="imageView" destination="59d-Ey-8pR" id="OmC-xP-Agj"/>
+                        <outlet property="takePicture" destination="HeC-Dg-qIb" id="zR8-Be-hRM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2eq-5e-rvD" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -64,18 +64,28 @@ public class MonitorActor : Actor {
 
 public class RemoteViewController : UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
+    let session = AppActorSystem.shared.selectActor("RemoteCam Session")!
     
     let monitor = AppActorSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
     
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var takePicture: UIBarButtonItem!
+    
+    @IBAction func onTakePicture(sender: UIBarButtonItem) {
+        session ! RemoteCmd.TakePic(sender: Optional.None)
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.toolbarHidden = false
         monitor ! AddImageView(imageView: self.imageView)
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
+                    self.navigationController?.toolbarHidden = true
             monitor ! UnbecomeMonitor(sender: Optional.None)
         }
     }

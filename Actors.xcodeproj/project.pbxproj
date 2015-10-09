@@ -11,7 +11,7 @@
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; settings = {ASSET_TAGS = (); }; };
 		061C254A1BC30A670049D6C9 /* TestActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25491BC30A670049D6C9 /* TestActor.swift */; settings = {ASSET_TAGS = (); }; };
-		064C6ECD1BC5F8D000B0F13D /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		064C6ECD1BC5F8D000B0F13D /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6ED11BC5F8E800B0F13D /* RemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6ED31BC5F92B00B0F13D /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */; settings = {ASSET_TAGS = (); }; };
@@ -107,7 +107,7 @@
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
 		061C25491BC30A670049D6C9 /* TestActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestActor.swift; sourceTree = "<group>"; };
-		064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RolePickerController.swift; sourceTree = "<group>"; };
 		064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteViewController.swift; sourceTree = "<group>"; };
 		064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Multipeer.storyboard; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 		064C6ECB1BC5F32600B0F13D /* Multipeer */ = {
 			isa = PBXGroup;
 			children = (
-				064C6ECC1BC5F8D000B0F13D /* LobbyViewController.swift */,
+				064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */,
 				064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */,
 				064C6ED01BC5F8E800B0F13D /* RemoteViewController.swift */,
 				064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */,
@@ -576,7 +576,7 @@
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
 				064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
-				064C6ECD1BC5F8D000B0F13D /* LobbyViewController.swift in Sources */,
+				064C6ECD1BC5F8D000B0F13D /* RolePickerController.swift in Sources */,
 				064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */,
 				064C6ED11BC5F8E800B0F13D /* RemoteViewController.swift in Sources */,

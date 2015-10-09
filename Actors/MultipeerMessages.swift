@@ -12,9 +12,9 @@ import MultipeerConnectivity
 
 public class StartScanningWithLobbyViewController : Message {
     
-    public let lobby : LobbyViewController
+    public let lobby : RolePickerController
     
-    public init(sender: Optional<ActorRef>, lobby : LobbyViewController) {
+    public init(sender: Optional<ActorRef>, lobby : RolePickerController) {
         self.lobby = lobby
         super.init(sender: sender)
     }
@@ -37,6 +37,15 @@ public class BecomeDevice : Message {}
 public class UnbecomeCamera : Message {}
 
 public class BecomeCamera : BecomeDevice {}
+
+public class AddCameraController : Message {
+    let ctrl : CameraViewController
+    
+    public init(sender: Optional<ActorRef>, ctrl : CameraViewController) {
+        self.ctrl = ctrl
+        super.init(sender: sender)
+    }
+}
 
 public class UnbecomeMonitor : Message {}
 
@@ -80,3 +89,90 @@ public class OnFrame : Message {
         super.init(sender: sender)
     }
 }
+
+public class RemoteCmd : Message {
+    
+    public class TakePic : RemoteCmd, NSCoding {
+        
+        public override init(sender: Optional<ActorRef>) {
+            super.init(sender: sender)
+        }
+        
+        public func encodeWithCoder(aCoder: NSCoder) {}
+        
+        public required init?(coder aDecoder: NSCoder) {
+            super.init(sender: Optional.None)
+        }
+        
+    }
+    
+    public class TakePicResp : RemoteCmd, NSCoding {
+        
+        let pic : Optional<NSData>
+        let error : Optional<NSError>
+        
+        
+        public func encodeWithCoder(aCoder: NSCoder) {
+            if let pic = self.pic {
+                aCoder.encodeDataObject(pic)
+            }
+            
+            if let error = self.error {
+                aCoder.encodeObject(error, forKey: "error")
+            }
+        }
+        
+        public required init?(coder aDecoder: NSCoder) {
+            if let pic = aDecoder.decodeDataObject() {
+                self.pic = pic
+            } else {
+                self.pic = Optional.None
+            }
+            
+            if let error = aDecoder.decodeObjectForKey("error") {
+                self.error = Optional.Some(error as! NSError)
+            }else {
+                self.error = Optional.None
+            }
+            
+            super.init(sender: Optional.None)
+        }
+        
+        public init(sender: Optional<ActorRef>, pic : NSData) {
+            self.pic = Optional.Some(pic)
+            self.error = Optional.None
+            super.init(sender: sender)
+        }
+        
+        public init(sender: Optional<ActorRef>, error : NSError) {
+            self.pic = Optional.None
+            self.error = Optional.Some(error)
+            super.init(sender: sender)
+        }
+    }
+    
+    public class ChangeCam : RemoteCmd, NSCoding {
+        public func encodeWithCoder(aCoder: NSCoder) {}
+        
+        public required init?(coder aDecoder: NSCoder) {
+            super.init(sender: Optional.None)
+        }
+    }
+    
+    public class OnPeerChangedRole : RemoteCmd, NSCoding {
+        
+        let peerRole : BecomeDevice
+        
+        public func encodeWithCoder(aCoder: NSCoder) {
+            aCoder.encodeObject(peerRole, forKey: "peerRole")
+        }
+        
+        public required init?(coder aDecoder: NSCoder) {
+            self.peerRole = aDecoder.decodeObjectForKey("peerRole") as! BecomeDevice
+            super.init(sender: Optional.None)
+        }
+    }
+}
+
+
+

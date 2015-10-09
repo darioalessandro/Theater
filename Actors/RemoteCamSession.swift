@@ -25,20 +25,78 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         become(self.idle)
     }
     
-    func camera(peer : MCPeerID) -> Receive {
+    func cameraTakingPic(peer : MCPeerID,
+        ctrl : CameraViewController,
+        lobby : RolePickerController) -> Receive {
+            let alert = UIAlertController(title: "Taking picture",
+                message: Optional.None,
+                preferredStyle: .Alert)
+            
+            ^{lobby.presentViewController(alert, animated: true, completion: nil)}
+            
         return {[unowned self] (msg : Message) in
             print("camera")
             switch(msg) {
-                case let s as SendFrame:
-                    do {
-                        let data = NSKeyedArchiver.archivedDataWithRootObject(s)
-                        try self.session.sendData(data,
-                            toPeers: self.session.connectedPeers,
-                            withMode:.Unreliable)
+                case let t as RemoteCmd.TakePicResp:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(t),
+                        toPeers: self.session.connectedPeers,
+                        withMode:.Reliable)
                     } catch let error as NSError {
                         print("error \(error)")
+                        ^{
+                            let a = UIAlertController(title: "Error sending pic",
+                                message: Optional.None,
+                                preferredStyle: .Alert)
+                            ctrl.presentViewController(a, animated: true, completion: nil)
+                        }
                     }
+                    self.unbecome()
+                    break
+                
+                case let c as DisconnectPeer:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    if (c.peer.displayName == peer.displayName) {
+                        self.unbecome()
+                        self.this ! c
+                    }
+                    break
                     
+                case is UnbecomeCamera:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.unbecome()
+                    break
+                    
+                case is Disconnect:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}                    
+                    self.unbecome()
+                    self.this ! msg
+                    break
+                
+                default:
+                    self.receive(msg)
+            }
+        }
+    }
+    
+    func cameraWithController(peer : MCPeerID,
+                              ctrl : CameraViewController,
+                             lobby : RolePickerController) -> Receive {
+        return {[unowned self] (msg : Message) in
+            print("camera")
+            switch(msg) {
+            case let s as SendFrame:
+                do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(s),
+                        toPeers: self.session.connectedPeers,
+                        withMode:.Unreliable)
+                } catch let error as NSError {
+                    print("error \(error)")
+                }
+                break
+                
+            case is RemoteCmd.TakePic:
+                ^{ctrl.takePicture()}
+                self.become(self.cameraTakingPic(peer, ctrl: ctrl, lobby : lobby))
                 break
                 
             case let c as DisconnectPeer:
@@ -47,6 +105,36 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     self.this ! c
                 }
                 break
+                
+            case is UnbecomeCamera:
+                self.unbecome()
+                break
+                
+            case is Disconnect:
+                self.unbecome()
+                self.this ! msg
+                break
+                
+            default:
+                self.receive(msg)
+            }
+        }
+    }
+    
+    func camera(peer : MCPeerID, lobby : RolePickerController) -> Receive {
+        return {[unowned self] (msg : Message) in
+            print("camera")
+            switch(msg) {
+                case let c as DisconnectPeer:
+                    if (c.peer.displayName == peer.displayName) {
+                        self.unbecome()
+                        self.this ! c
+                    }
+                    break
+                
+                case let c as AddCameraController:
+                    self.become(self.cameraWithController(peer, ctrl: c.ctrl, lobby:lobby))
+                    break
                 
                 case is UnbecomeCamera:
                     self.unbecome()
@@ -62,7 +150,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func monitor(peer : MCPeerID) -> Receive {
+    func monitor(peer : MCPeerID, lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             print("monitor")
             switch(msg) {
@@ -71,7 +159,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     break
                 case let m as AddMonitor:
                     print("adding monitor")
-                    self.become(self.monitorWithMonitor(m.sender!, peer: peer))
+                    self.become(self.monitorWithMonitor(m.sender!, peer: peer, lobby : lobby))
                     break
                 
                 case is UnbecomeMonitor:
@@ -95,44 +183,115 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func monitorWithMonitor(monitor : ActorRef,peer : MCPeerID) -> Receive {
+    func monitorTakingPicture(monitor : ActorRef,
+                                 peer : MCPeerID,
+                                lobby : RolePickerController) -> Receive {
+        let alert = UIAlertController(title: "Requesting picture",
+                                    message: Optional.None,
+                             preferredStyle: .Alert)
         return {[unowned self] (msg : Message) in
-            print("monitorWithMonitor")
             switch(msg) {
-            case is OnFrame:                
-                monitor ! msg
-                break
-            case is UnbecomeMonitor:
-                self.unbecome()
-                self.this ! msg
-                break
-            case let c as DisconnectPeer:
-                if (c.peer.displayName == peer.displayName) {
-                    self.unbecome()
-                    self.this ! c
-                }
-                break
+                case let takePic as RemoteCmd.TakePic:
+                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
+                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(takePic),
+                        toPeers: self.session.connectedPeers,
+                        withMode:.Reliable)
+                    } catch let error as NSError {
+                        print("error \(error)")
+                    }
+                    break
                 
-            case is Disconnect:
-                self.unbecome()
-                self.this ! msg
-                break
-            default:
-                self.receive(msg)
+                case let picResp as RemoteCmd.TakePicResp:
+                    self.unbecome()
+                    print("saving picture...")
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    if let imageData = picResp.pic, image = UIImage(data: imageData) {
+                        UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+                    }else if let error = picResp.error {
+                        ^{
+                            let alert = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                                alert.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                            alert.addAction(cancelAction)
+                            lobby.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    }
+                    
+                    break
+                case let c as DisconnectPeer:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    if (c.peer.displayName == peer.displayName) {
+                        self.unbecome()
+                        self.this ! c
+                    }
+                    break
+                    
+                case is UnbecomeMonitor:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.unbecome()
+                    break
+                    
+                case is Disconnect:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.unbecome()
+                    self.this ! msg
+                    break
+                
+                default:
+                    print("sdfsdf")
             }
         }
     }
     
-    func connected(lobby : LobbyViewController, peer : MCPeerID) -> Receive {
+    func monitorWithMonitor(monitor : ActorRef,
+                               peer : MCPeerID,
+                              lobby : RolePickerController) -> Receive {
+        return {[unowned self] (msg : Message) in
+            print("monitorWithMonitor")
+            switch(msg) {
+                case is OnFrame:
+                    monitor ! msg
+                    break
+                    
+                case is UnbecomeMonitor:
+                    self.unbecome()
+                    self.this ! msg
+                    break
+                    
+                case let c as DisconnectPeer:
+                    if (c.peer.displayName == peer.displayName) {
+                        self.unbecome()
+                        self.this ! c
+                    }
+                    break
+                    
+                case is RemoteCmd.TakePic:
+                    self.become(self.monitorTakingPicture(monitor, peer: peer, lobby: lobby))
+                    self.this ! msg
+                    break
+                    
+                case is Disconnect:
+                    self.unbecome()
+                    self.this ! msg
+                    break
+                    
+                default:
+                    self.receive(msg)
+                }
+        }
+    }
+    
+    func connected(lobby : RolePickerController, peer : MCPeerID) -> Receive {
         return {[unowned self] (msg : Message) in
             print("Connected")
             switch(msg) {
                 case is BecomeCamera:
-                    self.become(self.camera(peer))
+                    self.become(self.camera(peer, lobby:lobby))
                     ^{lobby.showCamera()}
                     break
                 case is BecomeMonitor:
-                    self.become(self.monitor(peer))
+                    self.become(self.monitor(peer, lobby:lobby))
                     ^{lobby.showRemote()}
                     break
                 case let c as DisconnectPeer:
@@ -153,7 +312,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     
     
-    func scanning(lobby : LobbyViewController) -> Receive {
+    func scanning(lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             print("Scanning")
             switch(msg) {
@@ -189,7 +348,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    func startScanning(lobby : LobbyViewController) {
+    func startScanning(lobby : RolePickerController) {
         ^{lobby.navigationController?.popToViewController(lobby, animated: true)}
         ^{
             self.session = MCSession(peer: self.peerID)
@@ -207,7 +366,14 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    //MCBrowser
+    @objc func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        if error != nil {
+            ^{
+                print("error \(error)")
+//                UIAlertController(title: "Error saving image", message: nil, preferredStyle: .Alert)
+            }
+        }
+    }
     
     public func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
         browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
@@ -216,8 +382,6 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     public func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
         browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
     }
-    
-    //MCSession delegate garbage
     
     public func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         switch state {
@@ -239,6 +403,12 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
             case let frame as SendFrame:
                 this ! OnFrame(data: frame.data, sender: Optional.None, peerId : peerID, fps:frame.fps)
+            break
+            case let picReq as RemoteCmd.TakePic:
+                this ! picReq
+            break
+            case let picResp as RemoteCmd.TakePicResp:
+                this ! picResp
             break
             default:
                 print("unable to unarchive")

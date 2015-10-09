@@ -9,7 +9,7 @@
 import UIKit
 import Theater
 
-public class LobbyViewController : UIViewController {
+public class RolePickerController : UIViewController {
 
     let showCameraSegue : String = "showCamera"
     
