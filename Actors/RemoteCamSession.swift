@@ -128,15 +128,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             switch(msg) {
                 case is BecomeCamera:
                     self.become(self.camera(peer))
-                    ^{
-                        lobby.showCamera()
-                    }
+                    ^{lobby.showCamera()}
                     break
                 case is BecomeMonitor:
                     self.become(self.monitor(peer))
-                    ^{
-                        lobby.showRemote()
-                    }
+                    ^{lobby.showRemote()}
                     break
                 case let c as DisconnectPeer:
                     if (c.peer.displayName == peer.displayName) {
@@ -161,12 +157,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             print("Scanning")
             switch(msg) {
                 case is StartScanning:
+                    ^{lobby.navigationController?.popToViewController(lobby, animated: true)}
                     ^{
-                        lobby.navigationController?.popToViewController(lobby, animated: true)
-                    }
-                    self.session = MCSession(peer: self.peerID)
-                    self.session.delegate = self
-                    ^{
+                        self.session = MCSession(peer: self.peerID)
+                        self.session.delegate = self
                         let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
                         browser.delegate = self;
                         browser.minimumNumberOfPeers = 2
