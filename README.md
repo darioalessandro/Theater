@@ -10,4 +10,4 @@ Theater is Open Source and available under the Apache 2 License.
 
 Theater is inspired by Akka.
 
-Twitter = [@TheaterFwk](https://github.com/user/repo/blob/branch/other_file.md)
+Twitter = [@TheaterFwk](https://twitter.com/TheaterFwk)
