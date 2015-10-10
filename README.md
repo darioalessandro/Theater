@@ -2,7 +2,7 @@
 
 Writing async, resilient and responsive applications is too hard. 
 
-In the case of iOS because we've been using the wrong abstraction level: NSOperationQueues, dispatch_semaphore_create, dispatch_semaphore_wait and other low level GCD functions and structures.
+In the case of iOS, is because we've been using the wrong abstraction level: NSOperationQueues, dispatch_semaphore_create, dispatch_semaphore_wait and other low level GCD functions and structures.
 
 Using the Actor Model, we raise the abstraction level and provide a better platform to build correct concurrent and scalable applications.
 
