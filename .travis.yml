@@ -5,5 +5,5 @@ before_install:
 osx_image: xcode7
 language: objective-c
 
-xcode_project:Actors.xcodeproj  # path to your xcodeproj folder
-xcode_scheme:Theater
+xcode_project: Actors.xcodeproj 
+xcode_scheme: Theater
