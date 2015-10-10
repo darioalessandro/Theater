@@ -7,3 +7,4 @@ language: objective-c
 
 xcode_project: Actors.xcodeproj 
 xcode_scheme: Theater
+xcode_sdk: iphonesimulator8.0
