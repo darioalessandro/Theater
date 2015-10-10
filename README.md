@@ -1,4 +1,9 @@
-# Theater : Swift actor model framework
+
+<p align="center" >
+  <img src="theaterlogo.jpg" title="Theter logo" float=left>
+</p>
+
+# Theater : iOS Actor Model Framework
 
 Writing async, resilient and responsive applications is too hard. 
 
