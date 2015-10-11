@@ -54,7 +54,6 @@
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
 		06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		06FA4AD81BC8B8E9005608E6 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FA4AD71BC8B8E9005608E6 /* CocoaLumberjack.framework */; };
 		613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -183,7 +182,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06FA4AD81BC8B8E9005608E6 /* CocoaLumberjack.framework in Frameworks */,
 				06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
