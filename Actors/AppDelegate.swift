@@ -8,6 +8,7 @@
 
 import UIKit
 import Theater
+import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        defaultDebugLevel = DDLogLevel.Debug
+        DDLog.addLogger(DDTTYLogger.sharedInstance())
         return true
     }
 
