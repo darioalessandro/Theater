@@ -5,7 +5,7 @@
 
 # Theater : iOS Actor Model Framework
 [![Build Status](https://travis-ci.org/darioalessandro/Theater.svg)](https://travis-ci.org/CocoaLumberjack/CocoaLumberjack)
-[![Pod Version]http://img.shields.io/cocoapods/v/Theater.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
+[![Pod Version](http://img.shields.io/cocoapods/v/Theater.svg?style=flat)](http://cocoadocs.org/docsets/CocoaLumberjack/)
 
 Writing async, resilient and responsive applications is too hard. 
 
