@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
 
 
 infix operator ! {associativity left precedence 130}
@@ -45,7 +44,7 @@ public class Actor : NSObject {
                 popToState(name)
             }
         } else {
-            DDLogError("unable to find state with name \(name)")
+            print("unable to find state with name \(name)")
         }
     }
     
@@ -55,16 +54,16 @@ public class Actor : NSObject {
                 self.context.stop(self.this)
                 break
             default :
-                DDLogError("message not handled \(NSStringFromClass(msg.dynamicType))")
+                print("message not handled \(NSStringFromClass(msg.dynamicType))")
         }
     }
     
     public func tell(msg : Message) -> Void {
         mailbox.addOperationWithBlock { () -> Void in
             self.sender = msg.sender
-            DDLogDebug("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
+            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
             if let (name,state) : (String,Receive) = self.statesStack.head() {
-                DDLogDebug("Sending message to state \(name)")
+                print("Sending message to state \(name)")
                 state(msg)
             } else {
                 self.receive(msg)
@@ -80,7 +79,7 @@ public class Actor : NSObject {
     }
     
     deinit {
-        DDLogDebug("killing \(self.this.path.asString)")
+        print("killing \(self.this.path.asString)")
     }
 
 }

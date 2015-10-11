@@ -6,7 +6,6 @@ platform :ios, '8.0'
 use_frameworks!
 
 pod 'Starscream', '~> 1.0.0'
-pod 'CocoaLumberjack/Swift', :git => 'https://github.com/CocoaLumberjack/CocoaLumberjack.git', :branch => 'swift_2.0'
 
 
 target 'Actors' do

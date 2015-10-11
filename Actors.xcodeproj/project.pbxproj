@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		061C253E1BC2B3BC0049D6C9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C253D1BC2B3BC0049D6C9 /* Stack.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; settings = {ASSET_TAGS = (); }; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; settings = {ASSET_TAGS = (); }; };
 		061C254A1BC30A670049D6C9 /* TestActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25491BC30A670049D6C9 /* TestActor.swift */; settings = {ASSET_TAGS = (); }; };
@@ -21,8 +20,16 @@
 		064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; settings = {ASSET_TAGS = (); }; };
 		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80271BCB0A1A00A10D76 /* Actor.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80311BCB0A1A00A10D76 /* ActorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80281BCB0A1A00A10D76 /* ActorContext.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802A1BCB0A1A00A10D76 /* BLECentral.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80341BCB0A1A00A10D76 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802B1BCB0A1A00A10D76 /* Message.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802D1BCB0A1A00A10D76 /* Stack.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80371BCB0A1A00A10D76 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802E1BCB0A1A00A10D76 /* Try.swift */; settings = {ASSET_TAGS = (); }; };
+		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; settings = {ASSET_TAGS = (); }; };
 		0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */; settings = {ASSET_TAGS = (); }; };
-		0693BC791BC335DE00694512 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC781BC335DE00694512 /* NSOperationQueue.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; settings = {ASSET_TAGS = (); }; };
 		0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25471BC3070E0049D6C9 /* AccountTests.swift */; settings = {ASSET_TAGS = (); }; };
@@ -43,15 +50,8 @@
 		06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D52E1BB76EE400E07321 /* TheaterTests.swift */; };
 		06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		06E1D53C1BB76F0800E07321 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5171BB76E2600E07321 /* Message.swift */; };
-		06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5151BB769AA00E07321 /* Actor.swift */; };
-		06E1D5461BB77F4F00E07321 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5451BB77F4F00E07321 /* Try.swift */; settings = {ASSET_TAGS = (); }; };
-		06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5471BB84BDD00E07321 /* ActorContext.swift */; settings = {ASSET_TAGS = (); }; };
-		06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5491BB8A86000E07321 /* AppActorSystem.swift */; settings = {ASSET_TAGS = (); }; };
-		06E1D54E1BB8BB1100E07321 /* BLECentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D54C1BB8B97C00E07321 /* BLECentral.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7D41BBB7305005787AE /* BLEActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D31BBB7305005787AE /* BLEActors.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; settings = {ASSET_TAGS = (); }; };
-		06EEA7DA1BBB875A005787AE /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D91BBB875A005787AE /* WebSocketClient.swift */; settings = {ASSET_TAGS = (); }; };
 		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
 		06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		06FA4AD81BC8B8E9005608E6 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FA4AD71BC8B8E9005608E6 /* CocoaLumberjack.framework */; };
@@ -104,7 +104,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		061C253D1BC2B3BC0049D6C9 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
@@ -119,10 +118,18 @@
 		064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
 		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
 		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
+		068F80271BCB0A1A00A10D76 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = Classes/Actor.swift; sourceTree = SOURCE_ROOT; };
+		068F80281BCB0A1A00A10D76 /* ActorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActorContext.swift; path = Classes/ActorContext.swift; sourceTree = SOURCE_ROOT; };
+		068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = Classes/AppActorSystem.swift; sourceTree = SOURCE_ROOT; };
+		068F802A1BCB0A1A00A10D76 /* BLECentral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLECentral.swift; path = Classes/BLECentral.swift; sourceTree = SOURCE_ROOT; };
+		068F802B1BCB0A1A00A10D76 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = Classes/Message.swift; sourceTree = SOURCE_ROOT; };
+		068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSOperationQueue.swift; path = Classes/NSOperationQueue.swift; sourceTree = SOURCE_ROOT; };
+		068F802D1BCB0A1A00A10D76 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stack.swift; path = Classes/Stack.swift; sourceTree = SOURCE_ROOT; };
+		068F802E1BCB0A1A00A10D76 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Try.swift; path = Classes/Try.swift; sourceTree = SOURCE_ROOT; };
+		068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebSocketClient.swift; path = Classes/WebSocketClient.swift; sourceTree = SOURCE_ROOT; };
 		069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Actors-Bridging-Header.h"; sourceTree = "<group>"; };
 		0691835A1BC75CD800BE9B5C /* UIImage+ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageProcessing.h"; sourceTree = "<group>"; };
 		0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageProcessing.m"; sourceTree = "<group>"; };
-		0693BC781BC335DE00694512 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationQueue.swift; sourceTree = "<group>"; };
 		0693BC801BC33EA600694512 /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		0693BC811BC33EA600694512 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		0693BC841BC3405100694512 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
@@ -137,8 +144,6 @@
 		06E1D5011BB7699800E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D5061BB7699800E07321 /* ActorsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActorsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D50C1BB7699800E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06E1D5151BB769AA00E07321 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = ../Actors/Actor.swift; sourceTree = "<group>"; };
-		06E1D5171BB76E2600E07321 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Actors/Message.swift; sourceTree = "<group>"; };
 		06E1D51E1BB76EE300E07321 /* Theater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Theater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D5201BB76EE300E07321 /* Theater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Theater.h; sourceTree = "<group>"; };
 		06E1D5221BB76EE300E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,13 +152,8 @@
 		06E1D5301BB76EE400E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActorsDemo.swift; path = ../Actors/ActorsDemo.swift; sourceTree = "<group>"; };
 		06E1D5431BB77D3500E07321 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		06E1D5451BB77F4F00E07321 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Try.swift; sourceTree = "<group>"; };
-		06E1D5471BB84BDD00E07321 /* ActorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorContext.swift; sourceTree = "<group>"; };
-		06E1D5491BB8A86000E07321 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = ../Actors/AppActorSystem.swift; sourceTree = "<group>"; };
-		06E1D54C1BB8B97C00E07321 /* BLECentral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLECentral.swift; path = ../Actors/BLECentral.swift; sourceTree = "<group>"; };
 		06EEA7D31BBB7305005787AE /* BLEActors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEActors.swift; sourceTree = "<group>"; };
 		06EEA7D61BBB7360005787AE /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEMessages.swift; sourceTree = "<group>"; };
-		06EEA7D91BBB875A005787AE /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		06EEA7DB1BBB87EE005787AE /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
 		06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSViewController.swift; sourceTree = "<group>"; };
 		06FA4AD71BC8B8E9005608E6 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack.framework"; sourceTree = "<group>"; };
@@ -309,17 +309,17 @@
 		06E1D51F1BB76EE300E07321 /* Theater */ = {
 			isa = PBXGroup;
 			children = (
-				0693BC781BC335DE00694512 /* NSOperationQueue.swift */,
-				06E1D54C1BB8B97C00E07321 /* BLECentral.swift */,
-				06E1D5491BB8A86000E07321 /* AppActorSystem.swift */,
-				06E1D5171BB76E2600E07321 /* Message.swift */,
-				06E1D5151BB769AA00E07321 /* Actor.swift */,
-				06E1D5451BB77F4F00E07321 /* Try.swift */,
+				068F80271BCB0A1A00A10D76 /* Actor.swift */,
+				068F80281BCB0A1A00A10D76 /* ActorContext.swift */,
+				068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */,
+				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
+				068F802B1BCB0A1A00A10D76 /* Message.swift */,
+				068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */,
+				068F802D1BCB0A1A00A10D76 /* Stack.swift */,
+				068F802E1BCB0A1A00A10D76 /* Try.swift */,
+				068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */,
 				06E1D5201BB76EE300E07321 /* Theater.h */,
 				06E1D5221BB76EE300E07321 /* Info.plist */,
-				06E1D5471BB84BDD00E07321 /* ActorContext.swift */,
-				06EEA7D91BBB875A005787AE /* WebSocketClient.swift */,
-				061C253D1BC2B3BC0049D6C9 /* Stack.swift */,
 			);
 			path = Theater;
 			sourceTree = "<group>";
@@ -639,15 +639,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06E1D5461BB77F4F00E07321 /* Try.swift in Sources */,
-				0693BC791BC335DE00694512 /* NSOperationQueue.swift in Sources */,
-				06E1D54E1BB8BB1100E07321 /* BLECentral.swift in Sources */,
-				06EEA7DA1BBB875A005787AE /* WebSocketClient.swift in Sources */,
-				06E1D53C1BB76F0800E07321 /* Message.swift in Sources */,
-				06E1D54B1BB8A92F00E07321 /* AppActorSystem.swift in Sources */,
-				06E1D53D1BB76F0B00E07321 /* Actor.swift in Sources */,
-				061C253E1BC2B3BC0049D6C9 /* Stack.swift in Sources */,
-				06E1D5481BB84BDD00E07321 /* ActorContext.swift in Sources */,
+				068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */,
+				068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */,
+				068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */,
+				068F80371BCB0A1A00A10D76 /* Try.swift in Sources */,
+				068F80311BCB0A1A00A10D76 /* ActorContext.swift in Sources */,
+				068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */,
+				068F80341BCB0A1A00A10D76 /* Message.swift in Sources */,
+				068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */,
+				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +856,7 @@
 		06E1D5361BB76EE400E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -874,6 +875,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -882,6 +884,7 @@
 		06E1D5371BB76EE400E07321 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
