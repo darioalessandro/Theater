@@ -25,7 +25,7 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         let cgBackedImage = UIImage(fromSampleBuffer: sampleBuffer)
         let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
-        let msg = SendFrame(data: imageData, sender: Optional.None, fps:3)        
+        let msg = RemoteCmd.SendFrame(data: imageData, sender: Optional.None, fps:3)
         remoteCamSession ! msg
     }
 }
@@ -45,14 +45,14 @@ public class CameraViewController : UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupCamera()
-        session ! AddCameraController(sender: Optional.None, ctrl: self)
+        session ! UICmd.AddCameraController(sender: Optional.None, ctrl: self)
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
             captureSession?.stopRunning()
-            session ! UnbecomeCamera(sender : Optional.None)
+            session ! UICmd.UnbecomeCamera(sender : Optional.None)
         }
     }
     
@@ -107,11 +107,10 @@ public class CameraViewController : UIViewController {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
                 if imageDataSampleBuffer == nil {
-                    self.session ! RemoteCmd.TakePicResp(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
+                    self.session ! UICmd.OnPicture(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
                 } else {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                    self.session ! RemoteCmd.TakePicAck()
-                    self.session ! RemoteCmd.TakePicResp(sender: Optional.None, pic:imageData)
+                    self.session ! UICmd.OnPicture(sender: Optional.None, pic:imageData)
                 }
             }
         }

@@ -38,19 +38,18 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             
         return {[unowned self] (msg : Message) in
             switch(msg) {
-                case is RemoteCmd.TakePicAck:
-                    alert.title = "Sending picture"
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(msg),
+                
+                case let t as UICmd.OnPicture:
+                    let ack = RemoteCmd.TakePicAck(sender: self.this)
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(ack),
                         toPeers: self.session.connectedPeers,
                         withMode:.Reliable)
                     } catch let error as NSError {
                         print("error \(error)")
                     }
-                break
-                
-                case let t as RemoteCmd.TakePicResp:
-                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(t),
+                    let resp = RemoteCmd.TakePicResp(sender: self.this, pic:t.pic, error: t.error)
+                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(resp),
                         toPeers: self.session.connectedPeers,
                         withMode:.Reliable)
                     } catch let error as NSError {
@@ -74,7 +73,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.popAndStartScanning()
                     
-                case is UnbecomeCamera:
+                case is UICmd.UnbecomeCamera:
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.popAndStartScanning()
                 
@@ -89,7 +88,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                              lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
-            case let s as SendFrame:
+            case let s as RemoteCmd.SendFrame:
                 do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(s),
                         toPeers: self.session.connectedPeers,
                         withMode:.Unreliable)
@@ -102,7 +101,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 self.become(self.states.cameraTakingPic,
                             state:self.cameraTakingPic(peer, ctrl: ctrl, lobby : lobby))
                 
-            case is UnbecomeCamera:
+            case is UICmd.UnbecomeCamera:
                 self.popToState(self.states.connected)
                 
             case let c as DisconnectPeer:
@@ -124,11 +123,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         return {[unowned self] (msg : Message) in
 
             switch(msg) {
-                case let c as AddCameraController:
+                case let c as UICmd.AddCameraController:
                     self.become(self.states.cameraWithController,
                          state:self.cameraWithController(peer, ctrl: c.ctrl, lobby:lobby))
                 
-                case is UnbecomeCamera:
+                case is UICmd.UnbecomeCamera:
                     self.popToState(self.states.connected)
                 
                 case is Disconnect:
@@ -150,15 +149,15 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
-                case is OnFrame:
+                case is RemoteCmd.OnFrame:
                     print("ignoring frame")
 
-                case let m as AddMonitor:
+                case let m as UICmd.AddMonitor:
                     print("adding monitor")
                     self.become(self.states.monitorWithMonitor,
                         state: self.monitorWithMonitor(m.sender!, peer: peer, lobby : lobby))
                 
-                case is UnbecomeMonitor:
+                case is UICmd.UnbecomeMonitor:
                     self.popToState(self.states.connected)
                 
                 case let c as DisconnectPeer:
@@ -193,9 +192,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                         print("error \(error)")
                     }
                 
-                case let takePic as RemoteCmd.TakePic:
+                case is UICmd.TakePicture:
+                    let cmd = RemoteCmd.TakePic(sender: self.this)
                     ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(takePic),
+                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(cmd),
                         toPeers: self.session.connectedPeers,
                         withMode:.Reliable)
                     } catch let error as NSError {
@@ -229,7 +229,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.popAndStartScanning()
                 
-                case is UnbecomeMonitor:
+                case is UICmd.UnbecomeMonitor:
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.popToState(self.states.connected)
                 
@@ -244,10 +244,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                               lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
-                case is OnFrame:
+                case is RemoteCmd.OnFrame:
                     monitor ! msg
                     
-                case is UnbecomeMonitor:
+                case is UICmd.UnbecomeMonitor:
                     self.popToState(self.states.connected)
                     
                 case let c as DisconnectPeer:
@@ -274,21 +274,21 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         return {[unowned self] (msg : Message) in
             switch(msg) {
                 
-                case is BecomeCamera:
+                case is UICmd.BecomeCamera:
                     self.become(self.states.camera, state: self.camera(peer, lobby:lobby))
                     ^{lobby.showCamera()}
-                    self.fireAndForget(peer, message : PeerBecameCamera())
+                    self.fireAndForget(peer, message : RemoteCmd.PeerBecameCamera())
 
-                case is BecomeMonitor:
+                case is UICmd.BecomeMonitor:
                     self.become(self.states.monitor, state:self.monitor(peer, lobby:lobby))
                     ^{lobby.showRemote()}
-                    self.fireAndForget(peer, message : PeerBecameMonitor())
+                    self.fireAndForget(peer, message : RemoteCmd.PeerBecameMonitor())
                 
-                case is PeerBecameCamera:
-                    self.this ! BecomeMonitor(sender:self.this)
+                case is RemoteCmd.PeerBecameCamera:
+                    self.this ! UICmd.BecomeMonitor(sender:self.this)
                 
-                case is PeerBecameMonitor:
-                    self.this ! BecomeCamera(sender:self.this)
+                case is RemoteCmd.PeerBecameMonitor:
+                    self.this ! UICmd.BecomeCamera(sender:self.this)
 
                 case let c as DisconnectPeer:
                     if (c.peer.displayName == peer.displayName) {
@@ -330,7 +330,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     lazy var idle : Receive = {[unowned self] (msg : Message) in
         switch(msg) {
-            case let w as StartScanningWithLobbyViewController:
+            case let w as UICmd.StartScanningWithLobbyViewController:
                 self.become(self.states.scanning, state:self.scanning(w.lobby))
                 self.this ! StartScanning()
 
@@ -399,23 +399,24 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
+        let remote = ActorRef(context: AppActorSystem.shared, path: ActorPath(path: "theOtherDevice"))
         switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
-            case let frame as SendFrame:
-                this ! OnFrame(data: frame.data, sender: Optional.None, peerId : peerID, fps:frame.fps)
+            case let frame as RemoteCmd.SendFrame:
+                this ! RemoteCmd.OnFrame(data: frame.data, sender: remote, peerId : peerID, fps:frame.fps)
 
-            case let picReq as RemoteCmd.TakePic:
-                this ! picReq
+            case is RemoteCmd.TakePic:
+                this ! RemoteCmd.TakePic(sender: remote)
 
             case let picResp as RemoteCmd.TakePicResp:
-                this ! picResp
+                this ! RemoteCmd.TakePicResp(sender: remote, pic : picResp.pic, error : picResp.error)
 
-            case let ack as RemoteCmd.TakePicAck:
-                this ! ack
+            case is RemoteCmd.TakePicAck:
+                this ! RemoteCmd.TakePicAck(sender:remote)
             
-            case let a as PeerBecameCamera:
+            case let a as RemoteCmd.PeerBecameCamera:
                 this ! a
             
-            case let a as PeerBecameMonitor:
+            case let a as RemoteCmd.PeerBecameMonitor:
                 this ! a
             
             default:

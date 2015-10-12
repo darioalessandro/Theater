@@ -9,18 +9,6 @@
 import UIKit
 import Theater
 
-public class AddMonitor : Message {
-    
-}
-
-public class AddImageView : Message {
-    let imageView : UIImageView
-    
-    public required init(imageView : UIImageView) {
-        self.imageView = imageView
-        super.init(sender: Optional.None)
-    }
-}
 
 public class MonitorActor : Actor {
     
@@ -29,22 +17,22 @@ public class MonitorActor : Actor {
     public required init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
         let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
-        session! ! AddMonitor(sender: ref)
+        session! ! UICmd.AddMonitor(sender: ref)
     }
     
     override public func receive(msg: Message) {
         switch(msg) {
             
-            case let i as AddImageView:
+            case let i as UICmd.AddImageView:
                 self.imageView = i.imageView
                 break
             
-            case is UnbecomeMonitor:
+            case is UICmd.UnbecomeMonitor:
                 let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
                 session! ! msg
                 break
             
-            case let f as OnFrame:
+            case let f as RemoteCmd.OnFrame:
                 let img = UIImage(data: f.data)
                 ^{
                     if let imageView = self.imageView {
@@ -72,20 +60,20 @@ public class MonitorViewController : UIViewController {
     @IBOutlet weak var takePicture: UIBarButtonItem!
     
     @IBAction func onTakePicture(sender: UIBarButtonItem) {
-        session ! RemoteCmd.TakePic(sender: Optional.None)
+        session ! UICmd.TakePicture(sender: Optional.None)
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.toolbarHidden = false
-        monitor ! AddImageView(imageView: self.imageView)
+        monitor ! UICmd.AddImageView(imageView: self.imageView)
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
                     self.navigationController?.toolbarHidden = true
-            monitor ! UnbecomeMonitor(sender: Optional.None)
+            monitor ! UICmd.UnbecomeMonitor(sender: Optional.None)
         }
     }
 }

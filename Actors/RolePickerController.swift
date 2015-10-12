@@ -24,7 +24,7 @@ public class RolePickerController : UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.remoteCamSession ! StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
+        self.remoteCamSession ! UICmd.StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
     }
     
     override public func viewDidDisappear(animated: Bool) {
@@ -48,11 +48,11 @@ public class RolePickerController : UIViewController {
     }
     
     @IBAction public func becomeMonitor(button : UIButton) -> Void {
-        self.remoteCamSession ! BecomeMonitor(sender: Optional.None)
+        self.remoteCamSession ! UICmd.BecomeMonitor(sender: Optional.None)
     }
     
     @IBAction public func becomeCamera(button : UIButton) -> Void {
-        self.remoteCamSession ! BecomeCamera(sender: Optional.None)
+        self.remoteCamSession ! UICmd.BecomeCamera(sender: Optional.None)
     }
     
     
