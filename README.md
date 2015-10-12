@@ -43,16 +43,15 @@ In order to unwrap the message, you can use switch
 
 ```swift
 override public func receive(msg : Message) -> Void {
-        switch (msg) {
-            case let m as Hi:
-                m.sender! ! Hello(sender: self.this)
-            case is Hello:
-                print("got Hello")
-            default:
-                print("what?")
-        }
-    }
+  switch (msg) {
+    case let m as Hi:
+      m.sender! ! Hello(sender: self.this)
+    case is Hello:
+      print("got Hello")
+    default:
+      print("what?")
   }
+}
 ```
 
 All messages must subclass Message:
