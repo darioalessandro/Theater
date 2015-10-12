@@ -40,15 +40,20 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             switch(msg) {
                 
                 case let t as UICmd.OnPicture:
-                    let ack = RemoteCmd.TakePicAck(sender: self.this)
+                    
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    
+                    let ack = RemoteCmd.TakePicAck(sender: self.this)
+                    
                     do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(ack),
                         toPeers: self.session.connectedPeers,
                         withMode:.Reliable)
                     } catch let error as NSError {
                         print("error \(error)")
                     }
+                    
                     let resp = RemoteCmd.TakePicResp(sender: self.this, pic:t.pic, error: t.error)
+                    
                     do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(resp),
                         toPeers: self.session.connectedPeers,
                         withMode:.Reliable)
@@ -58,6 +63,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                             let a = UIAlertController(title: "Error sending pic",
                                 message: Optional.None,
                                 preferredStyle: .Alert)
+                            
+                            a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                                a.dismissViewControllerAnimated(true, completion: nil)
+                                })
+                            
                             ctrl.presentViewController(a, animated: true, completion: nil)
                         }
                     }
@@ -210,12 +220,13 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                         UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
                     }else if let error = picResp.error {
                         ^{
-                            let alert = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
-                            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel) { (action) in
-                                alert.dismissViewControllerAnimated(true, completion: nil)
-                            }
-                            alert.addAction(cancelAction)
-                            lobby.presentViewController(alert, animated: true, completion: nil)
+                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            
+                            a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                                a.dismissViewControllerAnimated(true, completion: nil)
+                            })
+                            
+                            lobby.presentViewController(a, animated: true, completion: nil)
                         }
                     }
                 
