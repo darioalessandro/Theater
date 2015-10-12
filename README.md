@@ -19,8 +19,6 @@ Theater is inspired by Akka.
 
 Twitter = [@TheaterFwk](https://twitter.com/TheaterFwk)
 
-##Quick start:
-
 ### How to get started
 
 - install via [CocoaPods](http://cocoapods.org)
