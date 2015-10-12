@@ -21,6 +21,13 @@ Twitter = [@TheaterFwk](https://twitter.com/TheaterFwk)
 
 ##Quick start:
 
+### How to get started
+- install via [CocoaPods](http://cocoapods.org)
+
+```ruby
+pod 'Theater'
+```
+
 Actors should subclass the Actor class:
 
 ```swift
