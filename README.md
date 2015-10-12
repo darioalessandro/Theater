@@ -22,6 +22,7 @@ Twitter = [@TheaterFwk](https://twitter.com/TheaterFwk)
 ##Quick start:
 
 ### How to get started
+
 - install via [CocoaPods](http://cocoapods.org)
 
 ```ruby
@@ -33,7 +34,7 @@ Actors should subclass the Actor class:
 ```swift
   public class Dude : Actor {
 ```
-In order to "listen for messages, users have to override the receive method:
+In order to "listen" for messages, actors have to override the receive method:
 ```swift
   override public func receive(msg : Message) -> Void {
 
