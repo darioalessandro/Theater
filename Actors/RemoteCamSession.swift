@@ -266,7 +266,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                         self.popAndStartScanning()
                     }
                     
-                case is RemoteCmd.TakePic:
+                case is UICmd.TakePicture:
                     self.become(self.states.monitorTakingPicture, state:
                         self.monitorTakingPicture(monitor, peer: peer, lobby: lobby))
                     self.this ! msg

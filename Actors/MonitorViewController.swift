@@ -48,7 +48,6 @@ public class MonitorActor : Actor {
     }
 }
 
-
 public class MonitorViewController : UIViewController {
     
     let session = AppActorSystem.shared.selectActor("RemoteCam Session")!

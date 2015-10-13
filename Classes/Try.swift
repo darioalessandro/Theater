@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Try<T> {
+public class Try<T> : NSCoder {
     
     private let e : NSException = NSException(name: "invalid usage", reason: "please do not use this class directly, use Success || Failure", userInfo: nil)
 
@@ -21,8 +21,6 @@ public class Try<T> {
     }
     
     public func get() -> T { e.raise(); return NSObject() as! T}
-    
-    public func description() -> String {e.raise(); return "Try"}
     
     public func map<U>(f : (T) -> (U)) -> Try<U> {return Try<U>()}
     
@@ -41,7 +39,18 @@ public class Try<T> {
         } catch let error as NSError {
             return Failure(exception : error)
         }
-        
+    }
+    
+    override public init() {
+        super.init()
+    }
+    
+    public func encodeWithCoder(aCoder: NSCoder) {
+
+    }
+    
+    public init?(coder aDecoder: NSCoder) {
+        super.init()
     }
 }
 
@@ -49,17 +58,16 @@ public class Success<T> : Try<T> {
     
     private let value : T
     
-    public init(value : T) { self.value = value}
+    public init(value : T) {
+        self.value = value
+        super.init()
+    }
     
     override public func isFailure() -> Bool {return false}
     
     override public func isSuccess() -> Bool { return true}
     
     override public func get() -> T {return self.value}
-    
-    override public func description() -> String {
-        return "Success : \(self.get())"
-    }
     
     override public func map<U>(f : (T) -> (U)) -> Try<U> {
         return Try<U>.gen(f(self.value))
@@ -69,13 +77,25 @@ public class Success<T> : Try<T> {
         return  Optional.Some(self.value)
     }
     
+    override public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.value as! NSObject, forKey:"value")
+    }
+    
+    override public init?(coder aDecoder: NSCoder) {
+        self.value = aDecoder.decodeObjectForKey("value") as! T
+        super.init()
+    }
+    
 }
 
 public class Failure<T> : Try<T> {
     
     public let exception : NSError
     
-    public init(exception : NSError) {self.exception = exception}
+    public init(exception : NSError) {
+        self.exception = exception
+        super.init()
+    }
 
     override public func isFailure() -> Bool {return true}
     
@@ -86,8 +106,13 @@ public class Failure<T> : Try<T> {
         return NSObject() as! T
     }
     
-    override public func description() -> String {
-        return "Failure : \(self.exception.debugDescription)"
+    override public func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.exception, forKey:"exception")
+    }
+    
+    override public init?(coder aDecoder: NSCoder) {
+        self.exception = aDecoder.decodeObjectForKey("exception") as! NSError
+        super.init()
     }
     
     override public func map<U>(f : (T) -> (U)) -> Failure<U> {

@@ -71,7 +71,7 @@ public class Account : Actor {
                 break
             
             case let w as BankOpResult:
-                print("Account \(number) : \(w.operationId.UUIDString) \(w.result.description())")
+                print("Account \(number) : \(w.operationId.UUIDString) \(w.result.description)")
                 break
             
             default:
