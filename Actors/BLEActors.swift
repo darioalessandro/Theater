@@ -22,8 +22,8 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
     required public init(context : ActorSystem, ref : ActorRef) {
         self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
-        self.central ! AddListener(sender: this)
-        self.central ! StartScanning()
+        self.central ! BLECentralMsg.AddListener(sender: this)
+        self.central ! BLECentralMsg.StartScanning()
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,8 +76,8 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
     override public func receive(msg: Message) {
         switch(msg) {
             
-        case is StopScanning:
-            self.central ! StopScanning(sender: this)
+        case is BLECentralMsg.StopScanning:
+            self.central ! BLECentralMsg.StopScanning(sender: this)
             break
             
         case let w as SetObservationsController:
@@ -107,7 +107,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
             }
             break
             
-        case let observation as DevicesObservationUpdate:
+        case let observation as BLECentralMsg.DevicesObservationUpdate:
             self.devices = observation.devices
             self.identifiers = Array(self.devices.keys)
             let sections = NSIndexSet(index: 0)

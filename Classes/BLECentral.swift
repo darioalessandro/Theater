@@ -9,11 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-public class StartScanning : Message {
-    public init() {
-        super.init(sender: Optional.None)
-    }
-}
+
 
 public class BLEPeripheral {
     public let peripheral: CBPeripheral
@@ -29,28 +25,38 @@ public class BLEPeripheral {
     }
 }
 
-public class AddListener : Message {}
+public class BLECentralMsg {
 
-public class RemoveListener : Message {}
-
-public class StopScanning : Message {}
-
-public class StateChanged : Message {
-    let state : CBCentralManagerState
-    
-    init(sender : ActorRef, state : CBCentralManagerState) {
-        self.state = state
-        super.init(sender: sender)
+    public class StartScanning : Message {
+        public init() {
+            super.init(sender: Optional.None)
+        }
     }
-}
 
-public class DevicesObservationUpdate : Message {
-    public let devices : [String : [BLEPeripheral]]
-    
-    init(sender : Optional<ActorRef>, devices : [String : [BLEPeripheral]]) {
-        self.devices = devices
-        super.init(sender: sender)
+    public class AddListener : Message {}
+
+    public class RemoveListener : Message {}
+
+    public class StopScanning : Message {}
+
+    public class StateChanged : Message {
+        let state : CBCentralManagerState
+        
+        init(sender : ActorRef, state : CBCentralManagerState) {
+            self.state = state
+            super.init(sender: sender)
+        }
     }
+
+    public class DevicesObservationUpdate : Message {
+        public let devices : [String : [BLEPeripheral]]
+        
+        init(sender : Optional<ActorRef>, devices : [String : [BLEPeripheral]]) {
+            self.devices = devices
+            super.init(sender: sender)
+        }
+    }
+
 }
 
 public class BLECentral : Actor, CBCentralManagerDelegate {
@@ -102,10 +108,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     lazy var scanning : Receive = {[unowned self] (msg : Message) in
             switch (msg) {
-            case is StartScanning:
+            case is BLECentralMsg.StartScanning:
                 print("already scanning")
                 break
-            case is StopScanning:
+            case is BLECentralMsg.StopScanning:
                 self.shouldScan = false
                 self.central.stopScan()
                 print("stopped")
@@ -118,7 +124,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     lazy var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-        case is StartScanning:
+        case is BLECentralMsg.StartScanning:
             self.shouldScan = true
             self.shouldWait = false
             if self.central.state == CBCentralManagerState.PoweredOn {
@@ -127,13 +133,13 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
                 self.become("scanning", state: self.scanning)
             }
             break
-        case is StopScanning:
+        case is BLECentralMsg.StopScanning:
             print("not scanning")
             break
-        case let m where msg is RemoveListener:
+        case let m where msg is BLECentralMsg.RemoveListener:
             self.removeListener(m.sender)
             break
-        case let m where msg is AddListener:
+        case let m where msg is BLECentralMsg.AddListener:
             self.addListener(m.sender)
             break
         case is Harakiri:
@@ -165,7 +171,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         }
         
         listeners.forEach { (listener) -> () in
-            listener ! StateChanged(sender: this, state: central.state)
+            listener ! BLECentralMsg.StateChanged(sender: this, state: central.state)
         }
     }
     
@@ -197,7 +203,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         })
         
         listeners.forEach { (listener) -> () in
-            listener ! DevicesObservationUpdate(sender: this, devices: self.devices)
+            listener ! BLECentralMsg.DevicesObservationUpdate(sender: this, devices: self.devices)
         }
     }
     
