@@ -213,22 +213,22 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     }
                 
                 case let picResp as RemoteCmd.TakePicResp:
-                    self.unbecome()
                     print("saving picture...")
-                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     if let imageData = picResp.pic, image = UIImage(data: imageData) {
                         UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+                        ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     }else if let error = picResp.error {
-                        ^{
+                        ^{alert.dismissViewControllerAnimated(true, completion:{ () in
                             let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
                             
                             a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
                                 a.dismissViewControllerAnimated(true, completion: nil)
-                            })
+                                })
                             
                             lobby.presentViewController(a, animated: true, completion: nil)
-                        }
+                        })}
                     }
+                    self.unbecome()
                 
                 case let c as DisconnectPeer:
                     if c.peer.displayName == peer.displayName {
@@ -363,6 +363,22 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
             self.mcAdvertiserAssistant.start()
             lobby.presentViewController(browser, animated: true, completion: nil)
+        }
+    }
+    
+    override public func receive(msg: Message) {
+        switch (msg) {
+            case is RemoteCmd.TakePic:
+                let l = RemoteCmd.TakePicResp(sender: this, error: NSError(domain: "unable to take picture since \(UIDevice.currentDevice().name) is not in the camera screen", code: 0, userInfo: nil))
+                do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(l),
+                    toPeers: self.session.connectedPeers,
+                    withMode:.Reliable)
+                } catch let error as NSError {
+                    print("error \(error)")
+            }
+            
+            default:
+                super.receive(msg)
         }
     }
     
