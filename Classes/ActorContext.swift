@@ -84,7 +84,7 @@ public class ActorSystem  {
     
     /**
     This is used to stop or kill an actor
-    @param actorRef: the actorRef of the actor that you want to stop.
+    - Parameter actorRef: the actorRef of the actor that you want to stop.
     */
     
     public func stop(actorRef : ActorRef) {
@@ -120,8 +120,8 @@ public class ActorSystem  {
     
     /**
     This method tries finding an actor given it's actorpath as a string
-    @param actorPath : the actor path as string
-    @return an ActorRef or None
+    - Parameter actorPath : the actor path as string
+    - Returns: an ActorRef or None
     */
     
     public func selectActor(actorPath : String) -> Optional<ActorRef>{

@@ -37,16 +37,16 @@ public class Try<T> : NSCoder {
     /**
     Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
     
-    wsResult : Try<Number> = getNumberOfLikes()
-    .
-    .
-    .
-    
-    if let double = wsResult.toOptional {
-        //Success
-    } else {
-        //Failure
-    }
+        wsResult : Try<Number> = getNumberOfLikes()
+        .
+        .
+        .
+        
+        if let double = wsResult.toOptional {
+            //Success
+        } else {
+            //Failure
+        }
     */
     
     public func toOptional() -> Optional<T> {
@@ -129,16 +129,16 @@ public class Success<T> : Try<T> {
     /**
     Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
     
-    wsResult : Try<Number> = getNumberOfLikes()
-    .
-    .
-    .
-    
-    if let number = wsResult.toOptional {
-        showNumberOfLikes(number)
-    } else {
-    //Failure
-    }
+        wsResult : Try<Number> = getNumberOfLikes()
+        .
+        .
+        .
+        
+        if let number = wsResult.toOptional {
+            showNumberOfLikes(number)
+        } else {
+        //Failure
+        }
     */
     
     override public func toOptional() -> Optional<T> {

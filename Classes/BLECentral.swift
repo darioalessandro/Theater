@@ -32,7 +32,7 @@ BLECentral related messages
 public class BLECentralMsg {
     
 /**
-Use this message to tell BLECentral to start scanning, scanning success depends on the status of the BLE hardware, BLECentral will message all it's listeners when it actually starts scanning an #BLECentralMsg.StateChanged when it actually starts scanning.
+Use this message to tell BLECentral to start scanning, scanning success depends on the status of the BLE hardware, BLECentral will message all it's listeners when it actually starts scanning an @see BLECentralMsg#StateChanged when it actually starts scanning.
 */
 
     public class StartScanning : Message {
@@ -42,7 +42,7 @@ Use this message to tell BLECentral to start scanning, scanning success depends 
     }
     
 /**
-Use AddListener to subscribe to BLECentral events such as #BLECentralMsg.DevicesObservationUpdate.
+Use AddListener to subscribe to BLECentral events such as @see BLECentralMsg#DevicesObservationUpdate.
 */
 
     public class AddListener : Message {}

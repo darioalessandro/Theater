@@ -70,8 +70,8 @@ public class Actor : NSObject {
     /**
     Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
     
-    @param state: the new state to push
-    @param name: The name of the new state
+    - Parameter state: the new state to push
+    - Parameter name: The name of the new state
     */
     
     public func become(name : String, state : Receive) -> Void  {
@@ -88,7 +88,7 @@ public class Actor : NSObject {
     
     /**
     Pop states from the statesStack until it finds name
-    @param name: the state that you can to pop to.
+    - Parameter name: the state that you can to pop to.
     */
     
     public func popToState(name : String) {
@@ -105,7 +105,7 @@ public class Actor : NSObject {
     /**
     This method will be called when there's an incoming message, notice that if you push a state int the statesStack this method will not be called anymore until you pop all the states from the statesStack.
     
-    @param msg: the incoming message
+    - Parameter msg: the incoming message
     */
     
     public func receive(msg : Message) -> Void {
@@ -136,7 +136,7 @@ public class Actor : NSObject {
     }
     
     /**
-    Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use #ActorSystem.actorOf to create a new actor
+    Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  @seeActorSystem#actorOf to create a new actor
     */
     
     required public init(context : ActorSystem, ref : ActorRef) {
