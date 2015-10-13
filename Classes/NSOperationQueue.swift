@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+Convenience operator that executes a block with type (Void) -> (Void) in the main queue.
+*/
+
 prefix operator ^ {}
 public prefix func ^ (block : (Void) -> (Void)) -> Void {
     NSOperationQueue.mainQueue().addOperationWithBlock(block)
