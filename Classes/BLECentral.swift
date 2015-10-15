@@ -9,35 +9,67 @@
 import Foundation
 import CoreBluetooth
 
-
-
-public class BLEPeripheral {
-    public let peripheral: CBPeripheral
-    public let advertisementData: [String : AnyObject]
-    public let RSSI: NSNumber
-    public let timestamp : NSDate
-    
-    init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : NSDate) {
-        self.peripheral = peripheral
-        self.advertisementData = advertisementData
-        self.RSSI = RSSI
-        self.timestamp = timestamp
-    }
-}
-
 /**
 BLECentral related messages
 */
 
 public class BLECentralMsg {
+ 
+    /**
+    Namespace for Peripheral related messages
+    */
+    
+    public class Peripheral {
+    /**
+        Tries to connect to CBPeripheral
+    */
+        public class Connect : Message {
+            public let peripheral : CBPeripheral
+            
+            public init(sender: Optional<ActorRef>, peripheral : CBPeripheral) {
+                self.peripheral = peripheral
+                super.init(sender: sender)
+            }
+        }
+        
+    /**
+        Message sent from BLECentral to subscribers when it connects to peripheral
+    */
+        public class OnConnect : Connect {}
+
+    /**
+        Message sent from BLECentral to subscribers when it disconnects from peripheral
+    */
+        
+        public class OnDisconnect : Connect {
+        
+            let error : Optional<NSError>
+            
+            public init(sender: Optional<ActorRef>, peripheral: CBPeripheral, error : Optional<NSError>) {
+                self.error = error
+                super.init(sender: sender, peripheral: peripheral)
+            }
+        }
+        
+        /**
+        Message sent from BLECentral to force disconnecting all peripherals
+        */
+        
+        public class Disconnect : Connect {}
+    }
+    
     
 /**
 Use this message to tell BLECentral to start scanning, scanning success depends on the status of the BLE hardware, BLECentral will message all it's listeners when it actually starts scanning an @see BLECentralMsg#StateChanged when it actually starts scanning.
 */
 
     public class StartScanning : Message {
-        public init() {
-            super.init(sender: Optional.None)
+        
+        public let services : Optional<[CBUUID]>
+        
+        public init(services : Optional<[CBUUID]>, sender : Optional<ActorRef>) {
+            self.services = services
+            super.init(sender: sender)
         }
     }
     
@@ -96,6 +128,8 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     private struct States {
         let scanning : String = "scanning"
         let notScanning : String = "notScanning"
+        let connecting = "connecting"
+        let connected = "connected"
     }
     
     private let states = States()
@@ -143,52 +177,106 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     private func removeListener(sender : Optional<ActorRef>) {
 
-
         if let listener = sender,
             n = listeners.indexOf({ actor -> Bool in  return listener.path.asString == actor.path.asString}) {
             listeners.removeFirst(n)
         }
     }
     
-    lazy private var scanning : Receive = {[unowned self] (msg : Message) in
+    private func connected(peripheral : CBPeripheral) -> Receive {
+        
+        return {[unowned self](msg : Message) in
+            
+            switch(msg) {
+            case let m as BLECentralMsg.Peripheral.OnDisconnect:
+                self.broadcast(m)
+                self.popToState(self.states.scanning)
+                
+            case let m as BLECentralMsg.Peripheral.Disconnect:
+                self.central.cancelPeripheralConnection(m.peripheral)
+                
+            default:
+                print("ignoring")
+                //self.receive(msg)
+            }
+            
+        }
+    }
+    
+    private func connecting(peripheral : CBPeripheral) -> Receive {
+
+        self.central.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnConnectionKey : true,
+            CBConnectPeripheralOptionNotifyOnDisconnectionKey : true,
+            CBConnectPeripheralOptionNotifyOnNotificationKey : true])
+        
+        return {[unowned self](msg : Message) in
+            
+            switch(msg) {
+                case let m as BLECentralMsg.Peripheral.OnConnect:
+                    self.become(self.states.connected, state: self.connected(m.peripheral))
+                    self.broadcast(m)
+                
+                case let m as BLECentralMsg.Peripheral.OnDisconnect:
+                    self.broadcast(m)
+                    self.unbecome()
+                
+                default:
+                    self.receive(msg)
+            }
+            
+        }
+        
+    }
+    
+    private func scanning(services : Optional<[CBUUID]>) -> Receive {
+        self.shouldScan = true
+        self.shouldWait = false
+        if self.central.state == CBCentralManagerState.PoweredOn {
+            if let services = services {
+                self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
+            } else {
+                self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
+            }
+            print("Started")
+        }
+
+        return {[unowned self] (msg : Message) in
             switch (msg) {
             case is BLECentralMsg.StartScanning:
                 print("already scanning")
-                break
+                
             case is BLECentralMsg.StopScanning:
                 self.shouldScan = false
                 self.central.stopScan()
                 print("stopped")
                 self.become(self.states.notScanning, state: self.notScanning)
-                break
+                
+            case let m as BLECentralMsg.Peripheral.Connect:
+                self.become(self.states.connecting, state:self.connecting(m.peripheral))
+                
             default:
                 self.notScanning(msg)
             }
         }
+    }
     
     lazy private var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-        case is BLECentralMsg.StartScanning:
-            self.shouldScan = true
-            self.shouldWait = false
-            if self.central.state == CBCentralManagerState.PoweredOn {
-                self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
-                print("Started")
-                self.become(self.states.scanning, state: self.scanning)
-            }
-            break
+        case let m as BLECentralMsg.StartScanning:
+            self.become(self.states.scanning, state: self.scanning(m.services))
+
         case is BLECentralMsg.StopScanning:
             print("not scanning")
-            break
-        case let m where msg is BLECentralMsg.RemoveListener:
+
+        case let m as BLECentralMsg.RemoveListener:
             self.removeListener(m.sender)
-            break
-        case let m where msg is BLECentralMsg.AddListener:
+
+        case let m as BLECentralMsg.AddListener:
             self.addListener(m.sender)
-            break
+
         case is Harakiri:
             self.context.stop(self.this)
-            break
+
         default:
             print("not handled")
         }
@@ -199,6 +287,8 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         self.this ! msg
         
     }
+    
+    private func broadcast(msg : Message) { listeners.forEach { $0 ! msg} }
     
     /**
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
@@ -268,7 +358,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     */
     
     @objc public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        
+        this ! BLECentralMsg.Peripheral.OnConnect(sender: this, peripheral: peripheral)
     }
     
     /**
@@ -276,7 +366,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     */
     
     @objc public func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        
+        this ! BLECentralMsg.Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     
     /**
@@ -284,7 +374,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     */
 
     @objc public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        
+        this ! BLECentralMsg.Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     
     deinit {

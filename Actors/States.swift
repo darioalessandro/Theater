@@ -9,7 +9,7 @@
 import Foundation
 
 struct States {
-    let scanning = "scanning"
+    let scanning = "scanni§ng"
     let idle = "idle"
     let connected = "connected"
     let camera = "camera"

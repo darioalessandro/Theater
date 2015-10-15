@@ -11,7 +11,7 @@ import Theater
 
 class DeviceListController: UITableViewController {
     
-    let reactive : ActorRef = AppActorSystem.shared.actorOf(RDeviceListController)
+    let reactive : ActorRef = AppActorSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class DeviceListController: UITableViewController {
         switch(ctrl) {
             case is ObservationsViewController:
                 reactive ! SetObservationsController(ctrl: ctrl as! UITableViewController)
-            break
+
             default :
                 print("I have nothing to do")
         }
@@ -42,5 +42,32 @@ class DeviceListController: UITableViewController {
 }
 
 class ObservationsViewController : UITableViewController {
+    
+    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let ctrl = segue.destinationViewController
+        
+        switch(ctrl) {
+        case is DeviceViewController:
+            reactive! ! SetDeviceViewController(ctrl: ctrl as! DeviceViewController)
+            
+        default :
+            print("I have nothing to do")
+        }
+    }
+    
+}
+
+class DeviceViewController : UITableViewController {
+    
+    @IBOutlet weak var stateRow: UITableViewCell!
+    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    
+    internal override func viewWillDisappear(animated: Bool) {
+        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
+            reactive! ! RemoveDeviceViewController(ctrl : self)
+        }
+    }
     
 }

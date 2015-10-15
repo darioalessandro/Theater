@@ -52,7 +52,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
     
     lazy var connected : Receive = {[unowned self](msg : Message) in
         switch(msg) {
-        case let w as SendMessage:
+        case let w as WebSocketMsg.SendMessage:
             ^{ () -> Void in
                 self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
@@ -60,10 +60,10 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
                 self.ctrl?.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
             }
-            self.wsClient ! SendMessage(sender: self.this, message: w.message)
+            self.wsClient ! WebSocketMsg.SendMessage(sender: self.this, message: w.message)
             break
             
-        case let w as OnMessage:
+        case let w as WebSocketMsg.OnMessage:
             ^{ () -> Void in
                 self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
                 let i = self.receivedMessages.count - 1
@@ -73,7 +73,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
             }
             break
             
-        case let w as OnDisconnect:
+        case let w as WebSocketMsg.OnDisconnect:
             self.onDisconnect(w)
             break
             
@@ -82,7 +82,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func onDisconnect(msg : OnDisconnect) -> Void {
+    func onDisconnect(msg : WebSocketMsg.OnDisconnect) -> Void {
         ^{ [unowned self] () -> Void in
             self.ctrl?.title = "Disconnected"
             self.ctrl?.navigationItem.prompt = msg.error?.localizedDescription
@@ -90,22 +90,22 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
         }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
             if let url = self.url {
-                self.this ! Connect(url: url, delegate: self.this)
+                self.this ! WebSocketMsg.Connect(url: url, delegate: self.this)
             }
         })
     }
 
     override public func receive(msg: Message) {
         switch(msg) {
-        case let w as Connect:
-            wsClient ! Connect(url: w.url, delegate: this)
+        case let w as WebSocketMsg.Connect:
+            wsClient ! WebSocketMsg.Connect(url: w.url, delegate: this)
             url = w.url
             ^{ () -> Void in
                 self.ctrl?.title = "Connecting"
             }
             break
             
-        case is OnConnect:
+        case is WebSocketMsg.OnConnect:
             ^{ () -> Void in
                 self.ctrl?.title = "Connected"
                 self.ctrl?.navigationItem.prompt = nil
@@ -125,7 +125,7 @@ public class WSRViewController : Actor, UITableViewDataSource, UITableViewDelega
                 self.ctrl?.tableView.delegate = self
             }
             break
-        case let d as OnDisconnect:
+        case let d as WebSocketMsg.OnDisconnect:
             self.onDisconnect(d)
             
         default:
@@ -149,19 +149,19 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         wsCtrl ! SetWSController(ctrl: self)
-        wsCtrl ! Connect(url: NSURL(string: "wss://echo.websocket.org")!, delegate: wsCtrl)
+        wsCtrl ! WebSocketMsg.Connect(url: NSURL(string: "wss://echo.websocket.org")!, delegate: wsCtrl)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
         send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        wsCtrl ! SendMessage(sender: wsCtrl, message: textField.text!)
+        wsCtrl ! WebSocketMsg.SendMessage(sender: wsCtrl, message: textField.text!)
         return true
     }
     
     @objc func onClick(btn : UIButton) {
-        wsCtrl ! SendMessage(sender: wsCtrl, message: textField.text!)
+        wsCtrl ! WebSocketMsg.SendMessage(sender: wsCtrl, message: textField.text!)
     }
     
     deinit {

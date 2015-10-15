@@ -9,12 +9,20 @@
 import Foundation
 import UIKit
 import Theater
+import CoreBluetooth
 
-public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDelegate {
+public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDelegate {
+    
+    public struct States {
+        let connected = "connected"
+    }
+    
+    let states = States()
     
     var devices : [String : [BLEPeripheral]] = [String : [BLEPeripheral]]()
     var identifiers : [String] = [String]()
     weak var ctrl : Optional<UITableViewController> = Optional.None
+    weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
     weak var observationsCtrl : Optional<UITableViewController> = Optional.None
     var selectedIdentifier : Optional<String> = Optional.None
     let central : ActorRef
@@ -23,10 +31,16 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
         self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
         self.central ! BLECentralMsg.AddListener(sender: this)
-        self.central ! BLECentralMsg.StartScanning()
+        self.central ! BLECentralMsg.StartScanning(services: Optional.None, sender: this)
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let deviceViewCtrl = self.deviceViewCtrl {
+            if tableView.isEqual(deviceViewCtrl.tableView) {
+                return deviceViewCtrl.tableView(tableView, numberOfRowsInSection:section)
+            }
+        }
+        
         if let obsCtrl = self.observationsCtrl,
             selectedId = self.selectedIdentifier,
             observations = self.devices[selectedId] {
@@ -53,6 +67,12 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if let deviceViewCtrl = self.deviceViewCtrl {
+            if tableView.isEqual(deviceViewCtrl.tableView) {
+                return deviceViewCtrl.tableView(tableView, cellForRowAtIndexPath:indexPath)
+            }
+        }
+            
         let cell = tableView.dequeueReusableCellWithIdentifier("device")!
         
         if let obsCtrl = self.observationsCtrl, selectedId = self.selectedIdentifier, observations = self.devices[selectedId] {
@@ -73,12 +93,44 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    func connected(peripheral : CBPeripheral) -> Receive {
+        return {[unowned self](msg : Message) in
+            switch(msg) {
+                
+            case let m as BLECentralMsg.Peripheral.OnConnect:
+                if let d = self.deviceViewCtrl {
+                    ^{d.stateRow.detailTextLabel?.text = "Connected"}
+                }
+                
+                case is RemoveDeviceViewController:
+                    ^{ () -> Void in
+                        self.deviceViewCtrl?.tableView.delegate = nil
+                        self.deviceViewCtrl?.tableView.dataSource = nil
+                        self.deviceViewCtrl = nil
+                    }
+                    
+                    self.central ! BLECentralMsg.Peripheral.Disconnect(sender : self.this, peripheral : peripheral)
+                    self.unbecome()
+                    
+                case let m as BLECentralMsg.Peripheral.OnDisconnect:
+                    if let d = self.deviceViewCtrl {
+                        ^{d.stateRow.detailTextLabel?.text = "Disconnected"}
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                            self.central ! BLECentralMsg.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
+                        })
+                    }
+                
+                default:
+                    print("ignoring")
+            }
+        }
+    }
+    
     override public func receive(msg: Message) {
         switch(msg) {
             
         case is BLECentralMsg.StopScanning:
             self.central ! BLECentralMsg.StopScanning(sender: this)
-            break
             
         case let w as SetObservationsController:
             ^{ () -> Void in
@@ -88,7 +140,7 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.observationsCtrl?.title = self.selectedIdentifier
                 self.observationsCtrl?.tableView.reloadData()
             }
-            break
+
         case is RemoveObservationController:
             ^{ () -> Void in
                 self.observationsCtrl?.tableView.delegate = nil
@@ -96,7 +148,6 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.observationsCtrl = Optional.None
                 self.selectedIdentifier = Optional.None
             }
-            break
             
         case let w as SetTableViewController:
             ^{ () -> Void in
@@ -105,7 +156,26 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                 self.ctrl?.tableView.dataSource = self
                 self.ctrl?.tableView.reloadData()
             }
-            break
+            
+        case let w as SetDeviceViewController:
+            ^{ () -> Void in
+                self.deviceViewCtrl = w.ctrl
+                self.deviceViewCtrl?.tableView.delegate = self
+                self.deviceViewCtrl?.tableView.dataSource = self
+                self.deviceViewCtrl?.tableView.reloadData()
+            }
+            
+            if let selected = self.selectedIdentifier,
+                peripherals = self.devices[selected],
+                peripheral = peripherals.first {
+                    self.central ! BLECentralMsg.Peripheral.Connect(sender: Optional.Some(self.this), peripheral: peripheral.peripheral)
+            }
+            
+        case let m as BLECentralMsg.Peripheral.OnConnect:
+            if let d = self.deviceViewCtrl {
+                ^{d.stateRow.detailTextLabel?.text = "Connected"}
+            }
+            self.become(self.states.connected, state: self.connected(m.peripheral))
             
         case let observation as BLECentralMsg.DevicesObservationUpdate:
             self.devices = observation.devices
@@ -119,11 +189,10 @@ public class RDeviceListController : Actor, UITableViewDataSource, UITableViewDe
                     obsCtrl.tableView.reloadSections(sections, withRowAnimation: .None)
                 }
             }
-            break
+            
         case is Harakiri:
             central ! Harakiri(sender: this)
             super.receive(msg)
-            break
             
         default:
             super.receive(msg)

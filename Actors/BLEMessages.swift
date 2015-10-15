@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import Theater
 
-class RemoveObservationController : Message {
+public class RemoveObservationController : Message {
     init () {super.init(sender: Optional.None)}
 }
 
-class SetTableViewController: Message {
+public class SetTableViewController: Message {
     
     let ctrl : UITableViewController
     
@@ -24,11 +24,23 @@ class SetTableViewController: Message {
     }
 }
 
-class SetObservationsController: Message {
+public class SetObservationsController: Message {
     
     let ctrl : UITableViewController
     
     init(ctrl : UITableViewController) {
+        self.ctrl = ctrl
+        super.init(sender : Optional.None)
+    }
+}
+
+public class RemoveDeviceViewController : SetDeviceViewController {}
+
+public class SetDeviceViewController : Message {
+    
+    let ctrl : DeviceViewController
+    
+    init(ctrl : DeviceViewController) {
         self.ctrl = ctrl
         super.init(sender : Optional.None)
     }
