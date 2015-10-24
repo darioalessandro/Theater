@@ -60,11 +60,9 @@ This is an Actor System generated message that is sent to the sender when it tri
 
 public class DeadLetter : Message {
     
-    public let deadActor : ActorRef
     public let message : Message
     
-    public init(message : Message, sender: Optional<ActorRef>, deadActor : ActorRef) {
-        self.deadActor = deadActor
+    public init(message : Message, sender: Optional<ActorRef>) {
         self.message = message
         super.init(sender: sender)
     }

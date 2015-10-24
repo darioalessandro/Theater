@@ -128,11 +128,15 @@ public class ActorSystem  {
         return self.actors[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
     }
     
+    /**
+    All messages go through this method, eventually we will create an scheduler
+    */
+    
     public func tell(msg : Message, recipient : ActorRef) -> Void {
         if let actor = actorForRef(recipient) {
             actor.tell(msg)
         } else if let sender = msg.sender {
-            sender ! DeadLetter(message: msg, sender:Optional.None, deadActor: recipient)
+            sender ! DeadLetter(message: msg, sender:recipient)
         } else {
             print("Dropped message \(msg)")
         }

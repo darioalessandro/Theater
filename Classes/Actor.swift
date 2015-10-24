@@ -41,13 +41,17 @@ Which will be called when some other actor tries to ! (tell) you something
 
 public class Actor : NSObject {
     
-    private var statesStack : Stack<(String,Receive)> = Stack()
+    /**
+    Here we save all the actor states
+    */
+    
+    final private let statesStack : Stack<(String,Receive)> = Stack()
     
     /**
     Each actor has it's own mailbox to process messages.
     */
     
-    public let mailbox : NSOperationQueue = NSOperationQueue()
+    final public let mailbox : NSOperationQueue = NSOperationQueue()
     
     /**
     Sender has a reference to the last actor ref that sent this actor a message
@@ -74,7 +78,7 @@ public class Actor : NSObject {
     - Parameter name: The name of the new state
     */
     
-    public func become(name : String, state : Receive) -> Void  {
+    final public func become(name : String, state : Receive) -> Void  {
         self.statesStack.push((name, state))
     }
     
@@ -82,7 +86,7 @@ public class Actor : NSObject {
     Pop the state at the head of the statesStack and go to the previous stored state
     */
     
-    public func unbecome() {
+    final public func unbecome() {
         self.statesStack.pop()
     }
     
@@ -91,7 +95,7 @@ public class Actor : NSObject {
     - Parameter name: the state that you can to pop to.
     */
     
-    public func popToState(name : String) {
+    final public func popToState(name : String) {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != name {
                 unbecome()
@@ -139,7 +143,7 @@ public class Actor : NSObject {
     Schedule Once
     */
      
-    public func scheduleOnce(seconds:Double, block : Void -> Void) {
+    final public func scheduleOnce(seconds:Double, block : Void -> Void) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC))), self.mailbox.underlyingQueue!, block)
     }
     
