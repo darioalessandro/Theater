@@ -15,24 +15,12 @@ class DeviceListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reactive ! SetTableViewController(ctrl: self)
+        reactive ! SetDeviceListController(ctrl: self)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive ! RemoveObservationController()
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let ctrl = segue.destinationViewController
-        
-        switch(ctrl) {
-            case is ObservationsViewController:
-                reactive ! SetObservationsController(ctrl: ctrl as! UITableViewController)
-
-            default :
-                print("I have nothing to do")
-        }
+        reactive ! BLECentralMsg.StartScanning(services: Optional.None, sender: Optional.None)
     }
     
     deinit {
@@ -45,15 +33,19 @@ class ObservationsViewController : UITableViewController {
     
     let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let ctrl = segue.destinationViewController
-        
-        switch(ctrl) {
-        case is DeviceViewController:
-            reactive! ! SetDeviceViewController(ctrl: ctrl as! DeviceViewController)
-            
-        default :
-            print("I have nothing to do")
+    internal override func viewDidLoad() {
+        super.viewDidLoad()
+        reactive! ! SetObservationsController(ctrl: self)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        reactive! ! BLECentralMsg.StartScanning(services: Optional.None, sender: Optional.None)
+    }
+    
+    internal override func viewWillDisappear(animated: Bool) {
+        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
+            reactive! ! RemoveObservationController()
         }
     }
     
@@ -63,6 +55,11 @@ class DeviceViewController : UITableViewController {
     
     @IBOutlet weak var stateRow: UITableViewCell!
     let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    
+    internal override func viewDidLoad() {
+        super.viewDidLoad()
+        reactive! ! SetDeviceViewController(ctrl: self)
+    }
     
     internal override func viewWillDisappear(animated: Bool) {
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){

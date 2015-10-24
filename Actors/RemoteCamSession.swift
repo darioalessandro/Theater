@@ -402,11 +402,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     public func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
-        browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
+        browserViewController.dismissViewControllerAnimated(true) { () in }
     }
     
     public func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
-        browserViewController.dismissViewControllerAnimated(true) { () -> Void in }
+        browserViewController.dismissViewControllerAnimated(true) { () in }
     }
     
     public func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {

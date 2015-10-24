@@ -70,7 +70,7 @@ public class ActorSystem  {
     @warning: this contaings a dic with all the actors that belong to the 'ActorSystem' eventually this will look more like a graph than a dic.
     */
     
-    var actors : Dictionary = [String : Actor]()
+    var actors  = [String : Actor]()
     
     /**
     The name of the 'ActorSystem'
@@ -114,7 +114,7 @@ public class ActorSystem  {
     Private method to get the underlying actor given an actor ref, remember that you shoulf never access an actor directly other than for testing.
     */
     
-    func actorForRef(ref : ActorRef) -> Optional<Actor> {
+    private func actorForRef(ref : ActorRef) -> Optional<Actor> {
         return self.actors[ref.path.asString]
     }
     

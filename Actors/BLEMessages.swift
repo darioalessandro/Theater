@@ -14,7 +14,7 @@ public class RemoveObservationController : Message {
     init () {super.init(sender: Optional.None)}
 }
 
-public class SetTableViewController: Message {
+public class SetDeviceListController: Message {
     
     let ctrl : UITableViewController
     

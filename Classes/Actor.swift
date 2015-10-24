@@ -123,7 +123,7 @@ public class Actor : NSObject {
     */
     
     final public func tell(msg : Message) -> Void {
-        mailbox.addOperationWithBlock { () -> Void in
+        mailbox.addOperationWithBlock { () in
             self.sender = msg.sender
             print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
             if let (name,state) : (String,Receive) = self.statesStack.head() {
@@ -136,11 +136,20 @@ public class Actor : NSObject {
     }
     
     /**
+    Schedule Once
+    */
+     
+    public func scheduleOnce(seconds:Double, block : Void -> Void) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC))), self.mailbox.underlyingQueue!, block)
+    }
+    
+    /**
     Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  @seeActorSystem#actorOf to create a new actor
     */
     
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
+        mailbox.underlyingQueue = dispatch_queue_create(ref.path.asString, nil)
         sender = Optional.None
         self.context = context
         self.this = ref

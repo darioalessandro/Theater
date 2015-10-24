@@ -45,7 +45,7 @@ public class Account : Actor {
             case let w as Withdraw:
                 let op = self.withdraw(w.ammount)
                 if let sender = self.sender {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                    self.scheduleOnce(delay(),block: { () in
                         sender ! WithdrawResult(sender: self.this, operationId: w.operationId, result: op)
                     })
                 }
@@ -54,7 +54,7 @@ public class Account : Actor {
             case let w as Deposit:
                 let r = self.deposit(w.ammount)
                 if let sender = self.sender {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay() * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                    self.scheduleOnce(delay(),block: { () in
                         sender ! DepositResult(sender: self.this, operationId: w.operationId, result: r)
                     })
                 }

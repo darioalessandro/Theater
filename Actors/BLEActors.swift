@@ -11,7 +11,7 @@ import UIKit
 import Theater
 import CoreBluetooth
 
-public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDelegate {
+public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDelegate, CBPeripheralDelegate {
     
     public struct States {
         let connected = "connected"
@@ -31,7 +31,6 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
         self.central ! BLECentralMsg.AddListener(sender: this)
-        self.central ! BLECentralMsg.StartScanning(services: Optional.None, sender: this)
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,9 +100,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                 if let d = self.deviceViewCtrl {
                     ^{d.stateRow.detailTextLabel?.text = "Connected"}
                 }
+                let p = m.peripheral
+                p.delegate = self
+                p.discoverServices(Optional.None)
                 
                 case is RemoveDeviceViewController:
-                    ^{ () -> Void in
+                    ^{ () in
                         self.deviceViewCtrl?.tableView.delegate = nil
                         self.deviceViewCtrl?.tableView.dataSource = nil
                         self.deviceViewCtrl = nil
@@ -115,7 +117,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                 case let m as BLECentralMsg.Peripheral.OnDisconnect:
                     if let d = self.deviceViewCtrl {
                         ^{d.stateRow.detailTextLabel?.text = "Disconnected"}
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                        self.scheduleOnce(1,block: { () in
                             self.central ! BLECentralMsg.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
                         })
                     }
@@ -129,11 +131,14 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     override public func receive(msg: Message) {
         switch(msg) {
             
+        case let m as BLECentralMsg.StartScanning:
+            self.central ! BLECentralMsg.StartScanning(services: m.services, sender: self.this)
+            
         case is BLECentralMsg.StopScanning:
             self.central ! BLECentralMsg.StopScanning(sender: this)
             
         case let w as SetObservationsController:
-            ^{ () -> Void in
+            ^{ () in
                 self.observationsCtrl = w.ctrl
                 self.observationsCtrl?.tableView.delegate = self
                 self.observationsCtrl?.tableView.dataSource = self
@@ -142,15 +147,15 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             }
 
         case is RemoveObservationController:
-            ^{ () -> Void in
+            ^{ () in
                 self.observationsCtrl?.tableView.delegate = nil
                 self.observationsCtrl?.tableView.dataSource = nil
                 self.observationsCtrl = Optional.None
                 self.selectedIdentifier = Optional.None
             }
             
-        case let w as SetTableViewController:
-            ^{ () -> Void in
+        case let w as SetDeviceListController:
+            ^{ () in
                 self.ctrl = w.ctrl
                 self.ctrl?.tableView.delegate = self
                 self.ctrl?.tableView.dataSource = self
@@ -158,7 +163,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             }
             
         case let w as SetDeviceViewController:
-            ^{ () -> Void in
+            ^{ () in
                 self.deviceViewCtrl = w.ctrl
                 self.deviceViewCtrl?.tableView.delegate = self
                 self.deviceViewCtrl?.tableView.dataSource = self
@@ -176,15 +181,14 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                 ^{d.stateRow.detailTextLabel?.text = "Connected"}
             }
             self.become(self.states.connected, state: self.connected(m.peripheral))
+            this ! m
             
         case let observation as BLECentralMsg.DevicesObservationUpdate:
             self.devices = observation.devices
             self.identifiers = Array(self.devices.keys)
             let sections = NSIndexSet(index: 0)
-            ^{ () -> Void in
-                
-                self.ctrl?.tableView.reloadSections(sections, withRowAnimation: .None)
-                
+            ^{ () in
+                self.ctrl?.tableView.reloadSections(sections, withRowAnimation: .None)                
                 if let obsCtrl = self.observationsCtrl, _ = self.selectedIdentifier {
                     obsCtrl.tableView.reloadSections(sections, withRowAnimation: .None)
                 }
@@ -197,5 +201,21 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         default:
             super.receive(msg)
         }
+    }
+    
+    public func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+        print("didDiscoverCharacteristicsForService \(service.characteristics)")
+    }
+    
+    public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+        print("didUpdateValueForCharacteristic")
+    }
+    
+    public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+        print("didDiscoverServices \(peripheral.services)")
+        peripheral.services?.forEach({ (service : CBService) in
+            peripheral.discoverCharacteristics(nil, forService: service)
+        })
+        
     }
 }
