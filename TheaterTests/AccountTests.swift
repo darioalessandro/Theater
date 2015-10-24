@@ -60,7 +60,7 @@ class AccountTests: XCTestCase {
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(10) { (error) -> Void in
+        self.waitForExpectationsWithTimeout(20) { (error) -> Void in
             print("error \(error)")
         }
     }

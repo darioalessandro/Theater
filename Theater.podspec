@@ -3,8 +3,8 @@ Pod::Spec.new do |s|
   s.name         = "Theater"
   s.version      = "0.1.5"
   s.summary      = "Swift framework to help write async, resilient and responsive applications."
- 
   s.description  = <<-DESC
+  
 Writing async, resilient and responsive applications is too hard. 
 
 In the case of iOS, is because we've been using the wrong abstraction level: NSOperationQueues, dispatch_semaphore_create, dispatch_semaphore_wait and other low level GCD functions and structures.
