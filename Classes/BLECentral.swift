@@ -14,7 +14,7 @@ import CoreBluetooth
 BLECentral is a wrapper for CBCentralManager which allows developers to interact with CoreBluetooth using actors as opposed to the callback oriented approach of Apple.
 */
 
-public class BLECentral : Actor, CBCentralManagerDelegate {
+public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     private struct States {
         let scanning : String = "scanning"
@@ -39,7 +39,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
     
     private var threshold : Double = 5
     
-    private var listeners : [ActorRef] = []
+    public var listeners : [ActorRef] = []
     
     private var shouldScan : Bool = false
     
@@ -51,21 +51,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate {
         self.central = CBCentralManager.init(delegate: nil, queue: self.bleQueue.underlyingQueue)
         super.init(context: context, ref: ref)
         self.central.delegate = self
-    }
-    
-    private func addListener(sender : Optional<ActorRef>) {
-        if let s = sender {
-            if (listeners.contains({ a -> Bool in return s.path.asString == a.path.asString}) == false) {
-                listeners.append(s)
-            }
-        }
-    }
-    
-    private func removeListener(sender : Optional<ActorRef>) {
-        if let l = sender,
-            n = listeners.indexOf({ a -> Bool in  return l.path.asString == a.path.asString}) {
-            listeners.removeFirst(n)
-        }
     }
     
     private func connected(peripheral : CBPeripheral) -> Receive {

@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 import Theater
+import CoreBluetooth
+
+public struct BLEData {
+    let svc = CBUUID(string: "71DA3FD1-7E10-41C1-B16F-4430B506CDE7")
+    let characteristic = CBUUID(string: "71DA3FD1-7E10-41C1-B16F-4430B506CDE2")
+}
 
 public class RemoveObservationController : Message {
     init () {super.init(sender: Optional.None)}

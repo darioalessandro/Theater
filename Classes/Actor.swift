@@ -140,6 +140,14 @@ public class Actor : NSObject {
     }
     
     /**
+     Is called when an Actor is started. Actors are automatically started asynchronously when created. Empty default implementation.
+    */
+     
+    public func preStart() -> Void {
+        
+    }
+    
+    /**
     Schedule Once
     */
      
@@ -157,6 +165,8 @@ public class Actor : NSObject {
         sender = Optional.None
         self.context = context
         self.this = ref
+        super.init()
+        self.preStart()
     }
     
     deinit {
