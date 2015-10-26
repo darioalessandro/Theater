@@ -27,7 +27,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(bool: true)]
     
-    private var devices : [String : [BLEPeripheral]] = [String : [BLEPeripheral]]()
+    private var devices : [String : [BLEPeripheralObservation]] = [String : [BLEPeripheralObservation]]()
     
     private let bleQueue = NSOperationQueue.init()
     
@@ -156,8 +156,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         
     }
     
-    private func broadcast(msg : Message) { listeners.forEach { $0 ! msg} }
-    
     /**
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
@@ -185,7 +183,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
-        let bleDevice = BLEPeripheral(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
+        let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
         if var historyOfDevice = self.devices[peripheral.identifier.UUIDString], let lastObv = historyOfDevice.first {
             let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20
             let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSinceDate(lastObv.timestamp)) > threshold

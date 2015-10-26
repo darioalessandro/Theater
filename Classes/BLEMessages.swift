@@ -109,9 +109,9 @@ public class BLECentralMsg {
     */
     
     public class DevicesObservationUpdate : Message {
-        public let devices : [String : [BLEPeripheral]]
+        public let devices : [String : [BLEPeripheralObservation]]
         
-        init(sender : Optional<ActorRef>, devices : [String : [BLEPeripheral]]) {
+        init(sender : Optional<ActorRef>, devices : [String : [BLEPeripheralObservation]]) {
             self.devices = devices
             super.init(sender: sender)
         }

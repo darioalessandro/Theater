@@ -15,6 +15,8 @@ public protocol WithListeners : class {
     func addListener(sender : Optional<ActorRef>)
     
     func removeListener(sender : Optional<ActorRef>)
+    
+    func broadcast(msg : Message)
 
 }
 
@@ -35,4 +37,6 @@ extension WithListeners {
                 listeners.removeFirst(n)
         }
     }
+    
+    public func broadcast(m : Message) { listeners.forEach { $0 ! m} }
 }

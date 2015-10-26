@@ -11,8 +11,6 @@ import Theater
 import CoreBluetooth
 
 public class PeripheralMsg {
-    public class StartAdvertising : Message {}
-    public class StopAdvertising : Message {}
     public class SetPeripheralViewController : Message {
         public let ctrl : PeripheralViewController
         
@@ -27,13 +25,11 @@ public class PeripheralMsg {
     public class ToggleAdvertising : Message {}
 }
 
-public class PeripheralActor : Actor, CBPeripheralManagerDelegate, WithListeners {
+public class PeripheralActor : Actor, WithListeners {
     
     public var listeners : [ActorRef] = []
     
     var onClickCharacteristic = CBMutableCharacteristic(type:  BLEData().characteristic, properties: [.Read , .Notify], value: nil, permissions: [.Readable])
-    
-    var centrals : [CBCentral] = []
     
     struct States {
         let idle = "idle"
@@ -49,15 +45,23 @@ public class PeripheralActor : Actor, CBPeripheralManagerDelegate, WithListeners
                                                     CBAdvertisementDataLocalNameKey : "TheaterDemo",
                                                     CBAdvertisementDataServiceUUIDsKey : [BLEData().svc]]
     
-    private let peripheral : CBPeripheralManager = CBPeripheralManager()
+    private let peripheral : ActorRef = AppActorSystem.shared.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
     
     required public init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
-        peripheral.delegate = self
     }
     
     override public func preStart() -> Void {
         become(states.idle, state: self.idle)
+    }
+    
+    public override func receive(msg : Message) -> Void {
+        switch(msg) {
+        case let v as PeripheralMsg.SetPeripheralViewController:
+            self.ctrl = v.ctrl
+        default:
+            super.receive(msg)
+        }
     }
     
     lazy var idle : Receive = {[unowned self](msg : Message) in
@@ -65,99 +69,65 @@ public class PeripheralActor : Actor, CBPeripheralManagerDelegate, WithListeners
             case is PeripheralMsg.ToggleAdvertising:
                 var svc = CBMutableService(type: BLEData().svc, primary: true)
                 svc.characteristics = [self.onClickCharacteristic]
-                self.peripheral.addService(svc)
-                self.peripheral.startAdvertising(self.advertisementData)
+                self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData)
                 self.addListener(msg.sender)
+            
+            case is BLEPeripheral.DidStartAdvertising:
+                self.become(self.states.advertising, state: self.advertising)
+                ^{self.ctrl!.advertisingButton.setTitle("Advertising", forState: .Normal)}
+            
+            case is BLEPeripheral.DidStopAdvertising:
+                self.popToState(self.states.idle)
+            
             default :
                 self.receive(msg)
-        }
-    }
-    
-    lazy var connected : Receive = {[unowned self](msg : Message) in
-        switch (msg) {
-        default :
-            self.receive(msg)
         }
     }
     
     lazy var advertising : Receive = {[unowned self](msg : Message) in
         switch (msg) {
             case is PeripheralMsg.ToggleAdvertising:
-                self.peripheral.stopAdvertising()
-                self.peripheral.removeAllServices()
+                self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
                 self.unbecome()
                 ^{self.ctrl!.advertisingButton.setTitle("Idle", forState: .Normal)}
             
             case is PeripheralMsg.OnClick:
-                 var data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding)
-                self.peripheral.updateValue(data!, forCharacteristic: self.onClickCharacteristic, onSubscribedCentrals: self.centrals)
+                if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
+                 self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: nil, value: data)
+                }
+            
+            case let m as BLEPeripheral.CentralDidSubscribeToCharacteristic:
+                self.become(self.states.connected, state: self.connected(m.central))
             
             default :
-                self.receive(msg)
+                self.idle(msg)
         }
     }
     
-    public override func receive(msg : Message) -> Void {
-        switch(msg) {
-            case let v as PeripheralMsg.SetPeripheralViewController:
-                self.ctrl = v.ctrl
-            default:
-                super.receive(msg)
-        }
-    }
-    
-    public func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
-        switch(peripheral.state) {
-            case .PoweredOff:
-                print("off")
-            case .PoweredOn:
-                print("on")
-            case .Resetting:
-                print("resetting")
-            default:
-                print("ignoring")
-        }
+    func connected(central : CBCentral) -> Receive {
+        return {[unowned self](msg : Message) in
+            switch(msg) {
+                case is PeripheralMsg.OnClick :
+                    if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
+                        self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: [central], value: data)
+                    }
         
-        
-    }
-    
-    public func peripheralManager(peripheral: CBPeripheralManager, willRestoreState dict: [String : AnyObject]) {
-        print("willRestoreState")
-    }
-    
-    public func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
-        print("central subscribed")
-        centrals.append(central)
-    }
-    
-    public func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFromCharacteristic characteristic: CBCharacteristic) {
-        print("removed central")
-        if let i = centrals.indexOf(central) {
-            centrals.removeAtIndex(i)
-        }
-    }
-    
-    public func peripheralManager(peripheral: CBPeripheralManager, didReceiveReadRequest request: CBATTRequest) {
-        request.value = self.onClickCharacteristic.value
-        self.peripheral.respondToRequest(request, withResult: .Success)
-    }
-    
-    public func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
-        if let ctrl = self.ctrl {
-            ^{
-                if let error = error {
-                    ctrl.advertisingButton.setTitle(error.domain, forState: .Normal)
-                    self.popToState(self.states.idle)
-                } else {
-                    ctrl.advertisingButton.setTitle("Advertising", forState: .Normal)
-                    self.become(self.states.advertising, state: self.advertising)
-                }
+                case let m as BLEPeripheral.DidReceiveReadRequest:
+                    m.request.value = self.onClickCharacteristic.value
+                    self.peripheral ! BLEPeripheral.RespondToRequest(sender: self.this, request: m.request, result: .Success)
+                
+                case is BLEPeripheral.CentralDidUnsubscribeFromCharacteristic:
+                    self.unbecome()
+                
+                default:
+                    self.advertising(msg)
             }
         }
     }
     
     deinit {
-        self.peripheral.stopAdvertising()
+        self.peripheral ! Harakiri(sender: this)
     }
     
 }

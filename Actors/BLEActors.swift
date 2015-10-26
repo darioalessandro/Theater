@@ -20,7 +20,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     let states = States()
     
-    var devices : [String : [BLEPeripheral]] = [String : [BLEPeripheral]]()
+    var devices : [String : [BLEPeripheralObservation]] = [String : [BLEPeripheralObservation]]()
     var identifiers : [String] = [String]()
     weak var ctrl : Optional<UITableViewController> = Optional.None
     weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
@@ -77,7 +77,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         
         if let obsCtrl = self.observationsCtrl, selectedId = self.selectedIdentifier, observations = self.devices[selectedId] {
             if tableView.isEqual(obsCtrl.tableView) {
-                let blePeripheral : BLEPeripheral = observations[indexPath.row]
+                let blePeripheral : BLEPeripheralObservation = observations[indexPath.row]
                 cell.textLabel?.text = "\(blePeripheral.timestamp) : \(blePeripheral.RSSI)"
                 cell.detailTextLabel?.text = blePeripheral.advertisementData.debugDescription
             } else {

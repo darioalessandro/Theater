@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-public class BLEPeripheral {
+public class BLEPeripheralObservation {
     public let peripheral: CBPeripheral
     public let advertisementData: [String : AnyObject]
     public let RSSI: NSNumber

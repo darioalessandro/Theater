@@ -19,7 +19,7 @@
 		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; };
 		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; };
 		068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D31BDC51AE00330714 /* BLEMessages.swift */; };
-		068EA7D61BDC51AE00330714 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D41BDC51AE00330714 /* BLEPeripheral.swift */; };
+		068EA7D61BDC51AE00330714 /* BLEPeripheralObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */; };
 		068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */; };
 		068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D91BDC5ACE00330714 /* Main.storyboard */; };
 		068EA7DC1BDC5D3E00330714 /* BLEPeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7DB1BDC5D3E00330714 /* BLEPeripheralViewController.swift */; };
@@ -44,6 +44,8 @@
 		0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0694680D1BC45CA100C84503 /* WireTransferWorker.swift */; };
 		069468111BC45D3D00C84503 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069468101BC45D3D00C84503 /* Bank.swift */; };
 		069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */; };
+		06C30E421BDEB2B40055CBF4 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C30E411BDEB2B40055CBF4 /* BLEPeripheral.swift */; settings = {ASSET_TAGS = (); }; };
+		06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
 		06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */; };
@@ -97,6 +99,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */,
 				06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -118,7 +121,7 @@
 		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
 		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
 		068EA7D31BDC51AE00330714 /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEMessages.swift; path = Classes/BLEMessages.swift; sourceTree = SOURCE_ROOT; };
-		068EA7D41BDC51AE00330714 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; };
+		068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheralObservation.swift; path = Classes/BLEPeripheralObservation.swift; sourceTree = SOURCE_ROOT; };
 		068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bluetooth.storyboard; sourceTree = "<group>"; };
 		068EA7D91BDC5ACE00330714 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		068EA7DB1BDC5D3E00330714 /* BLEPeripheralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheralViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		0694680D1BC45CA100C84503 /* WireTransferWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireTransferWorker.swift; sourceTree = "<group>"; };
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
 		069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLECentralViewController.swift; sourceTree = "<group>"; };
+		06C30E411BDEB2B40055CBF4 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheral.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4FC1BB7699800E07321 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -247,8 +251,9 @@
 			isa = PBXGroup;
 			children = (
 				068EA7D31BDC51AE00330714 /* BLEMessages.swift */,
-				068EA7D41BDC51AE00330714 /* BLEPeripheral.swift */,
+				068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */,
 				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
+				06C30E411BDEB2B40055CBF4 /* BLEPeripheral.swift */,
 			);
 			name = Bluetooth;
 			sourceTree = "<group>";
@@ -344,7 +349,7 @@
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
-				06EEA7D51BBB730B005787AE /* Bluetooth */,
+				06EEA7D51BBB730B005787AE /* BLE Button */,
 				064C6ECB1BC5F32600B0F13D /* Multipeer */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
@@ -388,14 +393,14 @@
 			path = TheaterTests;
 			sourceTree = "<group>";
 		};
-		06EEA7D51BBB730B005787AE /* Bluetooth */ = {
+		06EEA7D51BBB730B005787AE /* BLE Button */ = {
 			isa = PBXGroup;
 			children = (
 				068EA7DE1BDC5D5B00330714 /* Controllers */,
 				068EA7DD1BDC5D5000330714 /* Model */,
 				068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */,
 			);
-			name = Bluetooth;
+			name = "BLE Button";
 			sourceTree = "<group>";
 		};
 		06EEA7D81BBB84E2005787AE /* WebSockets */ = {
@@ -528,7 +533,7 @@
 				TargetAttributes = {
 					06E1D4F11BB7699700E07321 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 9BAHU39A66;
+						DevelopmentTeam = 8DPYD7M3EU;
 					};
 					06E1D5051BB7699800E07321 = {
 						CreatedOnToolsVersion = 7.0;
@@ -691,10 +696,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */,
-				068EA7D61BDC51AE00330714 /* BLEPeripheral.swift in Sources */,
+				068EA7D61BDC51AE00330714 /* BLEPeripheralObservation.swift in Sources */,
 				068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */,
 				068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */,
 				068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */,
+				06C30E421BDEB2B40055CBF4 /* BLEPeripheral.swift in Sources */,
 				068F80371BCB0A1A00A10D76 /* Try.swift in Sources */,
 				068F80311BCB0A1A00A10D76 /* ActorContext.swift in Sources */,
 				068EA7E21BDC64FA00330714 /* WithListeners.swift in Sources */,
