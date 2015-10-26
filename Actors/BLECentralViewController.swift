@@ -8,6 +8,7 @@
 
 import UIKit
 import Theater
+import AudioToolbox
 
 class DeviceListController: UITableViewController {
     
@@ -20,7 +21,7 @@ class DeviceListController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive ! BLECentralMsg.StartScanning(services: Optional.None, sender: Optional.None)
+        reactive ! BLECentralMsg.StartScanning(services: [BLEData().svc], sender: Optional.None)
     }
     
     deinit {
@@ -40,7 +41,7 @@ class ObservationsViewController : UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive! ! BLECentralMsg.StartScanning(services: Optional.None, sender: Optional.None)
+        reactive! ! BLECentralMsg.StartScanning(services: [BLEData().svc], sender: Optional.None)
     }
     
     internal override func viewWillDisappear(animated: Bool) {

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Theater
 import CoreBluetooth
+import AudioToolbox
 
 public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDelegate, CBPeripheralDelegate {
     
@@ -96,13 +97,38 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Message) in
             switch(msg) {
                 
-            case let m as BLECentralMsg.Peripheral.OnConnect:
-                if let d = self.deviceViewCtrl {
-                    ^{d.stateRow.detailTextLabel?.text = "Connected"}
-                }
-                let p = m.peripheral
-                p.delegate = self
-                p.discoverServices(Optional.None)
+                case is BLECentralMsg.DidUpdateValueForCharacteristic:
+                     AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    if let ctrl : UIViewController = self.deviceViewCtrl {
+                        let alert = UIAlertController(title: "onClick \(peripheral.name)", message: nil,                         preferredStyle: .Alert)
+                        ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                        }
+                        self.scheduleOnce(3, block: {() in
+                            ^{
+                                alert.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                        })
+                    }
+                
+                
+                
+                case let m as BLECentralMsg.DidDiscoverCharacteristicsForService:
+                    let chars = m.chars.filter({ (char) -> Bool in
+                        return char.UUID == BLEData().characteristic
+                    })
+                
+                    if let char : CBCharacteristic = chars.first {
+                        peripheral.setNotifyValue(true, forCharacteristic: char)
+                    }
+                
+                case let m as BLECentralMsg.Peripheral.OnConnect:
+                    if let d = self.deviceViewCtrl {
+                        ^{d.stateRow.detailTextLabel?.text = "Connected"}
+                    }
+                    let p = m.peripheral
+                    p.delegate = self
+                    p.discoverServices(Optional.None)
                 
                 case is RemoveDeviceViewController:
                     ^{ () in
@@ -205,10 +231,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     public func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
         print("didDiscoverCharacteristicsForService \(service.characteristics)")
+        this ! BLECentralMsg.DidDiscoverCharacteristicsForService(sender: self.this, chars : service.characteristics!, svc : service, peripheral : peripheral)
     }
     
     public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         print("didUpdateValueForCharacteristic")
+        this ! BLECentralMsg.DidUpdateValueForCharacteristic(sender : this, char : characteristic, peripheral : peripheral, error : error)
     }
     
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
@@ -216,6 +244,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         peripheral.services?.forEach({ (service : CBService) in
             peripheral.discoverCharacteristics(nil, forService: service)
         })
+        this ! BLECentralMsg.DidDiscoverServices(sender: self.this, svcs : peripheral.services!, peripheral : peripheral)
         
     }
 }

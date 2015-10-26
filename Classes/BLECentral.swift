@@ -92,22 +92,23 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     }
     
     private func scanning(services : Optional<[CBUUID]>) -> Receive {
-        self.shouldScan = true
         self.shouldWait = false
-        if self.central.state == CBCentralManagerState.PoweredOn {
-            if let services = services {
-                self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
-            } else {
-                self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
-            }
-            print("Started")
-        }
-
+        
         return {[unowned self] (msg : Message) in
             switch (msg) {
+                case is BLECentralMsg.StateChanged:
+                    if self.central.state == CBCentralManagerState.PoweredOn {
+                        self.this ! BLECentralMsg.StartScanning(services: services, sender: self.this)
+                    }
+                
                 case is BLECentralMsg.StartScanning:
-                    print("already scanning")
-                    
+                    if let services = services {
+                        self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
+                    } else {
+                        self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
+                    }
+                    print("Started")
+                
                 case is BLECentralMsg.StopScanning:
                     self.shouldScan = false
                     self.central.stopScan()
@@ -163,21 +164,11 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     @objc public func centralManagerDidUpdateState(central: CBCentralManager) {
         
-        switch(central.state) {
-            case .PoweredOn:
-                if self.shouldScan {
-                    self.central.scanForPeripheralsWithServices(nil, options: bleOptions)
-                } else {
-                    self.central.stopScan()
-                }
-                
-            default:
-                print("doing nothing")
-        }
+        let stateChanged = BLECentralMsg.StateChanged(sender: this, state: central.state)
         
-        listeners.forEach { (listener) -> () in
-            listener ! BLECentralMsg.StateChanged(sender: this, state: central.state)
-        }
+        this ! stateChanged
+        
+        listeners.forEach { (listener) in listener ! stateChanged }
     }
     
     /**

@@ -117,4 +117,44 @@ public class BLECentralMsg {
         }
     }
     
+    /**
+
+    */
+    public class DidDiscoverCharacteristicsForService : Message {
+        public let chars : [CBCharacteristic]
+        public let svc : CBService
+        public let peripheral : CBPeripheral
+        
+        public init(sender: Optional<ActorRef>, chars : [CBCharacteristic], svc : CBService, peripheral : CBPeripheral) {
+            self.chars = chars
+            self.svc = svc
+            self.peripheral = peripheral
+            super.init(sender: sender)
+        }
+    }
+    
+    public class DidDiscoverServices : Message {
+        public let svcs : [CBService]
+        public let peripheral : CBPeripheral
+        
+        public init(sender: Optional<ActorRef>, svcs : [CBService], peripheral : CBPeripheral) {
+            self.svcs = svcs
+            self.peripheral = peripheral
+            super.init(sender: sender)
+        }
+    }
+    
+    public class DidUpdateValueForCharacteristic : Message {
+        public let char : CBCharacteristic
+        public let peripheral : CBPeripheral
+        public let error : NSError?
+        
+        public init(sender : Optional<ActorRef>, char : CBCharacteristic, peripheral : CBPeripheral, error : NSError?) {
+            self.char = char
+            self.peripheral = peripheral
+            self.error = error
+            super.init(sender : sender)
+        }
+    }
+    
 }
