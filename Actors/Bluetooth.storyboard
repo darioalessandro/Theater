@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Bluetooth-->
+        <!--BLE Button-->
         <scene sceneID="tEt-E0-G6U">
             <objects>
-                <tableViewController title="Bluetooth" id="43B-mG-aeN" sceneMemberID="viewController">
+                <tableViewController title="BLE Button" id="43B-mG-aeN" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="shT-Ct-5Jl">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,9 +25,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="201"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To see this demo, you'll need 2 iOS devices, one has to be the central and the other has to be the peripheral." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdA-TF-1fw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdA-TF-1fw">
                                                     <rect key="frame" x="8" y="8" width="584" height="185"/>
                                                     <animations/>
+                                                    <string key="text">BLE button: The peripheral advertises a BLE button svc with one characteristic that Central uses to detect when there's an onClick event from the peripheral. To see this demo, you'll need 2 iOS devices, one has to be the central and the other has to be the peripheral.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
