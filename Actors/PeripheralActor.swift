@@ -79,6 +79,7 @@ public class PeripheralActor : Actor, WithListeners {
             
             case is BLEPeripheral.DidStopAdvertising:
                 self.popToState(self.states.idle)
+                ^{self.ctrl!.advertisingButton.setTitle("Idle", forState: .Normal)}
             
             default :
                 self.receive(msg)
@@ -99,6 +100,9 @@ public class PeripheralActor : Actor, WithListeners {
             
             case let m as BLEPeripheral.CentralDidSubscribeToCharacteristic:
                 self.become(self.states.connected, state: self.connected(m.central))
+                ^{if let ctrl = self.ctrl {
+                    ctrl.statusCell.detailTextLabel!.text = "connected to \(m.central.identifier.UUIDString)"
+                    }}
             
             default :
                 self.idle(msg)
@@ -117,8 +121,11 @@ public class PeripheralActor : Actor, WithListeners {
                     m.request.value = self.onClickCharacteristic.value
                     self.peripheral ! BLEPeripheral.RespondToRequest(sender: self.this, request: m.request, result: .Success)
                 
-                case is BLEPeripheral.CentralDidUnsubscribeFromCharacteristic:
+                case let m as BLEPeripheral.CentralDidUnsubscribeFromCharacteristic:
                     self.unbecome()
+                    ^{if let ctrl = self.ctrl {
+                        ctrl.statusCell.detailTextLabel!.text = "disconnected"
+                    }}
                 
                 default:
                     self.advertising(msg)

@@ -57,6 +57,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         switch (msg) {
             case let m as StartAdvertising:
                 self.peripheral.startAdvertising(m.advertisementData)
+                self.addListener(m.sender)
             
             case is FailedToStartAdvertising:
                 self.broadcast(msg)
@@ -82,6 +83,8 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is StopAdvertising:
                 self.peripheral.stopAdvertising()
+                self.peripheral.removeAllServices()
+                self.unbecome()
                 self.broadcast(DidStopAdvertising(sender: self.this))
             
             case let m as CentralDidSubscribeToCharacteristic:
