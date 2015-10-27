@@ -13,7 +13,7 @@ import CoreBluetooth
 BLECentral related messages
 */
 
-public class BLECentralMsg {
+public extension BLECentral {
     
     /**
     Namespace for Peripheral related messages

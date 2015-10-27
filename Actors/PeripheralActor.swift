@@ -10,7 +10,7 @@ import Foundation
 import Theater
 import CoreBluetooth
 
-public class PeripheralMsg {
+public extension PeripheralActor {
     public class SetPeripheralViewController : Message {
         public let ctrl : PeripheralViewController
         
@@ -57,7 +57,7 @@ public class PeripheralActor : Actor, WithListeners {
     
     public override func receive(msg : Message) -> Void {
         switch(msg) {
-        case let v as PeripheralMsg.SetPeripheralViewController:
+        case let v as SetPeripheralViewController:
             self.ctrl = v.ctrl
         default:
             super.receive(msg)
@@ -66,7 +66,7 @@ public class PeripheralActor : Actor, WithListeners {
     
     lazy var idle : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-            case is PeripheralMsg.ToggleAdvertising:
+            case is ToggleAdvertising:
                 var svc = CBMutableService(type: BLEData().svc, primary: true)
                 svc.characteristics = [self.onClickCharacteristic]
                 self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
@@ -88,12 +88,12 @@ public class PeripheralActor : Actor, WithListeners {
     
     lazy var advertising : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-            case is PeripheralMsg.ToggleAdvertising:
+            case is ToggleAdvertising:
                 self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
                 self.unbecome()
                 ^{self.ctrl!.advertisingButton.setTitle("Idle", forState: .Normal)}
             
-            case is PeripheralMsg.OnClick:
+            case is OnClick:
                 if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
                  self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: nil, value: data)
                 }
@@ -112,7 +112,7 @@ public class PeripheralActor : Actor, WithListeners {
     func connected(central : CBCentral) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
-                case is PeripheralMsg.OnClick :
+                case is OnClick :
                     if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
                         self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: [central], value: data)
                     }
@@ -121,7 +121,7 @@ public class PeripheralActor : Actor, WithListeners {
                     m.request.value = self.onClickCharacteristic.value
                     self.peripheral ! BLEPeripheral.RespondToRequest(sender: self.this, request: m.request, result: .Success)
                 
-                case let m as BLEPeripheral.CentralDidUnsubscribeFromCharacteristic:
+                case is BLEPeripheral.CentralDidUnsubscribeFromCharacteristic:
                     self.unbecome()
                     ^{if let ctrl = self.ctrl {
                         ctrl.statusCell.detailTextLabel!.text = "disconnected"

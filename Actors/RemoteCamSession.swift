@@ -317,13 +317,13 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     func popAndStartScanning() {
         self.popToState(self.states.scanning)
-        self.this ! BLECentralMsg.StartScanning(services: Optional.None, sender: this)
+        self.this ! BLECentral.StartScanning(services: Optional.None, sender: this)
     }
     
     func scanning(lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Message) in
             switch(msg) {
-            case is BLECentralMsg.StartScanning:
+            case is BLECentral.StartScanning:
                 self.startScanning(lobby)
                 
             case let w as OnConnectToDevice:
@@ -331,7 +331,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 self.mcAdvertiserAssistant.stop()
                 
             case is Disconnect:
-                self.this ! BLECentralMsg.StartScanning(services: Optional.None, sender: self.this)
+                self.this ! BLECentral.StartScanning(services: Optional.None, sender: self.this)
                 
             default:
                 self.receive(msg)
@@ -343,7 +343,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         switch(msg) {
             case let w as UICmd.StartScanningWithLobbyViewController:
                 self.become(self.states.scanning, state:self.scanning(w.lobby))
-                self.this ! BLECentralMsg.StartScanning(services: Optional.None, sender: self.this)
+                self.this ! BLECentral.StartScanning(services: Optional.None, sender: self.this)
 
             default:
                 self.receive(msg)

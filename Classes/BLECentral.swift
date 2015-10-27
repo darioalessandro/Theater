@@ -56,11 +56,11 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     private func connected(peripheral : CBPeripheral) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
-                case let m as BLECentralMsg.Peripheral.OnDisconnect:
+                case let m as Peripheral.OnDisconnect:
                     self.broadcast(m)
                     self.popToState(self.states.notScanning)
                     
-                case let m as BLECentralMsg.Peripheral.Disconnect:
+                case let m as Peripheral.Disconnect:
                     self.central.cancelPeripheralConnection(m.peripheral)
                     
                 default:
@@ -77,11 +77,11 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         
         return {[unowned self](msg : Message) in
             switch(msg) {
-                case let m as BLECentralMsg.Peripheral.OnConnect:
+                case let m as Peripheral.OnConnect:
                     self.become(self.states.connected, state: self.connected(m.peripheral))
                     self.broadcast(m)
                 
-                case let m as BLECentralMsg.Peripheral.OnDisconnect:
+                case let m as Peripheral.OnDisconnect:
                     self.broadcast(m)
                     self.popToState(self.states.notScanning)
                 
@@ -96,12 +96,12 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         
         return {[unowned self] (msg : Message) in
             switch (msg) {
-                case is BLECentralMsg.StateChanged:
+                case is StateChanged:
                     if self.central.state == CBCentralManagerState.PoweredOn {
-                        self.this ! BLECentralMsg.StartScanning(services: services, sender: self.this)
+                        self.this ! StartScanning(services: services, sender: self.this)
                     }
                 
-                case is BLECentralMsg.StartScanning:
+                case is StartScanning:
                     if let services = services {
                         self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
                     } else {
@@ -109,13 +109,13 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                     }
                     print("Started")
                 
-                case is BLECentralMsg.StopScanning:
+                case is StopScanning:
                     self.shouldScan = false
                     self.central.stopScan()
                     print("stopped")
                     self.become(self.states.notScanning, state: self.notScanning)
                     
-                case let m as BLECentralMsg.Peripheral.Connect:
+                case let m as Peripheral.Connect:
                     self.unbecome()
                     self.become(self.states.connecting, state: self.connecting(m.peripheral))
                     
@@ -127,19 +127,19 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     lazy private var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-            case let m as BLECentralMsg.Peripheral.Connect:
+            case let m as Peripheral.Connect:
                 self.become(self.states.connecting, state: self.connecting(m.peripheral))
                 
-            case let m as BLECentralMsg.StartScanning:
+            case let m as StartScanning:
                 self.become(self.states.scanning, state: self.scanning(m.services))
 
-            case is BLECentralMsg.StopScanning:
+            case is StopScanning:
                 print("not scanning")
 
-            case let m as BLECentralMsg.RemoveListener:
+            case let m as RemoveListener:
                 self.removeListener(m.sender)
 
-            case let m as BLECentralMsg.AddListener:
+            case let m as AddListener:
                 self.addListener(m.sender)
 
             case is Harakiri:
@@ -162,7 +162,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     @objc public func centralManagerDidUpdateState(central: CBCentralManager) {
         
-        let stateChanged = BLECentralMsg.StateChanged(sender: this, state: central.state)
+        let stateChanged = StateChanged(sender: this, state: central.state)
         
         this ! stateChanged
         
@@ -204,7 +204,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         })
         
         listeners.forEach { (listener) -> () in
-            listener ! BLECentralMsg.DevicesObservationUpdate(sender: this, devices: self.devices)
+            listener ! DevicesObservationUpdate(sender: this, devices: self.devices)
         }
     }
     
@@ -213,7 +213,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        this ! BLECentralMsg.Peripheral.OnConnect(sender: this, peripheral: peripheral)
+        this ! Peripheral.OnConnect(sender: this, peripheral: peripheral)
     }
     
     /**
@@ -221,7 +221,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        this ! BLECentralMsg.Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
+        this ! Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     
     /**
@@ -229,7 +229,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
 
     @objc public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        this ! BLECentralMsg.Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
+        this ! Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     
     deinit {

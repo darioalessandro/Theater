@@ -22,7 +22,7 @@ public class PeripheralViewController : UITableViewController {
     var peripheral : ActorRef = AppActorSystem.shared.actorOf(PeripheralActor.self, name: "PeripheralActor")
     
     public override func viewWillAppear(animated: Bool) {
-        peripheral ! PeripheralMsg.SetPeripheralViewController(sender: Optional.None, ctrl : self)
+        peripheral ! PeripheralActor.SetPeripheralViewController(sender: Optional.None, ctrl : self)
     }
     
     public override func viewWillDisappear(animated: Bool) {
@@ -32,11 +32,11 @@ public class PeripheralViewController : UITableViewController {
     }
     
     @IBAction func toggleAdvertising(sender: AnyObject) {
-        peripheral ! PeripheralMsg.ToggleAdvertising(sender : Optional.None)
+        peripheral ! PeripheralActor.ToggleAdvertising(sender : Optional.None)
     }
     
     @IBAction func onClick(sender: UIButton) {
-        peripheral ! PeripheralMsg.OnClick(sender : Optional.None)
+        peripheral ! PeripheralActor.OnClick(sender : Optional.None)
     }
     
     deinit {
