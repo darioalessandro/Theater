@@ -156,5 +156,114 @@ public class BLECentralMsg {
             super.init(sender : sender)
         }
     }
+}
+
+/**
+This extension contains all the messages that BLEPeripheral produces
+*/
+
+public extension BLEPeripheral {
     
+    public class StartAdvertising : Message {
+        public let advertisementData : [String : AnyObject]?
+        
+        public init(sender: Optional<ActorRef>, advertisementData : [String : AnyObject]?) {
+            self.advertisementData = advertisementData
+            super.init(sender: sender)
+        }
+    }
+    
+    public class StopAdvertising : Message {}
+    
+    public class DidStartAdvertising : Message {}
+    
+    public class DidStopAdvertising : Message {}
+    
+    public class FailedToStartAdvertising : Error {}
+    
+    public class Error : Message {
+        let error : NSError
+        init(sender : Optional<ActorRef>, error : NSError) {
+            self.error = error
+            super.init(sender: sender)
+        }
+    }
+    
+    public class CentralDidSubscribeToCharacteristic : Message {
+        public let central: CBCentral
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>, central : CBCentral, characteristic : CBCharacteristic) {
+            self.central = central
+            self.characteristic = characteristic
+            super.init(sender: sender)
+        }
+    }
+    
+    public class CentralDidUnsubscribeFromCharacteristic : CentralDidSubscribeToCharacteristic {}
+    
+    public class DidReceiveReadRequest : Message {
+        public let request: CBATTRequest
+        public init(sender: Optional<ActorRef>, request : CBATTRequest) {
+            self.request = request
+            super.init(sender: sender)
+        }
+    }
+    
+    public class RespondToRequest : DidReceiveReadRequest {
+        
+        public let result : CBATTError
+        
+        public init(sender: Optional<ActorRef>, request : CBATTRequest, result : CBATTError) {
+            self.result = result
+            super.init(sender: sender, request:request)
+        }
+        
+    }
+    
+    public class DidReceiveWriteRequests : Message {
+        public let requests: [CBATTRequest]
+        
+        public init(sender: Optional<ActorRef>, requests : [CBATTRequest]) {
+            self.requests = requests
+            super.init(sender: sender)
+        }
+    }
+    
+    public class PeripheralManagerDidUpdateState : Message {
+        
+        public let state : CBPeripheralManagerState
+        
+        public init(sender: Optional<ActorRef>, state : CBPeripheralManagerState) {
+            self.state = state
+            super.init(sender: sender)
+        }
+    }
+    
+    public class AddServices : Message {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+            self.svcs = svcs
+            super.init(sender: sender)
+        }
+    }
+    
+    public class RemoveServices : AddServices {}
+    
+    public class UpdateCharacteristicValue : Message {
+        public let char : CBMutableCharacteristic
+        public let centrals : [CBCentral]?
+        public let value : NSData
+        
+        public init(sender: Optional<ActorRef>,
+            char : CBMutableCharacteristic,
+            centrals : [CBCentral]?,
+            value : NSData) {
+                self.char = char
+                self.centrals = centrals
+                self.value = value
+                super.init(sender: sender)
+        }
+    }
 }
