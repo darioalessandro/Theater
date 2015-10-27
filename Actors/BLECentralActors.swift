@@ -244,7 +244,6 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         peripheral.services?.forEach({ (service : CBService) in
             peripheral.discoverCharacteristics(nil, forService: service)
         })
-        this ! BLECentral.DidDiscoverServices(sender: self.this, svcs : peripheral.services!, peripheral : peripheral)
-        
+        this ! BLECentral.DidDiscoverServices(sender: self.this, svcs : peripheral.services!, peripheral : peripheral)        
     }
 }
