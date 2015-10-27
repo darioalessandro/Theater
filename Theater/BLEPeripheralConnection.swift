@@ -11,6 +11,15 @@ import CoreBluetooth
 
 public extension BLEPeripheralConnection {
     
+    public class SetPeripheral : Message {
+        public let peripheral : CBPeripheral
+        
+        public init(sender: Optional<ActorRef>, peripheral : CBPeripheral) {
+            self.peripheral = peripheral
+            super.init(sender: sender)
+        }
+    }
+    
     public class PeripheralDidUpdateName : Message {
         
         public let peripheral : CBPeripheral
@@ -151,43 +160,57 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     
     public var listeners : [ActorRef] = [ActorRef]()
     
-    override public func receive(msg: Message) {
+    func connected(peripheral : CBPeripheral) -> Receive {
+        return { [unowned self] (msg : Message) in
         switch(msg) {
+            
             case is PeripheralDidUpdateName:
                 self.broadcast(msg)
             
             case is DidModifyServices:
                 self.broadcast(msg)
-                    
+                
             case is DidReadRSSI:
                 self.broadcast(msg)
-                    
+                
             case is DidDiscoverServices:
-               self.broadcast(msg)
-            
+                self.broadcast(msg)
+                
             case is DidDiscoverIncludedServicesForService:
                 self.broadcast(msg)
-                    
+                
             case is DidDiscoverCharacteristicsForService:
                 self.broadcast(msg)
-                    
+                
             case is DidUpdateValueForCharacteristic:
                 self.broadcast(msg)
-                    
+                
             case is DidWriteValueForCharacteristic:
                 self.broadcast(msg)
-            
+                
             case is DidUpdateNotificationStateForCharacteristic:
                 self.broadcast(msg)
-            
+                
             case is DidDiscoverDescriptorsForCharacteristic:
                 self.broadcast(msg)
-            
+                
             case is DidUpdateValueForDescriptor:
                 self.broadcast(msg)
-            
+                
             case is DidWriteValueForDescriptor:
                 self.broadcast(msg)
+                
+            default:
+                print("ignored")
+        }
+        }
+    }
+    
+    override public func receive(msg: Message) {
+        switch(msg) {
+            
+            case let p as SetPeripheral:
+                self.become("conencted", state: self.connected(p.peripheral))
             
             default:
                 super.receive(msg)
