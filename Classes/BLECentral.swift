@@ -43,6 +43,8 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     private var shouldScan : Bool = false
     
+    private var peripheralConnections : [NSUUID : ActorRef] = [NSUUID : ActorRef]()
+    
     /**
     This is the constructor used by the ActorSystem, do not call it directly
     */
@@ -53,72 +55,48 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         self.central.delegate = self
     }
     
-    private func connected(peripheral : CBPeripheral) -> Receive {
-        return {[unowned self](msg : Message) in
-            switch(msg) {
-                case let m as Peripheral.OnDisconnect:
-                    self.broadcast(m)
-                    self.popToState(self.states.notScanning)
-                    
-                case let m as Peripheral.Disconnect:
-                    self.central.cancelPeripheralConnection(m.peripheral)
-                    
-                default:
-                    print("ignoring")
-            }
-        }
-    }
-    
-    private func connecting(peripheral : CBPeripheral) -> Receive {
-
-        self.central.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnConnectionKey : true,
-            CBConnectPeripheralOptionNotifyOnDisconnectionKey : true,
-            CBConnectPeripheralOptionNotifyOnNotificationKey : true])
-        
-        return {[unowned self](msg : Message) in
-            switch(msg) {
-                case let m as Peripheral.OnConnect:
-                    self.become(self.states.connected, state: self.connected(m.peripheral))
-                    self.broadcast(m)
-                
-                case let m as Peripheral.OnDisconnect:
-                    self.broadcast(m)
-                    self.popToState(self.states.notScanning)
-                
-                default:
-                    print("ignoring")
-            }
-        }
-    }
-    
     private func scanning(services : Optional<[CBUUID]>) -> Receive {
         self.shouldWait = false
         
         return {[unowned self] (msg : Message) in
             switch (msg) {
+                
                 case is StateChanged:
                     if self.central.state == CBCentralManagerState.PoweredOn {
                         self.this ! StartScanning(services: services, sender: self.this)
                     }
                 
                 case is StartScanning:
-                    if let services = services {
-                        self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
-                    } else {
-                        self.central.scanForPeripheralsWithServices(nil, options: self.bleOptions)
-                    }
-                    print("Started")
+                    self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
                 
                 case is StopScanning:
                     self.shouldScan = false
                     self.central.stopScan()
-                    print("stopped")
-                    self.become(self.states.notScanning, state: self.notScanning)
+                    self.popToState(self.states.notScanning)
                     
                 case let m as Peripheral.Connect:
-                    self.unbecome()
-                    self.become(self.states.connecting, state: self.connecting(m.peripheral))
+                    self.central.connectPeripheral(m.peripheral, options: [CBConnectPeripheralOptionNotifyOnConnectionKey : true,
+                        CBConnectPeripheralOptionNotifyOnDisconnectionKey : true,
+                        CBConnectPeripheralOptionNotifyOnNotificationKey : true])
+                
+                case let m as Peripheral.OnConnect:
+                    let id = m.peripheral.identifier
+                    let c = self.context.actorOf(BLEPeripheralConnection.self, name: id.UUIDString)
+                    self.peripheralConnections[id] = c
+                    c ! BLEPeripheralConnection.SetPeripheral(sender: self.this, peripheral: m.peripheral)
+                    self.broadcast(Peripheral.OnConnect(sender: self.this, peripheral: m.peripheral, peripheralConnection: c))
+                
+                case let m as Peripheral.OnDisconnect:
+                    let id = m.peripheral.identifier
+                    if let c = self.peripheralConnections[id] {
+                        c ! Harakiri(sender: self.this)
+                    }
+                    self.peripheralConnections.removeValueForKey(m.peripheral.identifier)
+                    self.broadcast(m)                
                     
+                case let m as Peripheral.Disconnect:
+                    self.central.cancelPeripheralConnection(m.peripheral)
+                
                 default:
                     self.notScanning(msg)
             }
@@ -127,8 +105,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     lazy private var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-            case let m as Peripheral.Connect:
-                self.become(self.states.connecting, state: self.connecting(m.peripheral))
                 
             case let m as StartScanning:
                 self.become(self.states.scanning, state: self.scanning(m.services))
@@ -161,11 +137,8 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManagerDidUpdateState(central: CBCentralManager) {
-        
         let stateChanged = StateChanged(sender: this, state: central.state)
-        
         this ! stateChanged
-        
         listeners.forEach { (listener) in listener ! stateChanged }
     }
     
@@ -213,7 +186,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        this ! Peripheral.OnConnect(sender: this, peripheral: peripheral)
+        this ! Peripheral.OnConnect(sender: this, peripheral: peripheral, peripheralConnection: nil)
     }
     
     /**

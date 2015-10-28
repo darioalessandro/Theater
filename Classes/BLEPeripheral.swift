@@ -29,11 +29,13 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     private var advertisementData : [String : AnyObject]?
     
-    private let peripheral : CBPeripheralManager = CBPeripheralManager()
+    private var peripheral : CBPeripheralManager
     
     required public init(context: ActorSystem, ref: ActorRef) {
+        self.peripheral = CBPeripheralManager() //Stupid swift
         super.init(context: context, ref: ref)
-        self.peripheral.delegate = self
+        self.peripheral = CBPeripheralManager(delegate: self, queue: self.mailbox.underlyingQueue)
+        self.peripheral.removeAllServices()
     }
     
     override public func preStart() -> Void {
@@ -43,7 +45,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     public override func receive(msg : Message) -> Void {
         switch(msg) {
             case let m as AddServices:
-                m.svcs.forEach{self.peripheral.addService($0)}
+                if self.peripheral.state == .PoweredOn {
+                    m.svcs.forEach{self.peripheral.addService($0)}
+            }
             
             case let m as RemoveServices:
                 m.svcs.forEach{self.peripheral.removeService($0)}

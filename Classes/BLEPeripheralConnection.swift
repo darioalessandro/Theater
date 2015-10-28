@@ -11,6 +11,8 @@ import CoreBluetooth
 
 public extension BLEPeripheralConnection {
     
+    public class AddListener : Message {}
+    
     public class SetPeripheral : Message {
         public let peripheral : CBPeripheral
         
@@ -73,6 +75,16 @@ public extension BLEPeripheralConnection {
             error : NSError?) {
                 self.error = error
                 self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DiscoverServices : Message {
+        public let services : [CBUUID]
+        
+        public init(sender: Optional<ActorRef>,
+            services : [CBUUID]) {
+                self.services = services
                 super.init(sender: sender)
         }
     }
@@ -161,8 +173,15 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     public var listeners : [ActorRef] = [ActorRef]()
     
     func connected(peripheral : CBPeripheral) -> Receive {
+        peripheral.delegate = self
         return { [unowned self] (msg : Message) in
         switch(msg) {
+            
+            case let m as DiscoverServices:
+                peripheral.discoverServices(m.services)
+            
+            case is AddListener:
+                self.addListener(msg.sender)
             
             case is PeripheralDidUpdateName:
                 self.broadcast(msg)
@@ -259,6 +278,10 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     *
     */
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?){
+        print("didDiscoverServices \(peripheral.services)")
+        peripheral.services?.forEach({ (service : CBService) in
+            peripheral.discoverCharacteristics(nil, forService: service)
+        })
         this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
     }
     

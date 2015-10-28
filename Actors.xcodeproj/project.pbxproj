@@ -20,7 +20,7 @@
 		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; };
 		06631A671BDF191D00883344 /* WithListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A661BDF191D00883344 /* WithListeners.swift */; };
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
-		06631A6B1BDF245300883344 /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A6A1BDF245300883344 /* BLEPeripheralConnection.swift */; };
+		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
 		068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D31BDC51AE00330714 /* BLEMessages.swift */; };
 		068EA7D61BDC51AE00330714 /* BLEPeripheralObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */; };
 		068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */; };
@@ -123,7 +123,7 @@
 		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
 		06631A661BDF191D00883344 /* WithListeners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WithListeners.swift; path = Classes/WithListeners.swift; sourceTree = SOURCE_ROOT; };
 		06631A681BDF192600883344 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; };
-		06631A6A1BDF245300883344 /* BLEPeripheralConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheralConnection.swift; sourceTree = "<group>"; };
+		066805951BE05C190048085B /* BLEPeripheralConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheralConnection.swift; path = Classes/BLEPeripheralConnection.swift; sourceTree = SOURCE_ROOT; };
 		068EA7D31BDC51AE00330714 /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEMessages.swift; path = Classes/BLEMessages.swift; sourceTree = SOURCE_ROOT; };
 		068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheralObservation.swift; path = Classes/BLEPeripheralObservation.swift; sourceTree = SOURCE_ROOT; };
 		068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bluetooth.storyboard; sourceTree = "<group>"; };
@@ -252,11 +252,11 @@
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				066805951BE05C190048085B /* BLEPeripheralConnection.swift */,
 				06631A681BDF192600883344 /* BLEPeripheral.swift */,
 				068EA7D31BDC51AE00330714 /* BLEMessages.swift */,
 				068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */,
 				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
-				06631A6A1BDF245300883344 /* BLEPeripheralConnection.swift */,
 			);
 			name = Bluetooth;
 			sourceTree = "<group>";
@@ -712,7 +712,7 @@
 				068F80341BCB0A1A00A10D76 /* Message.swift in Sources */,
 				068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */,
 				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
-				06631A6B1BDF245300883344 /* BLEPeripheralConnection.swift in Sources */,
+				066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -97,7 +97,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Message) in
             switch(msg) {
                 
-                case is BLECentral.DidUpdateValueForCharacteristic:
+                case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
                         let alert = UIAlertController(title: "onClick \(peripheral.name)", message: nil,                         preferredStyle: .Alert)
@@ -111,10 +111,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         })
                     }
                 
-                
-                
-                case let m as BLECentral.DidDiscoverCharacteristicsForService:
-                    let chars = m.chars.filter({ (char) -> Bool in
+                case let m as BLEPeripheralConnection.DidDiscoverCharacteristicsForService:
+                    let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
                     })
                 
@@ -126,9 +124,9 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     if let d = self.deviceViewCtrl {
                         ^{d.stateRow.detailTextLabel?.text = "Connected"}
                     }
-                    let p = m.peripheral
-                    p.delegate = self
-                    p.discoverServices(Optional.None)
+                    m.peripheralConnection! ! BLEPeripheralConnection.AddListener(sender : self.this)
+                    m.peripheralConnection! ! BLEPeripheralConnection.DiscoverServices(sender: self.this, services: [BLEData().svc])
+                
                 
                 case is RemoveDeviceViewController:
                     ^{ () in
@@ -136,15 +134,14 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         self.deviceViewCtrl?.tableView.dataSource = nil
                         self.deviceViewCtrl = nil
                     }
-                    
+                    self.unbecome()                    
                     self.central ! BLECentral.Peripheral.Disconnect(sender : self.this, peripheral : peripheral)
-                    self.unbecome()
                     
                 case let m as BLECentral.Peripheral.OnDisconnect:
                     if let d = self.deviceViewCtrl {
                         ^{d.stateRow.detailTextLabel?.text = "Disconnected"}
                         self.scheduleOnce(1,block: { () in
-                            self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
+                           self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
                         })
                     }
                 
@@ -204,10 +201,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             
         case let m as BLECentral.Peripheral.OnConnect:
             if let d = self.deviceViewCtrl {
-                ^{d.stateRow.detailTextLabel?.text = "Connected"}
+                ^{
+                    d.stateRow.detailTextLabel?.text = "Connected"
+                }
             }
             self.become(self.states.connected, state: self.connected(m.peripheral))
-            this ! m
+            self.this ! m
             
         case let observation as BLECentral.DevicesObservationUpdate:
             self.devices = observation.devices
@@ -229,21 +228,4 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         }
     }
     
-    public func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
-        print("didDiscoverCharacteristicsForService \(service.characteristics)")
-        this ! BLECentral.DidDiscoverCharacteristicsForService(sender: self.this, chars : service.characteristics!, svc : service, peripheral : peripheral)
-    }
-    
-    public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-        print("didUpdateValueForCharacteristic")
-        this ! BLECentral.DidUpdateValueForCharacteristic(sender : this, char : characteristic, peripheral : peripheral, error : error)
-    }
-    
-    public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-        print("didDiscoverServices \(peripheral.services)")
-        peripheral.services?.forEach({ (service : CBService) in
-            peripheral.discoverCharacteristics(nil, forService: service)
-        })
-        this ! BLECentral.DidDiscoverServices(sender: self.this, svcs : peripheral.services!, peripheral : peripheral)        
-    }
 }

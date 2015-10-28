@@ -26,7 +26,7 @@ public extension BLECentral {
         public class Connect : Message {
             public let peripheral : CBPeripheral
             
-            public init(sender: Optional<ActorRef>, peripheral : CBPeripheral) {
+            public init(sender: ActorRef?, peripheral : CBPeripheral) {
                 self.peripheral = peripheral
                 super.init(sender: sender)
             }
@@ -35,19 +35,33 @@ public extension BLECentral {
         /**
         Message sent from BLECentral to subscribers when it connects to peripheral
         */
-        public class OnConnect : Connect {}
+        public class OnConnect : Message {
+            
+            public let peripheralConnection : ActorRef?
+            
+            public let peripheral : CBPeripheral
+            
+            public init(sender: ActorRef?, peripheral: CBPeripheral, peripheralConnection : ActorRef?) {
+                self.peripheralConnection = peripheralConnection
+                self.peripheral = peripheral
+                super.init(sender: sender)
+            }
+        }
         
         /**
         Message sent from BLECentral to subscribers when it disconnects from peripheral
         */
         
-        public class OnDisconnect : Connect {
+        public class OnDisconnect : Message {
             
             let error : Optional<NSError>
             
+            public let peripheral : CBPeripheral
+            
             public init(sender: Optional<ActorRef>, peripheral: CBPeripheral, error : Optional<NSError>) {
+                self.peripheral = peripheral
                 self.error = error
-                super.init(sender: sender, peripheral: peripheral)
+                super.init(sender: sender)
             }
         }
         
@@ -55,7 +69,14 @@ public extension BLECentral {
         Message sent from BLECentral to force disconnecting all peripherals
         */
         
-        public class Disconnect : Connect {}
+        public class Disconnect : Message {
+            public let peripheral : CBPeripheral
+            
+            public init(sender: ActorRef?, peripheral : CBPeripheral) {
+                self.peripheral = peripheral
+                super.init(sender: sender)
+            }
+        }
     }
     
     
@@ -116,46 +137,6 @@ public extension BLECentral {
             super.init(sender: sender)
         }
     }
-    
-    /**
-
-    */
-    public class DidDiscoverCharacteristicsForService : Message {
-        public let chars : [CBCharacteristic]
-        public let svc : CBService
-        public let peripheral : CBPeripheral
-        
-        public init(sender: Optional<ActorRef>, chars : [CBCharacteristic], svc : CBService, peripheral : CBPeripheral) {
-            self.chars = chars
-            self.svc = svc
-            self.peripheral = peripheral
-            super.init(sender: sender)
-        }
-    }
-    
-    public class DidDiscoverServices : Message {
-        public let svcs : [CBService]
-        public let peripheral : CBPeripheral
-        
-        public init(sender: Optional<ActorRef>, svcs : [CBService], peripheral : CBPeripheral) {
-            self.svcs = svcs
-            self.peripheral = peripheral
-            super.init(sender: sender)
-        }
-    }
-    
-    public class DidUpdateValueForCharacteristic : Message {
-        public let char : CBCharacteristic
-        public let peripheral : CBPeripheral
-        public let error : NSError?
-        
-        public init(sender : Optional<ActorRef>, char : CBCharacteristic, peripheral : CBPeripheral, error : NSError?) {
-            self.char = char
-            self.peripheral = peripheral
-            self.error = error
-            super.init(sender : sender)
-        }
-    }
 }
 
 /**
@@ -200,7 +181,17 @@ public extension BLEPeripheral {
         }
     }
     
-    public class CentralDidUnsubscribeFromCharacteristic : CentralDidSubscribeToCharacteristic {}
+    public class CentralDidUnsubscribeFromCharacteristic : Message {
+        public let central: CBCentral
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>, central : CBCentral, characteristic : CBCharacteristic) {
+            self.central = central
+            self.characteristic = characteristic
+            super.init(sender: sender)
+        }
+
+    }
     
     public class DidReceiveReadRequest : Message {
         public let request: CBATTRequest
@@ -210,13 +201,14 @@ public extension BLEPeripheral {
         }
     }
     
-    public class RespondToRequest : DidReceiveReadRequest {
-        
+    public class RespondToRequest : Message {
         public let result : CBATTError
+        public let request: CBATTRequest
         
         public init(sender: Optional<ActorRef>, request : CBATTRequest, result : CBATTError) {
             self.result = result
-            super.init(sender: sender, request:request)
+            self.request = request
+            super.init(sender: sender)
         }
         
     }
@@ -249,7 +241,14 @@ public extension BLEPeripheral {
         }
     }
     
-    public class RemoveServices : AddServices {}
+    public class RemoveServices : Message {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+            self.svcs = svcs
+            super.init(sender: sender)
+        }
+    }
     
     public class UpdateCharacteristicValue : Message {
         public let char : CBMutableCharacteristic
