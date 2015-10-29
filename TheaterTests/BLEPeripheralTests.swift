@@ -53,10 +53,9 @@ class BLEPeripheralTests: QuickSpec {
                     expect(advertising).to(equal(peripheral.states.advertising), description : "Failed to switch state")
                 }
                 
-                it("should transition to back to idle if it is forced to") {
-                    peripheral.unbecome()
-                    let idle = peripheral.currentState()!.0
-                    expect(idle).to(equal(peripheral.states.idle), description : "Failed to switch state")
+                it("should transition to back to idle if it gets a StopAdvertising") {
+                    peripheral.this ! BLEPeripheral.StopAdvertising(sender : nil)
+                    expect(peripheral.currentState()!.0).toEventually(equal(peripheral.states.idle), timeout: 5, pollInterval: 1, description : "Failed to switch state")
                 }
                 
                 it("should stop when requested") {
