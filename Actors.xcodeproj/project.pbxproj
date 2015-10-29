@@ -40,7 +40,6 @@
 		0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
-		0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25471BC3070E0049D6C9 /* AccountTests.swift */; };
 		0693BC7E1BC33C5100694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
 		0693BC7F1BC33C5400694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0693BC841BC3405100694512 /* AccountsViewController.swift */; };
@@ -118,7 +117,6 @@
 		060E28561BE1A5CA00D73ACB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
-		061C25471BC3070E0049D6C9 /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountTests.swift; path = ../TheaterTests/AccountTests.swift; sourceTree = "<group>"; };
 		06224B9C1BC85E00003A3CB7 /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
 		064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RolePickerController.swift; sourceTree = "<group>"; };
 		064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -268,9 +266,9 @@
 			children = (
 				066805951BE05C190048085B /* BLEPeripheralConnection.swift */,
 				06631A681BDF192600883344 /* BLEPeripheral.swift */,
+				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
 				068EA7D31BDC51AE00330714 /* BLEMessages.swift */,
 				068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */,
-				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
 			);
 			name = Bluetooth;
 			sourceTree = "<group>";
@@ -379,7 +377,6 @@
 		06E1D5091BB7699800E07321 /* ActorsTests */ = {
 			isa = PBXGroup;
 			children = (
-				061C25471BC3070E0049D6C9 /* AccountTests.swift */,
 				06E1D50C1BB7699800E07321 /* Info.plist */,
 			);
 			path = ActorsTests;
@@ -808,7 +805,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0693BC7D1BC33C2C00694512 /* AccountTests.swift in Sources */,
 				0693BC7E1BC33C5100694512 /* Account.swift in Sources */,
 				0693BC7F1BC33C5400694512 /* AccountOps.swift in Sources */,
 			);
