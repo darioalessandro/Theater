@@ -266,3 +266,231 @@ public extension BLEPeripheral {
         }
     }
 }
+
+
+/**
+ PeripheralConnection messages, most are just wrappers for the CBPeripheralDelegate original methods
+ */
+
+public extension BLEPeripheralConnection {
+    
+    public class AddListener : Message {}
+    
+    public class SetPeripheral : Message {
+        public let peripheral : CBPeripheral
+        
+        public init(sender: Optional<ActorRef>, peripheral : CBPeripheral) {
+            self.peripheral = peripheral
+            super.init(sender: sender)
+        }
+    }
+    
+    public class PeripheralDidUpdateName : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public init(sender: Optional<ActorRef>, peripheral : CBPeripheral) {
+            self.peripheral = peripheral
+            super.init(sender: sender)
+        }
+    }
+    
+    public class DidModifyServices : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let invalidatedServices : [CBService]
+        
+        public init(sender: Optional<ActorRef>, peripheral : CBPeripheral, invalidatedServices:[CBService]) {
+            self.peripheral = peripheral
+            self.invalidatedServices = invalidatedServices
+            super.init(sender: sender)
+        }
+    }
+    
+    public class DidReadRSSI : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let RSSI : NSNumber
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            error : NSError?,
+            RSSI : NSNumber) {
+                self.error = error
+                self.RSSI = RSSI
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidDiscoverServices : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            error : NSError?) {
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DiscoverServices : Message {
+        public let services : [CBUUID]
+        
+        public init(sender: Optional<ActorRef>,
+            services : [CBUUID]) {
+                self.services = services
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidDiscoverIncludedServicesForService : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let service: CBService
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            service : CBService,
+            error : NSError?) {
+                self.service = service
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidDiscoverCharacteristicsForService : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let service: CBService
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            service : CBService,
+            error : NSError?) {
+                self.service = service
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidUpdateValueForCharacteristic : Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidWriteValueForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidUpdateNotificationStateForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidDiscoverDescriptorsForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidUpdateValueForDescriptor : Message {
+        public let peripheral: CBPeripheral
+        public let descriptor: CBDescriptor
+        public let error: NSError?
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral: CBPeripheral,
+            descriptor: CBDescriptor,
+            error: NSError?) {
+                self.peripheral = peripheral
+                self.descriptor = descriptor
+                self.error = error
+                super.init(sender: sender)
+        }
+    }
+    
+    public class DidWriteValueForDescriptor : Message {
+        public let peripheral: CBPeripheral
+        public let descriptor: CBDescriptor
+        public let error: NSError?
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral: CBPeripheral,
+            descriptor: CBDescriptor,
+            error: NSError?) {
+                self.peripheral = peripheral
+                self.descriptor = descriptor
+                self.error = error
+                super.init(sender: sender)
+        }
+    }
+}
