@@ -9,6 +9,10 @@
 import Foundation
 import CoreBluetooth
 
+/**
+ PeripheralConnection messages, most are just wrappers for the CBPeripheralDelegate original methods
+*/
+
 public extension BLEPeripheralConnection {
     
     public class AddListener : Message {}
@@ -108,7 +112,23 @@ public extension BLEPeripheralConnection {
         }
     }
     
-    public class DidDiscoverCharacteristicsForService : DidDiscoverIncludedServicesForService {}
+    public class DidDiscoverCharacteristicsForService : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let service: CBService
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            service : CBService,
+            error : NSError?) {
+                self.service = service
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
     
     public class DidUpdateValueForCharacteristic : Message {
         
@@ -129,11 +149,59 @@ public extension BLEPeripheralConnection {
         }
     }
     
-    public class DidWriteValueForCharacteristic : DidUpdateValueForCharacteristic {}
+    public class DidWriteValueForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
     
-    public class DidUpdateNotificationStateForCharacteristic : DidUpdateValueForCharacteristic {}
+    public class DidUpdateNotificationStateForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
     
-    public class DidDiscoverDescriptorsForCharacteristic : DidUpdateValueForCharacteristic {}
+    public class DidDiscoverDescriptorsForCharacteristic : Message {
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public let characteristic: CBCharacteristic
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            characteristic: CBCharacteristic,
+            error : NSError?) {
+                self.characteristic = characteristic
+                self.error = error
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
     
     public class DidUpdateValueForDescriptor : Message {
         public let peripheral: CBPeripheral
@@ -167,6 +235,11 @@ public extension BLEPeripheralConnection {
         }
     }
 }
+
+/**
+BLECentral returns a BLEPeripheralConnection OnConnect, the idea is to simplify and provide a more organized
+ way to interact with CBPeripherals
+*/
 
 public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegate {
     
