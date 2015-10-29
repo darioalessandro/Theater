@@ -7,13 +7,17 @@ use_frameworks!
 
 pod 'Starscream', '~> 1.0.0'
 
+def testing_pods
+    pod 'Quick', '~> 0.8.0'
+    pod 'Nimble', '3.0.0'
+end
 
 target 'Actors' do
 
 end
 
 target 'ActorsTests' do
-
+    testing_pods
 end
 
 target 'Theater' do
@@ -21,6 +25,6 @@ target 'Theater' do
 end
 
 target 'TheaterTests' do
-
+    testing_pods
 end
 
