@@ -64,7 +64,7 @@ public class PeripheralActor : Actor, WithListeners {
         }
     }
     
-    lazy var idle : Receive = {[unowned self](msg : Message) in
+    lazy public var idle : Receive = {[unowned self](msg : Message) in
         switch (msg) {
             case is ToggleAdvertising:
                 var svc = CBMutableService(type: BLEData().svc, primary: true)
@@ -86,7 +86,7 @@ public class PeripheralActor : Actor, WithListeners {
         }
     }
     
-    lazy var advertising : Receive = {[unowned self](msg : Message) in
+    lazy public var advertising : Receive = {[unowned self](msg : Message) in
         switch (msg) {
             case is ToggleAdvertising:
                 self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
@@ -109,7 +109,7 @@ public class PeripheralActor : Actor, WithListeners {
         }
     }
     
-    func connected(central : CBCentral) -> Receive {
+    public func connected(central : CBCentral) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
                 case is OnClick :

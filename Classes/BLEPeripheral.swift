@@ -19,13 +19,13 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     var charsubscriptions : [CBCentral : [CBCharacteristic]] = [CBCentral : [CBCharacteristic]]()
     
-    struct States {
-        let idle = "idle"
-        let connected = "connected"
-        let advertising = "advertising"
+    public struct States {
+        public let idle = "idle"
+        public let connected = "connected"
+        public let advertising = "advertising"
     }
     
-    private let states : States = States()
+    public let states : States = States()
     
     private var advertisementData : [String : AnyObject]?
     
@@ -57,7 +57,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     
-    private lazy var idle : Receive = {[unowned self] (msg : Message) in
+    public lazy var idle : Receive = {[unowned self] (msg : Message) in
         switch (msg) {
             case let m as StartAdvertising:
                 self.peripheral.startAdvertising(m.advertisementData)
@@ -71,7 +71,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             }
     }
     
-    private lazy var advertising : Receive = {[unowned self](msg : Message) in
+    public lazy var advertising : Receive = {[unowned self](msg : Message) in
         switch (msg) {
             
             case is DidStartAdvertising,

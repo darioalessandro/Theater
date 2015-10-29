@@ -91,6 +91,14 @@ public class Actor : NSObject {
     }
     
     /**
+    Current state
+    */
+     
+    final public func currentState() -> (String,Receive)? {
+        return self.statesStack.head()
+    }
+    
+    /**
     Pop states from the statesStack until it finds name
     - Parameter name: the state that you can to pop to.
     */
