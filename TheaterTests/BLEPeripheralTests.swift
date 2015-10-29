@@ -61,7 +61,7 @@ class BLEPeripheralTests: QuickSpec {
                 
                 it("should stop when requested") {
                     peripheral.this ! Harakiri(sender: nil)
-                    expect(system.selectActor("BLEPeripheral1")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "peripheral never died")
+                    expect(system.selectActor("BLEPeripheral2")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "peripheral never died")
                 }
             })
             
