@@ -133,9 +133,10 @@ public class ActorSystem  {
     */
     
     public func tell(msg : Message, recipient : ActorRef) -> Void {
+        
         if let actor = actorForRef(recipient) {
             actor.tell(msg)
-        } else if let sender = msg.sender {
+        } else if let sender = msg.sender, _ = actorForRef(sender) {
             sender ! DeadLetter(message: msg, sender:recipient)
         } else {
             print("Dropped message \(msg)")
