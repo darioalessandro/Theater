@@ -10,6 +10,7 @@ import Foundation
 import Quick
 import Nimble
 import Theater
+import CoreBluetooth
 
 class BLEPeripheralTests: QuickSpec {
     
@@ -48,9 +49,9 @@ class BLEPeripheralTests: QuickSpec {
                 }
                 
                 it("should transition to advertising if it is forced to") {
-                    peripheral.become(peripheral.states.advertising, state: peripheral.advertising)
-                    let advertising = peripheral.currentState()!.0
-                    expect(advertising).to(equal(peripheral.states.advertising), description : "Failed to switch state")
+                    //Simulating CoreBluetooth message
+                    peripheral.peripheralManagerDidStartAdvertising(CBPeripheralManager(), error: nil)
+                    expect(peripheral.currentState()!.0).toEventually(equal(peripheral.states.advertising), timeout: 5, pollInterval: 1, description : "Failed to switch state")
                 }
                 
                 it("should transition to back to idle if it gets a StopAdvertising") {
