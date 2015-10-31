@@ -27,6 +27,10 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     var subscriptions : Subscriptions = Subscriptions()
     
+    /**
+     Human readable states
+     */
+    
     public struct States {
         public let idle = "idle"
         public let connected = "connected"
@@ -44,6 +48,10 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
      */
     
     private var peripheral : CBPeripheralManager
+    
+    /**
+     This is the constructor used by the ActorSystem to instantiate BLEPeripheral, do not call it directly, use the ActorSystem actor of method.
+     */
     
     required public init(context: ActorSystem, ref: ActorRef) {
         self.peripheral = CBPeripheralManager() //Stupid swift

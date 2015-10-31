@@ -35,7 +35,15 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         let connected = "connected"
     }
     
+    /**
+     Human readable Central states
+     */
+    
     private let states = States()
+    
+    /**
+    CBCentralManager scanner options, this will be exposed as a message in new versions of Theater
+    */
     
     private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(bool: true)]
     

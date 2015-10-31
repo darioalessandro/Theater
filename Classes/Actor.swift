@@ -188,7 +188,7 @@ public class Actor : NSObject {
     }
     
     /**
-    Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  @seeActorSystem#actorOf to create a new actor
+    Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  actorOf in the ActorSystem to create a new actor
     */
     
     required public init(context : ActorSystem, ref : ActorRef) {

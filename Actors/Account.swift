@@ -84,7 +84,7 @@ public class Account : Actor {
             _balance = _balance - amount
             return Success(value : _balance)
         } else {
-            return Failure(exception: NSError(domain: "Insufficient funds", code: 0, userInfo: nil))
+            return Failure(error: NSError(domain: "Insufficient funds", code: 0, userInfo: nil))
         }
     }
     

@@ -16,8 +16,22 @@ public class AccountsViewController : UIViewController {
     @IBOutlet weak var aToB: UIButton!
     @IBOutlet weak var accountBBalance: UILabel!
     
+    let bank : ActorRef = AppActorSystem.shared.actorOf(Bank.self, name: "Bank")
+    
     
     override public func viewDidLoad() {
-        AppActorSystem.shared.actorOf(Bank.self, name: "Bank") ! SetViewCtrl(ctrl: self)
+         bank ! SetViewCtrl(ctrl: self)
     }
+    
+    override public func viewWillDisappear(animated: Bool) {
+        if self.isBeingDismissed() || self.isMovingFromParentViewController() {
+            bank ! Actor.Harakiri(sender: nil)
+        }
+    }
+    
+    deinit {
+        print("killing accountsViewController")
+    }
+    
+    
 }

@@ -10,6 +10,15 @@ import Foundation
 import Theater
 
 public class Bank : ViewCtrlActor<AccountsViewController> {
+    
+    
+    /**
+     Subclasses must override this constructor.
+     */
+    
+    required public init(context : ActorSystem, ref : ActorRef) {
+        super.init(context: context, ref: ref)
+    }
 
     let accountA : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountA")
     let accountB : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountB")

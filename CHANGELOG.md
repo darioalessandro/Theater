@@ -1,3 +1,6 @@
+## [0.1.12 on Oct 31th, 2015](https://github.com/darioalessandro/Theater/releases/tag/0.1.12)
+- Incremented Docs coverage to 61%
+
 ## [0.1.11 on Oct 30th, 2015](https://github.com/darioalessandro/Theater/releases/tag/0.1.11)
 - Added a lot of documentation
 - Fixed unit tests

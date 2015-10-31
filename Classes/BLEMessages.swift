@@ -104,7 +104,7 @@ public extension BLECentral {
     
     
     /**
-    Use this message to tell BLECentral to start scanning, scanning success depends on the status of the BLE hardware, BLECentral will message all it's listeners when it actually starts scanning an @see BLECentralMsg#StateChanged when it actually starts scanning.
+    Use this message to tell BLECentral to start scanning, scanning success depends on the status of the BLE hardware, BLECentral will message all it's listeners when it actually starts scanning an BLECentral.StateChanged when it actually starts scanning.
     */
     
     public class StartScanning : Actor.Message {

@@ -20,6 +20,10 @@ This implementation is based on Scala, it would be nice if Swift protocols would
 
 public class Try<T> : NSCoder {
     
+    /**
+    Exception used in case that developers try to use this class directly, Success or Failure should be used instead, I'll try to replace this for a protocol when Apple supports generics on protocols.
+    */
+    
     private let e : NSException = NSException(name: "invalid usage", reason: "please do not use this class directly, use Success || Failure", userInfo: nil)
 
     /**
@@ -36,7 +40,7 @@ public class Try<T> : NSCoder {
     
     /**
     Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
-    
+      ```
         wsResult : Try<Number> = getNumberOfLikes()
         .
         .
@@ -47,6 +51,7 @@ public class Try<T> : NSCoder {
         } else {
             //Failure
         }
+      ```
     */
     
     public func toOptional() -> Optional<T> {
@@ -74,7 +79,7 @@ public class Try<T> : NSCoder {
             let s = Success(value : r)
             return s
         } catch let error as NSError {
-            return Failure(exception : error)
+            return Failure(error : error)
         }
     }
     
@@ -82,9 +87,18 @@ public class Try<T> : NSCoder {
         super.init()
     }
     
+    /**
+     encoder used to serialize a Try<T>
+     */
+    
     public func encodeWithCoder(aCoder: NSCoder) {
 
     }
+    
+    
+    /**
+     coder used to decode a Try<T>
+     */
     
     public init?(coder aDecoder: NSCoder) {
         super.init()
@@ -116,6 +130,11 @@ public class Success<T> : Try<T> {
     
     override public func isSuccess() -> Bool { return true}
     
+    /**
+    gets the underlying value
+    - returns : underlying value
+    */
+    
     override public func get() -> T {return self.value}
     
     /**
@@ -128,7 +147,7 @@ public class Success<T> : Try<T> {
     
     /**
     Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
-    
+         ```
         wsResult : Try<Number> = getNumberOfLikes()
         .
         .
@@ -139,15 +158,24 @@ public class Success<T> : Try<T> {
         } else {
         //Failure
         }
+         ```
     */
     
     override public func toOptional() -> Optional<T> {
         return  Optional.Some(self.value)
     }
     
+    /**
+     encoder used to serialize a success
+     */
+    
     override public func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.value as! NSObject, forKey:"value")
     }
+    
+    /**
+     coder used to decode a success
+     */
     
     override public init?(coder aDecoder: NSCoder) {
         self.value = aDecoder.decodeObjectForKey("value") as! T
@@ -162,10 +190,20 @@ Failure<T> is a way to express that a given computation failed.
 
 public class Failure<T> : Try<T> {
     
-    public let exception : NSError
+    /**
+    Failure reason
+    */
     
-    public init(exception : NSError) {
-        self.exception = exception
+    public let error : NSError
+    
+    /**
+    Public constructor
+     
+     - parameter error : failure reason
+    */
+    
+    public init(error : NSError) {
+        self.error = error
         super.init()
     }
     
@@ -181,17 +219,30 @@ public class Failure<T> : Try<T> {
     
     override public func isSuccess() -> Bool { return false}
     
+    /**
+     - Throws: failure reason
+    */
+    
     override public func get() -> T {
-        NSException.raise(self.exception.description, format: "", arguments: getVaList([""]))
+        NSException.raise(self.error.description, format: "", arguments: getVaList([""]))
         return NSObject() as! T
     }
     
+    
+    /**
+    encoder used to serialize a failure
+    */
+    
     override public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.exception, forKey:"exception")
+        aCoder.encodeObject(self.error, forKey:"exception")
     }
     
+    /**
+     coder used to decode a failure
+     */
+    
     override public init?(coder aDecoder: NSCoder) {
-        self.exception = aDecoder.decodeObjectForKey("exception") as! NSError
+        self.error = aDecoder.decodeObjectForKey("exception") as! NSError
         super.init()
     }
     
