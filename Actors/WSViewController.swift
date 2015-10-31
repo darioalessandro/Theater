@@ -86,7 +86,6 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
     
 
      override func withCtrl(ctrl : WSViewController) -> Receive {
-        
         ^{
             ctrl.tableView.dataSource = self
             ctrl.tableView.delegate = self
@@ -96,13 +95,11 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
                 case let w as WebSocketClient.Connect:
                     self.wsClient ! WebSocketClient.Connect(url: w.url, sender: self.this)
                     self.url = w.url
-                    ^{ () in
-                        ctrl.title = "Connecting"
-                    }
+                    ^{ ctrl.title = "Connecting"}
                     break
                     
                 case is WebSocketClient.OnConnect:
-                    ^{ () in
+                    ^{
                         ctrl.title = "Connected"
                         ctrl.navigationItem.prompt = nil
                         ctrl.textField.becomeFirstResponder()
@@ -151,9 +148,23 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         wsCtrl ! SetViewCtrl(ctrl: self)
         wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "wss://echo.websocket.org")!, sender : nil)
+        self.addNotifications()
+        send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if self.isBeingDismissed() || self.isMovingFromParentViewController() {
+            wsCtrl ! Harakiri(sender: nil)
+        }
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func addNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
-        send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -163,16 +174,6 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     
     @objc func onClick(btn : UIButton) {
         wsCtrl ! WebSocketClient.SendMessage(sender: nil, message: textField.text!)
-    }
-    
-    internal override func viewWillDisappear(animated: Bool) {
-        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
-            wsCtrl ! Harakiri(sender: nil)
-        }
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func keyboardWillAppear(notification: NSNotification){
