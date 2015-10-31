@@ -115,6 +115,16 @@ public class Actor : NSObject {
     }
     
     /**
+    pop to root state
+    */
+     
+    final public func popToRoot() {
+        while !self.statesStack.isEmpty() {
+            unbecome()
+        }
+    }
+    
+    /**
     This method will be called when there's an incoming message, notice that if you push a state int the statesStack this method will not be called anymore until you pop all the states from the statesStack.
     
     - Parameter msg: the incoming message
@@ -124,7 +134,7 @@ public class Actor : NSObject {
         switch msg {
             case is Harakiri:
                 self.context.stop(self.this)
-                break
+
             default :
                 print("message not handled \(NSStringFromClass(msg.dynamicType))")
         }
@@ -156,7 +166,7 @@ public class Actor : NSObject {
     }
     
     /**
-    Schedule Once
+    Schedule Once is a timer that executes the code in block after seconds
     */
      
     final public func scheduleOnce(seconds:Double, block : Void -> Void) {

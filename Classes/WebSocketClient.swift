@@ -9,40 +9,66 @@
 import Foundation
 import Starscream
 
-public class WebSocketMsg {
+/**
+WebSocketClient messages
+*/
+
+extension WebSocketClient {
+    
+    /**
+    Connect command
+    */
 
     public class Connect : Message {
         public let url : NSURL
-        public let delegate : ActorRef
         
-        public init(url : NSURL, delegate : ActorRef) {
+        public init(url : NSURL, sender : ActorRef?) {
             self.url = url
-            self.delegate = delegate
-            super.init(sender: delegate)
+            super.init(sender: sender)
         }
     }
+    
+    /**
+     Disconnect command
+     */
+
+    public class Disconnect : Message {}
+    
+    /**
+     Send message command
+     */
+    
+    public class SendMessage : OnMessage {}
+    
+    /**
+     Message broadcasted when there is an incoming WebSocket message
+     */
 
     public class OnMessage : Message {
         public let message : String
         
-        public init(sender: ActorRef, message : String) {
+        public init(sender: ActorRef?, message : String) {
             self.message = message
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Message broadcasted when there is incoming WebSocket data
+     */
 
     public class OnData : Message {
         public let data : NSData
         
-        public init(sender: ActorRef, data : NSData) {
+        public init(sender: ActorRef?, data : NSData) {
             self.data = data
             super.init(sender: sender)
         }
     }
-
-    public class SendMessage : OnMessage {}
-
-    public class Disconnect : Message {}
+    
+    /**
+     Message broadcasted when the websocket get's disconnected
+     */
 
     public class OnDisconnect : Message {
         public let error : Optional<NSError>
@@ -52,89 +78,112 @@ public class WebSocketMsg {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Message broadcasted when the websocket get's connected
+     */
 
     public class OnConnect : Message {}
         
 }
 
-public class WebSocketClient : Actor , WebSocketDelegate {
+/**
+Actor Wrapper for Starscream WebSocket
+*/
+
+public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
+
+    public var listeners : [ActorRef] = [ActorRef]()
     
-    var socket : Optional<WebSocket> = Optional.None
-    var delegate : Optional<ActorRef> = Optional.None
+    override public func preStart() {
+        super.preStart()
+        become("disconnected", state: disconnected)
+    }
+    
+    /**
+    websocketDidConnect
+    */
     
     public func websocketDidConnect(socket: WebSocket) {
-        if let del = self.delegate {
-            del ! WebSocketMsg.OnConnect(sender: this)
-            self.become("connected", state: connected)
-        }
+        self.broadcast(OnConnect(sender: this))
+        self.become("connected", state: self.connected(socket))
     }
+    
+    /**
+     websocketDidDisconnect
+     */
     
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
-        if let del = self.delegate {
-            del ! WebSocketMsg.OnDisconnect(sender: this, error: error)
-            self.become("disconnected", state: disconnected)
-        }
+        self.broadcast(OnDisconnect(sender: this, error: error))
+        self.become("disconnected", state: disconnected)
     }
+    
+    /**
+     websocketDidReceiveMessage
+     */
     
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        if let del = self.delegate {
-            del ! WebSocketMsg.OnMessage(sender: this, message: text)
-        }
+        self.broadcast(OnMessage(sender: this, message: text))
     }
     
+    /**
+     websocketDidReceiveData
+     */
+    
     public func websocketDidReceiveData(socket: WebSocket, data: NSData) {
-        if let del = self.delegate {
-            del ! WebSocketMsg.OnData(sender: this, data: data)
-        }
+        self.broadcast(OnData(sender: this, data: data))
     }
+    
+    /**
+    stupid variable to keep websocket around.
+    */
+    var socket : WebSocket?
+    
+    /**
+     disconnected is the initial state of the websocket
+     */
     
     lazy var disconnected : Receive = {[unowned self](msg : Message) in
         switch (msg) {
-        case let c as WebSocketMsg.Connect:
-            self.socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
-            self.socket!.delegate = self
-            self.delegate = c.sender
-            self.socket!.connect()
-            break
-            
-        case is Harakiri:
-            self.this ! WebSocketMsg.Disconnect(sender: Optional.None)
-            break
+        case let c as Connect:
+            let socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
+            self.socket = socket
+            socket.delegate = self
+            self.addListener(c.sender)
+            socket.connect()
             
         default:
-            print("ignoring \(msg)")
-            break
+            self.receive(msg)
         }
     }
     
-    lazy var connected : Receive = { [unowned self](msg : Message) in
-        switch(msg) {
-        case let c as WebSocketMsg.SendMessage:
-            if let s = self.socket {
-                s.writeString(c.message)
-            }
-            break
-            
-        case is WebSocketMsg.Disconnect:
-            if let s = self.socket {
-                s.disconnect()
-                self.socket!.delegate = nil
-                self.socket = nil
+    /**
+     state when the websocket is connected
+     */
+    
+    func connected(socket: WebSocket) -> Receive {
+        return {[unowned self](msg : Message) in
+            switch(msg) {
+            case let c as SendMessage:
+                socket.writeString(c.message)
+                
+            case is Disconnect:
+                socket.disconnect()
+                socket.delegate = nil
                 self.unbecome()
+                
+            default:
+                self.receive(msg)
             }
-            break
-            
-        case is Harakiri:
-            self.this ! WebSocketMsg.Disconnect(sender: Optional.None)
-            break
-            
-        default:
-            print("ignoring \(msg)")
         }
     }
     
-    override public func receive(msg : Message) {
-        become("disconnected", state: disconnected)
-        this ! (msg)
+    /**
+    Cleanup
+    */
+    
+    deinit {
+        self.this ! Disconnect(sender: nil)
     }
+    
 }

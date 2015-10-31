@@ -20,6 +20,10 @@ public class AppActorSystem : ActorSystem {
     
     public static let shared : AppActorSystem = AppActorSystem(name: "AppActorSystem")
     
+    /**
+    Hidden constructor so that it is not possible to create more AppActorSystems
+    */
+    
     override private init(name: String) {
         super.init(name: name)
     }

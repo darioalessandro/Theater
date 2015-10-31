@@ -14,6 +14,9 @@ Stack data structure implementation for general purposes.
 
 public class Stack<A> {
     
+    /**
+    Undelying array, do not modify it directly
+    */
     
     private var array : [A]
     
@@ -48,6 +51,14 @@ public class Stack<A> {
     
     public func head() -> Optional<A> {
         return self.array.first
+    }
+    
+    /**
+    Method to determine if the stack is empty
+    */
+    
+    public func isEmpty() -> Bool {
+        return self.array.isEmpty
     }
     
 }

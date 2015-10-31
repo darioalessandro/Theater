@@ -13,6 +13,11 @@ Convenience operator that executes a block with type (Void) -> (Void) in the mai
 */
 
 prefix operator ^ {}
+
+/**
+ Convenience operator that executes a block with type (Void) -> (Void) in the main queue.
+ */
+
 public prefix func ^ (block : (Void) -> (Void)) -> Void {
     NSOperationQueue.mainQueue().addOperationWithBlock(block)
 }

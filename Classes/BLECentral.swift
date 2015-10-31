@@ -16,6 +16,18 @@ BLECentral is a wrapper for CBCentralManager which allows developers to interact
 
 public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
+    /**
+     Peripheral connection default options
+    */
+    
+    let peripheralConnectionOptions = [CBConnectPeripheralOptionNotifyOnConnectionKey : true,
+        CBConnectPeripheralOptionNotifyOnDisconnectionKey : true,
+        CBConnectPeripheralOptionNotifyOnNotificationKey : true]
+    
+    /**
+     Human readable Central states
+    */
+    
     private struct States {
         let scanning : String = "scanning"
         let notScanning : String = "notScanning"
@@ -27,11 +39,21 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(bool: true)]
     
-    private var devices : [String : [BLEPeripheralObservation]] = [String : [BLEPeripheralObservation]]()
+    /**
+    This collection stores all peripheral observations, it would be nice to add a method to purge it.
+    */
     
-    private let bleQueue = NSOperationQueue.init()
+    private var observations : PeripheralObservations = PeripheralObservations()
     
-    private let central : CBCentralManager
+    /**
+    Underlying CBCentralManager
+    */
+    
+    private var central : CBCentralManager
+    
+    /**
+    This flag is used as a semaphore and avoids bombing other actors with PeripheralObservations
+    */
     
     private var shouldWait = false
     
@@ -39,21 +61,40 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     private var threshold : Double = 5
     
+    /**
+    Collection with actors that care about changes in BLECentral
+    */
+    
     public var listeners : [ActorRef] = []
     
-    private var shouldScan : Bool = false
+    /**
+    PeripheralConnections
+    */
     
-    private var peripheralConnections : [NSUUID : ActorRef] = [NSUUID : ActorRef]()
+    private var connections : PeripheralConnections = PeripheralConnections()
     
     /**
     This is the constructor used by the ActorSystem, do not call it directly
     */
     
     public required init(context: ActorSystem, ref: ActorRef) {
-        self.central = CBCentralManager.init(delegate: nil, queue: self.bleQueue.underlyingQueue)
+        self.central = CBCentralManager() // stupid swift
         super.init(context: context, ref: ref)
-        self.central.delegate = self
+        self.central = CBCentralManager(delegate: self, queue: self.mailbox.underlyingQueue)
     }
+    
+    /**
+    Initializes the BLECentral in the notScanning state
+    */
+    
+    override public func preStart() {
+        super.preStart()
+        self.become(self.states.notScanning, state: self.notScanning)
+    }
+    
+    /**
+     Scanning state message handler
+    */
     
     private func scanning(services : Optional<[CBUUID]>) -> Receive {
         self.shouldWait = false
@@ -70,28 +111,25 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                     self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
                 
                 case is StopScanning:
-                    self.shouldScan = false
                     self.central.stopScan()
                     self.popToState(self.states.notScanning)
                     
                 case let m as Peripheral.Connect:
-                    self.central.connectPeripheral(m.peripheral, options: [CBConnectPeripheralOptionNotifyOnConnectionKey : true,
-                        CBConnectPeripheralOptionNotifyOnDisconnectionKey : true,
-                        CBConnectPeripheralOptionNotifyOnNotificationKey : true])
+                    self.central.connectPeripheral(m.peripheral, options: self.peripheralConnectionOptions)
                 
                 case let m as Peripheral.OnConnect:
                     let id = m.peripheral.identifier
                     let c = self.context.actorOf(BLEPeripheralConnection.self, name: id.UUIDString)
-                    self.peripheralConnections[id] = c
+                    self.connections[id] = c
                     c ! BLEPeripheralConnection.SetPeripheral(sender: self.this, peripheral: m.peripheral)
                     self.broadcast(Peripheral.OnConnect(sender: self.this, peripheral: m.peripheral, peripheralConnection: c))
                 
                 case let m as Peripheral.OnDisconnect:
                     let id = m.peripheral.identifier
-                    if let c = self.peripheralConnections[id] {
+                    if let c = self.connections[id] {
                         c ! Harakiri(sender: self.this)
                     }
-                    self.peripheralConnections.removeValueForKey(m.peripheral.identifier)
+                    self.connections.removeValueForKey(m.peripheral.identifier)
                     self.broadcast(m)                
                     
                 case let m as Peripheral.Disconnect:
@@ -102,6 +140,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
             }
         }
     }
+    
+    /**
+     Not scanning state message handler
+     */
     
     lazy private var notScanning : Receive = {[unowned self](msg : Message) in
         switch (msg) {
@@ -124,12 +166,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
             default:
                 print("not handled")
         }
-    }
-    
-    override public func receive(msg : Message) -> Void {
-        self.become(self.states.notScanning, state: self.notScanning)
-        self.this ! msg
-        
     }
     
     /**
@@ -157,15 +193,15 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
         let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
-        if var historyOfDevice = self.devices[peripheral.identifier.UUIDString], let lastObv = historyOfDevice.first {
+        if var historyOfDevice = self.observations[peripheral.identifier.UUIDString], let lastObv = historyOfDevice.first {
             let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20
             let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSinceDate(lastObv.timestamp)) > threshold
             if  areRSSIDifferent || isThereEnoughTimeBetweenSamples {
                 historyOfDevice.insert(bleDevice, atIndex: 0)
-                self.devices[peripheral.identifier.UUIDString] = historyOfDevice
+                self.observations[peripheral.identifier.UUIDString] = historyOfDevice
             }
         } else {
-            self.devices[peripheral.identifier.UUIDString] = [bleDevice]
+            self.observations[peripheral.identifier.UUIDString] = [bleDevice]
         }
         
         if shouldWait { return }
@@ -177,7 +213,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         })
         
         listeners.forEach { (listener) -> () in
-            listener ! DevicesObservationUpdate(sender: this, devices: self.devices)
+            listener ! DevicesObservationUpdate(sender: this, devices: self.observations)
         }
     }
     

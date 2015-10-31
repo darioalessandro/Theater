@@ -16,6 +16,29 @@ BLECentral related messages
 public extension BLECentral {
     
     /**
+     Message used by BLECentral to encapsule a CBPeripheral advertisement packet
+     */
+    
+    public class BLEPeripheralObservation {
+        
+        public let peripheral: CBPeripheral
+        public let advertisementData: [String : AnyObject]
+        public let RSSI: NSNumber
+        public let timestamp : NSDate
+        
+        init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : NSDate) {
+            self.peripheral = peripheral
+            self.advertisementData = advertisementData
+            self.RSSI = RSSI
+            self.timestamp = timestamp
+        }
+    }
+    
+    typealias PeripheralObservations = [String : [BLEPeripheralObservation]]
+    
+    typealias PeripheralConnections = [NSUUID : ActorRef]    
+    
+    /**
     Namespace for Peripheral related messages
     */
     
@@ -145,6 +168,25 @@ This extension contains all the messages that BLEPeripheral produces
 
 public extension BLEPeripheral {
     
+    typealias Subscriptions = [CBCentral : [CBCharacteristic]]
+    
+    /**
+    BLEPeripheral broadcasts this message when a central subscribes or unsubscribes from CBCharacteristics
+    */
+    
+    public class SubscriptionsChanged : Message {
+        let subscriptions : Subscriptions
+        
+        init(sender: Optional<ActorRef>, subscriptions : Subscriptions) {
+            self.subscriptions = subscriptions
+            super.init(sender: sender)
+        }
+    }
+    
+    /**
+    Command used to signal BLEPeripheral to start advertising
+    */
+    
     public class StartAdvertising : Message {
         public let advertisementData : [String : AnyObject]?
         
@@ -154,21 +196,39 @@ public extension BLEPeripheral {
         }
     }
     
+    /**
+     Command used to signal BLEPeripheral to stop advertising
+     */
+    
     public class StopAdvertising : Message {}
+    
+    /**
+     Message broadcasted by BLEPeripheral when it starts advertising
+    */
     
     public class DidStartAdvertising : Message {}
     
+    /**
+     Message broadcasted by BLEPeripheral when it stops advertising
+     */
+    
     public class DidStopAdvertising : Message {}
     
-    public class FailedToStartAdvertising : Error {}
+    /**
+     Message broadcasted by BLEPeripheral when it fails to start advertising
+     */
     
-    public class Error : Message {
+    public class FailedToStartAdvertising : Message {
         let error : NSError
         init(sender : Optional<ActorRef>, error : NSError) {
             self.error = error
             super.init(sender: sender)
         }
     }
+    
+    /**
+    Message broadcasted when a central subscribes to a characteristic
+    */
     
     public class CentralDidSubscribeToCharacteristic : Message {
         public let central: CBCentral
@@ -180,6 +240,10 @@ public extension BLEPeripheral {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Message broadcasted when a central unsubscribes to a characteristic
+     */
     
     public class CentralDidUnsubscribeFromCharacteristic : Message {
         public let central: CBCentral
@@ -193,6 +257,10 @@ public extension BLEPeripheral {
 
     }
     
+    /**
+     Message broadcasted when BLEPeripheral receives a read request, user is responsible for responding using RespondToRequest
+     */
+    
     public class DidReceiveReadRequest : Message {
         public let request: CBATTRequest
         public init(sender: Optional<ActorRef>, request : CBATTRequest) {
@@ -200,6 +268,10 @@ public extension BLEPeripheral {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Message used by the user to signal BLEPeripheral to respond to the CBATTRequest
+     */
     
     public class RespondToRequest : Message {
         public let result : CBATTError
@@ -213,6 +285,10 @@ public extension BLEPeripheral {
         
     }
     
+    /**
+     Message broadcasted when BLEPeripheral receives a write request, user is responsible for responding
+     */
+    
     public class DidReceiveWriteRequests : Message {
         public let requests: [CBATTRequest]
         
@@ -221,6 +297,10 @@ public extension BLEPeripheral {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Message broadcasted when BLEPeripheral changes it CBPeripheralManagerState
+    */
     
     public class PeripheralManagerDidUpdateState : Message {
         
@@ -232,6 +312,10 @@ public extension BLEPeripheral {
         }
     }
     
+    /**
+    Command to signal BLEPeripheral to add a CBMutableService to it's GATT
+    */
+    
     public class AddServices : Message {
         public let svcs : [CBMutableService]
         
@@ -241,6 +325,10 @@ public extension BLEPeripheral {
         }
     }
     
+    /**
+     Command to signal BLEPeripheral to remove a CBMutableService from it's GATT
+     */
+    
     public class RemoveServices : Message {
         public let svcs : [CBMutableService]
         
@@ -249,6 +337,10 @@ public extension BLEPeripheral {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Command to signal BLEPeripheral to update the value of a CBMutableCharacteristic in the given centrals
+     */
     
     public class UpdateCharacteristicValue : Message {
         public let char : CBMutableCharacteristic
@@ -285,6 +377,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+        PeripheralDidUpdateName
+    */
+    
     public class PeripheralDidUpdateName : Message {
         
         public let peripheral : CBPeripheral
@@ -294,6 +390,10 @@ public extension BLEPeripheralConnection {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     DidModifyServices
+     */
     
     public class DidModifyServices : Message {
         
@@ -307,6 +407,10 @@ public extension BLEPeripheralConnection {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     DidReadRSSI
+     */
     
     public class DidReadRSSI : Message {
         
@@ -327,6 +431,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DidDiscoverServices
+     */
+    
     public class DidDiscoverServices : Message {
         
         public let peripheral : CBPeripheral
@@ -342,6 +450,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DiscoverServices
+     */
+    
     public class DiscoverServices : Message {
         public let services : [CBUUID]
         
@@ -351,6 +463,10 @@ public extension BLEPeripheralConnection {
                 super.init(sender: sender)
         }
     }
+    
+    /**
+     DidDiscoverIncludedServicesForService
+     */
     
     public class DidDiscoverIncludedServicesForService : Message {
         
@@ -371,6 +487,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DidDiscoverCharacteristicsForService
+     */
+    
     public class DidDiscoverCharacteristicsForService : Message {
         public let peripheral : CBPeripheral
         
@@ -388,6 +508,10 @@ public extension BLEPeripheralConnection {
                 super.init(sender: sender)
         }
     }
+    
+    /**
+     DidUpdateValueForCharacteristic
+     */
     
     public class DidUpdateValueForCharacteristic : Message {
         
@@ -408,6 +532,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DidWriteValueForCharacteristic
+     */
+    
     public class DidWriteValueForCharacteristic : Message {
         public let peripheral : CBPeripheral
         
@@ -425,6 +553,10 @@ public extension BLEPeripheralConnection {
                 super.init(sender: sender)
         }
     }
+    
+    /**
+     DidUpdateNotificationStateForCharacteristic
+     */
     
     public class DidUpdateNotificationStateForCharacteristic : Message {
         public let peripheral : CBPeripheral
@@ -444,6 +576,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DidDiscoverDescriptorsForCharacteristic
+     */
+    
     public class DidDiscoverDescriptorsForCharacteristic : Message {
         public let peripheral : CBPeripheral
         
@@ -462,6 +598,10 @@ public extension BLEPeripheralConnection {
         }
     }
     
+    /**
+     DidUpdateValueForDescriptor
+     */
+    
     public class DidUpdateValueForDescriptor : Message {
         public let peripheral: CBPeripheral
         public let descriptor: CBDescriptor
@@ -477,6 +617,10 @@ public extension BLEPeripheralConnection {
                 super.init(sender: sender)
         }
     }
+    
+    /**
+     DidWriteValueForDescriptor
+     */
     
     public class DidWriteValueForDescriptor : Message {
         public let peripheral: CBPeripheral

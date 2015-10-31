@@ -15,9 +15,17 @@ import CoreBluetooth
 
 public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListeners {
     
+    /**
+     All actors interested on changes in BLEPeripheral
+    */
+    
     public var listeners : [ActorRef] = []
     
-    var charsubscriptions : [CBCentral : [CBCharacteristic]] = [CBCentral : [CBCharacteristic]]()
+    /**
+     Centrals subscriptions to CBCharacteristics DB
+    */
+    
+    var subscriptions : Subscriptions = Subscriptions()
     
     public struct States {
         public let idle = "idle"
@@ -25,9 +33,15 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         public let advertising = "advertising"
     }
     
+    /**
+    Human readable states
+     */
+    
     public let states : States = States()
     
-    private var advertisementData : [String : AnyObject]?
+    /**
+     CBPeripheral manager is the one that interacts with BLE hardware
+     */
     
     private var peripheral : CBPeripheralManager
     
@@ -39,8 +53,13 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     }
     
     override public func preStart() -> Void {
+        super.preStart()
         become(states.idle, state: self.idle)
     }
+    
+    /**
+    This is the fallback message handler in case that the message is not handled on the other states
+    */
     
     public override func receive(msg : Message) -> Void {
         switch(msg) {
@@ -57,6 +76,10 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     
+    /**
+     Idle is the initial state
+     */
+    
     public lazy var idle : Receive = {[unowned self] (msg : Message) in
         switch (msg) {
             case let m as StartAdvertising:
@@ -70,6 +93,10 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 self.receive(msg)
             }
     }
+    
+    /**
+    Message receiver for the advertising state
+    */
     
     public lazy var advertising : Receive = {[unowned self](msg : Message) in
         switch (msg) {
@@ -92,19 +119,24 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 self.broadcast(DidStopAdvertising(sender: self.this))
             
             case let m as CentralDidSubscribeToCharacteristic:
-                if var subs = self.charsubscriptions[m.central] {
+                if var subs = self.subscriptions[m.central] {
                     subs.append(m.characteristic)
                 } else {
-                    self.charsubscriptions[m.central] = [m.characteristic]
+                    self.subscriptions[m.central] = [m.characteristic]
                 }
                 self.broadcast(msg)
+                self.broadcast(SubscriptionsChanged(sender: self.this, subscriptions: self.subscriptions))
                 
             case let m as CentralDidUnsubscribeFromCharacteristic:
-                if var subs = self.charsubscriptions[m.central],
+                if var subs = self.subscriptions[m.central],
                     let i = subs.indexOf(m.characteristic) {
                         subs.removeAtIndex(i)
+                        if subs.count == 0 {
+                            self.subscriptions.removeValueForKey(m.central)
+                        }
                 }
                 self.broadcast(msg)
+                self.broadcast(SubscriptionsChanged(sender: self.this, subscriptions: self.subscriptions))
             
             default :
                 self.receive(msg)

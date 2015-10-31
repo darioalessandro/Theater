@@ -19,11 +19,11 @@
 		064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */; };
 		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; };
 		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; };
+		06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06545B991BE40716004A2D5F /* ViewControllerActor.swift */; };
 		06631A671BDF191D00883344 /* WithListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A661BDF191D00883344 /* WithListeners.swift */; };
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
 		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
 		068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D31BDC51AE00330714 /* BLEMessages.swift */; };
-		068EA7D61BDC51AE00330714 /* BLEPeripheralObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */; };
 		068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */; };
 		068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D91BDC5ACE00330714 /* Main.storyboard */; };
 		068EA7DC1BDC5D3E00330714 /* BLEPeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7DB1BDC5D3E00330714 /* BLEPeripheralViewController.swift */; };
@@ -125,12 +125,12 @@
 		064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
 		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
 		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
+		06545B991BE40716004A2D5F /* ViewControllerActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewControllerActor.swift; path = Classes/ViewControllerActor.swift; sourceTree = SOURCE_ROOT; };
 		06631A661BDF191D00883344 /* WithListeners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WithListeners.swift; path = Classes/WithListeners.swift; sourceTree = SOURCE_ROOT; };
 		06631A681BDF192600883344 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; };
 		066805951BE05C190048085B /* BLEPeripheralConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheralConnection.swift; path = Classes/BLEPeripheralConnection.swift; sourceTree = SOURCE_ROOT; };
 		066805C11BE07BA90048085B /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		068EA7D31BDC51AE00330714 /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEMessages.swift; path = Classes/BLEMessages.swift; sourceTree = SOURCE_ROOT; };
-		068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEPeripheralObservation.swift; path = Classes/BLEPeripheralObservation.swift; sourceTree = SOURCE_ROOT; };
 		068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bluetooth.storyboard; sourceTree = "<group>"; };
 		068EA7D91BDC5ACE00330714 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		068EA7DB1BDC5D3E00330714 /* BLEPeripheralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEPeripheralViewController.swift; sourceTree = "<group>"; };
@@ -268,7 +268,6 @@
 				06631A681BDF192600883344 /* BLEPeripheral.swift */,
 				068F802A1BCB0A1A00A10D76 /* BLECentral.swift */,
 				068EA7D31BDC51AE00330714 /* BLEMessages.swift */,
-				068EA7D41BDC51AE00330714 /* BLEPeripheralObservation.swift */,
 			);
 			name = Bluetooth;
 			sourceTree = "<group>";
@@ -290,7 +289,7 @@
 			name = Language;
 			sourceTree = "<group>";
 		};
-		064CB7811BD0781A00FEBA29 /* Theater */ = {
+		064CB7811BD0781A00FEBA29 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				06631A661BDF191D00883344 /* WithListeners.swift */,
@@ -300,7 +299,15 @@
 				068F802B1BCB0A1A00A10D76 /* Message.swift */,
 				068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */,
 			);
-			name = Theater;
+			name = Core;
+			sourceTree = "<group>";
+		};
+		06545B9B1BE40723004A2D5F /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				06545B991BE40716004A2D5F /* ViewControllerActor.swift */,
+			);
+			name = UIKit;
 			sourceTree = "<group>";
 		};
 		068EA7DD1BDC5D5000330714 /* Model */ = {
@@ -385,7 +392,8 @@
 		06E1D51F1BB76EE300E07321 /* Theater */ = {
 			isa = PBXGroup;
 			children = (
-				064CB7811BD0781A00FEBA29 /* Theater */,
+				06545B9B1BE40723004A2D5F /* UIKit */,
+				064CB7811BD0781A00FEBA29 /* Core */,
 				064CB7801BD0780400FEBA29 /* Language */,
 				064CB77F1BD077F400FEBA29 /* WebSockets */,
 				064CB77E1BD077DB00FEBA29 /* Bluetooth */,
@@ -563,7 +571,7 @@
 				TargetAttributes = {
 					06E1D4F11BB7699700E07321 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 9BAHU39A66;
+						DevelopmentTeam = 8DPYD7M3EU;
 					};
 					06E1D5051BB7699800E07321 = {
 						CreatedOnToolsVersion = 7.0;
@@ -815,7 +823,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */,
-				068EA7D61BDC51AE00330714 /* BLEPeripheralObservation.swift in Sources */,
+				06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */,
 				068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */,
 				068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */,
 				068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */,

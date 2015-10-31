@@ -22,7 +22,7 @@ public class PeripheralViewController : UITableViewController {
     var peripheral : ActorRef = AppActorSystem.shared.actorOf(PeripheralActor.self, name: "PeripheralActor")
     
     public override func viewWillAppear(animated: Bool) {
-        peripheral ! PeripheralActor.SetPeripheralViewController(sender: Optional.None, ctrl : self)
+        peripheral ! SetViewCtrl(ctrl : self)
     }
     
     public override func viewWillDisappear(animated: Bool) {

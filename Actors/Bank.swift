@@ -9,7 +9,7 @@
 import Foundation
 import Theater
 
-public class Bank : Actor {
+public class Bank : ViewCtrlActor<AccountsViewController> {
 
     let accountA : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountA")
     let accountB : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountB")
@@ -27,15 +27,34 @@ public class Bank : Actor {
         this ! Transfer(origin: accountA, destination: accountB, sender: this, ammount: 1)
     }
     
-    override public func receive(msg: Message) {
+    public override func withCtrl(ctrl : AccountsViewController) -> Receive {
+        
+        ^{
+            ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)
+            ctrl.aToB.addTarget(self, action: "onClickAtoB:", forControlEvents: .TouchUpInside)
+            self.accountALabel = ctrl.accountABalance
+            self.accountBLabel = ctrl.accountBBalance
+        }
+        
+        accountA ! SetAccountNumber(accountNumber: "AccountA", operationId: NSUUID())
+        accountB ! SetAccountNumber(accountNumber: "AccountB", operationId: NSUUID())
+        
+        print("accountA \(accountA.path.asString)")
+        print("accountB \(accountB.path.asString)")
+        
+        accountA ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
+        accountB ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
+        
+        
+        return {[unowned self](msg : Message) in
+            
         switch(msg) {
             case let w as Transfer:
             if self.transfers.keys.contains(w.operationId.UUIDString) == false {
                 self.transfers[w.operationId.UUIDString] = (w,Optional.None)
-                let wireTransfer = context.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
+                let wireTransfer = self.context.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
                 wireTransfer ! w
             }
-            break
             
             case let w as TransferResult:
             let uuid = w.operationId.UUIDString
@@ -49,26 +68,7 @@ public class Bank : Actor {
                 }
             }
             
-            w.sender! ! Harakiri(sender: this)
-            break
-            
-            case let w as HookupViewController:
-            ^{
-                w.ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)
-                w.ctrl.aToB.addTarget(self, action: "onClickAtoB:", forControlEvents: .TouchUpInside)
-                self.accountALabel = w.ctrl.accountABalance
-                self.accountBLabel = w.ctrl.accountBBalance
-            }
-            
-            accountA ! SetAccountNumber(accountNumber: "AccountA", operationId: NSUUID())
-            accountB ! SetAccountNumber(accountNumber: "AccountB", operationId: NSUUID())
-            
-            print("accountA \(accountA.path.asString)")
-            print("accountB \(accountB.path.asString)")
-            
-            accountA ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
-            accountB ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
-            break
+            w.sender! ! Harakiri(sender: self.this)
             
             case let w as OnBalanceChanged:
             ^{
@@ -89,10 +89,9 @@ public class Bank : Actor {
                 
             }
             
-            break
         default:
-            super.receive(msg)
+            self.receive(msg)
         }
-        
+        }
     }
 }

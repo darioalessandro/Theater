@@ -9,15 +9,6 @@
 import Foundation
 import Theater
 
-class HookupViewController: Message {
-    let ctrl : AccountsViewController
-    
-    init(ctrl : AccountsViewController) {
-        self.ctrl = ctrl
-        super.init(sender: Optional.None)
-    }
-}
-
 public class AccountsViewController : UIViewController {
     
     @IBOutlet weak var bToA: UIButton!
@@ -27,6 +18,6 @@ public class AccountsViewController : UIViewController {
     
     
     override public func viewDidLoad() {
-        AppActorSystem.shared.actorOf(Bank.self, name: "Bank") ! HookupViewController(ctrl: self)
+        AppActorSystem.shared.actorOf(Bank.self, name: "Bank") ! SetViewCtrl(ctrl: self)
     }
 }

@@ -40,8 +40,6 @@ class BLEPeripheralTests: QuickSpec {
             
             describe("states", {
                 
-
-                
                 it("should start with in idle state") {
                     let actor : Actor = system.actorForRef(system.actorOf(BLEPeripheral.self, name:  "BLEPeripheral2"))!
                     let peripheral = actor as! BLEPeripheral

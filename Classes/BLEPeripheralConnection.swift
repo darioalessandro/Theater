@@ -10,11 +10,15 @@ import Foundation
 import CoreBluetooth
 
 /**
-BLECentral returns a BLEPeripheralConnection OnConnect, the idea is to simplify and provide a more organized
- way to interact with CBPeripherals
+    BLECentral returns a BLEPeripheralConnection OnConnect, the idea is to simplify and provide a more organized
+     way to interact with CBPeripherals
 */
 
 public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegate {
+    
+    /**
+    Actors that care about this peripheral connection
+    */
     
     public var listeners : [ActorRef] = [ActorRef]()
     
@@ -96,6 +100,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     *						At this point, the designated <code>CBService</code> objects have been invalidated.
     *						Services can be re-discovered via @link discoverServices: @/link.
     */
+    
     public func peripheral(peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]){
         this ! DidModifyServices(sender: this, peripheral: peripheral, invalidatedServices: invalidatedServices)
     }
