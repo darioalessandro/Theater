@@ -99,7 +99,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     private func scanning(services : Optional<[CBUUID]>) -> Receive {
         self.shouldWait = false
         
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
                 
                 case is StateChanged:
@@ -142,10 +142,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     }
     
     /**
-     Not scanning state message handler
+     Not scanning state Actor.Message handler
      */
     
-    lazy private var notScanning : Receive = {[unowned self](msg : Message) in
+    lazy private var notScanning : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
                 
             case let m as StartScanning:

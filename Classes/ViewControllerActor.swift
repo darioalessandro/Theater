@@ -13,7 +13,7 @@ import UIKit
     This message is used to set the view controller to a subclass of ViewCtrlActor
 */
 
-public class SetViewCtrl<T : UIViewController> : Message {
+public class SetViewCtrl<T : UIViewController> : Actor.Message {
     
     /**
      Da controller
@@ -62,7 +62,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
     This built in method waits for a SetViewCtrl message to transition to the withCtrl state.
     */
     
-    final lazy var waitingForCtrl : Receive = {[unowned self](msg : Message) in
+    final lazy var waitingForCtrl : Receive = {[unowned self](msg : Actor.Message) in
         switch(msg) {
             case let a as SetViewCtrl<A>:
                 unowned let b = a.ctrl
@@ -75,10 +75,12 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
     
     /**
      Subclasses of ViewCtrlActor must override this method to handle messages.
+     
+     - parameter ctrl : controller that was set to this Actor
     */
     
     public func withCtrl(ctrl : A) -> Receive {
-        return { (msg : Message) in }
+        return { (msg : Actor.Message) in }
     }
     
     deinit {

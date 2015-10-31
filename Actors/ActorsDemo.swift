@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 import Theater
 
-public class TestPerformance : Message {
+public class TestPerformance : Actor.Message {
     public let count : NSInteger
     public let max : NSInteger
     public let expectation : XCTestExpectation
@@ -25,7 +25,7 @@ public class TestPerformance : Message {
 }
 
 public class TestActor : Actor {
-    override public func receive(msg : Message) -> Void {
+    override public func receive(msg : Actor.Message) -> Void {
         switch msg {
         case is TestPerformance:
                 let test = msg as! TestPerformance

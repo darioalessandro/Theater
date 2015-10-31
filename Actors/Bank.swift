@@ -46,7 +46,7 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
         accountB ! Deposit(sender: this, ammount: 10, operationId: NSUUID())
         
         
-        return {[unowned self](msg : Message) in
+        return {[unowned self](msg : Actor.Message) in
             
         switch(msg) {
             case let w as Transfer:

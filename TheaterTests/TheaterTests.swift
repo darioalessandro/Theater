@@ -44,7 +44,7 @@ class TheaterTests: XCTestCase {
         
         medium ! ChrisRedfield.SetExpectation(expectation: expectation)
         system.stop(zombie)
-        zombie ! Message(sender: medium)
+        zombie ! Actor.Message(sender: medium)
         
         self.waitForExpectationsWithTimeout(2) { (error) -> Void in
             print("error \(error)")
@@ -60,7 +60,7 @@ public class ChrisRedfield : Actor {
     
     var expectation : XCTestExpectation!
     
-    public class SetExpectation : Message {
+    public class SetExpectation : Actor.Message {
         internal let expectation : XCTestExpectation
         
         init(expectation : XCTestExpectation) {
@@ -69,7 +69,7 @@ public class ChrisRedfield : Actor {
         }
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch(msg) {
         case let e as SetExpectation:
             self.expectation = e.expectation

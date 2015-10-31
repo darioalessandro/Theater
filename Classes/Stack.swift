@@ -20,12 +20,20 @@ public class Stack<A> {
     
     private var array : [A]
     
+    /**
+    Stack default construction
+     
+    - returns : empty Stack
+    */
+    
     public init() {
         self.array = [A]()
     }
     
     /**
     Push an element of type A into the Stack
+     
+    - parameter element : element to push
     */
     
     public func push(element : A) -> Void {
@@ -55,6 +63,8 @@ public class Stack<A> {
     
     /**
     Method to determine if the stack is empty
+    
+    - returns : returns if the Stack is empty or not
     */
     
     public func isEmpty() -> Bool {

@@ -61,7 +61,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     This is the fallback message handler in case that the message is not handled on the other states
     */
     
-    public override func receive(msg : Message) -> Void {
+    public override func receive(msg : Actor.Message) -> Void {
         switch(msg) {
             case let m as AddServices:
                 if self.peripheral.state == .PoweredOn {
@@ -80,7 +80,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
      Idle is the initial state
      */
     
-    public lazy var idle : Receive = {[unowned self] (msg : Message) in
+    public lazy var idle : Receive = {[unowned self] (msg : Actor.Message) in
         switch (msg) {
             case let m as StartAdvertising:
                 self.peripheral.startAdvertising(m.advertisementData)
@@ -98,7 +98,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     Message receiver for the advertising state
     */
     
-    public lazy var advertising : Receive = {[unowned self](msg : Message) in
+    public lazy var advertising : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
             
             case is DidStartAdvertising,
@@ -143,17 +143,34 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
+    
+    
     public func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         this ! PeripheralManagerDidUpdateState(sender : this, state : peripheral.state)
     }
+    
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
     
     public func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
         this ! CentralDidSubscribeToCharacteristic(sender: this, central: central, characteristic: characteristic)
     }
     
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
+    
     public func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFromCharacteristic characteristic: CBCharacteristic) {
             this ! CentralDidUnsubscribeFromCharacteristic(sender: this, central: central, characteristic: characteristic)
     }
+    
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
     
     public func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
         if let error = error {
@@ -165,27 +182,33 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
+    
     public func peripheralManager(peripheral: CBPeripheralManager, didReceiveReadRequest request: CBATTRequest) {
         this ! DidReceiveReadRequest(sender: this, request: request)
     }
+    
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
     
     public func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
         this ! DidReceiveWriteRequests(sender: this, requests: requests)
     }
     
-    /*!
-    *  @method peripheralManagerIsReadyToUpdateSubscribers:
-    *
-    *  @param peripheral   The peripheral manager providing this update.
-    *
-    *  @discussion         This method is invoked after a failed call to @link updateValue:forCharacteristic:onSubscribedCentrals: @/link, when <i>peripheral</i> is again
-    *                      ready to send characteristic value updates.
-    *
-    */
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
     
     public func peripheralManagerIsReadyToUpdateSubscribers(peripheral: CBPeripheralManager) {
         //TODO: What is this for?
     }
+    
+    /**
+     CBPeripheralManagerDelegate methods, BLEPeripheral hides this methods so that messages can interact with BLE devices using actors
+     */
     
     public func peripheralManager(peripheral: CBPeripheralManager, willRestoreState dict: [String : AnyObject]) {
         //TODO: what is this for?

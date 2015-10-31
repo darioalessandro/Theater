@@ -26,7 +26,7 @@ class DeviceListController: UITableViewController {
     
     deinit {
         reactive ! BLECentral.StopScanning(sender: Optional.None)
-        reactive ! Harakiri(sender: Optional.None)
+        reactive ! Actor.Harakiri(sender: Optional.None)
     }
 }
 

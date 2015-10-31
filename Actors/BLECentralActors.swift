@@ -94,7 +94,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     }
     
     func connected(peripheral : CBPeripheral) -> Receive {
-        return {[unowned self](msg : Message) in
+        return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
@@ -151,7 +151,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         }
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch(msg) {
             
         case let m as BLECentral.StartScanning:

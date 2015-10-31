@@ -14,9 +14,9 @@ import CoreBluetooth
 
 public extension PeripheralActor {
     
-    public class OnClick : Message {}
+    public class OnClick : Actor.Message {}
     
-    public class ToggleAdvertising : Message {}
+    public class ToggleAdvertising : Actor.Message {}
 }
 
 public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithListeners {
@@ -43,7 +43,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     }
     
     override public func withCtrl(ctrl : PeripheralViewController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
                 case is ToggleAdvertising:
                     let svc = CBMutableService(type: BLEData().svc, primary: true)
@@ -66,7 +66,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     }
     
     func advertising(ctrl : PeripheralViewController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
                 case is ToggleAdvertising:
                     self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
@@ -91,7 +91,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     }
     
     public func connected(ctrl : PeripheralViewController, central : CBCentral) -> Receive {
-        return {[unowned self](msg : Message) in
+        return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 case is OnClick :
                     if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {

@@ -16,11 +16,11 @@ public struct BLEData {
     let characteristic = CBUUID(string: "71DA3FD1-7E10-41C1-B16F-4430B506CDE2")
 }
 
-public class RemoveObservationController : Message {
+public class RemoveObservationController : Actor.Message {
     init () {super.init(sender: Optional.None)}
 }
 
-public class SetDeviceListController: Message {
+public class SetDeviceListController: Actor.Message {
     
     let ctrl : UITableViewController
     
@@ -30,7 +30,7 @@ public class SetDeviceListController: Message {
     }
 }
 
-public class SetObservationsController: Message {
+public class SetObservationsController: Actor.Message {
     
     let ctrl : UITableViewController
     
@@ -42,7 +42,7 @@ public class SetObservationsController: Message {
 
 public class RemoveDeviceViewController : SetDeviceViewController {}
 
-public class SetDeviceViewController : Message {
+public class SetDeviceViewController : Actor.Message {
     
     let ctrl : DeviceViewController
     

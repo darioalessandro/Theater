@@ -19,7 +19,7 @@ extension WebSocketClient {
     Connect command
     */
 
-    public class Connect : Message {
+    public class Connect : Actor.Message {
         public let url : NSURL
         
         public init(url : NSURL, sender : ActorRef?) {
@@ -32,7 +32,7 @@ extension WebSocketClient {
      Disconnect command
      */
 
-    public class Disconnect : Message {}
+    public class Disconnect : Actor.Message {}
     
     /**
      Send message command
@@ -44,7 +44,7 @@ extension WebSocketClient {
      Message broadcasted when there is an incoming WebSocket message
      */
 
-    public class OnMessage : Message {
+    public class OnMessage : Actor.Message {
         public let message : String
         
         public init(sender: ActorRef?, message : String) {
@@ -57,7 +57,7 @@ extension WebSocketClient {
      Message broadcasted when there is incoming WebSocket data
      */
 
-    public class OnData : Message {
+    public class OnData : Actor.Message {
         public let data : NSData
         
         public init(sender: ActorRef?, data : NSData) {
@@ -70,7 +70,7 @@ extension WebSocketClient {
      Message broadcasted when the websocket get's disconnected
      */
 
-    public class OnDisconnect : Message {
+    public class OnDisconnect : Actor.Message {
         public let error : Optional<NSError>
         
         init(sender: Optional<ActorRef>, error :Optional<NSError>) {
@@ -83,15 +83,19 @@ extension WebSocketClient {
      Message broadcasted when the websocket get's connected
      */
 
-    public class OnConnect : Message {}
+    public class OnConnect : Actor.Message {}
         
 }
 
 /**
-Actor Wrapper for Starscream WebSocket
-*/
+ Actor Wrapper for Starscream WebSocket
+ */
 
 public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
+    
+    /**
+     Collection with actors that care about changes in BLECentral
+     */
 
     public var listeners : [ActorRef] = [ActorRef]()
     
@@ -143,7 +147,7 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
      disconnected is the initial state of the websocket
      */
     
-    lazy var disconnected : Receive = {[unowned self](msg : Message) in
+    lazy var disconnected : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
         case let c as Connect:
             let socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
@@ -162,7 +166,7 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
      */
     
     func connected(socket: WebSocket) -> Receive {
-        return {[unowned self](msg : Message) in
+        return {[unowned self](msg : Actor.Message) in
             switch(msg) {
             case let c as SendMessage:
                 socket.writeString(c.message)

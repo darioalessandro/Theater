@@ -10,6 +10,13 @@ import Foundation
 
 /**
  Convenience actor system for apps so that you can reference it anywhere in your app
+ 
+ ## Example
+ 
+ ```
+ let system : AppActorSystem = AppActorSystem.shared
+ ```
+ 
 */
 
 public class AppActorSystem : ActorSystem {

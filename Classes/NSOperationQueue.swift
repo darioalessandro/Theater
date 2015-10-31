@@ -8,14 +8,25 @@
 
 import Foundation
 
-/**
-Convenience operator that executes a block with type (Void) -> (Void) in the main queue.
-*/
-
 prefix operator ^ {}
 
 /**
  Convenience operator that executes a block with type (Void) -> (Void) in the main queue.
+ 
+ Replaces:
+ 
+ ```
+ NSOperationQueue.mainQueue().addOperationWithBlock({
+ print("blah")
+ })
+ ```
+ 
+ with
+ 
+ ```
+ ^{print("blah")}
+ ```
+ 
  */
 
 public prefix func ^ (block : (Void) -> (Void)) -> Void {

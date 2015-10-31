@@ -32,7 +32,7 @@ class BLEPeripheralTests: QuickSpec {
                 }
                 
                 it("should stop when requested") {
-                    peripheral.this ! Harakiri(sender: nil)
+                    peripheral.this ! Actor.Harakiri(sender: nil)
                     expect(system.selectActor("BLEPeripheral1")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "peripheral never died")
                 }
                 
@@ -55,7 +55,7 @@ class BLEPeripheralTests: QuickSpec {
                     expect(peripheral.currentState()!.0).toEventually(equal(peripheral.states.advertising), timeout: 5, pollInterval: 1, description : "Failed to switch state")
                     peripheral.this ! BLEPeripheral.StopAdvertising(sender : nil)
                     expect(peripheral.currentState()!.0).toEventually(equal(peripheral.states.idle), timeout: 5, pollInterval: 1, description : "Failed to switch state")
-                    peripheral.this ! Harakiri(sender: nil)
+                    peripheral.this ! Actor.Harakiri(sender: nil)
                     expect(system.selectActor("BLEPeripheral3")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "peripheral never died")
                 }
                 

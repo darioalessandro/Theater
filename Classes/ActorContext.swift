@@ -29,16 +29,34 @@ public class ActorPath {
 
 public class ActorRef {
     
+    /**
+    The actor system that this ActorRef belongs to
+    */
+    
     public let context : ActorSystem
     
+    /**
+     The Path to this ActorRef
+     */
+    
     public let path : ActorPath
+    
+    /**
+    This constructor is used by the ActorSystem, should not be used by developers
+    */
     
     public init(context : ActorSystem, path : ActorPath) {
         self.context = context
         self.path = path
     }
+    
+    /**
+    This method is used to send a message to the underlying Actor.
+     
+    - parameter msg : The message to send to the Actor.
+    */
 
-    public func tell (msg : Message) -> Void {
+    public func tell (msg : Actor.Message) -> Void {
         self.context.tell(msg, recipient:self)
     }
     
@@ -67,16 +85,25 @@ For convenience, we provide AppActorSystem.shared which provides a default actor
 public class ActorSystem  {
     
     /**
-    @warning: this contaings a dic with all the actors that belong to the 'ActorSystem' eventually this will look more like a graph than a dic.
+     
+    - warning : this contaings a dic with all the actors that belong to the 'ActorSystem' eventually this will look more like a graph than a dic.
     */
     
     var actors  = [String : Actor]()
     
     /**
+     
     The name of the 'ActorSystem'
+     
     */
     
     let name : String
+    
+    /**
+    Create a new actor system
+     
+    - parameter name : The name of the ActorSystem
+    */
     
     public init(name : String) {
         self.name = name
@@ -84,15 +111,26 @@ public class ActorSystem  {
     
     /**
     This is used to stop or kill an actor
-    - Parameter actorRef: the actorRef of the actor that you want to stop.
+     
+    - parameter actorRef : the actorRef of the actor that you want to stop.
     */
     
-    public func stop(actorRef : ActorRef) {
+    public func stop(actorRef : ActorRef) -> Void {
         self.actors.removeValueForKey(actorRef.path.asString)
     }
     
     /**
     This method is used to instantiate actors using an Actor class as the 'blueprint' and assigning a unique name to it.
+     
+    - parameter clz: Actor Class
+    - parameter name: name of the actor, it has to be unique
+    - returns: Actor ref instance
+     
+     ## Example
+     
+     ```
+     var wsCtrl : ActorRef = actorSystem.actorOf(WSRViewController.self, name:  "WSRViewController")
+     ```
     */
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
@@ -103,7 +141,17 @@ public class ActorSystem  {
     }
     
     /**
-    This method is used to instantiate actors using an Actor class as the 'blueprint' and assigning a random unique name to it.
+     This method is used to instantiate actors using an Actor class as the 'blueprint' and assigning a unique name to it.
+     
+     - parameter clz: Actor Class
+     - returns: Actor ref instance with a random UUID as name
+     
+      ##Example:
+     
+     ```
+     var wsCtrl : ActorRef = actorSystem.actorOf(WSRViewController.self)
+     ```
+     
     */
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
@@ -112,6 +160,8 @@ public class ActorSystem  {
     
     /**
     Private method to get the underlying actor given an actor ref, remember that you shoulf never access an actor directly other than for testing.
+     
+     - parameter ref: reference to resolve
     */
     
     private func actorForRef(ref : ActorRef) -> Optional<Actor> {
@@ -120,8 +170,9 @@ public class ActorSystem  {
     
     /**
     This method tries finding an actor given it's actorpath as a string
+     
     - Parameter actorPath : the actor path as string
-    - Returns: an ActorRef or None
+    - returns : an ActorRef or None
     */
     
     public func selectActor(actorPath : String) -> Optional<ActorRef>{
@@ -130,14 +181,17 @@ public class ActorSystem  {
     
     /**
     All messages go through this method, eventually we will create an scheduler
+     
+    - parameter msg : message to send
+    - parameter recipient : the ActorRef of the Actor that you want to receive the message.
     */
     
-    public func tell(msg : Message, recipient : ActorRef) -> Void {
+    public func tell(msg : Actor.Message, recipient : ActorRef) -> Void {
         
         if let actor = actorForRef(recipient) {
             actor.tell(msg)
         } else if let sender = msg.sender, _ = actorForRef(sender) {
-            sender ! DeadLetter(message: msg, sender:recipient)
+            sender ! Actor.DeadLetter(message: msg, sender:recipient)
         } else {
             print("Dropped message \(msg)")
         }

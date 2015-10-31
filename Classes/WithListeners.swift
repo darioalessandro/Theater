@@ -18,22 +18,27 @@ public protocol WithListeners : class {
     
     /**
      adds sender to listeners
+     
+     - parameter sender : ActorRef to add to the listeners
      */
-    
-    
+        
     func addListener(sender : ActorRef?)
     
     /**
      removes sender from listeners
+     
+     - parameter sender : ActorRef to remove from the listeners collection
      */
     
     func removeListener(sender : ActorRef?)
 
     /**
-     Send m to all listeners
+     Send message to all listeners
+     
+     -parameter m : message to send
      */
     
-    func broadcast(msg : Message)
+    func broadcast(msg : Actor.Message)
 
 }
 
@@ -45,6 +50,8 @@ extension WithListeners {
 
     /**
      adds sender to listeners
+     
+     - parameter sender : ActorRef to add to the listeners
      */
     
     public func addListener(sender : ActorRef?) {
@@ -58,6 +65,8 @@ extension WithListeners {
     
     /**
      removes sender from listeners
+     
+      - parameter sender : ActorRef to remove from the listeners collection
     */
     
     public func removeListener(sender : ActorRef?) {
@@ -68,8 +77,10 @@ extension WithListeners {
     }
     
     /**
-    Send m to all listeners
+    Send message to all listeners
+     
+    -parameter m : message to send
     */
     
-    public func broadcast(m : Message) { listeners.forEach { $0 ! m} }
+    public func broadcast(m : Actor.Message) { listeners.forEach { $0 ! m} }
 }

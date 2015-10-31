@@ -40,6 +40,6 @@ public class PeripheralViewController : UITableViewController {
     }
     
     deinit {
-        peripheral ! Harakiri(sender: Optional.None)
+        peripheral ! Actor.Harakiri(sender: Optional.None)
     }
 }

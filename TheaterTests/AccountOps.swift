@@ -9,18 +9,18 @@
 import Foundation
 import Theater
 
-public class SetAccountNumber: Message {
+public class SetAccountNumber: Actor.Message {
     
     public let accountNumber : String
     
     public init(accountNumber : String, operationId : NSUUID) {
         self.accountNumber = accountNumber
-        super.init(sender: Optional.None)
+        super.init(sender: nil)
     }
     
 }
 
-public class BankOp: MessageWithOperationId {
+public class BankOp: Actor.MessageWithOperationId {
     
     public let ammount : Double
     
@@ -34,13 +34,13 @@ public class Withdraw: BankOp {}
 
 public class Deposit: BankOp {}
 
-public class PrintBalance: MessageWithOperationId {
+public class PrintBalance: Actor.MessageWithOperationId {
     public init(operationId : NSUUID) {
         super.init(sender: Optional.None, operationId : operationId)
     }
 }
 
-public class BankOpResult : Message {
+public class BankOpResult : Actor.Message {
     
     public let result : Try<Double>
     
@@ -57,7 +57,7 @@ public class WithdrawResult : BankOpResult { }
 
 public class DepositResult : BankOpResult { }
 
-public class OnBalanceChanged : Message {
+public class OnBalanceChanged : Actor.Message {
     public let balance : Double
     public init(sender : ActorRef, balance : Double) {
         self.balance = balance

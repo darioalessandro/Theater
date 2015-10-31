@@ -36,7 +36,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             
             ^{lobby.presentViewController(alert, animated: true, completion: nil)}
             
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
                 case let t as UICmd.OnPicture:
@@ -96,7 +96,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     func cameraWithController(peer : MCPeerID,
                               ctrl : CameraViewController,
                              lobby : RolePickerController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
             case let s as RemoteCmd.SendFrame:
                 do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(s),
@@ -130,7 +130,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     func camera(peer : MCPeerID,
                lobby : RolePickerController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
 
             switch(msg) {
                 case let c as UICmd.AddCameraController:
@@ -157,7 +157,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     func monitor(peer : MCPeerID,
                 lobby : RolePickerController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 case is RemoteCmd.OnFrame:
                     print("ignoring frame")
@@ -190,7 +190,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         let alert = UIAlertController(title: "Requesting picture",
                                     message: Optional.None,
                              preferredStyle: .Alert)
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
                 case is RemoteCmd.TakePicAck:
@@ -253,7 +253,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     func monitorWithMonitor(monitor : ActorRef,
                                peer : MCPeerID,
                               lobby : RolePickerController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 case is RemoteCmd.OnFrame:
                     monitor ! msg
@@ -282,7 +282,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     func connected(lobby : RolePickerController,
                     peer : MCPeerID) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
                 case is UICmd.BecomeCamera:
@@ -321,7 +321,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     func scanning(lobby : RolePickerController) -> Receive {
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
             case is BLECentral.StartScanning:
                 self.startScanning(lobby)
@@ -339,7 +339,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    lazy var idle : Receive = {[unowned self] (msg : Message) in
+    lazy var idle : Receive = {[unowned self] (msg : Actor.Message) in
         switch(msg) {
             case let w as UICmd.StartScanningWithLobbyViewController:
                 self.become(self.states.scanning, state:self.scanning(w.lobby))
@@ -366,7 +366,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch (msg) {
             case is RemoteCmd.TakePic:
                 let l = RemoteCmd.TakePicResp(sender: this, error: NSError(domain: "unable to take picture since \(UIDevice.currentDevice().name) is not in the camera screen", code: 0, userInfo: nil))
@@ -391,7 +391,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    public func fireAndForget(peer : MCPeerID, message : Message) {
+    public func fireAndForget(peer : MCPeerID, message : Actor.Message) {
         do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(message),
             toPeers: [peer],
             withMode:.Reliable)

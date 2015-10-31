@@ -40,7 +40,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
     
     func connected(ctrl : WSViewController) -> Receive {
         
-        return {[unowned self](msg : Message) in
+        return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 case let w as WebSocketClient.SendMessage:
                     ^{
@@ -90,7 +90,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
             ctrl.tableView.dataSource = self
             ctrl.tableView.delegate = self
         }
-        return {[unowned self] (msg : Message) in
+        return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 case let w as WebSocketClient.Connect:
                     self.wsClient ! WebSocketClient.Connect(url: w.url, sender: self.this)
@@ -154,7 +154,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            wsCtrl ! Harakiri(sender: nil)
+            wsCtrl ! Actor.Harakiri(sender: nil)
         }
     }
     

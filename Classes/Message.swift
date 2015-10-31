@@ -1,5 +1,5 @@
 //
-//  Message.swift
+//  Actor.Message.swift
 //  Actors
 //
 //  Created by Dario Lencina on 9/26/15.
@@ -8,63 +8,68 @@
 
 import Foundation
 
-/**
-Actor send and receive objects that must subclass Message, the Message class provides a sender, which Actors can use to reply.
-*/
+extension Actor {
 
-@objc public class Message : NSObject {
-    
     /**
-    The ActorRef of the Actor that sent this message
+    Actor send and receive objects that must subclass Message, the Message class provides a sender, which Actors can use to reply.
     */
-    
-    public let sender : Optional<ActorRef>
-    
+
+    @objc public class Message : NSObject {
+        
+        /**
+        The ActorRef of the Actor that sent this message
+        */
+        
+        public let sender : Optional<ActorRef>
+        
+        /**
+        The constuctor requires an Optional<ActorRef> to setup the sender
+        */
+        
+         public init(sender : Optional<ActorRef>) {
+            self.sender = sender
+        }
+        
+    }
+
     /**
-    The constuctor requires an Optional<ActorRef> to setup the sender
+    Harakiri is the default Message that forces an Actor to commit suicide, this behaviour can be changed once you override the #Actor.receive method.
     */
-    
-     public init(sender : Optional<ActorRef>) {
-        self.sender = sender
+
+    public class Harakiri : Message {}
+
+    /**
+    Convenient Message subclass which has an operationId that can be used to track a transaction or some sort of message that needs to be tracked
+    */
+
+    public class MessageWithOperationId : Message {
+        
+        /**
+         
+        The operationId used to track the Operation
+         
+        */
+        public let operationId : NSUUID
+        
+        public init(sender: Optional<ActorRef>, operationId : NSUUID) {
+            self.operationId = operationId
+            super.init(sender : sender)
+        }
     }
-    
-}
 
-/**
-Harakiri is the default Message that forces an Actor to commit suicide, this behaviour can be changed once you override the #Actor.receive method.
-*/
+    /**
+    This is an Actor System generated message that is sent to the sender when it tries to send a message to an Actor that has been stopped beforehand.
+    */
 
-public class Harakiri : Message {
-    
-    public override init(sender: Optional<ActorRef>) {
-        super.init(sender: sender)
+    public class DeadLetter : Message {
+        
+        public let message : Message
+        
+        public init(message : Actor.Message, sender: Optional<ActorRef>) {
+            self.message = message
+            super.init(sender: sender)
+        }
     }
-}
 
-/**
-Convenient Message subclass which has an operationId that can be used to track a transaction or some sort of message that needs to be tracked
-*/
-
-public class MessageWithOperationId : Message {
-    public let operationId : NSUUID
-    
-    public init(sender: Optional<ActorRef>, operationId : NSUUID) {
-        self.operationId = operationId
-        super.init(sender : sender)
-    }
-}
-
-/**
-This is an Actor System generated message that is sent to the sender when it tries to send a message to an Actor that has been stopped beforehand.
-*/
-
-public class DeadLetter : Message {
-    
-    public let message : Message
-    
-    public init(message : Message, sender: Optional<ActorRef>) {
-        self.message = message
-        super.init(sender: sender)
-    }
 }
 

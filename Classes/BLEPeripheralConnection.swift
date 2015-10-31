@@ -24,7 +24,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     
     func connected(peripheral : CBPeripheral) -> Receive {
         peripheral.delegate = self
-        return { [unowned self] (msg : Message) in
+        return { [unowned self] (msg : Actor.Message) in
         switch(msg) {
             
             case let m as DiscoverServices:
@@ -75,7 +75,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
         }
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch(msg) {
             
             case let p as SetPeripheral:

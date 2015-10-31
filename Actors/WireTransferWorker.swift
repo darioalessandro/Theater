@@ -15,7 +15,7 @@ public class WireTransferWorker : Actor {
     var bank : Optional<ActorRef> = Optional.None
     
     
-    lazy var transfering : Receive = {[unowned self](msg : Message) in
+    lazy var transfering : Receive = {[unowned self](msg : Actor.Message) in
         switch(msg) {
         case let w as WithdrawResult:
             if w.result.isSuccess() {
@@ -40,7 +40,7 @@ public class WireTransferWorker : Actor {
         }
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch (msg) {
         case let transfer as Transfer:
             if let _ = self.transfer {} else {

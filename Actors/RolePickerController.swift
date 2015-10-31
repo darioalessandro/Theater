@@ -31,7 +31,7 @@ public class RolePickerController : UIViewController {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
             remoteCamSession ! Disconnect(sender:Optional.None)
-            remoteCamSession ! Harakiri(sender: Optional.None)
+            remoteCamSession ! Actor.Harakiri(sender: Optional.None)
         }
     }
     

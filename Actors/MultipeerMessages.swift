@@ -10,9 +10,9 @@ import Foundation
 import Theater
 import MultipeerConnectivity
 
-public class Disconnect : Message {}
+public class Disconnect : Actor.Message {}
 
-public class ConnectToDevice : Message {
+public class ConnectToDevice : Actor.Message {
     public let peer : MCPeerID
     
     public init(peer : MCPeerID, sender : Optional<ActorRef>) {
@@ -23,9 +23,9 @@ public class ConnectToDevice : Message {
 
 public class UICmd {
     
-    public class AddMonitor : Message {}
+    public class AddMonitor : Actor.Message {}
     
-    public class AddImageView : Message {
+    public class AddImageView : Actor.Message {
         let imageView : UIImageView
         
         public required init(imageView : UIImageView) {
@@ -34,7 +34,7 @@ public class UICmd {
         }
     }
     
-    public class StartScanningWithLobbyViewController : Message {
+    public class StartScanningWithLobbyViewController : Actor.Message {
         
         public let lobby : RolePickerController
         
@@ -44,17 +44,17 @@ public class UICmd {
         }
     }
 
-    public class BecomeDevice : Message {}
+    public class BecomeDevice : Actor.Message {}
     
-    public class UnbecomeCamera : Message {}
+    public class UnbecomeCamera : Actor.Message {}
 
     public class BecomeCamera : BecomeDevice {}
     
-    public class UnbecomeMonitor : Message {}
+    public class UnbecomeMonitor : Actor.Message {}
     
     public class BecomeMonitor : BecomeDevice {}
 
-    public class AddCameraController : Message {
+    public class AddCameraController : Actor.Message {
         let ctrl : CameraViewController
         
         public init(sender: Optional<ActorRef>, ctrl : CameraViewController) {
@@ -63,9 +63,9 @@ public class UICmd {
         }
     }
     
-    public class TakePicture : Message {}
+    public class TakePicture : Actor.Message {}
     
-    public class OnPicture : Message {
+    public class OnPicture : Actor.Message {
         
         let pic : Optional<NSData>
         let error : Optional<NSError>
@@ -89,7 +89,7 @@ public class DisconnectPeer : OnConnectToDevice{}
 
 public class OnConnectToDevice : ConnectToDevice {}
 
-public class RemoteCmd : Message {
+public class RemoteCmd : Actor.Message {
     
     public class TakePic : RemoteCmd, NSCoding {
         
@@ -105,7 +105,7 @@ public class RemoteCmd : Message {
         
     }
     
-    public class TakePicAck : Message, NSCoding {
+    public class TakePicAck : Actor.Message, NSCoding {
         
         public override init(sender: Optional<ActorRef>) {
             super.init(sender: sender)
@@ -169,7 +169,7 @@ public class RemoteCmd : Message {
         }
     }
     
-    public class SendFrame : Message, NSCoding {
+    public class SendFrame : Actor.Message, NSCoding {
         public let data : NSData
         public let fps : NSInteger
         init(data : NSData, sender : Optional<ActorRef>, fps : NSInteger) {
@@ -191,7 +191,7 @@ public class RemoteCmd : Message {
         }
     }
     
-    public class OnFrame : Message {
+    public class OnFrame : Actor.Message {
         public let data : NSData
         public let peerId : MCPeerID
         public let fps : NSInteger
@@ -204,7 +204,7 @@ public class RemoteCmd : Message {
         }
     }
     
-    public class PeerBecameCamera : Message , NSCoding {
+    public class PeerBecameCamera : Actor.Message , NSCoding {
         
         public init() {
             super.init(sender : Optional.None)
@@ -217,7 +217,7 @@ public class RemoteCmd : Message {
         }
     }
     
-    public class PeerBecameMonitor : Message , NSCoding {
+    public class PeerBecameMonitor : Actor.Message , NSCoding {
         
         public init() {
             super.init(sender : Optional.None)

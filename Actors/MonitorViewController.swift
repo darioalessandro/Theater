@@ -20,7 +20,7 @@ public class MonitorActor : Actor {
         session! ! UICmd.AddMonitor(sender: ref)
     }
     
-    override public func receive(msg: Message) {
+    override public func receive(msg: Actor.Message) {
         switch(msg) {
             
             case let i as UICmd.AddImageView:

@@ -8,18 +8,29 @@
 
 import Foundation
 
-
-/**
-'!' Is a shortcut for typing actor ! msg instead of actorRef.tell(msg)
-*/
-
 infix operator ! {associativity left precedence 130}
 
-public func !(actorRef : ActorRef, msg : Message) -> Void {
+/**
+ 
+ '!' Is a shortcut for typing:
+ 
+ ```
+ actor ! msg
+ ```
+ 
+ instead of
+ 
+ ```
+ actorRef.tell(msg)
+ ```
+ 
+ */
+
+public func !(actorRef : ActorRef, msg : Actor.Message) -> Void {
     actorRef.tell(msg)
 }
 
-public typealias Receive = (Message) -> (Void)
+public typealias Receive = (Actor.Message) -> (Void)
 
 /**
 
@@ -32,9 +43,11 @@ Actors are the central elements of Theater.
 You must subclass Actor to implement your own actor classes such as: BankAccount, Device, Person etc.
 
 the single most important to override is
-
-public func receive(msg : Message) -> Void
-
+ 
+```
+public func receive(msg : Actor.Message) -> Void
+```
+ 
 Which will be called when some other actor tries to ! (tell) you something
 
 */
@@ -48,7 +61,7 @@ public class Actor : NSObject {
     final private let statesStack : Stack<(String,Receive)> = Stack()
     
     /**
-    Each actor has it's own mailbox to process messages.
+    Each actor has it's own mailbox to process Actor.Messages.
     */
     
     final public let mailbox : NSOperationQueue = NSOperationQueue()
@@ -75,7 +88,7 @@ public class Actor : NSObject {
     Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
     
     - Parameter state: the new state to push
-    - Parameter name: The name of the new state
+    - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
     */
     
     final public func become(name : String, state : Receive) -> Void  {
@@ -92,6 +105,7 @@ public class Actor : NSObject {
     
     /**
     Current state
+    - Returns: The state at the top of the statesStack
     */
      
     final public func currentState() -> (String,Receive)? {
@@ -103,7 +117,7 @@ public class Actor : NSObject {
     - Parameter name: the state that you can to pop to.
     */
     
-    final public func popToState(name : String) {
+    final public func popToState(name : String) -> Void {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != name {
                 unbecome()
@@ -118,7 +132,7 @@ public class Actor : NSObject {
     pop to root state
     */
      
-    final public func popToRoot() {
+    final public func popToRoot() -> Void {
         while !self.statesStack.isEmpty() {
             unbecome()
         }
@@ -130,7 +144,7 @@ public class Actor : NSObject {
     - Parameter msg: the incoming message
     */
     
-    public func receive(msg : Message) -> Void {
+    public func receive(msg : Actor.Message) -> Void {
         switch msg {
             case is Harakiri:
                 self.context.stop(self.this)
@@ -144,7 +158,7 @@ public class Actor : NSObject {
     This method is used by the ActorSystem to communicate with the actors, do not override.
     */
     
-    final public func tell(msg : Message) -> Void {
+    final public func tell(msg : Actor.Message) -> Void {
         mailbox.addOperationWithBlock { () in
             self.sender = msg.sender
             print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
