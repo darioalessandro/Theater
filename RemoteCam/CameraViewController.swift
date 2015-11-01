@@ -78,31 +78,33 @@ public class CameraViewController : UIViewController {
         }
     }
     
+    func toggleCameraPosition(p : AVCaptureDevicePosition) -> Try<AVCaptureDevicePosition> {
+        switch(p) {
+        case .Back:
+            return Success(value: .Front)
+        case .Front:
+            return Success(value: .Back)
+        default:
+            return Failure(error: NSError(domain: "Unable to find camera position", code: 0, userInfo: nil))
+        }
+    }
+    
     func toggleCamera() -> Try<(AVCaptureFlashMode,AVCaptureDevicePosition)> {
         do {
             if let captureSession = self.captureSession,
                 let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
-                let device = genericDevice.device {
-                    switch(device.position) {
-                    case .Back:
-                        let front = try AVCaptureDeviceInput(device: self.cameraForPosition(.Front))
-                        captureSession.removeInput(genericDevice)
-                        captureSession.addInput(front)
-                        return Success(value: (front.device.flashMode, front.device.position))
-                    case .Front:
-                        let back = try AVCaptureDeviceInput(device: self.cameraForPosition(.Back))
-                        captureSession.removeInput(genericDevice)
-                        captureSession.addInput(back)
-                        return Success(value: (back.device.flashMode, back.device.position))
-                    default:
-                        return Failure(error: NSError(domain: "Unable to find camera position", code: 0, userInfo: nil))
-                    }
-                    
+                let device = genericDevice.device,
+                let newPosition = toggleCameraPosition(device.position).toOptional() {
+                    let newDevice = self.cameraForPosition(newPosition)
+                    let newInput = try AVCaptureDeviceInput(device: newDevice)
+                    captureSession.removeInput(genericDevice)
+                    captureSession.addInput(newInput)
+                    self.setFrameRate(self.fps,videoDevice:newDevice)
+                    return Success(value: (newInput.device.flashMode, newInput.device.position))
             } else {
                 return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
             }
         } catch let error as NSError {
-            print("error \(error)")
             return Failure(error: error)
         }
     }
