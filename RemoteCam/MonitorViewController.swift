@@ -56,7 +56,7 @@ public class MonitorViewController : UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var takePicture: UIBarButtonItem!
+    @IBOutlet weak var takePicture: UIButton!
     
     @IBAction func onTakePicture(sender: UIBarButtonItem) {
         session ! UICmd.TakePicture(sender: Optional.None)

@@ -14,7 +14,11 @@ def testing_pods
 end
 
 target 'Actors' do
+pod 'Starscream', '~> 1.0.0'
+end
 
+target 'RemoteCam' do
+    pod 'Starscream', '~> 1.0.0'
 end
 
 target 'ActorsTests' do
@@ -22,7 +26,7 @@ target 'ActorsTests' do
 end
 
 target 'Theater' do
-
+pod 'Starscream', '~> 1.0.0'
 end
 
 target 'TheaterTests' do
