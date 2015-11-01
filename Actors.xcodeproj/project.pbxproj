@@ -11,14 +11,6 @@
 		060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
-		06224B9D1BC85E00003A3CB7 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06224B9C1BC85E00003A3CB7 /* States.swift */; };
-		064C6ECD1BC5F8D000B0F13D /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */; };
-		064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */; };
-		064C6ED11BC5F8E800B0F13D /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED01BC5F8E800B0F13D /* MonitorViewController.swift */; };
-		064C6ED31BC5F92B00B0F13D /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */; };
-		064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */; };
-		064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */; };
-		064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */; };
 		06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06545B991BE40716004A2D5F /* ViewControllerActor.swift */; };
 		06631A671BDF191D00883344 /* WithListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A661BDF191D00883344 /* WithListeners.swift */; };
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
@@ -37,7 +29,31 @@
 		068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802D1BCB0A1A00A10D76 /* Stack.swift */; };
 		068F80371BCB0A1A00A10D76 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802E1BCB0A1A00A10D76 /* Try.swift */; };
 		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; };
-		0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */; };
+		0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */; };
+		069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284251BE5BF5B00AF4678 /* Assets.xcassets */; };
+		069284291BE5BF5B00AF4678 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */; };
+		069284341BE5BF5C00AF4678 /* RemoteCamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */; };
+		0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
+		0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284421BE5C0E600AF4678 /* CameraViewController.swift */; };
+		0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284431BE5C0E600AF4678 /* MonitorViewController.swift */; };
+		0692844E1BE5C0E600AF4678 /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284441BE5C0E600AF4678 /* Multipeer.storyboard */; };
+		0692844F1BE5C0E600AF4678 /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284451BE5C0E600AF4678 /* MultipeerMessages.swift */; };
+		069284501BE5C0E600AF4678 /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */; };
+		069284511BE5C0E600AF4678 /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284471BE5C0E600AF4678 /* RemoteCamSession.swift */; };
+		069284521BE5C0E600AF4678 /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284481BE5C0E600AF4678 /* RolePickerController.swift */; };
+		069284531BE5C0E600AF4678 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284491BE5C0E600AF4678 /* States.swift */; };
+		069284541BE5C0E600AF4678 /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */; };
+		069284561BE5C12000AF4678 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284551BE5C12000AF4678 /* Main.storyboard */; };
+		069284571BE5C18E00AF4678 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284421BE5C0E600AF4678 /* CameraViewController.swift */; };
+		069284581BE5C18E00AF4678 /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284431BE5C0E600AF4678 /* MonitorViewController.swift */; };
+		069284591BE5C18E00AF4678 /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284441BE5C0E600AF4678 /* Multipeer.storyboard */; };
+		0692845A1BE5C18E00AF4678 /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284451BE5C0E600AF4678 /* MultipeerMessages.swift */; };
+		0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */; };
+		0692845C1BE5C18E00AF4678 /* RemoteCamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284471BE5C0E600AF4678 /* RemoteCamSession.swift */; };
+		0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284481BE5C0E600AF4678 /* RolePickerController.swift */; };
+		0692845E1BE5C18E00AF4678 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284491BE5C0E600AF4678 /* States.swift */; };
+		0692845F1BE5C18E00AF4678 /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
 		0693BC7E1BC33C5100694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
@@ -64,6 +80,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		069284301BE5BF5C00AF4678 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0692841B1BE5BF5B00AF4678;
+			remoteInfo = RemoteCam;
+		};
+		0692843E1BE5BF6800AF4678 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06E1D51D1BB76EE300E07321;
+			remoteInfo = Theater;
+		};
 		06E1D5071BB7699800E07321 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
@@ -95,6 +125,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		069284401BE5BF6800AF4678 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D5381BB76EE400E07321 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,14 +158,6 @@
 		060E28561BE1A5CA00D73ACB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
-		06224B9C1BC85E00003A3CB7 /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
-		064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RolePickerController.swift; sourceTree = "<group>"; };
-		064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		064C6ED01BC5F8E800B0F13D /* MonitorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MonitorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Multipeer.storyboard; sourceTree = "<group>"; };
-		064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
-		064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RemoteCamSession.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MultipeerMessages.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06545B991BE40716004A2D5F /* ViewControllerActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ViewControllerActor.swift; path = Classes/ViewControllerActor.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06631A661BDF191D00883344 /* WithListeners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = WithListeners.swift; path = Classes/WithListeners.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06631A681BDF192600883344 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -145,8 +178,26 @@
 		068F802E1BCB0A1A00A10D76 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Try.swift; path = Classes/Try.swift; sourceTree = SOURCE_ROOT; };
 		068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = WebSocketClient.swift; path = Classes/WebSocketClient.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Actors-Bridging-Header.h"; sourceTree = "<group>"; };
-		0691835A1BC75CD800BE9B5C /* UIImage+ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageProcessing.h"; sourceTree = "<group>"; };
-		0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageProcessing.m"; sourceTree = "<group>"; };
+		0692841C1BE5BF5B00AF4678 /* RemoteCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		069284251BE5BF5B00AF4678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		069284281BE5BF5B00AF4678 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0692842A1BE5BF5B00AF4678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemoteCamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCamTests.swift; sourceTree = "<group>"; };
+		069284351BE5BF5C00AF4678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		069284411BE5C0E500AF4678 /* RemoteCam-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RemoteCam-Bridging-Header.h"; sourceTree = "<group>"; };
+		069284421BE5C0E600AF4678 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		069284431BE5C0E600AF4678 /* MonitorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorViewController.swift; sourceTree = "<group>"; };
+		069284441BE5C0E600AF4678 /* Multipeer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Multipeer.storyboard; sourceTree = "<group>"; };
+		069284451BE5C0E600AF4678 /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
+		069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
+		069284471BE5C0E600AF4678 /* RemoteCamSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCamSession.swift; sourceTree = "<group>"; };
+		069284481BE5C0E600AF4678 /* RolePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RolePickerController.swift; sourceTree = "<group>"; };
+		069284491BE5C0E600AF4678 /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
+		0692844A1BE5C0E600AF4678 /* UIImage+ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageProcessing.h"; sourceTree = "<group>"; };
+		0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageProcessing.m"; sourceTree = "<group>"; };
+		069284551BE5C12000AF4678 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0693BC841BC3405100694512 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		0694680D1BC45CA100C84503 /* WireTransferWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WireTransferWorker.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -182,6 +233,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		069284191BE5BF5B00AF4678 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0692842C1BE5BF5C00AF4678 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D4EF1BB7699700E07321 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,48 +285,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06224B991BC85D46003A3CB7 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				064C6ECC1BC5F8D000B0F13D /* RolePickerController.swift */,
-				064C6ECE1BC5F8DC00B0F13D /* CameraViewController.swift */,
-				064C6ED01BC5F8E800B0F13D /* MonitorViewController.swift */,
-				064C6ED81BC6015000B0F13D /* PhonePickerViewController.swift */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		06224B9A1BC85D53003A3CB7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				064C6EDA1BC601D300B0F13D /* RemoteCamSession.swift */,
-				06224B9C1BC85E00003A3CB7 /* States.swift */,
-				064C6EEF1BC6165400B0F13D /* MultipeerMessages.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		06224B9B1BC85D5A003A3CB7 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				0691835A1BC75CD800BE9B5C /* UIImage+ImageProcessing.h */,
-				0691835B1BC75CD800BE9B5C /* UIImage+ImageProcessing.m */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		064C6ECB1BC5F32600B0F13D /* Multipeer */ = {
-			isa = PBXGroup;
-			children = (
-				06224B991BC85D46003A3CB7 /* Controllers */,
-				06224B9A1BC85D53003A3CB7 /* Model */,
-				06224B9B1BC85D5A003A3CB7 /* Utils */,
-				064C6ED21BC5F92B00B0F13D /* Multipeer.storyboard */,
-				069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */,
-			);
-			name = Multipeer;
-			sourceTree = "<group>";
-		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +353,54 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		0692841D1BE5BF5B00AF4678 /* RemoteCam */ = {
+			isa = PBXGroup;
+			children = (
+				069284611BE5C1BD00AF4678 /* Model */,
+				069284601BE5C1A700AF4678 /* Controllers */,
+				0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */,
+				069284251BE5BF5B00AF4678 /* Assets.xcassets */,
+				069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */,
+				069284441BE5C0E600AF4678 /* Multipeer.storyboard */,
+				0692842A1BE5BF5B00AF4678 /* Info.plist */,
+				069284411BE5C0E500AF4678 /* RemoteCam-Bridging-Header.h */,
+				069284551BE5C12000AF4678 /* Main.storyboard */,
+			);
+			path = RemoteCam;
+			sourceTree = "<group>";
+		};
+		069284321BE5BF5C00AF4678 /* RemoteCamTests */ = {
+			isa = PBXGroup;
+			children = (
+				069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */,
+				069284351BE5BF5C00AF4678 /* Info.plist */,
+			);
+			path = RemoteCamTests;
+			sourceTree = "<group>";
+		};
+		069284601BE5C1A700AF4678 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				069284421BE5C0E600AF4678 /* CameraViewController.swift */,
+				069284431BE5C0E600AF4678 /* MonitorViewController.swift */,
+				069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */,
+				069284481BE5C0E600AF4678 /* RolePickerController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		069284611BE5C1BD00AF4678 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				069284451BE5C0E600AF4678 /* MultipeerMessages.swift */,
+				069284471BE5C0E600AF4678 /* RemoteCamSession.swift */,
+				069284491BE5C0E600AF4678 /* States.swift */,
+				0692844A1BE5C0E600AF4678 /* UIImage+ImageProcessing.h */,
+				0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		0693BC7C1BC33C1600694512 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +420,8 @@
 				06E1D5091BB7699800E07321 /* ActorsTests */,
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06E1D52D1BB76EE400E07321 /* TheaterTests */,
+				0692841D1BE5BF5B00AF4678 /* RemoteCam */,
+				069284321BE5BF5C00AF4678 /* RemoteCamTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -361,6 +435,8 @@
 				06E1D5061BB7699800E07321 /* ActorsTests.xctest */,
 				06E1D51E1BB76EE300E07321 /* Theater.framework */,
 				06E1D5271BB76EE400E07321 /* TheaterTests.xctest */,
+				0692841C1BE5BF5B00AF4678 /* RemoteCam.app */,
+				0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -372,10 +448,10 @@
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
 				06EEA7D51BBB730B005787AE /* BLE Button */,
-				064C6ECB1BC5F32600B0F13D /* Multipeer */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
 				068EA7D91BDC5ACE00330714 /* Main.storyboard */,
+				069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */,
 				06E1D5011BB7699800E07321 /* Info.plist */,
 			);
 			path = Actors;
@@ -476,6 +552,43 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0692841B1BE5BF5B00AF4678 /* RemoteCam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 069284361BE5BF5C00AF4678 /* Build configuration list for PBXNativeTarget "RemoteCam" */;
+			buildPhases = (
+				069284181BE5BF5B00AF4678 /* Sources */,
+				069284191BE5BF5B00AF4678 /* Frameworks */,
+				0692841A1BE5BF5B00AF4678 /* Resources */,
+				069284401BE5BF6800AF4678 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0692843F1BE5BF6800AF4678 /* PBXTargetDependency */,
+			);
+			name = RemoteCam;
+			productName = RemoteCam;
+			productReference = 0692841C1BE5BF5B00AF4678 /* RemoteCam.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0692842E1BE5BF5C00AF4678 /* RemoteCamTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 069284391BE5BF5C00AF4678 /* Build configuration list for PBXNativeTarget "RemoteCamTests" */;
+			buildPhases = (
+				0692842B1BE5BF5C00AF4678 /* Sources */,
+				0692842C1BE5BF5C00AF4678 /* Frameworks */,
+				0692842D1BE5BF5C00AF4678 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				069284311BE5BF5C00AF4678 /* PBXTargetDependency */,
+			);
+			name = RemoteCamTests;
+			productName = RemoteCamTests;
+			productReference = 0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		06E1D4F11BB7699700E07321 /* Actors */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "Actors" */;
@@ -569,9 +682,16 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = dario;
 				TargetAttributes = {
+					0692841B1BE5BF5B00AF4678 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					0692842E1BE5BF5C00AF4678 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 0692841B1BE5BF5B00AF4678;
+					};
 					06E1D4F11BB7699700E07321 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 8DPYD7M3EU;
+						DevelopmentTeam = 9BAHU39A66;
 					};
 					06E1D5051BB7699800E07321 = {
 						CreatedOnToolsVersion = 7.0;
@@ -603,20 +723,40 @@
 				06E1D5051BB7699800E07321 /* ActorsTests */,
 				06E1D51D1BB76EE300E07321 /* Theater */,
 				06E1D5261BB76EE400E07321 /* TheaterTests */,
+				0692841B1BE5BF5B00AF4678 /* RemoteCam */,
+				0692842E1BE5BF5C00AF4678 /* RemoteCamTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0692841A1BE5BF5B00AF4678 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0692844E1BE5C0E600AF4678 /* Multipeer.storyboard in Resources */,
+				069284291BE5BF5B00AF4678 /* LaunchScreen.storyboard in Resources */,
+				069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */,
+				069284561BE5C12000AF4678 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0692842D1BE5BF5C00AF4678 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D4F01BB7699700E07321 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
-				064C6ED31BC5F92B00B0F13D /* Multipeer.storyboard in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
 				06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */,
+				069284591BE5C18E00AF4678 /* Multipeer.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,28 +922,52 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		069284181BE5BF5B00AF4678 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				069284511BE5C0E600AF4678 /* RemoteCamSession.swift in Sources */,
+				0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */,
+				0692844F1BE5C0E600AF4678 /* MultipeerMessages.swift in Sources */,
+				069284531BE5C0E600AF4678 /* States.swift in Sources */,
+				069284501BE5C0E600AF4678 /* PhonePickerViewController.swift in Sources */,
+				069284521BE5C0E600AF4678 /* RolePickerController.swift in Sources */,
+				0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */,
+				0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */,
+				069284541BE5C0E600AF4678 /* UIImage+ImageProcessing.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0692842B1BE5BF5C00AF4678 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				069284341BE5BF5C00AF4678 /* RemoteCamTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D4EE1BB7699700E07321 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
+				0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */,
 				068EA7E01BDC5D8800330714 /* PeripheralActors.swift in Sources */,
-				064C6EDB1BC601D300B0F13D /* RemoteCamSession.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
-				064C6ECD1BC5F8D000B0F13D /* RolePickerController.swift in Sources */,
-				064C6ECF1BC5F8DC00B0F13D /* CameraViewController.swift in Sources */,
+				069284581BE5C18E00AF4678 /* MonitorViewController.swift in Sources */,
 				06EEA7D41BBB7305005787AE /* BLECentralActors.swift in Sources */,
-				064C6ED11BC5F8E800B0F13D /* MonitorViewController.swift in Sources */,
-				0691835C1BC75CD800BE9B5C /* UIImage+ImageProcessing.m in Sources */,
+				069284571BE5C18E00AF4678 /* CameraViewController.swift in Sources */,
 				06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */,
-				064C6EF01BC6165400B0F13D /* MultipeerMessages.swift in Sources */,
 				0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */,
+				0692845E1BE5C18E00AF4678 /* States.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
+				0692845A1BE5C18E00AF4678 /* MultipeerMessages.swift in Sources */,
+				0692845F1BE5C18E00AF4678 /* UIImage+ImageProcessing.m in Sources */,
 				069468111BC45D3D00C84503 /* Bank.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
-				064C6ED91BC6015000B0F13D /* PhonePickerViewController.swift in Sources */,
-				06224B9D1BC85E00003A3CB7 /* States.swift in Sources */,
+				0692845C1BE5C18E00AF4678 /* RemoteCamSession.swift in Sources */,
 				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,
+				0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */,
 				068EA7DC1BDC5D3E00330714 /* BLEPeripheralViewController.swift in Sources */,
 			);
@@ -853,6 +1017,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		069284311BE5BF5C00AF4678 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0692841B1BE5BF5B00AF4678 /* RemoteCam */;
+			targetProxy = 069284301BE5BF5C00AF4678 /* PBXContainerItemProxy */;
+		};
+		0692843F1BE5BF6800AF4678 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06E1D51D1BB76EE300E07321 /* Theater */;
+			targetProxy = 0692843E1BE5BF6800AF4678 /* PBXContainerItemProxy */;
+		};
 		06E1D5081BB7699800E07321 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 06E1D4F11BB7699700E07321 /* Actors */;
@@ -876,6 +1050,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				069284281BE5BF5B00AF4678 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -887,6 +1069,67 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		069284371BE5BF5C00AF4678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = RemoteCam/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		069284381BE5BF5C00AF4678 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = RemoteCam/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		0692843A1BE5BF5C00AF4678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RemoteCamTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RemoteCam.app/RemoteCam";
+			};
+			name = Debug;
+		};
+		0692843B1BE5BF5C00AF4678 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RemoteCamTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RemoteCam.app/RemoteCam";
+			};
+			name = Release;
+		};
 		06E1D50D1BB7699800E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -980,7 +1223,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1000,7 +1243,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1127,6 +1370,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		069284361BE5BF5C00AF4678 /* Build configuration list for PBXNativeTarget "RemoteCam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				069284371BE5BF5C00AF4678 /* Debug */,
+				069284381BE5BF5C00AF4678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		069284391BE5BF5C00AF4678 /* Build configuration list for PBXNativeTarget "RemoteCamTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0692843A1BE5BF5C00AF4678 /* Debug */,
+				0692843B1BE5BF5C00AF4678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "Actors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
