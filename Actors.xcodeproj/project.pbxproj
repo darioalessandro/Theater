@@ -31,7 +31,6 @@
 		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; };
 		0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */; };
 		069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284251BE5BF5B00AF4678 /* Assets.xcassets */; };
-		069284291BE5BF5B00AF4678 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */; };
 		069284341BE5BF5C00AF4678 /* RemoteCamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */; };
 		0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -54,6 +53,13 @@
 		0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284481BE5C0E600AF4678 /* RolePickerController.swift */; };
 		0692845E1BE5C18E00AF4678 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284491BE5C0E600AF4678 /* States.swift */; };
 		0692845F1BE5C18E00AF4678 /* UIImage+ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */; };
+		069284661BE5C71800AF4678 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284651BE5C71800AF4678 /* Media.xcassets */; };
+		069284681BE5C7DB00AF4678 /* Acknowledgments.html in Resources */ = {isa = PBXBuildFile; fileRef = 069284671BE5C7DB00AF4678 /* Acknowledgments.html */; };
+		069284691BE5C7DB00AF4678 /* Acknowledgments.html in Resources */ = {isa = PBXBuildFile; fileRef = 069284671BE5C7DB00AF4678 /* Acknowledgments.html */; };
+		069284711BE5C82E00AF4678 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0692846F1BE5C82E00AF4678 /* Localizable.strings */; };
+		069284721BE5C82E00AF4678 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0692846F1BE5C82E00AF4678 /* Localizable.strings */; };
+		069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 069284701BE5C82E00AF4678 /* InfoPlist.strings */; };
+		069284741BE5C82E00AF4678 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 069284701BE5C82E00AF4678 /* InfoPlist.strings */; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
 		0693BC7E1BC33C5100694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
@@ -181,7 +187,6 @@
 		0692841C1BE5BF5B00AF4678 /* RemoteCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemoteCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		069284251BE5BF5B00AF4678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		069284281BE5BF5B00AF4678 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0692842A1BE5BF5B00AF4678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemoteCamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCamTests.swift; sourceTree = "<group>"; };
@@ -198,6 +203,10 @@
 		0692844A1BE5C0E600AF4678 /* UIImage+ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageProcessing.h"; sourceTree = "<group>"; };
 		0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageProcessing.m"; sourceTree = "<group>"; };
 		069284551BE5C12000AF4678 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		069284651BE5C71800AF4678 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		069284671BE5C7DB00AF4678 /* Acknowledgments.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Acknowledgments.html; sourceTree = "<group>"; };
+		0692846F1BE5C82E00AF4678 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		069284701BE5C82E00AF4678 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		0693BC841BC3405100694512 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		0694680D1BC45CA100C84503 /* WireTransferWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WireTransferWorker.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -356,15 +365,11 @@
 		0692841D1BE5BF5B00AF4678 /* RemoteCam */ = {
 			isa = PBXGroup;
 			children = (
+				069284761BE5C94600AF4678 /* Delegate */,
+				069284751BE5C8F900AF4678 /* Assets */,
 				069284611BE5C1BD00AF4678 /* Model */,
 				069284601BE5C1A700AF4678 /* Controllers */,
-				0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */,
-				069284251BE5BF5B00AF4678 /* Assets.xcassets */,
-				069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */,
-				069284441BE5C0E600AF4678 /* Multipeer.storyboard */,
 				0692842A1BE5BF5B00AF4678 /* Info.plist */,
-				069284411BE5C0E500AF4678 /* RemoteCam-Bridging-Header.h */,
-				069284551BE5C12000AF4678 /* Main.storyboard */,
 			);
 			path = RemoteCam;
 			sourceTree = "<group>";
@@ -399,6 +404,29 @@
 				0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		069284751BE5C8F900AF4678 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				069284251BE5BF5B00AF4678 /* Assets.xcassets */,
+				069284651BE5C71800AF4678 /* Media.xcassets */,
+				069284671BE5C7DB00AF4678 /* Acknowledgments.html */,
+				069284551BE5C12000AF4678 /* Main.storyboard */,
+				0692846F1BE5C82E00AF4678 /* Localizable.strings */,
+				069284701BE5C82E00AF4678 /* InfoPlist.strings */,
+				069284441BE5C0E600AF4678 /* Multipeer.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		069284761BE5C94600AF4678 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */,
+				069284411BE5C0E500AF4678 /* RemoteCam-Bridging-Header.h */,
+			);
+			name = Delegate;
 			sourceTree = "<group>";
 		};
 		0693BC7C1BC33C1600694512 /* Accounts */ = {
@@ -735,8 +763,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0692844E1BE5C0E600AF4678 /* Multipeer.storyboard in Resources */,
-				069284291BE5BF5B00AF4678 /* LaunchScreen.storyboard in Resources */,
+				069284741BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
+				069284721BE5C82E00AF4678 /* Localizable.strings in Resources */,
+				069284691BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
 				069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */,
+				069284661BE5C71800AF4678 /* Media.xcassets in Resources */,
 				069284561BE5C12000AF4678 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,8 +784,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */,
+				069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
+				069284711BE5C82E00AF4678 /* Localizable.strings in Resources */,
+				069284681BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
 				06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */,
 				069284591BE5C18E00AF4678 /* Multipeer.storyboard in Resources */,
 			);
@@ -1050,14 +1084,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		069284271BE5BF5B00AF4678 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				069284281BE5BF5B00AF4678 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1073,6 +1099,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1091,6 +1118,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1223,7 +1251,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1243,7 +1271,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Actors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";

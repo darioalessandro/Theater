@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "monitor.png",
+      "filename" : "navigationBarButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "navigationBarButton@2x.png",
       "scale" : "2x"
     },
     {
