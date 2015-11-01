@@ -54,25 +54,66 @@ public class MonitorViewController : UIViewController {
     
     let monitor = AppActorSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
     
+    @IBOutlet weak var flashStatus: UILabel!
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var takePicture: UIButton!
+    
+    @IBOutlet weak var sliderContainer : UIView!
+    
+    @IBOutlet weak var timerSlider : UISlider!
+    
+    @IBAction func toggleCamera(sender: UIButton) {
+        session ! UICmd.ToggleCamera()
+    }
+    
+    @IBAction func showSettings(sender: UIButton) {}
+    
+    @IBAction func toggleFlash(sender: UIButton) {}
+    
+    @IBAction func showGallery(sender: UIButton) {}
+    
+    @IBAction func goBack(sender: UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     @IBAction func onTakePicture(sender: UIBarButtonItem) {
         session ! UICmd.TakePicture(sender: Optional.None)
     }
     
+    override public func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.toolbarHidden = false
         monitor ! UICmd.AddImageView(imageView: self.imageView)
+        self.configureTimerUI()
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
-                    self.navigationController?.toolbarHidden = true
+        if self.isBeingDismissed() || self.isMovingFromParentViewController() {
             monitor ! UICmd.UnbecomeMonitor(sender: Optional.None)
         }
+    }
+    
+    func configureTimerUI() {
+        self.sliderContainer.layer.cornerRadius = 30.0
+        self.sliderContainer.clipsToBounds=true
+
+        let trans = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+        self.timerSlider.layer.anchorPoint = CGPointMake(1, 1)
+        self.timerSlider.transform=trans
+        let c = UIColor(red: 0.150, green: 0.670, blue: 0.80, alpha: 1)
+        self.timerSlider.minimumTrackTintColor = c
+        self.timerSlider.minimumTrackTintColor = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
+        self.timerSlider.thumbTintColor = c
+
+//        RCRemoteConfiguration * remoteConfig=[[RCSession activeSession] remoteConfiguration];
+//        _timerSlider.value=(float)remoteConfig.timer;
+//        _timerLabel.text=[NSString stringWithFormat:@"%ld", (long)remoteConfig.timer];
     }
 }

@@ -18,4 +18,6 @@ struct States {
     let cameraWithController = "cameraWithController"
     let monitorTakingPicture = "monitorTakingPicture"
     let monitorWithMonitor = "monitorWithMonitor"
+    let monitorTogglingFlash = "monitorTogglingFlash"
+    let monitorTogglingCamera = "monitorTogglingCamera"
 }

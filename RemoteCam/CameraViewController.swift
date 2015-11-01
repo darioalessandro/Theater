@@ -38,9 +38,13 @@ public class CameraViewController : UIViewController {
     
     var captureVideoPreviewLayer : AVCaptureVideoPreviewLayer!
     
+    @IBOutlet weak var back : UIButton!
+    
     let stillImageOutput = AVCaptureStillImageOutput()
     
     var session : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    
+    let fps = 3
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -48,17 +52,102 @@ public class CameraViewController : UIViewController {
         session ! UICmd.AddCameraController(sender: Optional.None, ctrl: self)
     }
     
+    override public func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
-            captureSession?.stopRunning()
-            session ! UICmd.UnbecomeCamera(sender : Optional.None)
+        if self.isBeingDismissed() || self.isMovingFromParentViewController() {
+            if let cs = captureSession {
+                cs.stopRunning()
+                session ! UICmd.UnbecomeCamera(sender : Optional.None)
+            }
+        }
+    }
+    
+    private func nextFlashMode(mode : AVCaptureFlashMode) -> AVCaptureFlashMode {
+        switch(mode) {
+            case .Off:
+                return .On
+            case .On:
+                return .Auto
+            case .Auto:
+                return .Off
+        }
+    }
+    
+    func toggleCamera() -> Try<(AVCaptureFlashMode,AVCaptureDevicePosition)> {
+        do {
+            if let captureSession = self.captureSession,
+                let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
+                let device = genericDevice.device {
+                    switch(device.position) {
+                    case .Back:
+                        let front = try AVCaptureDeviceInput(device: self.cameraForPosition(.Front))
+                        captureSession.removeInput(genericDevice)
+                        captureSession.addInput(front)
+                        return Success(value: (front.device.flashMode, front.device.position))
+                    case .Front:
+                        let back = try AVCaptureDeviceInput(device: self.cameraForPosition(.Back))
+                        captureSession.removeInput(genericDevice)
+                        captureSession.addInput(back)
+                        return Success(value: (back.device.flashMode, back.device.position))
+                    default:
+                        return Failure(error: NSError(domain: "Unable to find camera position", code: 0, userInfo: nil))
+                    }
+                    
+            } else {
+                return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
+            }
+        } catch let error as NSError {
+            print("error \(error)")
+            return Failure(error: error)
+        }
+    }
+    
+    func toggleFlash() -> Try<AVCaptureFlashMode> {
+        if let captureSession = self.captureSession,
+           let genericDevice = captureSession.inputs.first,
+           let device = genericDevice as? AVCaptureDevice {
+            return self.setFlashMode(nextFlashMode(device.flashMode), device: device)
+        }  else {
+            return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
+        }
+    }
+    
+    func setFlashMode(mode : AVCaptureFlashMode, device : AVCaptureDevice) -> Try<AVCaptureFlashMode> {
+        if device.hasFlash {
+            do {
+                try device.lockForConfiguration()
+                device.flashMode = mode
+                device.unlockForConfiguration()
+            } catch let error as NSError {
+                print("error \(error)")
+                return Failure(error: error)
+            } catch {
+                print("sdfsdf")
+               return Failure(error: NSError(domain: "Unknown error", code: 0, userInfo: nil))
+            }
+        }
+    
+        return Success(value: mode)
+    }
+    
+    func cameraForPosition(position : AVCaptureDevicePosition) -> AVCaptureDevice {
+        let videoDevices : [AVCaptureDevice] = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo) as! [AVCaptureDevice] //stupid swift
+        let filtered : [AVCaptureDevice] = videoDevices.filter { return $0.position == position}
+        if let cam = filtered.first {
+            return cam
+        } else {
+            return AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         }
     }
     
     func setupCamera() -> Void {
-        if let captureSession = self.captureSession {
-            captureSession.stopRunning()
+        if let cs = self.captureSession {
+            cs.stopRunning()
         }
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetHigh
@@ -68,7 +157,7 @@ public class CameraViewController : UIViewController {
         captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         captureVideoPreviewLayer.frame = self.view.frame
 
-        self.view.layer.addSublayer(captureVideoPreviewLayer)
+        self.view.layer.insertSublayer(captureVideoPreviewLayer, below: self.back.layer)
         
         stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
         
@@ -89,7 +178,7 @@ public class CameraViewController : UIViewController {
                 output.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
                 output.alwaysDiscardsLateVideoFrames = true
                 
-                self.setFrameRate(3,videoDevice:videoDevice)
+                self.setFrameRate(self.fps,videoDevice:videoDevice)
                                 
                 self.captureSession?.startRunning()
             } catch let error as NSError {
@@ -102,14 +191,36 @@ public class CameraViewController : UIViewController {
         }
     }
     
+    @IBAction func goBack(sender: UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    public override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        self.rotateCameraToOrientation(toInterfaceOrientation)
+    }
+    
+    private func rotateCameraToOrientation( orientation : UIInterfaceOrientation) {
+        let o = OrientationUtils.transform(orientation)
+        self.captureVideoPreviewLayer.connection.videoOrientation = o
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+            videoConnection.videoOrientation = o
+            self.captureVideoPreviewLayer.frame = self.view.bounds
+        }
+        
+        self.stillImageOutput.connections.forEach {
+            ($0 as! AVCaptureConnection).videoOrientation = o //stupid swift
+        }
+    
+    }
+    
     func takePicture() -> Void {
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
-                (imageDataSampleBuffer, error) -> Void in
-                if imageDataSampleBuffer == nil {
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {[unowned self]
+                (imageSampleBuffer, error) in
+                if imageSampleBuffer == nil {
                     self.session ! UICmd.OnPicture(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
                 } else {
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
                     self.session ! UICmd.OnPicture(sender: Optional.None, pic:imageData)
                 }
             }

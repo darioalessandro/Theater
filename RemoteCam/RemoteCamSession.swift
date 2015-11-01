@@ -111,6 +111,23 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 self.become(self.states.cameraTakingPic,
                             state:self.cameraTakingPic(peer, ctrl: ctrl, lobby : lobby))
                 
+            case is RemoteCmd.ToggleCamera:
+                let result = ctrl.toggleCamera()
+                if let (flashMode, camPosition) = result.toOptional() {
+                    self.sendMessage(peer, msg: RemoteCmd.ToggleCameraResp(flashMode: flashMode, camPosition: camPosition, error: nil), mode: .Reliable)
+                } else if let failure = result as? Failure {
+                    self.sendMessage(peer, msg: RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: failure.error), mode: .Reliable)
+                }
+                
+            case is RemoteCmd.ToggleFlash:
+                let result = ctrl.toggleFlash()
+                if let flashMode = result.toOptional() {
+                    self.sendMessage(peer, msg: RemoteCmd.ToggleFlashResp(flashMode: flashMode, error: nil), mode: .Reliable)
+                } else if let failure = result as? Failure {
+                    self.sendMessage(peer, msg: RemoteCmd.ToggleFlashResp(flashMode: nil, error: failure.error), mode: .Reliable)
+                }
+            
+                
             case is UICmd.UnbecomeCamera:
                 self.popToState(self.states.connected)
                 
@@ -182,6 +199,115 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     self.receive(msg)
             }
         }
+    }
+    
+    func monitorTogglingFlash(monitor : ActorRef,
+        peer : MCPeerID,
+        lobby : RolePickerController) -> Receive {
+            let alert = UIAlertController(title: "Requesting flash toggle",
+                message: Optional.None,
+                preferredStyle: .Alert)
+            return {[unowned self] (msg : Actor.Message) in
+                switch(msg) {
+                    
+                case is UICmd.ToggleFlash:
+                    ^{
+                        lobby.presentViewController(alert, animated: true, completion: nil)}
+                    let result = self.sendMessage(peer, msg: RemoteCmd.ToggleFlash(), mode: .Reliable)
+                    if let f = result as? Failure {
+                        self.this ! RemoteCmd.ToggleFlashResp(flashMode: nil, error: f.error)
+                    }
+                    
+                case let t as RemoteCmd.ToggleFlashResp:
+                    monitor ! UICmd.ToggleFlashResp(flashMode: t.flashMode, error: t.error)
+                    if let _ = t.flashMode {
+                        ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    }else if let error = t.error {
+                        ^{alert.dismissViewControllerAnimated(true, completion:{
+                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            
+                            a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                                a.dismissViewControllerAnimated(true, completion: nil)
+                                })
+                            
+                            lobby.presentViewController(a, animated: true, completion: nil)
+                        })}
+                    }
+                    self.unbecome()
+                    
+                case let c as DisconnectPeer:
+                    if c.peer.displayName == peer.displayName {
+                        ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                        self.popAndStartScanning()
+                    }
+                    
+                case is Disconnect:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.popAndStartScanning()
+                    
+                case is UICmd.UnbecomeMonitor:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.popToState(self.states.connected)
+                    
+                default:
+                    print("sdfsdf")
+                }
+            }
+    }
+    
+    func monitorTogglingCamera(monitor : ActorRef,
+        peer : MCPeerID,
+        lobby : RolePickerController) -> Receive {
+            let alert = UIAlertController(title: "Requesting camera toggle",
+                message: Optional.None,
+                preferredStyle: .Alert)
+            return {[unowned self] (msg : Actor.Message) in
+                switch(msg) {
+                    
+                case is UICmd.ToggleCamera:
+                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
+                    let req = self.sendMessage(peer, msg: RemoteCmd.ToggleCamera(), mode: .Reliable)
+                    
+                    if let f = req as? Failure {
+                        self.this ! RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: f.error)
+                    }
+    
+                    
+                case let t as RemoteCmd.ToggleCameraResp:
+                    monitor ! UICmd.ToggleCameraResp(flashMode: t.flashMode, camPosition: t.camPosition, error: t.error)
+                    if let _ = t.flashMode {
+                        ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    }else if let error = t.error {
+                        ^{alert.dismissViewControllerAnimated(true, completion:{
+                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            
+                            a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
+                                a.dismissViewControllerAnimated(true, completion: nil)
+                                })
+                            
+                            lobby.presentViewController(a, animated: true, completion: nil)
+                        })}
+                    }
+                    self.unbecome()
+                    
+                case let c as DisconnectPeer:
+                    if c.peer.displayName == peer.displayName {
+                        ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                        self.popAndStartScanning()
+                    }
+                    
+                case is Disconnect:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.popAndStartScanning()
+                    
+                case is UICmd.UnbecomeMonitor:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.popToState(self.states.connected)
+                    
+                default:
+                    print("sdfsdf")
+                }
+            }
     }
     
     func monitorTakingPicture(monitor : ActorRef,
@@ -265,7 +391,17 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     if c.peer.displayName == peer.displayName {
                         self.popAndStartScanning()
                     }
-                    
+                
+                case is UICmd.ToggleCamera:
+                    self.become(self.states.monitorTakingPicture, state:
+                        self.monitorTogglingCamera(monitor, peer: peer, lobby: lobby))
+                    self.this ! msg
+                
+                case is UICmd.ToggleFlash:
+                    self.become(self.states.monitorTogglingFlash, state:
+                        self.monitorTogglingFlash(monitor, peer: peer, lobby: lobby))
+                    self.this ! msg
+                
                 case is UICmd.TakePicture:
                     self.become(self.states.monitorTakingPicture, state:
                         self.monitorTakingPicture(monitor, peer: peer, lobby: lobby))
@@ -391,7 +527,19 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    public func fireAndForget(peer : MCPeerID, message : Actor.Message) {
+    public func sendMessage(peer : MCPeerID, msg : Actor.Message, mode : MCSessionSendDataMode) -> Try<Message> {
+        do {
+            try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(msg),
+            toPeers: [peer],
+            withMode:mode)
+            return Success(value: msg)
+        } catch let error as NSError {
+            print("error \(error)")
+            return Failure(error: error)
+        }
+    }
+    
+    public func fireAndForget(peer : MCPeerID, message : Actor.Message) -> Void {
         do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(message),
             toPeers: [peer],
             withMode:.Reliable)
@@ -426,7 +574,9 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     }
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
+        
         let remote = ActorRef(context: AppActorSystem.shared, path: ActorPath(path: "theOtherDevice"))
+        
         switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
             case let frame as RemoteCmd.SendFrame:
                 this ! RemoteCmd.OnFrame(data: frame.data, sender: remote, peerId : peerID, fps:frame.fps)
@@ -440,6 +590,18 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
             case is RemoteCmd.TakePicAck:
                 this ! RemoteCmd.TakePicAck(sender:remote)
             
+            case is RemoteCmd.ToggleCamera:
+                this ! RemoteCmd.ToggleCamera()
+            
+            case let m as RemoteCmd.ToggleCameraResp:
+                this ! m
+            
+            case is RemoteCmd.ToggleFlash:
+                this ! RemoteCmd.ToggleFlash()
+            
+            case let m as RemoteCmd.ToggleFlashResp:
+                this ! m
+
             case let a as RemoteCmd.PeerBecameCamera:
                 this ! a
             

@@ -27,6 +27,11 @@ public class RolePickerController : UIViewController {
         self.remoteCamSession ! UICmd.StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
     }
     
+    override public func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
