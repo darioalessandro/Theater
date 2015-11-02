@@ -24,6 +24,15 @@ public class ConnectToDevice : Actor.Message {
 
 public class UICmd {
     
+    public class FailedToSaveImage : Actor.Message {
+        let error : NSError
+        
+        init(sender: Optional<ActorRef>, error : NSError) {
+            self.error = error
+            super.init(sender: sender)
+        }
+    }
+    
     public class AddMonitor : Actor.Message {}
     
     public class AddImageView : Actor.Message {
@@ -35,15 +44,7 @@ public class UICmd {
         }
     }
     
-    public class StartScanningWithLobbyViewController : Actor.Message {
-        
-        public let lobby : RolePickerController
-        
-        public init(sender: Optional<ActorRef>, lobby : RolePickerController) {
-            self.lobby = lobby
-            super.init(sender: sender)
-        }
-    }
+    public class StartScanning : Actor.Message {}
 
     public class BecomeDevice : Actor.Message {}
     

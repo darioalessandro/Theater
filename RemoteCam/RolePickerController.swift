@@ -24,7 +24,8 @@ public class RolePickerController : UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.remoteCamSession ! UICmd.StartScanningWithLobbyViewController(sender : Optional.None, lobby : self)
+        self.remoteCamSession ! SetViewCtrl(ctrl: self)
+        self.remoteCamSession ! UICmd.StartScanning(sender : nil)
     }
     
     override public func viewWillAppear(animated: Bool) {

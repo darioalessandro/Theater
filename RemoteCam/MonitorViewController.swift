@@ -8,6 +8,7 @@
 
 import UIKit
 import Theater
+import AVFoundation
 
 
 public class MonitorActor : ViewCtrlActor<MonitorViewController> {
@@ -22,20 +23,12 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
         return {[unowned self](msg : Message) in
             switch(msg) {
                 
+            case let cam as UICmd.ToggleCameraResp:
+                self.setFlashMode(ctrl, flashMode:  cam.flashMode)
+                
             case let flash as RemoteCmd.ToggleFlashResp:
-                if let f = flash.flashMode {
-                    switch(f) {
-                    case .Off:
-                        ^{ctrl.flashStatus.text = "Off"}
-                    case .On:
-                        ^{ctrl.flashStatus.text = "On"}
-                    case .Auto:
-                        ^{ctrl.flashStatus.text = "Auto"}
-                    default:
-                        ^{ctrl.flashStatus.text = "--"}
-                    }
-                    
-                }
+                self.setFlashMode(ctrl, flashMode:  flash.flashMode)
+                
                 
             case is UICmd.UnbecomeMonitor:
                 let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
@@ -52,6 +45,21 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
         }
     }
     
+    func setFlashMode(ctrl : MonitorViewController, flashMode : AVCaptureFlashMode?) {
+        if let f = flashMode {
+            switch(f) {
+            case .Off:
+                ^{ctrl.flashStatus.text = "Off"}
+            case .On:
+                ^{ctrl.flashStatus.text = "On"}
+            case .Auto:
+                ^{ctrl.flashStatus.text = "Auto"}
+            }
+        } else {
+            ^{ctrl.flashStatus.text = "None"}
+        }
+    }
+    
 }
 
 public class MonitorViewController : UIViewController {
@@ -59,6 +67,8 @@ public class MonitorViewController : UIViewController {
     let session = AppActorSystem.shared.selectActor("RemoteCam Session")!
     
     let monitor = AppActorSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
+    
+    let timer : RCTimer = RCTimer()
     
     @IBOutlet weak var flashStatus: UILabel!
     
@@ -70,10 +80,15 @@ public class MonitorViewController : UIViewController {
     
     @IBOutlet weak var timerSlider : UISlider!
     
+    @IBOutlet weak var timerLabel: UILabel!
+    
     @IBAction func toggleCamera(sender: UIButton) {
         session ! UICmd.ToggleCamera()
     }
     
+    @IBAction func onSliderChange(sender: UISlider) {
+        self.timerLabel.text = "\(Int(sender.value))"
+    }
     @IBAction func toggleFlash(sender: UIButton) {
         session ! UICmd.ToggleFlash()
     }
@@ -87,7 +102,30 @@ public class MonitorViewController : UIViewController {
     }
     
     @IBAction func onTakePicture(sender: UIBarButtonItem) {
-        session ! UICmd.TakePicture(sender: Optional.None)
+        
+        func alertTitle(seconds : Int) -> String {
+            return "Taking picture in \(seconds) seconds"
+        }
+        
+        let alert = UIAlertController(title: alertTitle(Int(round(self.timerSlider.value))),
+            message: nil,
+            preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+            self.timer.cancel()
+        })
+        
+        self.presentViewController(alert, animated: true) {[unowned self] () -> Void in
+            self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {(t) -> Void in
+                ^{ alert.title = alertTitle(t.timeRemaining())}
+                }, cancelHandler: {(t) -> Void in
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                }, andCompletionHandler: {[unowned self] (t) -> Void in
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.session ! UICmd.TakePicture(sender: Optional.None)
+                })
+        }
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -118,11 +156,15 @@ public class MonitorViewController : UIViewController {
         self.timerSlider.transform=trans
         let c = UIColor(red: 0.150, green: 0.670, blue: 0.80, alpha: 1)
         self.timerSlider.minimumTrackTintColor = c
-        self.timerSlider.minimumTrackTintColor = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
+        self.timerSlider.maximumTrackTintColor = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
         self.timerSlider.thumbTintColor = c
 
 //        RCRemoteConfiguration * remoteConfig=[[RCSession activeSession] remoteConfiguration];
 //        _timerSlider.value=(float)remoteConfig.timer;
 //        _timerLabel.text=[NSString stringWithFormat:@"%ld", (long)remoteConfig.timer];
+    }
+    
+    deinit {
+        self.timer.cancel()
     }
 }

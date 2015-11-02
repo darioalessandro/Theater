@@ -89,7 +89,7 @@ public class CameraViewController : UIViewController {
         }
     }
     
-    func toggleCamera() -> Try<(AVCaptureFlashMode,AVCaptureDevicePosition)> {
+    func toggleCamera() -> Try<(AVCaptureFlashMode?,AVCaptureDevicePosition)> {
         do {
             if  let captureSession = self.captureSession,
                 let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
@@ -100,7 +100,8 @@ public class CameraViewController : UIViewController {
                     captureSession.removeInput(genericDevice)
                     captureSession.addInput(newInput)
                     self.setFrameRate(self.fps,videoDevice:newDevice)
-                    return Success(value: (newInput.device.flashMode, newInput.device.position))
+                    let newFlashMode : AVCaptureFlashMode? = (newInput.device.hasFlash) ? newInput.device.flashMode : nil
+                    return Success(value: (newFlashMode, newInput.device.position))
             } else {
                 return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
             }
@@ -116,7 +117,7 @@ public class CameraViewController : UIViewController {
             if device.hasFlash {
                 return self.setFlashMode(nextFlashMode(device.flashMode), device: device)
             } else {
-                return Failure(error: NSError(domain: "Camera does not have have flash available.", code: 0, userInfo: nil))
+                return Failure(error: NSError(domain: "Current camera does not support flash.", code: 0, userInfo: nil))
             }
             
         }  else {
@@ -181,6 +182,8 @@ public class CameraViewController : UIViewController {
                 output.alwaysDiscardsLateVideoFrames = true
                 
                 self.setFrameRate(self.fps,videoDevice:videoDevice)
+                
+                session ! UICmd.ToggleCameraResp(flashMode:(videoDevice.hasFlash) ? videoDevice.flashMode : nil, camPosition: videoDevice.position, error: nil)
                                 
                 self.captureSession?.startRunning()
             } catch let error as NSError {
