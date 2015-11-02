@@ -62,7 +62,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     
 }
 
-public class MonitorViewController : UIViewController {
+public class MonitorViewController : BaseViewController {
     
     let session = AppActorSystem.shared.selectActor("RemoteCam Session")!
     

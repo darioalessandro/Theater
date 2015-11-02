@@ -454,6 +454,9 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bannerHeight" destination="O6q-eN-7zw" id="uJn-sx-A9V"/>
+                        <outlet property="bannerView" destination="Bu2-yA-LPw" id="NQ4-H1-b8m"/>
+                        <outlet property="bottomBannerConstraint" destination="nG7-sh-7ah" id="8bQ-t7-4V5"/>
                         <outlet property="flashStatus" destination="wPR-EO-JjB" id="vAv-15-3KF"/>
                         <outlet property="imageView" destination="rc6-hX-T3o" id="Db7-D8-rXh"/>
                         <outlet property="sliderContainer" destination="Mhh-yx-IbA" id="yFn-c4-6a8"/>

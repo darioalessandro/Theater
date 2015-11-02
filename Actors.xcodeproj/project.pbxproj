@@ -10,6 +10,10 @@
 		03D346DA25D4212087115F09 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */; };
 		060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
 		060B1E161BE708F700077BCC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284651BE5C71800AF4678 /* Media.xcassets */; };
+		060B1E201BE70CC000077BCC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 060B1E1F1BE70CC000077BCC /* AdSupport.framework */; };
+		060B1E211BE70CCB00077BCC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 060B1E1F1BE70CC000077BCC /* AdSupport.framework */; };
+		060B1E251BE710FE00077BCC /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060B1E241BE710FE00077BCC /* DeviceViewController.swift */; };
+		060B1E261BE7110100077BCC /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060B1E241BE710FE00077BCC /* DeviceViewController.swift */; };
 		060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
@@ -48,7 +52,6 @@
 		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; };
 		0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */; };
 		069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284251BE5BF5B00AF4678 /* Assets.xcassets */; };
-		069284341BE5BF5C00AF4678 /* RemoteCamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */; };
 		0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284421BE5C0E600AF4678 /* CameraViewController.swift */; };
@@ -179,6 +182,8 @@
 
 /* Begin PBXFileReference section */
 		0512CCB0939AAABE96F23F13 /* Pods-ActorsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsTests/Pods-ActorsTests.release.xcconfig"; sourceTree = "<group>"; };
+		060B1E1F1BE70CC000077BCC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		060B1E241BE710FE00077BCC /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BLEPeripheralTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		060E28531BE1A5A400D73ACB /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		060E28551BE1A5CA00D73ACB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -220,7 +225,6 @@
 		069284251BE5BF5B00AF4678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0692842A1BE5BF5B00AF4678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemoteCamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCamTests.swift; sourceTree = "<group>"; };
 		069284351BE5BF5C00AF4678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		069284411BE5C0E500AF4678 /* RemoteCam-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RemoteCam-Bridging-Header.h"; sourceTree = "<group>"; };
 		069284421BE5C0E600AF4678 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				060B1E201BE70CC000077BCC /* AdSupport.framework in Frameworks */,
 				0684A2CA1BE5D73300F0B238 /* Pods.framework in Frameworks */,
 				0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */,
 				A2A0B37A0A55DF2E27B9B443 /* Pods_RemoteCam.framework in Frameworks */,
@@ -301,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				060B1E211BE70CCB00077BCC /* AdSupport.framework in Frameworks */,
 				06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */,
 				613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */,
 				93C91F16C947C58BC42B5460 /* Pods_Actors.framework in Frameworks */,
@@ -442,7 +448,6 @@
 		069284321BE5BF5C00AF4678 /* RemoteCamTests */ = {
 			isa = PBXGroup;
 			children = (
-				069284331BE5BF5C00AF4678 /* RemoteCamTests.swift */,
 				069284351BE5BF5C00AF4678 /* Info.plist */,
 			);
 			path = RemoteCamTests;
@@ -453,6 +458,7 @@
 			children = (
 				069284421BE5C0E600AF4678 /* CameraViewController.swift */,
 				069284431BE5C0E600AF4678 /* MonitorViewController.swift */,
+				060B1E241BE710FE00077BCC /* DeviceViewController.swift */,
 				069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */,
 				069284481BE5C0E600AF4678 /* RolePickerController.swift */,
 			);
@@ -607,6 +613,7 @@
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				060B1E1F1BE70CC000077BCC /* AdSupport.framework */,
 				0684A2C81BE5D62B00F0B238 /* Pods.framework */,
 				060E28551BE1A5CA00D73ACB /* Nimble.framework */,
 				060E28561BE1A5CA00D73ACB /* Quick.framework */,
@@ -1123,6 +1130,7 @@
 			files = (
 				0684A2DE1BE6F82D00F0B238 /* RCTimer.m in Sources */,
 				069284511BE5C0E600AF4678 /* Session.swift in Sources */,
+				060B1E251BE710FE00077BCC /* DeviceViewController.swift in Sources */,
 				0684A2E21BE702BC00F0B238 /* CPSoundManager.m in Sources */,
 				0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */,
 				0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */,
@@ -1142,7 +1150,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				069284341BE5BF5C00AF4678 /* RemoteCamTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1172,6 +1179,7 @@
 				0684A2D61BE6E9A600F0B238 /* MonitorStates.swift in Sources */,
 				0692845C1BE5C18E00AF4678 /* Session.swift in Sources */,
 				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,
+				060B1E261BE7110100077BCC /* DeviceViewController.swift in Sources */,
 				0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */,
 				068EA7DC1BDC5D3E00330714 /* BLEPeripheralViewController.swift in Sources */,
@@ -1283,7 +1291,7 @@
 				INFOPLIST_FILE = RemoteCam/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.remotecamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1307,7 +1315,7 @@
 				INFOPLIST_FILE = RemoteCam/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.RemoteCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.remotecamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
 			};
