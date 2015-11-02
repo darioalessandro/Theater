@@ -32,7 +32,7 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
 
 public class CameraViewController : UIViewController {
     
-    var captureSession : Optional<AVCaptureSession> = Optional.None;
+    var captureSession : AVCaptureSession? = Optional.None;
 
     let output : ActorOutput = ActorOutput()
     
@@ -62,8 +62,8 @@ public class CameraViewController : UIViewController {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
             if let cs = captureSession {
                 cs.stopRunning()
-                session ! UICmd.UnbecomeCamera(sender : Optional.None)
             }
+            session ! UICmd.UnbecomeCamera(sender : Optional.None)
         }
     }
     
@@ -91,11 +91,11 @@ public class CameraViewController : UIViewController {
     
     func toggleCamera() -> Try<(AVCaptureFlashMode,AVCaptureDevicePosition)> {
         do {
-            if let captureSession = self.captureSession,
+            if  let captureSession = self.captureSession,
                 let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
                 let device = genericDevice.device,
-                let newPosition = toggleCameraPosition(device.position).toOptional() {
-                    let newDevice = self.cameraForPosition(newPosition)
+                let newPosition = toggleCameraPosition(device.position).toOptional(),
+                let newDevice = self.cameraForPosition(newPosition) {
                     let newInput = try AVCaptureDeviceInput(device: newDevice)
                     captureSession.removeInput(genericDevice)
                     captureSession.addInput(newInput)
@@ -111,9 +111,14 @@ public class CameraViewController : UIViewController {
     
     func toggleFlash() -> Try<AVCaptureFlashMode> {
         if let captureSession = self.captureSession,
-           let genericDevice = captureSession.inputs.first,
-           let device = genericDevice as? AVCaptureDevice {
-            return self.setFlashMode(nextFlashMode(device.flashMode), device: device)
+           let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
+           let device = genericDevice.device {
+            if device.hasFlash {
+                return self.setFlashMode(nextFlashMode(device.flashMode), device: device)
+            } else {
+                return Failure(error: NSError(domain: "Camera does not have have flash available.", code: 0, userInfo: nil))
+            }
+            
         }  else {
             return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
         }
@@ -126,24 +131,20 @@ public class CameraViewController : UIViewController {
                 device.flashMode = mode
                 device.unlockForConfiguration()
             } catch let error as NSError {
-                print("error \(error)")
                 return Failure(error: error)
             } catch {
-                print("sdfsdf")
                return Failure(error: NSError(domain: "Unknown error", code: 0, userInfo: nil))
             }
         }
-    
         return Success(value: mode)
     }
     
-    func cameraForPosition(position : AVCaptureDevicePosition) -> AVCaptureDevice {
-        let videoDevices : [AVCaptureDevice] = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo) as! [AVCaptureDevice] //stupid swift
-        let filtered : [AVCaptureDevice] = videoDevices.filter { return $0.position == position}
-        if let cam = filtered.first {
-            return cam
+    func cameraForPosition(position : AVCaptureDevicePosition) -> AVCaptureDevice? {
+        if let videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo) as? [AVCaptureDevice] {
+            let filtered : [AVCaptureDevice] = videoDevices.filter { return $0.position == position}
+            return filtered.first
         } else {
-            return AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+            return Optional.None
         }
     }
     
@@ -151,6 +152,7 @@ public class CameraViewController : UIViewController {
         if let cs = self.captureSession {
             cs.stopRunning()
         }
+        
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetHigh
         
@@ -165,8 +167,6 @@ public class CameraViewController : UIViewController {
         
         if captureSession!.canAddOutput(stillImageOutput) {
             captureSession!.addOutput(stillImageOutput)
-        }else {
-            print("did not setup output")
         }
         
         if let videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo),
@@ -185,11 +185,7 @@ public class CameraViewController : UIViewController {
                 self.captureSession?.startRunning()
             } catch let error as NSError {
                 print("error \(error)")
-            } catch {
-                print("sdfsdf")
             }
-        } else {
-            print("error")
         }
     }
     

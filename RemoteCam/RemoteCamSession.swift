@@ -43,25 +43,14 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     
-                    let ack = RemoteCmd.TakePicAck(sender: self.this)
+                    self.sendMessage([peer], msg: RemoteCmd.TakePicAck(sender: self.this))
                     
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(ack),
-                        toPeers: self.session.connectedPeers,
-                        withMode:.Reliable)
-                    } catch let error as NSError {
-                        print("error \(error)")
-                    }
+                    let result = self.sendMessage([peer], msg: RemoteCmd.TakePicResp(sender: self.this, pic:t.pic, error: t.error))
                     
-                    let resp = RemoteCmd.TakePicResp(sender: self.this, pic:t.pic, error: t.error)
-                    
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(resp),
-                        toPeers: self.session.connectedPeers,
-                        withMode:.Reliable)
-                    } catch let error as NSError {
-                        print("error \(error)")
+                    if let failure = result as? Failure {
                         ^{
                             let a = UIAlertController(title: "Error sending pic",
-                                message: Optional.None,
+                                message: failure.error.description,
                                 preferredStyle: .Alert)
                             
                             a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
@@ -70,7 +59,9 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                             
                             ctrl.presentViewController(a, animated: true, completion: nil)
                         }
+
                     }
+                
                     self.unbecome()
                 
                 case let c as DisconnectPeer:
@@ -99,12 +90,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
             case let s as RemoteCmd.SendFrame:
-                do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(s),
-                        toPeers: self.session.connectedPeers,
-                        withMode:.Unreliable)
-                } catch let error as NSError {
-                    print("error \(error)")
-                }
+                self.sendMessage([peer], msg: s, mode: .Unreliable)
                 
             case is RemoteCmd.TakePic:
                 ^{ctrl.takePicture()}
@@ -113,20 +99,23 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 
             case is RemoteCmd.ToggleCamera:
                 let result = ctrl.toggleCamera()
+                var resp : Message?
                 if let (flashMode, camPosition) = result.toOptional() {
-                    self.sendMessage(peer, msg: RemoteCmd.ToggleCameraResp(flashMode: flashMode, camPosition: camPosition, error: nil), mode: .Reliable)
+                    resp = RemoteCmd.ToggleCameraResp(flashMode: flashMode, camPosition: camPosition, error: nil)
                 } else if let failure = result as? Failure {
-                    self.sendMessage(peer, msg: RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: failure.error), mode: .Reliable)
+                    resp = RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: failure.error)
                 }
+                self.sendMessage([peer], msg: resp!)
                 
             case is RemoteCmd.ToggleFlash:
                 let result = ctrl.toggleFlash()
+                var resp : Message?
                 if let flashMode = result.toOptional() {
-                    self.sendMessage(peer, msg: RemoteCmd.ToggleFlashResp(flashMode: flashMode, error: nil), mode: .Reliable)
+                    resp = RemoteCmd.ToggleFlashResp(flashMode: flashMode, error: nil)
                 } else if let failure = result as? Failure {
-                    self.sendMessage(peer, msg: RemoteCmd.ToggleFlashResp(flashMode: nil, error: failure.error), mode: .Reliable)
+                    resp = RemoteCmd.ToggleFlashResp(flashMode: nil, error: failure.error)
                 }
-            
+                self.sendMessage([peer], msg: resp!)
                 
             case is UICmd.UnbecomeCamera:
                 self.popToState(self.states.connected)
@@ -211,20 +200,20 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 switch(msg) {
                     
                 case is UICmd.ToggleFlash:
-                    ^{
-                        lobby.presentViewController(alert, animated: true, completion: nil)}
-                    let result = self.sendMessage(peer, msg: RemoteCmd.ToggleFlash(), mode: .Reliable)
-                    if let f = result as? Failure {
+                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
+
+                    if let f = self.sendMessage([peer], msg: RemoteCmd.ToggleFlash()) as? Failure {
                         self.this ! RemoteCmd.ToggleFlashResp(flashMode: nil, error: f.error)
                     }
                     
                 case let t as RemoteCmd.ToggleFlashResp:
                     monitor ! UICmd.ToggleFlashResp(flashMode: t.flashMode, error: t.error)
                     if let _ = t.flashMode {
+                        monitor ! t
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     }else if let error = t.error {
                         ^{alert.dismissViewControllerAnimated(true, completion:{
-                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            let a = UIAlertController(title: error.domain, message: nil, preferredStyle: .Alert)
                             
                             a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
                                 a.dismissViewControllerAnimated(true, completion: nil)
@@ -266,9 +255,8 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     
                 case is UICmd.ToggleCamera:
                     ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    let req = self.sendMessage(peer, msg: RemoteCmd.ToggleCamera(), mode: .Reliable)
-                    
-                    if let f = req as? Failure {
+
+                    if let f =  self.sendMessage([peer], msg: RemoteCmd.ToggleCamera()) as? Failure {
                         self.this ! RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: f.error)
                     }
     
@@ -279,7 +267,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     }else if let error = t.error {
                         ^{alert.dismissViewControllerAnimated(true, completion:{
-                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            let a = UIAlertController(title: error.domain, message: nil, preferredStyle: .Alert)
                             
                             a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
                                 a.dismissViewControllerAnimated(true, completion: nil)
@@ -321,22 +309,11 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 
                 case is RemoteCmd.TakePicAck:
                     ^{alert.title = "Receiving picture"}
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(msg),
-                        toPeers: self.session.connectedPeers,
-                        withMode:.Reliable)
-                    } catch let error as NSError {
-                        print("error \(error)")
-                    }
+                    self.sendMessage([peer], msg: msg)
                 
                 case is UICmd.TakePicture:
-                    let cmd = RemoteCmd.TakePic(sender: self.this)
                     ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(cmd),
-                        toPeers: self.session.connectedPeers,
-                        withMode:.Reliable)
-                    } catch let error as NSError {
-                        print("error \(error)")
-                    }
+                    self.sendMessage([peer], msg: RemoteCmd.TakePic(sender: self.this))
                 
                 case let picResp as RemoteCmd.TakePicResp:
                     print("saving picture...")
@@ -345,7 +322,7 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     }else if let error = picResp.error {
                         ^{alert.dismissViewControllerAnimated(true, completion:{ () in
-                            let a = UIAlertController(title: error.domain, message: error.localizedDescription, preferredStyle: .Alert)
+                            let a = UIAlertController(title: error.domain, message: nil, preferredStyle: .Alert)
                             
                             a.addAction(UIAlertAction(title: "Ok", style: .Cancel) { (action) in
                                 a.dismissViewControllerAnimated(true, completion: nil)
@@ -356,6 +333,10 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                     }
                     self.unbecome()
                 
+                case is UICmd.UnbecomeMonitor:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    self.popToState(self.states.connected)
+                
                 case let c as DisconnectPeer:
                     if c.peer.displayName == peer.displayName {
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}
@@ -365,10 +346,6 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 case is Disconnect:
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.popAndStartScanning()
-                
-                case is UICmd.UnbecomeMonitor:
-                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
-                    self.popToState(self.states.connected)
                 
                 default:
                     print("sdfsdf")
@@ -424,12 +401,12 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
                 case is UICmd.BecomeCamera:
                     self.become(self.states.camera, state: self.camera(peer, lobby:lobby))
                     ^{lobby.showCamera()}
-                    self.fireAndForget(peer, message : RemoteCmd.PeerBecameCamera())
+                    self.sendMessage([peer], msg : RemoteCmd.PeerBecameCamera())
 
                 case is UICmd.BecomeMonitor:
                     self.become(self.states.monitor, state:self.monitor(peer, lobby:lobby))
                     ^{lobby.showRemote()}
-                    self.fireAndForget(peer, message : RemoteCmd.PeerBecameMonitor())
+                    self.sendMessage([peer], msg : RemoteCmd.PeerBecameMonitor())
                 
                 case is RemoteCmd.PeerBecameCamera:
                     self.this ! UICmd.BecomeMonitor(sender:self.this)
@@ -502,16 +479,24 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
+    public func unableToProcessError(msg : Message) -> NSError {
+        return NSError(domain: "Unable to process \(msg.dynamicType) command, since \(UIDevice.currentDevice().name) is not in the camera screen.", code: 0, userInfo: nil)
+    }
+    
     override public func receive(msg: Actor.Message) {
         switch (msg) {
             case is RemoteCmd.TakePic:
-                let l = RemoteCmd.TakePicResp(sender: this, error: NSError(domain: "unable to take picture since \(UIDevice.currentDevice().name) is not in the camera screen", code: 0, userInfo: nil))
-                do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(l),
-                    toPeers: self.session.connectedPeers,
-                    withMode:.Reliable)
-                } catch let error as NSError {
-                    print("error \(error)")
-            }
+                let l = RemoteCmd.TakePicResp(sender: this, error: self.unableToProcessError(msg))
+                self.sendMessage(self.session.connectedPeers, msg: l)
+            
+            case is RemoteCmd.ToggleCamera:
+                let l = RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: self.unableToProcessError(msg))
+                self.sendMessage(self.session.connectedPeers, msg: l)
+            
+            case is RemoteCmd.ToggleFlash:
+                let l = RemoteCmd.ToggleFlashResp(flashMode: nil, error: self.unableToProcessError(msg))
+                self.sendMessage(self.session.connectedPeers, msg: l)
+            
             
             default:
                 super.receive(msg)
@@ -527,25 +512,15 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
         }
     }
     
-    public func sendMessage(peer : MCPeerID, msg : Actor.Message, mode : MCSessionSendDataMode) -> Try<Message> {
+    public func sendMessage(peer : [MCPeerID], msg : Actor.Message, mode : MCSessionSendDataMode = .Reliable) -> Try<Message> {
         do {
             try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(msg),
-            toPeers: [peer],
+            toPeers: peer,
             withMode:mode)
             return Success(value: msg)
         } catch let error as NSError {
             print("error \(error)")
             return Failure(error: error)
-        }
-    }
-    
-    public func fireAndForget(peer : MCPeerID, message : Actor.Message) -> Void {
-        do {try self.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(message),
-            toPeers: [peer],
-            withMode:.Reliable)
-        }
-        catch let error as NSError {
-            print("error \(error)")
         }
     }
     
@@ -575,38 +550,12 @@ public class RemoteCamSession : Actor, MCSessionDelegate, MCBrowserViewControlle
     
     public func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         
-        let remote = ActorRef(context: AppActorSystem.shared, path: ActorPath(path: "theOtherDevice"))
-        
         switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
             case let frame as RemoteCmd.SendFrame:
-                this ! RemoteCmd.OnFrame(data: frame.data, sender: remote, peerId : peerID, fps:frame.fps)
-
-            case is RemoteCmd.TakePic:
-                this ! RemoteCmd.TakePic(sender: remote)
-
-            case let picResp as RemoteCmd.TakePicResp:
-                this ! RemoteCmd.TakePicResp(sender: remote, pic : picResp.pic, error : picResp.error)
-
-            case is RemoteCmd.TakePicAck:
-                this ! RemoteCmd.TakePicAck(sender:remote)
+                this ! RemoteCmd.OnFrame(data: frame.data, sender: nil, peerId: peerID, fps: frame.fps)
             
-            case is RemoteCmd.ToggleCamera:
-                this ! RemoteCmd.ToggleCamera()
-            
-            case let m as RemoteCmd.ToggleCameraResp:
+            case let m as Message:
                 this ! m
-            
-            case is RemoteCmd.ToggleFlash:
-                this ! RemoteCmd.ToggleFlash()
-            
-            case let m as RemoteCmd.ToggleFlashResp:
-                this ! m
-
-            case let a as RemoteCmd.PeerBecameCamera:
-                this ! a
-            
-            case let a as RemoteCmd.PeerBecameMonitor:
-                this ! a
             
             default:
                 print("unable to unarchive")

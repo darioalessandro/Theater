@@ -10,9 +10,7 @@ import UIKit
 import Theater
 
 
-public class MonitorActor : Actor {
-    
-    weak var imageView : Optional<UIImageView> = Optional.None
+public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     
     public required init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
@@ -20,32 +18,40 @@ public class MonitorActor : Actor {
         session! ! UICmd.AddMonitor(sender: ref)
     }
     
-    override public func receive(msg: Actor.Message) {
-        switch(msg) {
-            
-            case let i as UICmd.AddImageView:
-                self.imageView = i.imageView
-                break
-            
+    override public func withCtrl(ctrl: MonitorViewController) -> Receive {
+        return {[unowned self](msg : Message) in
+            switch(msg) {
+                
+            case let flash as RemoteCmd.ToggleFlashResp:
+                if let f = flash.flashMode {
+                    switch(f) {
+                    case .Off:
+                        ^{ctrl.flashStatus.text = "Off"}
+                    case .On:
+                        ^{ctrl.flashStatus.text = "On"}
+                    case .Auto:
+                        ^{ctrl.flashStatus.text = "Auto"}
+                    default:
+                        ^{ctrl.flashStatus.text = "--"}
+                    }
+                    
+                }
+                
             case is UICmd.UnbecomeMonitor:
                 let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
                 session! ! msg
-                break
-            
+                
             case let f as RemoteCmd.OnFrame:
-                let img = UIImage(data: f.data)
-                ^{
-                    if let imageView = self.imageView {
-                        imageView.image = img
-                    }
+                if let img = UIImage(data: f.data) {
+                    ^{ctrl.imageView.image = img}
                 }
-                break
-            
+                
             default:
-                super.receive(msg)
-            
+                self.receive(msg)
+            }
         }
     }
+    
 }
 
 public class MonitorViewController : UIViewController {
@@ -68,9 +74,11 @@ public class MonitorViewController : UIViewController {
         session ! UICmd.ToggleCamera()
     }
     
-    @IBAction func showSettings(sender: UIButton) {}
+    @IBAction func toggleFlash(sender: UIButton) {
+        session ! UICmd.ToggleFlash()
+    }
     
-    @IBAction func toggleFlash(sender: UIButton) {}
+    @IBAction func showSettings(sender: UIButton) {}
     
     @IBAction func showGallery(sender: UIButton) {}
     
@@ -89,14 +97,15 @@ public class MonitorViewController : UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        monitor ! UICmd.AddImageView(imageView: self.imageView)
+        monitor ! SetViewCtrl(ctrl: self)
         self.configureTimerUI()
     }
     
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            monitor ! UICmd.UnbecomeMonitor(sender: Optional.None)
+            monitor ! UICmd.UnbecomeMonitor(sender: nil)
+            monitor ! Actor.Harakiri(sender: nil)
         }
     }
     

@@ -355,8 +355,12 @@ public class RemoteCmd : Actor.Message {
         }
         
         public required init?(coder aDecoder: NSCoder) {
-            self.flashMode = AVCaptureFlashMode(rawValue: aDecoder.decodeIntegerForKey("flashMode"))!
             self.error = aDecoder.decodeObjectForKey("error") as? NSError
+            if let _ = self.error {
+                self.flashMode = nil
+            } else {
+               self.flashMode = AVCaptureFlashMode(rawValue: aDecoder.decodeIntegerForKey("flashMode"))!
+            }
             super.init(sender: Optional.None)
         }
     }
@@ -404,9 +408,17 @@ public class RemoteCmd : Actor.Message {
         }
         
         public required init?(coder aDecoder: NSCoder) {
-            self.flashMode = AVCaptureFlashMode(rawValue: aDecoder.decodeIntegerForKey("flashMode"))
-            self.camPosition = AVCaptureDevicePosition(rawValue: aDecoder.decodeIntegerForKey("camPosition"))
             self.error = aDecoder.decodeObjectForKey("error") as? NSError
+            
+            if let _ = self.error {
+                self.flashMode = nil
+                self.camPosition = nil
+            } else {
+                self.flashMode = AVCaptureFlashMode(rawValue: aDecoder.decodeIntegerForKey("flashMode"))
+                self.camPosition = AVCaptureDevicePosition(rawValue: aDecoder.decodeIntegerForKey("camPosition"))
+
+            }
+            
             
             super.init(sender: Optional.None)
         }
