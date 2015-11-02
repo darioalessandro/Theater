@@ -70,6 +70,8 @@ public class MonitorViewController : UIViewController {
     
     let timer : RCTimer = RCTimer()
     
+    let soundManager : CPSoundManager = CPSoundManager()
+    
     @IBOutlet weak var flashStatus: UILabel!
     
     @IBOutlet weak var imageView: UIImageView!
@@ -115,10 +117,16 @@ public class MonitorViewController : UIViewController {
             alert.dismissViewControllerAnimated(true, completion: nil)
             self.timer.cancel()
         })
+        ^{self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)}
         
         self.presentViewController(alert, animated: true) {[unowned self] () -> Void in
-            self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {(t) -> Void in
+            self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {[unowned self](t) -> Void in
                 ^{ alert.title = alertTitle(t.timeRemaining())}
+                if t.timeRemaining() > 3 {
+                    self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
+                } else if t.timeRemaining() == 3 {
+                    self.soundManager.playBeepSound(CPSoundManagerAudioTypeFast)
+                }
                 }, cancelHandler: {(t) -> Void in
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                 }, andCompletionHandler: {[unowned self] (t) -> Void in
@@ -166,5 +174,6 @@ public class MonitorViewController : UIViewController {
     
     deinit {
         self.timer.cancel()
+        self.soundManager.stopPlayer()
     }
 }

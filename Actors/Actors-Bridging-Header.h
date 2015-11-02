@@ -5,3 +5,4 @@
 
 #import "UIImage+ImageProcessing.h"
 #import "RCTimer.h"
+#import "CPSoundManager.h"

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		03D346DA25D4212087115F09 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */; };
+		060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
+		060B1E161BE708F700077BCC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284651BE5C71800AF4678 /* Media.xcassets */; };
 		060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
@@ -24,6 +26,12 @@
 		0684A2D71BE6E9A800F0B238 /* CamStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D21BE6E98A00F0B238 /* CamStates.swift */; };
 		0684A2DD1BE6F82D00F0B238 /* RCTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2DC1BE6F82D00F0B238 /* RCTimer.m */; };
 		0684A2DE1BE6F82D00F0B238 /* RCTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2DC1BE6F82D00F0B238 /* RCTimer.m */; };
+		0684A2E11BE702BC00F0B238 /* CPSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2E01BE702BC00F0B238 /* CPSoundManager.m */; };
+		0684A2E21BE702BC00F0B238 /* CPSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2E01BE702BC00F0B238 /* CPSoundManager.m */; };
+		0684A2E71BE7049800F0B238 /* beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0684A2E61BE7049800F0B238 /* beep.m4a */; };
+		0684A2E81BE7049800F0B238 /* beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0684A2E61BE7049800F0B238 /* beep.m4a */; };
+		0684A2EA1BE704C600F0B238 /* fastBeep.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0684A2E91BE704C600F0B238 /* fastBeep.aif */; };
+		0684A2EB1BE704C600F0B238 /* fastBeep.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0684A2E91BE704C600F0B238 /* fastBeep.aif */; };
 		068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D31BDC51AE00330714 /* BLEMessages.swift */; };
 		068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */; };
 		068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 068EA7D91BDC5ACE00330714 /* Main.storyboard */; };
@@ -188,6 +196,10 @@
 		0684A2D41BE6E9A000F0B238 /* MonitorStates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorStates.swift; sourceTree = "<group>"; };
 		0684A2DB1BE6F82D00F0B238 /* RCTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTimer.h; sourceTree = "<group>"; };
 		0684A2DC1BE6F82D00F0B238 /* RCTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTimer.m; sourceTree = "<group>"; };
+		0684A2DF1BE702BC00F0B238 /* CPSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPSoundManager.h; sourceTree = "<group>"; };
+		0684A2E01BE702BC00F0B238 /* CPSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPSoundManager.m; sourceTree = "<group>"; };
+		0684A2E61BE7049800F0B238 /* beep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep.m4a; sourceTree = "<group>"; };
+		0684A2E91BE704C600F0B238 /* fastBeep.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = fastBeep.aif; sourceTree = "<group>"; };
 		068EA7D31BDC51AE00330714 /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEMessages.swift; path = Classes/BLEMessages.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068EA7D71BDC5A4300330714 /* Bluetooth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bluetooth.storyboard; sourceTree = "<group>"; };
 		068EA7D91BDC5ACE00330714 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -324,6 +336,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		060B1E141BE7079800077BCC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0684A2DB1BE6F82D00F0B238 /* RCTimer.h */,
+				0684A2DC1BE6F82D00F0B238 /* RCTimer.m */,
+				0684A2DF1BE702BC00F0B238 /* CPSoundManager.h */,
+				0684A2E01BE702BC00F0B238 /* CPSoundManager.m */,
+				0692844A1BE5C0E600AF4678 /* UIImage+ImageProcessing.h */,
+				0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,9 +431,9 @@
 			isa = PBXGroup;
 			children = (
 				069284761BE5C94600AF4678 /* Delegate */,
-				069284751BE5C8F900AF4678 /* Assets */,
 				069284611BE5C1BD00AF4678 /* Model */,
 				069284601BE5C1A700AF4678 /* Controllers */,
+				069284751BE5C8F900AF4678 /* Assets */,
 				0692842A1BE5BF5B00AF4678 /* Info.plist */,
 			);
 			path = RemoteCam;
@@ -437,14 +462,11 @@
 		069284611BE5C1BD00AF4678 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0684A2DB1BE6F82D00F0B238 /* RCTimer.h */,
-				0684A2DC1BE6F82D00F0B238 /* RCTimer.m */,
 				069284451BE5C0E600AF4678 /* MultipeerMessages.swift */,
 				0684A2D81BE6E9D400F0B238 /* RemoteCamSession */,
 				069284491BE5C0E600AF4678 /* States.swift */,
 				0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */,
-				0692844A1BE5C0E600AF4678 /* UIImage+ImageProcessing.h */,
-				0692844B1BE5C0E600AF4678 /* UIImage+ImageProcessing.m */,
+				060B1E141BE7079800077BCC /* Helpers */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -452,6 +474,8 @@
 		069284751BE5C8F900AF4678 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0684A2E61BE7049800F0B238 /* beep.m4a */,
+				0684A2E91BE704C600F0B238 /* fastBeep.aif */,
 				069284251BE5BF5B00AF4678 /* Assets.xcassets */,
 				069284651BE5C71800AF4678 /* Media.xcassets */,
 				069284671BE5C7DB00AF4678 /* Acknowledgments.html */,
@@ -823,6 +847,8 @@
 				069284741BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				069284721BE5C82E00AF4678 /* Localizable.strings in Resources */,
 				069284691BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
+				0684A2E81BE7049800F0B238 /* beep.m4a in Resources */,
+				0684A2EB1BE704C600F0B238 /* fastBeep.aif in Resources */,
 				069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */,
 				069284661BE5C71800AF4678 /* Media.xcassets in Resources */,
 				069284561BE5C12000AF4678 /* Main.storyboard in Resources */,
@@ -841,8 +867,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				068EA7D81BDC5A4300330714 /* Bluetooth.storyboard in Resources */,
+				0684A2E71BE7049800F0B238 /* beep.m4a in Resources */,
+				0684A2EA1BE704C600F0B238 /* fastBeep.aif in Resources */,
 				069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
+				060B1E161BE708F700077BCC /* Media.xcassets in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
 				069284711BE5C82E00AF4678 /* Localizable.strings in Resources */,
 				069284681BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
@@ -1094,6 +1123,7 @@
 			files = (
 				0684A2DE1BE6F82D00F0B238 /* RCTimer.m in Sources */,
 				069284511BE5C0E600AF4678 /* Session.swift in Sources */,
+				0684A2E21BE702BC00F0B238 /* CPSoundManager.m in Sources */,
 				0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */,
 				0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */,
 				0692844F1BE5C0E600AF4678 /* MultipeerMessages.swift in Sources */,
@@ -1122,6 +1152,8 @@
 			files = (
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
 				0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */,
+				060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */,
+				0684A2E11BE702BC00F0B238 /* CPSoundManager.m in Sources */,
 				068EA7E01BDC5D8800330714 /* PeripheralActors.swift in Sources */,
 				06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */,
 				069284581BE5C18E00AF4678 /* MonitorViewController.swift in Sources */,

@@ -153,7 +153,7 @@ extension RemoteCamSession {
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Requesting picture",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             return {[unowned self] (msg : Actor.Message) in
                 switch(msg) {
