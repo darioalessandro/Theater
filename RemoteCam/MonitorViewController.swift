@@ -29,7 +29,6 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
             case let flash as RemoteCmd.ToggleFlashResp:
                 self.setFlashMode(ctrl, flashMode:  flash.flashMode)
                 
-                
             case is UICmd.UnbecomeMonitor:
                 let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
                 session! ! msg
@@ -117,7 +116,8 @@ public class MonitorViewController : BaseViewController {
             alert.dismissViewControllerAnimated(true, completion: nil)
             self.timer.cancel()
         })
-        ^{self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)}
+        
+        self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
         
         self.presentViewController(alert, animated: true) {[unowned self] () -> Void in
             self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {[unowned self](t) -> Void in
@@ -158,18 +158,12 @@ public class MonitorViewController : BaseViewController {
     func configureTimerUI() {
         self.sliderContainer.layer.cornerRadius = 30.0
         self.sliderContainer.clipsToBounds=true
-
-        let trans = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
         self.timerSlider.layer.anchorPoint = CGPointMake(1, 1)
-        self.timerSlider.transform=trans
+        self.timerSlider.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
         let c = UIColor(red: 0.150, green: 0.670, blue: 0.80, alpha: 1)
         self.timerSlider.minimumTrackTintColor = c
         self.timerSlider.maximumTrackTintColor = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
         self.timerSlider.thumbTintColor = c
-
-//        RCRemoteConfiguration * remoteConfig=[[RCSession activeSession] remoteConfiguration];
-//        _timerSlider.value=(float)remoteConfig.timer;
-//        _timerLabel.text=[NSString stringWithFormat:@"%ld", (long)remoteConfig.timer];
     }
     
     deinit {

@@ -28,7 +28,7 @@ public class OrientationUtils {
         }
     }
     
-    class public func transform(o : AVCaptureVideoOrientation) ->  UIInterfaceOrientation{
+    class public func transformToUIKit(o : AVCaptureVideoOrientation) ->  UIInterfaceOrientation{
         switch(o) {
             
         case .LandscapeLeft:
@@ -42,6 +42,23 @@ public class OrientationUtils {
             
         default:
             return .Portrait;
+        }
+    }
+    
+    class public func transformToUIImage(o : AVCaptureVideoOrientation) ->  UIImageOrientation {
+        switch(o) {
+            
+        case .LandscapeLeft:
+            return .Left
+            
+        case .LandscapeRight:
+            return .Right
+            
+        case .PortraitUpsideDown:
+            return .Down
+            
+        default:
+            return .Up;
         }
     }
 }

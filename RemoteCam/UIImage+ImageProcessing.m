@@ -11,7 +11,7 @@
 
 @implementation UIImage (ImageProcessing)
 
-+ (UIImage *)imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
++ (UIImage *)imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer orientation:(UIImageOrientation) orientation
 {
     CVImageBufferRef cvImage = CMSampleBufferGetImageBuffer(sampleBuffer);
     CGRect cropRect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(320, 320), CGRectMake(0,0, CVPixelBufferGetWidth(cvImage),CVPixelBufferGetHeight(cvImage)) );
@@ -23,16 +23,17 @@
     [scaleFilter setValue:[NSNumber numberWithFloat:0.25] forKey:@"inputScale"];
     [scaleFilter setValue:[NSNumber numberWithFloat:1.0] forKey:@"inputAspectRatio"];
     CIImage *finalImage = [scaleFilter valueForKey:@"outputImage"];
-    UIImage* cgBackedImage = [UIImage cgImageBackedImageWithCIImage:finalImage];
+    UIImage* cgBackedImage = [UIImage cgImageBackedImageWithCIImage:finalImage orientation:orientation];
     
     return cgBackedImage;
 }
 
-+ (UIImage*) cgImageBackedImageWithCIImage:(CIImage*) ciImage {
++ (UIImage*) cgImageBackedImageWithCIImage:(CIImage*) ciImage orientation:(UIImageOrientation) orientation{
     
-    CIContext *context = [CIContext contextWithOptions:nil];
+    CIContext *context = [CIContext contextWithOptions:nil ];
     CGImageRef ref = [context createCGImage:ciImage fromRect:ciImage.extent];
-    UIImage* image = [UIImage imageWithCGImage:ref scale:[UIScreen mainScreen].scale orientation:UIImageOrientationRight];
+    UIImage* image = [UIImage imageWithCGImage:ref scale:[UIScreen mainScreen].scale orientation:orientation];
+    NSLog(@"orieantation %ld", (long)orientation);
     CGImageRelease(ref);
     
     return image;

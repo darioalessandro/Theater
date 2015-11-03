@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
 
+
 @interface UIImage (ImageProcessing)
-    + (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
-    + (UIImage*) cgImageBackedImageWithCIImage:(CIImage*) ciImage;
++ (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer orientation:(UIImageOrientation) orientation;
+    + (UIImage*) cgImageBackedImageWithCIImage:(CIImage*) ciImage orientation:(UIImageOrientation) orientation;
 @end
