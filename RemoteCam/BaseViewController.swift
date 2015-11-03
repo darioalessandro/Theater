@@ -9,7 +9,12 @@
 import UIKit
 import iAd
 
-public class BaseViewController : UIViewController, ADBannerViewDelegate {
+/**
+This UIViewController provides a preconfigured banner and some NSLayoutConstraints to show/hide the banner.
+Users must subclass to integrate this into their projects
+*/
+
+public class iAdViewController : UIViewController, ADBannerViewDelegate {
     let iAdBanner : ADBannerView = ADBannerView()
     var iAdConstraints : [NSLayoutConstraint]?
     

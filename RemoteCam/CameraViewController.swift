@@ -1,4 +1,4 @@
-    //
+//
 //  CameraViewController.swift
 //  Actors
 //
@@ -10,12 +10,15 @@ import UIKit
 import Theater
 import AVFoundation
     
+/**
+ActorOutput is responsible for forwarding the images recorded in the AVCaptureSession of CameraViewController to the RemoteCam Session actor.
+*/
     
 public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     let videoQueue : dispatch_queue_t = dispatch_queue_create("VideoQueue", DISPATCH_QUEUE_SERIAL);
     
-    lazy var remoteCamSession : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    lazy var remoteCamSession : ActorRef? = AppActorSystem.shared.selectActor("RemoteCam Session")
     
     public override init() {
         super.init()
@@ -23,16 +26,22 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
     }
     
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
-        let cgBackedImage = UIImage(fromSampleBuffer: sampleBuffer, orientation: OrientationUtils.transformOrientationToImage(UIApplication.sharedApplication().statusBarOrientation))
-        let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
-        let msg = RemoteCmd.SendFrame(data: imageData, sender: Optional.None, fps:3)
-        remoteCamSession ! msg
+        if let remoteCamSession = self.remoteCamSession {
+            let cgBackedImage = UIImage(fromSampleBuffer: sampleBuffer, orientation: OrientationUtils.transformOrientationToImage(UIApplication.sharedApplication().statusBarOrientation))
+            let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
+            let msg = RemoteCmd.SendFrame(data: imageData, sender: Optional.None, fps:3)
+            remoteCamSession ! msg
+        }
     }
 }
+    
+/**
+  Camera UI
+*/
 
 public class CameraViewController : UIViewController {
     
-    var captureSession : AVCaptureSession? = Optional.None;
+    var captureSession : AVCaptureSession? = nil;
 
     let output : ActorOutput = ActorOutput()
     
@@ -43,6 +52,10 @@ public class CameraViewController : UIViewController {
     let stillImageOutput = AVCaptureStillImageOutput()
     
     var session : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    
+    /**
+    Default fps, it would be neat if we would adjust this based on network conditions.
+    */
     
     let fps = 3
     
@@ -67,25 +80,54 @@ public class CameraViewController : UIViewController {
         }
     }
     
-    private func nextFlashMode(mode : AVCaptureFlashMode) -> AVCaptureFlashMode {
-        switch(mode) {
-            case .Off:
-                return .On
-            case .On:
-                return .Auto
-            case .Auto:
-                return .Off
-        }
+    public override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        self.rotateCameraToOrientation(toInterfaceOrientation)
     }
     
-    func toggleCameraPosition(p : AVCaptureDevicePosition) -> Try<AVCaptureDevicePosition> {
-        switch(p) {
-        case .Back:
-            return Success(value: .Front)
-        case .Front:
-            return Success(value: .Back)
-        default:
-            return Failure(error: NSError(domain: "Unable to find camera position", code: 0, userInfo: nil))
+    @IBAction func goBack(sender: UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func setupCamera() -> Void {
+        if let cs = self.captureSession {
+            cs.stopRunning()
+        }
+        
+        captureSession = AVCaptureSession()
+        captureSession!.sessionPreset = AVCaptureSessionPresetHigh
+        
+        self.captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        captureVideoPreviewLayer.frame = self.view.frame
+        
+        self.view.layer.insertSublayer(captureVideoPreviewLayer, below: self.back.layer)
+        
+        stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+        
+        if captureSession!.canAddOutput(stillImageOutput) {
+            captureSession!.addOutput(stillImageOutput)
+        }
+        
+        if let videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo),
+            captureSession = captureSession {
+                do {
+                    let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
+                    captureSession.addInput(videoDeviceInput)
+                    
+                    captureSession.addOutput(output)
+                    
+                    output.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
+                    output.alwaysDiscardsLateVideoFrames = true
+                    
+                    self.setFrameRate(self.fps,videoDevice:videoDevice)
+                    
+                    session ! UICmd.ToggleCameraResp(flashMode:(videoDevice.hasFlash) ? videoDevice.flashMode : nil, camPosition: videoDevice.position, error: nil)
+                    
+                    self.captureSession?.startRunning()
+                } catch let error as NSError {
+                    print("error \(error)")
+                }
         }
     }
     
@@ -94,14 +136,17 @@ public class CameraViewController : UIViewController {
             if  let captureSession = self.captureSession,
                 let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
                 let device = genericDevice.device,
-                let newPosition = toggleCameraPosition(device.position).toOptional(),
+                let newPosition = device.position.toggle().toOptional(),
                 let newDevice = self.cameraForPosition(newPosition) {
                     let newInput = try AVCaptureDeviceInput(device: newDevice)
                     captureSession.removeInput(genericDevice)
                     captureSession.addInput(newInput)
-                    self.setFrameRate(self.fps,videoDevice:newDevice)
-                    let newFlashMode : AVCaptureFlashMode? = (newInput.device.hasFlash) ? newInput.device.flashMode : nil
-                    return Success(value: (newFlashMode, newInput.device.position))
+                    if let res = self.setFrameRate(self.fps,videoDevice:newDevice) as? Failure {
+                        return Failure(error : res.error) //casting... swift sucks
+                    } else {
+                        let newFlashMode : AVCaptureFlashMode? = (newInput.device.hasFlash) ? newInput.device.flashMode : nil
+                        return Success(value: (newFlashMode, newInput.device.position))
+                    }
             } else {
                 return Failure(error: NSError(domain: "Unable to find camera", code: 0, userInfo: nil))
             }
@@ -115,7 +160,7 @@ public class CameraViewController : UIViewController {
            let genericDevice = captureSession.inputs.first as? AVCaptureDeviceInput,
            let device = genericDevice.device {
             if device.hasFlash {
-                return self.setFlashMode(nextFlashMode(device.flashMode), device: device)
+                return self.setFlashMode(device.flashMode.next(), device: device)
             } else {
                 return Failure(error: NSError(domain: "Current camera does not support flash.", code: 0, userInfo: nil))
             }
@@ -148,59 +193,7 @@ public class CameraViewController : UIViewController {
             return Optional.None
         }
     }
-    
-    func setupCamera() -> Void {
-        if let cs = self.captureSession {
-            cs.stopRunning()
-        }
-        
-        captureSession = AVCaptureSession()
-        captureSession!.sessionPreset = AVCaptureSessionPresetHigh
-        
-        self.captureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        
-        captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        captureVideoPreviewLayer.frame = self.view.frame
 
-        self.view.layer.insertSublayer(captureVideoPreviewLayer, below: self.back.layer)
-        
-        stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-        
-        if captureSession!.canAddOutput(stillImageOutput) {
-            captureSession!.addOutput(stillImageOutput)
-        }
-        
-        if let videoDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo),
-            captureSession = captureSession {
-            do {
-                let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
-                captureSession.addInput(videoDeviceInput)
-                
-                captureSession.addOutput(output)
-                
-                output.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
-                output.alwaysDiscardsLateVideoFrames = true
-                
-                self.setFrameRate(self.fps,videoDevice:videoDevice)
-                
-                session ! UICmd.ToggleCameraResp(flashMode:(videoDevice.hasFlash) ? videoDevice.flashMode : nil, camPosition: videoDevice.position, error: nil)
-                                
-                self.captureSession?.startRunning()
-            } catch let error as NSError {
-                print("error \(error)")
-            }
-        }
-    }
-    
-    @IBAction func goBack(sender: UIButton) {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    public override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        self.rotateCameraToOrientation(toInterfaceOrientation)
-    }
-
-    
     private func rotateCameraToOrientation( orientation : UIInterfaceOrientation) {
         let o = OrientationUtils.transform(orientation)
         self.captureVideoPreviewLayer.connection.videoOrientation = o
@@ -228,16 +221,17 @@ public class CameraViewController : UIViewController {
         }
     }
     
-    func setFrameRate(framerate:Int, videoDevice: AVCaptureDevice) -> Void {
+    func setFrameRate(framerate:Int, videoDevice: AVCaptureDevice) -> Try<Int> {
         do {
             try videoDevice.lockForConfiguration()
             videoDevice.activeVideoMaxFrameDuration = CMTimeMake(1,Int32(framerate))
             videoDevice.activeVideoMinFrameDuration = CMTimeMake(1,Int32(framerate))
             videoDevice.unlockForConfiguration()
+            return Success(value:framerate)
         } catch let error as NSError {
-            print("error \(error)")
+            return Failure(error: error)
         } catch {
-            print("sdfsdf")
+            return Failure(error: NSError(domain: "unknown error", code: 0, userInfo: nil))
         }
     }
 }

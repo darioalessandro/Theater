@@ -10,6 +10,9 @@ import UIKit
 import Theater
 import AVFoundation
 
+/**
+Monitor actor has a reference to the session actor and to the monitorViewController, it acts as the connection between the model and the controller from an MVC perspective.
+*/
 
 public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     
@@ -73,7 +76,11 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     
 }
 
-public class MonitorViewController : BaseViewController {
+/**
+UI for the monitor.
+*/
+
+public class MonitorViewController : iAdViewController {
     
     let session = AppActorSystem.shared.selectActor("RemoteCam Session")!
     
@@ -82,6 +89,9 @@ public class MonitorViewController : BaseViewController {
     let timer : RCTimer = RCTimer()
     
     let soundManager : CPSoundManager = CPSoundManager()
+    
+    private let sliderColor1 = UIColor(red: 0.150, green: 0.670, blue: 0.80, alpha: 1)
+    private let sliderColor2 = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
     
     @IBOutlet weak var flashStatus: UILabel!
     
@@ -114,34 +124,41 @@ public class MonitorViewController : BaseViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    /**
+     Take picture contains the logic to kick off the Timer for the picture.
+    */
+    
     @IBAction func onTakePicture(sender: UIBarButtonItem) {
         
-        func alertTitle(seconds : Int) -> String {
+        func timerAlertTitle(seconds : Int) -> String {
             return "Taking picture in \(seconds) seconds"
         }
         
-        let alert = UIAlertController(title: alertTitle(Int(round(self.timerSlider.value))),
+        let alert = UIAlertController(title: timerAlertTitle(Int(round(self.timerSlider.value))),
             message: nil,
             preferredStyle: .Alert)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (a) in
             alert.dismissViewControllerAnimated(true, completion: nil)
             self.timer.cancel()
         })
         
         self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
         
-        self.presentViewController(alert, animated: true) {[unowned self] () -> Void in
+        self.presentViewController(alert, animated: true) {[unowned self] in
             self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {[unowned self](t) -> Void in
-                ^{ alert.title = alertTitle(t.timeRemaining())}
-                if t.timeRemaining() > 3 {
-                    self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
-                } else if t.timeRemaining() == 3 {
-                    self.soundManager.playBeepSound(CPSoundManagerAudioTypeFast)
+                ^{ alert.title = timerAlertTitle(t.timeRemaining())}
+                switch(t.timeRemaining()) {
+                    case let l where l > 3:
+                        self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
+                    case 3:
+                        self.soundManager.playBeepSound(CPSoundManagerAudioTypeFast)
+                    default:
+                        break
                 }
-                }, cancelHandler: {(t) -> Void in
+                }, cancelHandler: {(t) in
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
-                }, andCompletionHandler: {[unowned self] (t) -> Void in
+                }, andCompletionHandler: {[unowned self] (t) in
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.session ! UICmd.TakePicture(sender: Optional.None)
                 })
@@ -167,15 +184,14 @@ public class MonitorViewController : BaseViewController {
         }
     }
     
-    func configureTimerUI() {
+    private func configureTimerUI() {
         self.sliderContainer.layer.cornerRadius = 30.0
         self.sliderContainer.clipsToBounds=true
         self.timerSlider.layer.anchorPoint = CGPointMake(1, 1)
         self.timerSlider.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
-        let c = UIColor(red: 0.150, green: 0.670, blue: 0.80, alpha: 1)
-        self.timerSlider.minimumTrackTintColor = c
-        self.timerSlider.maximumTrackTintColor = UIColor(red: 0.060, green: 0.100, blue: 0.160, alpha: 1)
-        self.timerSlider.thumbTintColor = c
+        self.timerSlider.minimumTrackTintColor = sliderColor1
+        self.timerSlider.maximumTrackTintColor = sliderColor2
+        self.timerSlider.thumbTintColor = sliderColor1
     }
     
     deinit {

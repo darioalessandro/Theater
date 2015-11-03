@@ -12,6 +12,10 @@
 typedef void (^RCTimerTick)(RCTimer *timer);
 typedef void (^RCTimerCompletion)(RCTimer *timer);
 
+/**
+Neat timer that uses blocks instead of the delegate pattern
+*/
+
 @interface RCTimer : NSObject
 
 -(void)cancel;
