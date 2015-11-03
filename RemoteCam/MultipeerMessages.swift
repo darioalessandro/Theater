@@ -69,8 +69,8 @@ public class UICmd {
     
     public class OnPicture : Actor.Message {
         
-        let pic : Optional<NSData>
-        let error : Optional<NSError>
+        public let pic : Optional<NSData>
+        public let error : Optional<NSError>
         
         public init(sender: Optional<ActorRef>, pic : NSData) {
             self.pic = Optional.Some(pic)
