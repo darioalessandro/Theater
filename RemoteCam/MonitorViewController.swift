@@ -35,6 +35,20 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
                 
             case let f as RemoteCmd.OnFrame:
                 if let img = UIImage(data: f.data) {
+                    print("orientation \(img.imageOrientation.rawValue)")
+                    var t : CGAffineTransform?
+                    switch(img.imageOrientation) {
+
+                   case .Left, .Right:
+                        t = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+                    case .Up:
+                        t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+                    default:
+                        print("none")
+                    }
+                    if let transform = t {
+                        ^{ctrl.imageView.transform = transform}
+                    }
                     ^{ctrl.imageView.image = img}
                 }
                 

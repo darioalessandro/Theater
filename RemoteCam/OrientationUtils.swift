@@ -61,4 +61,21 @@ public class OrientationUtils {
             return .Up;
         }
     }
+    
+    class public func transformOrientationToImage(o : UIInterfaceOrientation) -> UIImageOrientation {
+        switch(o) {
+            
+        case .LandscapeLeft:
+            return .Left
+            
+        case .LandscapeRight:
+            return .Right
+            
+        case .PortraitUpsideDown:
+            return .Down
+            
+        default:
+            return .Up
+        }
+    }
 }
