@@ -31,6 +31,7 @@ public class RolePickerController : UIViewController {
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
+        self.verifyCameraAndCameraRollAccess()
     }
     
     override public func viewDidDisappear(animated: Bool) {

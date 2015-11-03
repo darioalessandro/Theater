@@ -167,7 +167,6 @@ extension RemoteCamSession {
                     self.sendMessage([peer], msg: RemoteCmd.TakePic(sender: self.this))
                     
                 case let picResp as RemoteCmd.TakePicResp:
-                    print("saving picture...")
                     if let imageData = picResp.pic, image = UIImage(data: imageData) {
                         UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}

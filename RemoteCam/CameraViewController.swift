@@ -204,7 +204,6 @@ public class CameraViewController : UIViewController {
     private func rotateCameraToOrientation( orientation : UIInterfaceOrientation) {
         let o = OrientationUtils.transform(orientation)
         self.captureVideoPreviewLayer.connection.videoOrientation = o
-        print("rotateCameraToOrientation \(o.rawValue)")
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
             videoConnection.videoOrientation = o
             self.captureVideoPreviewLayer.frame = self.view.bounds

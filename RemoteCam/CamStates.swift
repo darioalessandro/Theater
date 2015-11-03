@@ -39,7 +39,7 @@ extension RemoteCamSession {
                     
                     if let failure = result as? Failure {
                         ^{
-                            let a = UIAlertController(title: "Error sending pic",
+                            let a = UIAlertController(title: "Error sending picture",
                                 message: failure.error.description,
                                 preferredStyle: .Alert)
                             
@@ -49,7 +49,6 @@ extension RemoteCamSession {
                             
                             ctrl.presentViewController(a, animated: true, completion: nil)
                         }
-                        
                     }
                     
                     self.unbecome()
