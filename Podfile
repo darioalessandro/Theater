@@ -28,6 +28,7 @@ end
 
 target 'ActorsTests' do
     testing_pods
+    gallery    
 end
 
 target 'Theater' do
