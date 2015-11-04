@@ -11,6 +11,10 @@ import Photos
 import AVFoundation
 import Theater
 
+/**
+Permissions verification extensions
+*/
+
 extension UIViewController {
     
     @objc public func verifyCameraAndCameraRollAccess() {
@@ -57,4 +61,5 @@ extension UIViewController {
         let blocker = NSBundle.mainBundle().loadNibNamed(fileName, owner: nil, options: nil)[0] as! UIView
         addErrorView(blocker)
     }
+    
 }

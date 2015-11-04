@@ -100,6 +100,8 @@
 		0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0694680D1BC45CA100C84503 /* WireTransferWorker.swift */; };
 		069468111BC45D3D00C84503 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069468101BC45D3D00C84503 /* Bank.swift */; };
 		069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */; };
+		06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
+		06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
@@ -264,6 +266,7 @@
 		0694680D1BC45CA100C84503 /* WireTransferWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WireTransferWorker.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLECentralViewController.swift; sourceTree = "<group>"; };
+		06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4FC1BB7699800E07321 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -481,6 +484,7 @@
 				069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */,
 				069284481BE5C0E600AF4678 /* RolePickerController.swift */,
 				0624C0401BE8616E001CC738 /* CameraAccess.swift */,
+				06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1175,6 +1179,7 @@
 				0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */,
 				0684A2D51BE6E9A000F0B238 /* MonitorStates.swift in Sources */,
 				0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */,
+				06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */,
 				066427751BE924DD003EDD41 /* EnumExtensions.swift in Sources */,
 				069284541BE5C0E600AF4678 /* UIImage+ImageProcessing.m in Sources */,
 			);
@@ -1193,6 +1198,7 @@
 			files = (
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
 				0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */,
+				06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */,
 				060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */,
 				0684A2E11BE702BC00F0B238 /* CPSoundManager.m in Sources */,
 				068EA7E01BDC5D8800330714 /* PeripheralActors.swift in Sources */,

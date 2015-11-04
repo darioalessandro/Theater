@@ -9,6 +9,7 @@
 import UIKit
 import Theater
 import AVFoundation
+import BFGallery
 
 /**
 Monitor actor has a reference to the session actor and to the monitorViewController, it acts as the connection between the model and the controller from an MVC perspective.
@@ -41,7 +42,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
                     var t : CGAffineTransform?
                     switch(img.imageOrientation) {
                         case .Left, .Right:
-                            t = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+                            t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
                         case .Up:
                             t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
                         default:
@@ -118,7 +119,10 @@ public class MonitorViewController : iAdViewController {
     
     @IBAction func showSettings(sender: UIButton) {}
     
-    @IBAction func showGallery(sender: UIButton) {}
+    @IBAction func showGallery(sender: UIButton) {
+        let ctrl = GalleryViewController(nibName: "BFGalleryViewController", bundle: NSBundle(forClass:BFGalleryViewController.self),  mediaProvider:BFGAssetsManagerProviderPhotoLibrary)
+        self.navigationController?.pushViewController(ctrl, animated: true)
+    }
     
     @IBAction func goBack(sender: UIButton) {
         self.navigationController?.popViewControllerAnimated(true)
