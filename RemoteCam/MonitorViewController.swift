@@ -42,7 +42,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
                     var t : CGAffineTransform?
                     switch(img.imageOrientation) {
                         case .Left, .Right:
-                            t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+                            t = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
                         case .Up:
                             t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
                         default:
@@ -117,7 +117,10 @@ public class MonitorViewController : iAdViewController {
         session ! UICmd.ToggleFlash()
     }
     
-    @IBAction func showSettings(sender: UIButton) {}
+    @IBAction func showSettings(sender: UIButton) {
+        let ctrl = CMConfigurationsViewController()
+        self.navigationController?.pushViewController(ctrl, animated: true)
+    }
     
     @IBAction func showGallery(sender: UIButton) {
         let ctrl = GalleryViewController(nibName: "BFGalleryViewController", bundle: NSBundle(forClass:BFGalleryViewController.self),  mediaProvider:BFGAssetsManagerProviderPhotoLibrary)

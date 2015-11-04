@@ -27,6 +27,18 @@
 		0624C04B1BE8662D001CC738 /* BFDeniedAccessToCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C0491BE8662D001CC738 /* BFDeniedAccessToCameraView.xib */; };
 		0624C04D1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */; };
 		0624C04E1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */; };
+		0650240D1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
+		0650240E1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
+		0650240F1BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */; };
+		065024101BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */; };
+		065024111BEA407F00311C8A /* CMConfigurationsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0650240B1BEA407F00311C8A /* CMConfigurationsViewController.mm */; };
+		065024121BEA407F00311C8A /* CMConfigurationsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0650240B1BEA407F00311C8A /* CMConfigurationsViewController.mm */; };
+		065024131BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0650240C1BEA407F00311C8A /* CMConfigurationsViewController.xib */; };
+		065024141BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0650240C1BEA407F00311C8A /* CMConfigurationsViewController.xib */; };
+		065024191BEA413900311C8A /* PurchasesRestorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024161BEA413900311C8A /* PurchasesRestorer.m */; };
+		0650241A1BEA413900311C8A /* PurchasesRestorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024161BEA413900311C8A /* PurchasesRestorer.m */; };
+		0650241B1BEA413900311C8A /* InAppPurchasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024181BEA413900311C8A /* InAppPurchasesManager.m */; };
+		0650241C1BEA413900311C8A /* InAppPurchasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024181BEA413900311C8A /* InAppPurchasesManager.m */; };
 		06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06545B991BE40716004A2D5F /* ViewControllerActor.swift */; };
 		06631A671BDF191D00883344 /* WithListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A661BDF191D00883344 /* WithListeners.swift */; };
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
@@ -209,6 +221,16 @@
 		0624C0441BE8636D001CC738 /* BFDeniedAccessToAssetsView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BFDeniedAccessToAssetsView~ipad.xib"; sourceTree = "<group>"; };
 		0624C0491BE8662D001CC738 /* BFDeniedAccessToCameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BFDeniedAccessToCameraView.xib; sourceTree = "<group>"; };
 		0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BFDeniedAccessToCameraView~ipad.xib"; sourceTree = "<group>"; };
+		065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgmentsViewController.h; sourceTree = "<group>"; };
+		065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgmentsViewController.m; sourceTree = "<group>"; };
+		065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcknowledgmentsViewController.xib; sourceTree = "<group>"; };
+		0650240A1BEA407F00311C8A /* CMConfigurationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMConfigurationsViewController.h; sourceTree = "<group>"; };
+		0650240B1BEA407F00311C8A /* CMConfigurationsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CMConfigurationsViewController.mm; sourceTree = "<group>"; };
+		0650240C1BEA407F00311C8A /* CMConfigurationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMConfigurationsViewController.xib; sourceTree = "<group>"; };
+		065024151BEA413900311C8A /* PurchasesRestorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchasesRestorer.h; sourceTree = "<group>"; };
+		065024161BEA413900311C8A /* PurchasesRestorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchasesRestorer.m; sourceTree = "<group>"; };
+		065024171BEA413900311C8A /* InAppPurchasesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchasesManager.h; sourceTree = "<group>"; };
+		065024181BEA413900311C8A /* InAppPurchasesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchasesManager.m; sourceTree = "<group>"; };
 		06545B991BE40716004A2D5F /* ViewControllerActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ViewControllerActor.swift; path = Classes/ViewControllerActor.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06631A661BDF191D00883344 /* WithListeners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = WithListeners.swift; path = Classes/WithListeners.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06631A681BDF192600883344 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -418,6 +440,31 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		065024061BEA406B00311C8A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0650241D1BEA414200311C8A /* InAppPurchases */,
+				065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */,
+				065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */,
+				065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */,
+				0650240A1BEA407F00311C8A /* CMConfigurationsViewController.h */,
+				0650240B1BEA407F00311C8A /* CMConfigurationsViewController.mm */,
+				0650240C1BEA407F00311C8A /* CMConfigurationsViewController.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		0650241D1BEA414200311C8A /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				065024151BEA413900311C8A /* PurchasesRestorer.h */,
+				065024161BEA413900311C8A /* PurchasesRestorer.m */,
+				065024171BEA413900311C8A /* InAppPurchasesManager.h */,
+				065024181BEA413900311C8A /* InAppPurchasesManager.m */,
+			);
+			name = InAppPurchases;
+			sourceTree = "<group>";
+		};
 		06545B9B1BE40723004A2D5F /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,6 +525,7 @@
 		069284601BE5C1A700AF4678 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				065024061BEA406B00311C8A /* Settings */,
 				069284421BE5C0E600AF4678 /* CameraViewController.swift */,
 				069284431BE5C0E600AF4678 /* MonitorViewController.swift */,
 				060B1E241BE710FE00077BCC /* BaseViewController.swift */,
@@ -883,12 +931,14 @@
 				0624C0461BE8636D001CC738 /* BFDeniedAccessToAssetsView.xib in Resources */,
 				069284741BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				069284721BE5C82E00AF4678 /* Localizable.strings in Resources */,
+				065024101BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */,
 				0624C04B1BE8662D001CC738 /* BFDeniedAccessToCameraView.xib in Resources */,
 				069284691BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
 				0684A2E81BE7049800F0B238 /* beep.m4a in Resources */,
 				0684A2EB1BE704C600F0B238 /* fastBeep.aif in Resources */,
 				069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */,
 				069284661BE5C71800AF4678 /* Media.xcassets in Resources */,
+				065024141BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */,
 				0624C04E1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib in Resources */,
 				069284561BE5C12000AF4678 /* Main.storyboard in Resources */,
 			);
@@ -910,8 +960,10 @@
 				0684A2E71BE7049800F0B238 /* beep.m4a in Resources */,
 				0624C0471BE8636D001CC738 /* BFDeniedAccessToAssetsView~ipad.xib in Resources */,
 				0684A2EA1BE704C600F0B238 /* fastBeep.aif in Resources */,
+				0650240F1BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */,
 				069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
+				065024131BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */,
 				060B1E161BE708F700077BCC /* Media.xcassets in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
 				0624C0451BE8636D001CC738 /* BFDeniedAccessToAssetsView.xib in Resources */,
@@ -1170,13 +1222,17 @@
 				0684A2E21BE702BC00F0B238 /* CPSoundManager.m in Sources */,
 				0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */,
 				0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */,
+				0650241A1BEA413900311C8A /* PurchasesRestorer.m in Sources */,
 				0692844F1BE5C0E600AF4678 /* MultipeerMessages.swift in Sources */,
 				069284531BE5C0E600AF4678 /* States.swift in Sources */,
+				0650241C1BEA413900311C8A /* InAppPurchasesManager.m in Sources */,
 				0624C0411BE8616E001CC738 /* CameraAccess.swift in Sources */,
 				069284501BE5C0E600AF4678 /* PhonePickerViewController.swift in Sources */,
 				0684A2D31BE6E98A00F0B238 /* CamStates.swift in Sources */,
 				069284521BE5C0E600AF4678 /* RolePickerController.swift in Sources */,
 				0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */,
+				065024121BEA407F00311C8A /* CMConfigurationsViewController.mm in Sources */,
+				0650240E1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */,
 				0684A2D51BE6E9A000F0B238 /* MonitorStates.swift in Sources */,
 				0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */,
 				06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */,
@@ -1211,7 +1267,10 @@
 				0694680E1BC45CA100C84503 /* WireTransferWorker.swift in Sources */,
 				0692845E1BE5C18E00AF4678 /* States.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
+				0650240D1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */,
 				0692845A1BE5C18E00AF4678 /* MultipeerMessages.swift in Sources */,
+				065024111BEA407F00311C8A /* CMConfigurationsViewController.mm in Sources */,
+				065024191BEA413900311C8A /* PurchasesRestorer.m in Sources */,
 				0684A2DD1BE6F82D00F0B238 /* RCTimer.m in Sources */,
 				066427761BE924E9003EDD41 /* EnumExtensions.swift in Sources */,
 				0624C0421BE861C6001CC738 /* CameraAccess.swift in Sources */,
@@ -1224,6 +1283,7 @@
 				060B1E261BE7110100077BCC /* BaseViewController.swift in Sources */,
 				0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */,
 				069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */,
+				0650241B1BEA413900311C8A /* InAppPurchasesManager.m in Sources */,
 				068EA7DC1BDC5D3E00330714 /* BLEPeripheralViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

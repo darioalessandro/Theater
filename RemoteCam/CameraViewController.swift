@@ -29,7 +29,7 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
         if let remoteCamSession = self.remoteCamSession {
             let cgBackedImage = UIImage(fromSampleBuffer: sampleBuffer, orientation: OrientationUtils.transformOrientationToImage(UIApplication.sharedApplication().statusBarOrientation))
             let imageData = UIImageJPEGRepresentation(cgBackedImage, 0.1)!
-            let msg = RemoteCmd.SendFrame(data: imageData, sender: Optional.None, fps:3)
+            let msg = RemoteCmd.SendFrame(data: imageData, sender: nil, fps:3)
             remoteCamSession ! msg
         }
     }
