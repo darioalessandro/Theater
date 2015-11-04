@@ -13,7 +13,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SharedConstants.h"
 #import <StoreKit/StoreKit.h>
 #import "PurchasesRestorer.h"
 

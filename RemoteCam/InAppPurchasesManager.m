@@ -7,7 +7,6 @@
 //
 
 #import "InAppPurchasesManager.h"
-#import "BFLog.h"
 
 
 static InAppPurchasesManager * _manager= nil;
@@ -99,7 +98,7 @@ static InAppPurchasesManager * _manager= nil;
 #pragma StoreKit Delegate
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response{
-	BFLog(@"request %@", request);
+	//BFLog(@"request %@", request);
     if(response.products){
         self.products= response.products;
     }
@@ -107,7 +106,7 @@ static InAppPurchasesManager * _manager= nil;
         	
     for(SKProduct * product in response.products){
         [currencyStyle setLocale:product.priceLocale];
-        BFLog(@"product %@ price %@ localizedPrice %@ %@", product.productIdentifier, product.price, [currencyStyle stringFromNumber:product.price], product.localizedTitle);
+       // BFLog(@"product %@ price %@ localizedPrice %@ %@", product.productIdentifier, product.price, [currencyStyle stringFromNumber:product.price], product.localizedTitle);
     }
     if(self.productRefreshHandler)
         self.productRefreshHandler(self, nil);
@@ -132,17 +131,17 @@ static InAppPurchasesManager * _manager= nil;
 }  
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
-    BFLog(@"number of transactions %lu", [transactions count]);
+//    BFLog(@"number of transactions %lu", [transactions count]);
     NSError * error= nil;
     
 	for(SKPaymentTransaction * transaction in transactions){
         switch ([transaction transactionState]) {
             case SKPaymentTransactionStatePurchasing:
-                BFLog(@"SKPaymentTransactionStatePurchasing");
+//                BFLog(@"SKPaymentTransactionStatePurchasing");
                 break;
             case SKPaymentTransactionStateRestored:                
             case SKPaymentTransactionStatePurchased:{
-                BFLog(@"SKPaymentTransactionStatePurchased");
+//                BFLog(@"SKPaymentTransactionStatePurchased");
                 [queue finishTransaction:transaction];
                 if([[[transaction payment] productIdentifier] isEqualToString:RemoveiAdsFeatureIdentifier]){
                     [self setDidUserBuyRemoveiAdsFeatures:TRUE];
@@ -157,8 +156,8 @@ static InAppPurchasesManager * _manager= nil;
                 }
                 break;
             case SKPaymentTransactionStateFailed:
-                BFLog(@"SKPaymentTransactionStateFailed");
-                BFLog(@"transaction %@", transaction.error);
+//                BFLog(@"SKPaymentTransactionStateFailed");
+//                BFLog(@"transaction %@", transaction.error);
                 [queue finishTransaction:transaction];
                 if([[[transaction payment] productIdentifier] isEqualToString:RemoveiAdsFeatureIdentifier]){
                     if(self.buyIAdsHandler)
@@ -182,7 +181,7 @@ static InAppPurchasesManager * _manager= nil;
 }
 
 -(void)errorHappened:(NSError *)error withRestorer:(PurchasesRestorer *)restorer{
-    BFLog(@"error %@", error);
+//    BFLog(@"error %@", error);
     self.buyIAdsHandler(self, error);
 }
 

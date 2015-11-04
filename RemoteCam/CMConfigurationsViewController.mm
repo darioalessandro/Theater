@@ -1,9 +1,7 @@
 #import "CMConfigurationsViewController.h"
-#import "BFLog.h"
 #import <QuartzCore/QuartzCore.h>
 #import "InAppPurchasesManager.h"
 #define kiAdsFeatureInstalled NSLocalizedString(@"iAds Removed.",nil);
-#import "SharedConstants.h"
 #import "AcknowledgmentsViewController.h"
 
 @interface CMConfigurationsViewController ()

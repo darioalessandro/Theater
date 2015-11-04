@@ -1,7 +1,5 @@
 
 #import "PurchasesRestorer.h"
-#import "SharedConstants.h"
-#import "BFLog.h"
 
 @implementation PurchasesRestorer
 @synthesize restoredLaws, numberOfLawsToRestore;
@@ -56,12 +54,12 @@
 }
 
 -(void)errorHappened:(NSError *)error withRestorer:(PurchasesRestorer *)restorer{
-    BFLog(@"error %@", error);
+    //BFLog(@"error %@", error);
     [progressAlert dismissWithClickedButtonIndex:1 animated:TRUE];
 }
 
 -(void)syncDBWithCompletedTransactionsQueue:(SKPaymentQueue *)queue{
-    BFLog(@"queue %@", queue.transactions);
+    //BFLog(@"queue %@", queue.transactions);
     for(SKPaymentTransaction * transaction in queue.transactions){
         [queue removeTransactionObserver:self];
     }
@@ -82,12 +80,12 @@
     if(transactions==nil || [transactions count]<=0)
         return;
     
-    BFLog(@"number of transactions %lu", (unsigned long)[transactions count]);
+    //BFLog(@"number of transactions %lu", (unsigned long)[transactions count]);
     for(SKPaymentTransaction * transaction in transactions){
         switch ([transaction transactionState]) {
             case SKPaymentTransactionStateRestored:
-                BFLog(@"SKPaymentTransactionStateRestored");
-                BFLog(@"producto %@", transaction.payment.productIdentifier);
+                //BFLog(@"SKPaymentTransactionStateRestored");
+                //BFLog(@"producto %@", transaction.payment.productIdentifier);
                 [self.delegate setDidUserBuyRemoveiAdsFeatures:TRUE];
                 break;
                 
