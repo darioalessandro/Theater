@@ -6,3 +6,4 @@
 #import "UIImage+ImageProcessing.h"
 #import "RCTimer.h"
 #import "CPSoundManager.h"
+#import "CMConfigurationsViewController.h"
