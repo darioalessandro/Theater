@@ -77,7 +77,9 @@
                             <constraint firstItem="Ouk-AK-7eb" firstAttribute="top" secondItem="YX2-mi-m3d" secondAttribute="bottom" constant="8" id="wfI-2t-W7N"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="camera" destination="Ouk-AK-7eb" id="qX9-Aj-CYR"/>
                         <outlet property="remote" destination="YX2-mi-m3d" id="ZOJ-NI-3F0"/>
@@ -133,7 +135,7 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6In-cm-wQH" firstAttribute="top" secondItem="dGC-7F-6cb" secondAttribute="topMargin" constant="124" id="BIX-mf-dMo"/>
                             <constraint firstItem="6In-cm-wQH" firstAttribute="leading" secondItem="dGC-7F-6cb" secondAttribute="leadingMargin" constant="-36" id="Q18-yJ-Sk9"/>

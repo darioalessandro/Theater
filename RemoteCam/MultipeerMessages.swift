@@ -45,16 +45,16 @@ public class UICmd {
     }
     
     public class StartScanning : Actor.Message {}
-
-    public class BecomeDevice : Actor.Message {}
     
     public class UnbecomeCamera : Actor.Message {}
 
-    public class BecomeCamera : BecomeDevice {}
+    public class BecomeCamera : Actor.Message {}
+    
+    public class ToggleConnect : Actor.Message {}
     
     public class UnbecomeMonitor : Actor.Message {}
     
-    public class BecomeMonitor : BecomeDevice {}
+    public class BecomeMonitor : Actor.Message {}
 
     public class AddCameraController : Actor.Message {
         let ctrl : CameraViewController
@@ -264,21 +264,25 @@ public class RemoteCmd : Actor.Message {
     public class SendFrame : Actor.Message, NSCoding {
         public let data : NSData
         public let fps : NSInteger
-        init(data : NSData, sender : Optional<ActorRef>, fps : NSInteger) {
+        public let camPosition : AVCaptureDevicePosition
+        
+        init(data : NSData, sender : Optional<ActorRef>, fps : NSInteger, camPosition : AVCaptureDevicePosition) {
             self.data = data
             self.fps = fps
-            
+            self.camPosition = camPosition
             super.init(sender: sender)
         }
         
         public func encodeWithCoder(aCoder: NSCoder) {
             aCoder.encodeDataObject(self.data)
             aCoder.encodeInteger(self.fps, forKey: "fps")
+            aCoder.encodeInteger(self.camPosition.rawValue, forKey: "camPosition")
         }
         
         public required init?(coder aDecoder: NSCoder) {
             self.data = aDecoder.decodeDataObject()!
             self.fps = aDecoder.decodeIntegerForKey("fps")
+            self.camPosition = AVCaptureDevicePosition(rawValue: aDecoder.decodeIntegerForKey("camPosition"))!
             super.init(sender: Optional.None)
         }
     }
@@ -287,8 +291,10 @@ public class RemoteCmd : Actor.Message {
         public let data : NSData
         public let peerId : MCPeerID
         public let fps : NSInteger
+        public let camPosition : AVCaptureDevicePosition
         
-        init(data : NSData, sender : Optional<ActorRef>, peerId : MCPeerID, fps:NSInteger) {
+        init(data : NSData, sender : Optional<ActorRef>, peerId : MCPeerID, fps:NSInteger, camPosition : AVCaptureDevicePosition) {
+            self.camPosition = camPosition
             self.data = data
             self.peerId = peerId
             self.fps = fps

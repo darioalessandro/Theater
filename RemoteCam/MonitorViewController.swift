@@ -42,7 +42,8 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
                     var t : CGAffineTransform?
                     switch(img.imageOrientation) {
                         case .Left, .Right:
-                            t = CGAffineTransformMakeRotation(CGFloat(-M_PI_2))
+                            let multiplier = (f.camPosition == .Back) ? Double(-1) : Double(1)
+                            t = CGAffineTransformMakeRotation(CGFloat(multiplier * M_PI_2))
                         case .Up:
                             t = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
                         default:

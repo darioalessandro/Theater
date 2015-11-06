@@ -26,6 +26,13 @@ public class RolePickerController : UIViewController {
     
     let presentPhonePickerSegue : String = "presentPhonePicker"
     
+    public struct States {
+        let connect = "Connect"
+        let disconnect = "Disconnect"
+    }
+    
+    public let states =  States()
+    
     @IBOutlet weak var remote: UIButton!
     @IBOutlet weak var camera: UIButton!
     
@@ -33,6 +40,7 @@ public class RolePickerController : UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: states.connect, style: .Done, target: self, action: "toggleConnect:")
         self.remoteCamSession ! SetViewCtrl(ctrl: self)
         self.remoteCamSession ! UICmd.StartScanning(sender : nil)
     }
@@ -63,12 +71,16 @@ public class RolePickerController : UIViewController {
         self.performSegueWithIdentifier(showRemoteSegue, sender: self)
     }
     
-    @IBAction public func becomeMonitor(button : UIButton) -> Void {
-        self.remoteCamSession ! UICmd.BecomeMonitor(sender: Optional.None)
+    @IBAction public func becomeMonitor(button : UIButton) {
+        self.remoteCamSession ! UICmd.BecomeMonitor(sender: nil)
     }
     
-    @IBAction public func becomeCamera(button : UIButton) -> Void {
-        self.remoteCamSession ! UICmd.BecomeCamera(sender: Optional.None)
+    @IBAction public func becomeCamera(button : UIButton) {
+        self.remoteCamSession ! UICmd.BecomeCamera(sender: nil)
+    }
+        
+    @objc public func toggleConnect(button : UIButton) {
+        self.remoteCamSession ! UICmd.ToggleConnect(sender : nil)
     }
     
 }

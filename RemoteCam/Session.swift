@@ -28,6 +28,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     
     func connected(lobby : RolePickerController,
                     peer : MCPeerID) -> Receive {
+        ^{lobby.navigationItem.rightBarButtonItem?.title = lobby.states.disconnect}
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
@@ -46,9 +47,12 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
                 
                 case is RemoteCmd.PeerBecameMonitor:
                     self.this ! UICmd.BecomeCamera(sender:self.this)
+                
+                case is UICmd.ToggleConnect:
+                    self.popAndStartScanning()
 
                 case let c as DisconnectPeer:
-                    if (c.peer.displayName == peer.displayName) {
+                    if c.peer.displayName == peer.displayName {
                         self.popAndStartScanning()
                     }
                 
@@ -69,8 +73,10 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     func scanning(lobby : RolePickerController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
+                
             case is BLECentral.StartScanning:
                 self.startScanning(lobby)
+                ^{lobby.navigationItem.rightBarButtonItem?.title = lobby.states.connect}
                 
             case let w as OnConnectToDevice:
                 self.become(self.states.connected, state: self.connected(lobby, peer: w.peer))
@@ -78,6 +84,11 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
                 
             case is Disconnect:
                 self.this ! BLECentral.StartScanning(services: Optional.None, sender: self.this)
+                
+            case is UICmd.BecomeCamera,
+             is UICmd.BecomeMonitor,
+             is UICmd.ToggleConnect:
+                self.startScanning(lobby)
                 
             default:
                 self.receive(msg)
@@ -162,6 +173,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     }
     
     public func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
+        //TODO: add dialog to force the person to connect with a phone
         browserViewController.dismissViewControllerAnimated(true) { () in }
     }
     
@@ -185,7 +197,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         
         switch (NSKeyedUnarchiver.unarchiveObjectWithData(data)) {
             case let frame as RemoteCmd.SendFrame:
-                this ! RemoteCmd.OnFrame(data: frame.data, sender: nil, peerId: peerID, fps: frame.fps)
+                this ! RemoteCmd.OnFrame(data: frame.data, sender: nil, peerId: peerID, fps: frame.fps, camPosition:  frame.camPosition)
             
             case let m as Message:
                 this ! m
