@@ -8,6 +8,7 @@
 
 import UIKit
 import iAd
+import Theater
 
 /**
 This UIViewController provides a preconfigured banner and some NSLayoutConstraints to show/hide the banner.
@@ -32,7 +33,12 @@ public class iAdViewController : UIViewController, ADBannerViewDelegate {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.setupiAdNetwork()
+        if !InAppPurchasesManager.sharedManager().didUserBuyRemoveiAdsFeature() {
+            self.setupiAdNetwork()
+        } else {
+            self.shouldHideBanner()
+        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "ShouldHideiAds:", name: "ShouldHideiAds", object: nil)
     }
     
     func layoutBanners() {
@@ -56,6 +62,17 @@ public class iAdViewController : UIViewController, ADBannerViewDelegate {
             self.bottomBannerConstraint!.constant = value
             self.view.layoutSubviews()
         }
+    }
+    
+    @objc func ShouldHideiAds(notification : NSNotification) {
+        ^{self.turnOffiAds()}
+    }
+    
+    func turnOffiAds() {
+        self.bannerView.removeConstraints(self.iAdsLayoutConstrains())
+        self.shouldHideBanner()
+        self.iAdBanner.removeFromSuperview()
+        self.iAdBanner.delegate = nil
     }
     
     func iAdsLayoutConstrains() -> [NSLayoutConstraint] {
