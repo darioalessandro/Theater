@@ -41,6 +41,7 @@ public class RolePickerController : UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: states.connect, style: .Done, target: self, action: "toggleConnect:")
+        self.navigationItem.prompt = "Select camera or remote:"
         self.remoteCamSession ! SetViewCtrl(ctrl: self)
         self.remoteCamSession ! UICmd.StartScanning(sender : nil)
     }

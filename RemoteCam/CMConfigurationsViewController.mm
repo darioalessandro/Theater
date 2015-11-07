@@ -94,8 +94,12 @@
         }else{
             [manager userWantsToBuyRemoveiAdsFeature:^(InAppPurchasesManager *purchasesManager, NSError *error) {
                 if(error){
-                    UIAlertView * alert= [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"InApp Purchases:",nil) message:[error localizedDescription] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                    [alert show];
+                    UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"InApp Purchases:",nil) message:[error localizedDescription] preferredStyle: UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [alert dismissViewControllerAnimated:TRUE completion:NULL];
+                    }]];
+                    
+                    [self presentViewController:alert animated:TRUE completion:NULL];
                 }else{
                     [self fillRestoreiAdsRow];
                     [[NSNotificationCenter defaultCenter] postNotificationName:ShouldHideiAds object:nil];
