@@ -33,7 +33,6 @@
     CIContext *context = [CIContext contextWithOptions:nil ];
     CGImageRef ref = [context createCGImage:ciImage fromRect:ciImage.extent];
     UIImage* image = [UIImage imageWithCGImage:ref scale:[UIScreen mainScreen].scale orientation:orientation];
-    NSLog(@"orieantation %ld", (long)orientation);
     CGImageRelease(ref);
     
     return image;

@@ -8,7 +8,7 @@ use_frameworks!
 
 pod 'Starscream', '~> 1.0.0'
 def gallery
-    pod 'BFGallery' , :git => "https://github.com/darioalessandro/BlackFireGallery.git", :tag => "0.1.1"
+    pod 'BFGallery' , :git => "https://github.com/darioalessandro/BlackFireGallery.git", :tag => "0.1.2"
 end
 
 def testing_pods

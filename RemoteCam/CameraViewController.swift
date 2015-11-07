@@ -135,6 +135,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
                     if let res = self.setFrameRate(self.fps,videoDevice:newDevice) as? Failure {
                         return Failure(error : res.error) //casting... swift sucks
                     } else {
+                        self.rotateCameraToOrientation(UIApplication.sharedApplication().statusBarOrientation)
                         let newFlashMode : AVCaptureFlashMode? = (newInput.device.hasFlash) ? newInput.device.flashMode : nil
                         return Success(value: (newFlashMode, newInput.device.position))
                     }

@@ -16,6 +16,9 @@
 		060B1E251BE710FE00077BCC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060B1E241BE710FE00077BCC /* BaseViewController.swift */; };
 		060B1E261BE7110100077BCC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060B1E241BE710FE00077BCC /* BaseViewController.swift */; };
 		060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
+		0615C2F71BEE7E3900E494B8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0615C2F61BEE7E3900E494B8 /* Pods.framework */; };
+		0615C2F81BEE7F0000E494B8 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
+		0615C2F91BEE7F0000E494B8 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
 		0624C0411BE8616E001CC738 /* CameraAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0624C0401BE8616E001CC738 /* CameraAccess.swift */; };
@@ -46,8 +49,6 @@
 		066427751BE924DD003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
 		066427761BE924E9003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
 		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
-		0684A2CA1BE5D73300F0B238 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; };
-		0684A2CB1BE5D73300F0B238 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
 		0684A2D31BE6E98A00F0B238 /* CamStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D21BE6E98A00F0B238 /* CamStates.swift */; };
 		0684A2D51BE6E9A000F0B238 /* MonitorStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D41BE6E9A000F0B238 /* MonitorStates.swift */; };
@@ -77,8 +78,6 @@
 		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; };
 		0692841F1BE5BF5B00AF4678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0692841E1BE5BF5B00AF4678 /* AppDelegate.swift */; };
 		069284261BE5BF5B00AF4678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284251BE5BF5B00AF4678 /* Assets.xcassets */; };
-		0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
-		0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0692844C1BE5C0E600AF4678 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284421BE5C0E600AF4678 /* CameraViewController.swift */; };
 		0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284431BE5C0E600AF4678 /* MonitorViewController.swift */; };
 		0692844E1BE5C0E600AF4678 /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284441BE5C0E600AF4678 /* Multipeer.storyboard */; };
@@ -133,19 +132,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0615C2FA1BEE7F0000E494B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06E1D51D1BB76EE300E07321;
+			remoteInfo = Theater;
+		};
 		069284301BE5BF5C00AF4678 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0692841B1BE5BF5B00AF4678;
 			remoteInfo = RemoteCam;
-		};
-		0692843E1BE5BF6800AF4678 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 06E1D51D1BB76EE300E07321;
-			remoteInfo = Theater;
 		};
 		06E1D5071BB7699800E07321 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -178,14 +177,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		069284401BE5BF6800AF4678 /* Embed Frameworks */ = {
+		0615C2FC1BEE7F0100E494B8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0684A2CB1BE5D73300F0B238 /* Pods.framework in Embed Frameworks */,
-				0692843D1BE5BF6800AF4678 /* Theater.framework in Embed Frameworks */,
+				0615C2F91BEE7F0000E494B8 /* Theater.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +217,7 @@
 		060E28531BE1A5A400D73ACB /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		060E28551BE1A5CA00D73ACB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		060E28561BE1A5CA00D73ACB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
+		0615C2F61BEE7E3900E494B8 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		0624C0401BE8616E001CC738 /* CameraAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAccess.swift; sourceTree = "<group>"; };
@@ -335,9 +334,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0615C2F71BEE7E3900E494B8 /* Pods.framework in Frameworks */,
+				0615C2F81BEE7F0000E494B8 /* Theater.framework in Frameworks */,
 				060B1E201BE70CC000077BCC /* AdSupport.framework in Frameworks */,
-				0684A2CA1BE5D73300F0B238 /* Pods.framework in Frameworks */,
-				0692843C1BE5BF6800AF4678 /* Theater.framework in Frameworks */,
 				A2A0B37A0A55DF2E27B9B443 /* Pods_RemoteCam.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,12 +595,12 @@
 		06E1D4E91BB7699700E07321 = {
 			isa = PBXGroup;
 			children = (
+				0692841D1BE5BF5B00AF4678 /* RemoteCam */,
+				069284321BE5BF5C00AF4678 /* RemoteCamTests */,
 				06E1D4F41BB7699700E07321 /* Actors */,
 				06E1D5091BB7699800E07321 /* ActorsTests */,
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06E1D52D1BB76EE400E07321 /* TheaterTests */,
-				0692841D1BE5BF5B00AF4678 /* RemoteCam */,
-				069284321BE5BF5C00AF4678 /* RemoteCamTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -692,6 +691,7 @@
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0615C2F61BEE7E3900E494B8 /* Pods.framework */,
 				0602E4FA1BEA54420015A988 /* Pods_Actors.framework */,
 				0602E4F81BEA54380015A988 /* BFGallery.framework */,
 				0602E4F41BEA527B0015A988 /* BFGallery.framework */,
@@ -756,14 +756,14 @@
 				069284181BE5BF5B00AF4678 /* Sources */,
 				069284191BE5BF5B00AF4678 /* Frameworks */,
 				0692841A1BE5BF5B00AF4678 /* Resources */,
-				069284401BE5BF6800AF4678 /* Embed Frameworks */,
 				CACA44FD9BEC4EADDD0CE1C8 /* Embed Pods Frameworks */,
 				84D84BA5F1415D8C55A8D993 /* Copy Pods Resources */,
+				0615C2FC1BEE7F0100E494B8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0692843F1BE5BF6800AF4678 /* PBXTargetDependency */,
+				0615C2FB1BEE7F0000E494B8 /* PBXTargetDependency */,
 			);
 			name = RemoteCam;
 			productName = RemoteCam;
@@ -901,6 +901,7 @@
 					};
 					06E1D51D1BB76EE300E07321 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 9BAHU39A66;
 					};
 					06E1D5261BB76EE400E07321 = {
 						CreatedOnToolsVersion = 7.0;
@@ -1340,15 +1341,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0615C2FB1BEE7F0000E494B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 06E1D51D1BB76EE300E07321 /* Theater */;
+			targetProxy = 0615C2FA1BEE7F0000E494B8 /* PBXContainerItemProxy */;
+		};
 		069284311BE5BF5C00AF4678 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0692841B1BE5BF5B00AF4678 /* RemoteCam */;
 			targetProxy = 069284301BE5BF5C00AF4678 /* PBXContainerItemProxy */;
-		};
-		0692843F1BE5BF6800AF4678 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 06E1D51D1BB76EE300E07321 /* Theater */;
-			targetProxy = 0692843E1BE5BF6800AF4678 /* PBXContainerItemProxy */;
 		};
 		06E1D5081BB7699800E07321 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1393,7 +1394,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1403,6 +1404,7 @@
 				INFOPLIST_FILE = RemoteCam/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.remotecamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
@@ -1417,9 +1419,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1429,8 +1431,10 @@
 				INFOPLIST_FILE = RemoteCam/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackfireapps.remotecamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8b558639-db8f-430e-b358-6af70e3e2a84";
 				SWIFT_OBJC_BRIDGING_HEADER = "RemoteCam/RemoteCam-Bridging-Header.h";
 			};
 			name = Release;
@@ -1481,7 +1485,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1527,7 +1531,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1639,7 +1643,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1663,14 +1667,14 @@
 			baseConfigurationReference = D8BD0D0628C205A2CECBE50B /* Pods-Theater.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
