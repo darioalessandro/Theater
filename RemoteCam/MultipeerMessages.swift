@@ -177,9 +177,23 @@ public class UICmd {
     }
 }
 
-public class DisconnectPeer : OnConnectToDevice{}
+public class DisconnectPeer : Actor.Message {
+    public let peer : MCPeerID
+    
+    public init(peer : MCPeerID, sender : Optional<ActorRef>) {
+        self.peer = peer
+        super.init(sender: sender)
+    }
+}
 
-public class OnConnectToDevice : ConnectToDevice {}
+public class OnConnectToDevice : Actor.Message {
+    public let peer : MCPeerID
+    
+    public init(peer : MCPeerID, sender : Optional<ActorRef>) {
+        self.peer = peer
+        super.init(sender: sender)
+    }
+}
 
 public class RemoteCmd : Actor.Message {
     
@@ -210,7 +224,7 @@ public class RemoteCmd : Actor.Message {
         }
     }
     
-    public class TakePicResp : RemoteCmd, NSCoding {
+    public class TakePicResp : Actor.Message , NSCoding {
         
         let pic : Optional<NSData>
         let error : Optional<NSError>

@@ -9,8 +9,8 @@
 import UIKit
 import BFGallery
 
-class GalleryViewController : BFGalleryViewController {
-    override func viewWillAppear(animated: Bool) {
+public class GalleryViewController : BFGalleryViewController {
+    override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Photos"
         self.view.backgroundColor = UIColor.blackColor()
@@ -19,10 +19,14 @@ class GalleryViewController : BFGalleryViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    override internal func viewDidDisappear(animated: Bool) {
+    override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
+    }
+    
+    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 }

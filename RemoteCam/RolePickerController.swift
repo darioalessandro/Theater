@@ -84,4 +84,8 @@ public class RolePickerController : UIViewController {
         self.remoteCamSession ! UICmd.ToggleConnect(sender : nil)
     }
     
+    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
 }

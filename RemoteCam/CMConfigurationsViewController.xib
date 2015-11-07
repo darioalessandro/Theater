@@ -32,6 +32,7 @@
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
         <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" textLabel="60" detailTextLabel="61" style="IBUITableViewCellStyleValue1" id="59" userLabel="remove iAds">

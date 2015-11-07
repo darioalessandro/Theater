@@ -202,6 +202,14 @@ public class MonitorViewController : iAdViewController {
         self.timerSlider.thumbTintColor = sliderColor1
     }
     
+    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    override public func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
+    
     deinit {
         self.timer.cancel()
         self.soundManager.stopPlayer()

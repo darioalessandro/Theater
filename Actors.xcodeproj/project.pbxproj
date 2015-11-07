@@ -83,7 +83,6 @@
 		0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284431BE5C0E600AF4678 /* MonitorViewController.swift */; };
 		0692844E1BE5C0E600AF4678 /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284441BE5C0E600AF4678 /* Multipeer.storyboard */; };
 		0692844F1BE5C0E600AF4678 /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284451BE5C0E600AF4678 /* MultipeerMessages.swift */; };
-		069284501BE5C0E600AF4678 /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */; };
 		069284511BE5C0E600AF4678 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284471BE5C0E600AF4678 /* Session.swift */; };
 		069284521BE5C0E600AF4678 /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284481BE5C0E600AF4678 /* RolePickerController.swift */; };
 		069284531BE5C0E600AF4678 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284491BE5C0E600AF4678 /* States.swift */; };
@@ -93,7 +92,6 @@
 		069284581BE5C18E00AF4678 /* MonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284431BE5C0E600AF4678 /* MonitorViewController.swift */; };
 		069284591BE5C18E00AF4678 /* Multipeer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 069284441BE5C0E600AF4678 /* Multipeer.storyboard */; };
 		0692845A1BE5C18E00AF4678 /* MultipeerMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284451BE5C0E600AF4678 /* MultipeerMessages.swift */; };
-		0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */; };
 		0692845C1BE5C18E00AF4678 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284471BE5C0E600AF4678 /* Session.swift */; };
 		0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284481BE5C0E600AF4678 /* RolePickerController.swift */; };
 		0692845E1BE5C18E00AF4678 /* States.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069284491BE5C0E600AF4678 /* States.swift */; };
@@ -280,7 +278,6 @@
 		069284431BE5C0E600AF4678 /* MonitorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonitorViewController.swift; sourceTree = "<group>"; };
 		069284441BE5C0E600AF4678 /* Multipeer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Multipeer.storyboard; sourceTree = "<group>"; };
 		069284451BE5C0E600AF4678 /* MultipeerMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerMessages.swift; sourceTree = "<group>"; };
-		069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhonePickerViewController.swift; sourceTree = "<group>"; };
 		069284471BE5C0E600AF4678 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		069284481BE5C0E600AF4678 /* RolePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RolePickerController.swift; sourceTree = "<group>"; };
 		069284491BE5C0E600AF4678 /* States.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = States.swift; sourceTree = "<group>"; };
@@ -536,7 +533,6 @@
 				069284421BE5C0E600AF4678 /* CameraViewController.swift */,
 				069284431BE5C0E600AF4678 /* MonitorViewController.swift */,
 				060B1E241BE710FE00077BCC /* BaseViewController.swift */,
-				069284461BE5C0E600AF4678 /* PhonePickerViewController.swift */,
 				069284481BE5C0E600AF4678 /* RolePickerController.swift */,
 				0624C0401BE8616E001CC738 /* CameraAccess.swift */,
 				06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */,
@@ -1241,7 +1237,6 @@
 				069284531BE5C0E600AF4678 /* States.swift in Sources */,
 				0650241C1BEA413900311C8A /* InAppPurchasesManager.m in Sources */,
 				0624C0411BE8616E001CC738 /* CameraAccess.swift in Sources */,
-				069284501BE5C0E600AF4678 /* PhonePickerViewController.swift in Sources */,
 				0684A2D31BE6E98A00F0B238 /* CamStates.swift in Sources */,
 				069284521BE5C0E600AF4678 /* RolePickerController.swift in Sources */,
 				0692844D1BE5C0E600AF4678 /* MonitorViewController.swift in Sources */,
@@ -1267,7 +1262,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */,
-				0692845B1BE5C18E00AF4678 /* PhonePickerViewController.swift in Sources */,
 				06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */,
 				060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */,
 				0684A2E11BE702BC00F0B238 /* CPSoundManager.m in Sources */,

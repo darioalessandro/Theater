@@ -51,11 +51,11 @@ extension RemoteCamSession {
                 switch(msg) {
                     
                 case is UICmd.ToggleFlash:
-                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    
-                    if let f = self.sendMessage([peer], msg: RemoteCmd.ToggleFlash()) as? Failure {
-                        self.this ! RemoteCmd.ToggleFlashResp(flashMode: nil, error: f.error)
-                    }
+                    ^{lobby.presentViewController(alert, animated: true, completion: {
+                        if let f = self.sendMessage([peer], msg: RemoteCmd.ToggleFlash()) as? Failure {
+                            self.this ! RemoteCmd.ToggleFlashResp(flashMode: nil, error: f.error)
+                        }
+                    })}
                     
                 case let t as RemoteCmd.ToggleFlashResp:
                     monitor ! UICmd.ToggleFlashResp(flashMode: t.flashMode, error: t.error)
@@ -105,12 +105,11 @@ extension RemoteCamSession {
                 switch(msg) {
                     
                 case is UICmd.ToggleCamera:
-                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    
-                    if let f =  self.sendMessage([peer], msg: RemoteCmd.ToggleCamera()) as? Failure {
-                        self.this ! RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: f.error)
-                    }
-                    
+                    ^{lobby.presentViewController(alert, animated: true, completion: {
+                        if let f =  self.sendMessage([peer], msg: RemoteCmd.ToggleCamera()) as? Failure {
+                            self.this ! RemoteCmd.ToggleCameraResp(flashMode: nil, camPosition: nil, error: f.error)
+                        }
+                    })}
                     
                 case let t as RemoteCmd.ToggleCameraResp:
                     monitor ! UICmd.ToggleCameraResp(flashMode: t.flashMode, camPosition: t.camPosition, error: t.error)
@@ -163,8 +162,9 @@ extension RemoteCamSession {
                     self.sendMessage([peer], msg: msg)
                     
                 case is UICmd.TakePicture:
-                    ^{lobby.presentViewController(alert, animated: true, completion: nil)}
-                    self.sendMessage([peer], msg: RemoteCmd.TakePic(sender: self.this))
+                    ^{lobby.presentViewController(alert, animated: true, completion: {
+                        self.sendMessage([peer], msg: RemoteCmd.TakePic(sender: self.this))
+                    })}
                     
                 case let picResp as RemoteCmd.TakePicResp:
                     if let imageData = picResp.pic, image = UIImage(data: imageData) {
@@ -198,6 +198,7 @@ extension RemoteCamSession {
                     self.popAndStartScanning()
                     
                 default:
+                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     print("sdfsdf")
                 }
             }

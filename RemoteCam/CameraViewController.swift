@@ -237,6 +237,13 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
                 let msg = RemoteCmd.SendFrame(data: imageData, sender: nil, fps:3, camPosition: device.position)
                 self.session ! msg
         }
+    }
     
+    override public func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
+    
+    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 }

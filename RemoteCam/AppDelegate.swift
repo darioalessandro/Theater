@@ -15,17 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         InAppPurchasesManager.sharedManager().reloadProductsWithHandler { (i, e) in }
+        application.statusBarStyle = .LightContent
         self.setCustomNavBarTheme()
         return true
     }
     
     func setCustomNavBarTheme() {
-        //UIView.appearance().backgroundColor = UIColor(red: 0.070, green: 0.130, blue: 0.260, alpha: 1)
         let shadow = NSShadow()
         shadow.shadowColor = UIColor.blackColor()
         shadow.shadowOffset = CGSizeMake(0.0, 1.0)
         
         let app = UINavigationBar.appearance()
+
         app.setBackgroundImage(UIImage(named:"blueBar"), forBarMetrics: .Default)
         let atts = [
             NSForegroundColorAttributeName : UIColor.whiteColor(),
