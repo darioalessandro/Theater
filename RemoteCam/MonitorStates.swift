@@ -12,35 +12,6 @@ import MultipeerConnectivity
 
 extension RemoteCamSession {
     
-    func monitor(peer : MCPeerID,
-        lobby : RolePickerController) -> Receive {
-            return {[unowned self] (msg : Actor.Message) in
-                switch(msg) {
-                case is RemoteCmd.OnFrame:
-                    print("ignoring frame")
-                    
-                case let m as UICmd.AddMonitor:
-                    print("adding monitor")
-                    self.become(self.states.monitorWithMonitor,
-                        state: self.monitorWithMonitor(m.sender!, peer: peer, lobby : lobby))
-                    
-                case is UICmd.UnbecomeMonitor:
-                    self.popToState(self.states.connected)
-                    
-                case let c as DisconnectPeer:
-                    if c.peer.displayName == peer.displayName {
-                        self.popAndStartScanning()
-                    }
-                    
-                case is Disconnect:
-                    self.popAndStartScanning()
-                    
-                default:
-                    self.receive(msg)
-                }
-            }
-    }
-    
     func monitorTogglingFlash(monitor : ActorRef,
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
@@ -205,7 +176,7 @@ extension RemoteCamSession {
             }
     }
     
-    func monitorWithMonitor(monitor : ActorRef,
+    func monitor(monitor : ActorRef,
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             return {[unowned self] (msg : Actor.Message) in

@@ -24,6 +24,8 @@ public class ConnectToDevice : Actor.Message {
 
 public class UICmd {
     
+    public class BecomeMonitorFailed: Actor.Message {}
+    
     public class FailedToSaveImage : Actor.Message {
         let error : NSError
         
@@ -47,8 +49,6 @@ public class UICmd {
     public class StartScanning : Actor.Message {}
     
     public class UnbecomeCamera : Actor.Message {}
-
-    public class BecomeCamera : Actor.Message {}
     
     public class ToggleConnect : Actor.Message {}
     
@@ -56,7 +56,7 @@ public class UICmd {
     
     public class BecomeMonitor : Actor.Message {}
 
-    public class AddCameraController : Actor.Message {
+    public class BecomeCamera : Actor.Message {
         let ctrl : CameraViewController
         
         public init(sender: Optional<ActorRef>, ctrl : CameraViewController) {

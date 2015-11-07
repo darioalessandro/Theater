@@ -73,7 +73,7 @@ extension RemoteCamSession {
             }
     }
     
-    func cameraWithController(peer : MCPeerID,
+    func camera(peer : MCPeerID,
         ctrl : CameraViewController,
         lobby : RolePickerController) -> Receive {
             return {[unowned self] (msg : Actor.Message) in
@@ -124,31 +124,5 @@ extension RemoteCamSession {
                 }
             }
     }
-    
-    func camera(peer : MCPeerID,
-        lobby : RolePickerController) -> Receive {
-            return {[unowned self] (msg : Actor.Message) in
-                
-                switch(msg) {
-                case let c as UICmd.AddCameraController:
-                    self.become(self.states.cameraWithController,
-                        state:self.cameraWithController(peer, ctrl: c.ctrl, lobby:lobby))
-                    
-                case is UICmd.UnbecomeCamera:
-                    self.popToState(self.states.connected)
-                    
-                case is Disconnect:
-                    self.popAndStartScanning()
-                    
-                case let c as DisconnectPeer:
-                    if (c.peer.displayName == peer.displayName) {
-                        self.popAndStartScanning()
-                    }
-                    
-                default:
-                    self.receive(msg)
-                    
-                }
-            }
-    }
+
 }

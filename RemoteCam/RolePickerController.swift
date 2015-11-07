@@ -64,20 +64,20 @@ public class RolePickerController : UIViewController {
         self.performSegueWithIdentifier(presentPhonePickerSegue, sender: self)
     }
     
-    public func showCamera() {
-        self.performSegueWithIdentifier(showCameraSegue, sender: self)
+    @IBAction public func becomeMonitor(button : UIButton) {
+        becomeMonitor()
     }
     
-    public func showRemote() {
+    public func becomeMonitor() {
         self.performSegueWithIdentifier(showRemoteSegue, sender: self)
     }
     
-    @IBAction public func becomeMonitor(button : UIButton) {
-        self.remoteCamSession ! UICmd.BecomeMonitor(sender: nil)
+    @IBAction public func becomeCamera(button : UIButton) {
+        becomeCamera()
     }
     
-    @IBAction public func becomeCamera(button : UIButton) {
-        self.remoteCamSession ! UICmd.BecomeCamera(sender: nil)
+    public func becomeCamera() {
+        self.performSegueWithIdentifier(showCameraSegue, sender: self)
     }
         
     @objc public func toggleConnect(button : UIButton) {

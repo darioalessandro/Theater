@@ -20,12 +20,15 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     public required init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
         let session : Optional<ActorRef> = AppActorSystem.shared.selectActor("RemoteCam Session")
-        session! ! UICmd.AddMonitor(sender: ref)
+        session! ! UICmd.BecomeMonitor(sender: ref)
     }
     
     override public func withCtrl(ctrl: MonitorViewController) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
+                
+            case is UICmd.BecomeMonitorFailed:
+                ^{ctrl.navigationController?.popViewControllerAnimated(true)}
                 
             case let cam as UICmd.ToggleCameraResp:
                 self.setFlashMode(ctrl, flashMode:  cam.flashMode)

@@ -51,7 +51,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupCamera()
-        session ! UICmd.AddCameraController(sender: Optional.None, ctrl: self)
+        session ! UICmd.BecomeCamera(sender: Optional.None, ctrl: self)
     }
     
     override public func viewWillAppear(animated: Bool) {

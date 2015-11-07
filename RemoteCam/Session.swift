@@ -32,21 +32,19 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
-                case is UICmd.BecomeCamera:
-                    self.become(self.states.camera, state: self.camera(peer, lobby:lobby))
-                    ^{lobby.showCamera()}
+                case let m as UICmd.BecomeCamera:
+                    self.become(self.states.camera, state: self.camera(peer, ctrl: m.ctrl, lobby: lobby))
                     self.sendMessage([peer], msg : RemoteCmd.PeerBecameCamera())
 
-                case is UICmd.BecomeMonitor:
-                    self.become(self.states.monitor, state:self.monitor(peer, lobby:lobby))
-                    ^{lobby.showRemote()}
+                case let m as UICmd.BecomeMonitor:
+                    self.become(self.states.monitor, state:self.monitor(m.sender!, peer: peer, lobby: lobby))
                     self.sendMessage([peer], msg : RemoteCmd.PeerBecameMonitor())
                 
                 case is RemoteCmd.PeerBecameCamera:
-                    self.this ! UICmd.BecomeMonitor(sender:self.this)
+                    ^{lobby.becomeMonitor()}
                 
                 case is RemoteCmd.PeerBecameMonitor:
-                    self.this ! UICmd.BecomeCamera(sender:self.this)
+                    ^{lobby.becomeCamera()}
                 
                 case is UICmd.ToggleConnect:
                     self.popAndStartScanning()
@@ -141,6 +139,13 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     
     override public func receive(msg: Actor.Message) {
         switch (msg) {
+            
+            case let m as UICmd.BecomeCamera:
+                ^{m.ctrl.navigationController?.popViewControllerAnimated(true)}
+            
+            case let m as UICmd.BecomeMonitor:
+                m.sender! ! UICmd.BecomeMonitorFailed(sender : this)
+            
             case is RemoteCmd.TakePic:
                 let l = RemoteCmd.TakePicResp(sender: this, error: self.unableToProcessError(msg))
                 self.sendMessage(self.session.connectedPeers, msg: l)
