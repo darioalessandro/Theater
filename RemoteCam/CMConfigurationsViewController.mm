@@ -18,7 +18,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData:)  name:@"AppDidBecomeActive" object:nil];
     [self setTitle:NSLocalizedString(@"Settings", nil)];
     [[[self navigationController] navigationBar] setHidden:FALSE];
-    self.tableViewCells=@[@[ self.disableiAds, self.restorePurchases], @[self.acknowledgments, self.versionCell]];
+    self.tableViewCells=@[@[ self.disableiAds, self.restorePurchases], @[self.acknowledgments, self.versionCell, self.blackFireApps, self.theaterFramework]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -75,21 +75,20 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    UITableViewCell * cell = self.tableViewCells[indexPath.section][indexPath.row];
+    return  [cell frame].size.height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
     UITableViewCell * cell= [tableView cellForRowAtIndexPath:indexPath];
     InAppPurchasesManager * manager= [InAppPurchasesManager sharedManager];
-    if([cell isEqual:self.disableiAds]){
+    if ([cell isEqual:self.disableiAds]){
         if([manager didUserBuyRemoveiAdsFeature])
             return;
-        
         if([[[cell textLabel] text] isEqualToString:NSLocalizedString(@"Tap to refresh from AppStore.", nil)]){
             [manager reloadProductsWithHandler:^(InAppPurchasesManager *purchasesManager, NSError *error) {
-                if(!error)
-                    [self fillRestoreiAdsRow];
+                if(!error) [self fillRestoreiAdsRow];
             }];
         }else{
             [manager userWantsToBuyRemoveiAdsFeature:^(InAppPurchasesManager *purchasesManager, NSError *error) {
@@ -108,8 +107,12 @@
         }
     }else if([cell isEqual:self.restorePurchases]){
         [self restoreThePurchases];
-    }else if([cell isEqual:self.acknowledgments]){
+    } else if ([cell isEqual:self.acknowledgments]) {
         [self showAcknowledgments];
+    } else if ([cell isEqual:self.blackFireApps]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://darioalessandro.com"]];
+    } else if ([cell isEqual:self.theaterFramework]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.theaterframework.com"]];
     }
 }
 

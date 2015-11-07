@@ -80,6 +80,7 @@ extension RemoteCamSession {
                 switch(msg) {
                 case let m as UICmd.ToggleCameraResp:
                     self.sendMessage([peer], msg: RemoteCmd.ToggleCameraResp(flashMode: m.flashMode, camPosition: m.camPosition, error: nil))
+                    
                 case let s as RemoteCmd.SendFrame:
                     self.sendMessage([peer], msg: s, mode: .Unreliable)
                     
