@@ -79,6 +79,11 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
                 ^{lobby.navigationItem.rightBarButtonItem?.title = lobby.states.connect}
                 
             case let w as OnConnectToDevice:
+                if let c = self.browser {
+                    c.dismissViewControllerAnimated(true, completion: {[unowned self] in
+                        self.browser = nil
+                    })
+                }
                 self.become(self.states.connected, state: self.connected(lobby, peer: w.peer))
                 self.mcAdvertiserAssistant.stop()
                 
@@ -109,19 +114,24 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         }
     }
     
+    var browser : MCBrowserViewController?
+    
     func startScanning(lobby : RolePickerController) {
         ^{lobby.navigationController?.popToViewController(lobby, animated: true)}
         ^{
             self.session = MCSession(peer: self.peerID)
             self.session.delegate = self
-            let browser = MCBrowserViewController(serviceType: self.service, session: self.session);
-            browser.delegate = self;
-            browser.minimumNumberOfPeers = 2
-            browser.maximumNumberOfPeers = 2
-            browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-            self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
-            self.mcAdvertiserAssistant.start()
-            lobby.presentViewController(browser, animated: true, completion: nil)
+            self.browser = MCBrowserViewController(serviceType: self.service, session: self.session)
+            
+            if let browser = self.browser {
+                browser.delegate = self;
+                browser.minimumNumberOfPeers = 2
+                browser.maximumNumberOfPeers = 2
+                browser.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+                self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: self.service, discoveryInfo: nil, session: self.session)
+                self.mcAdvertiserAssistant.start()
+                lobby.presentViewController(browser, animated: true, completion: nil)
+            }
         }
     }
     

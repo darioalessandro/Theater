@@ -101,6 +101,7 @@ extension RemoteCamSession {
             let alert = UIAlertController(title: "Requesting camera toggle",
                 message: Optional.None,
                 preferredStyle: .Alert)
+            
             return {[unowned self] (msg : Actor.Message) in
                 switch(msg) {
                     

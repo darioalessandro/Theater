@@ -115,6 +115,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
                     session ! UICmd.ToggleCameraResp(flashMode:(videoDevice.hasFlash) ? videoDevice.flashMode : nil, camPosition: videoDevice.position, error: nil)
                     
                     self.captureSession?.startRunning()
+                    self.rotateCameraToOrientation(UIApplication.sharedApplication().statusBarOrientation)
                 } catch let error as NSError {
                     print("error \(error)")
                 }
