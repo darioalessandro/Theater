@@ -19,6 +19,8 @@
 		0615C2F71BEE7E3900E494B8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0615C2F61BEE7E3900E494B8 /* Pods.framework */; };
 		0615C2F81BEE7F0000E494B8 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		0615C2F91BEE7F0000E494B8 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0615C3011BEED2F700E494B8 /* SyncTurnstile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0615C3001BEED2F700E494B8 /* SyncTurnstile.swift */; };
+		0615C3031BEED40F00E494B8 /* TurnstileMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
 		0624C0411BE8616E001CC738 /* CameraAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0624C0401BE8616E001CC738 /* CameraAccess.swift */; };
@@ -218,6 +220,8 @@
 		060E28551BE1A5CA00D73ACB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		060E28561BE1A5CA00D73ACB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		0615C2F61BEE7E3900E494B8 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
+		0615C3001BEED2F700E494B8 /* SyncTurnstile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncTurnstile.swift; sourceTree = "<group>"; };
+		0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnstileMessages.swift; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		0624C0401BE8616E001CC738 /* CameraAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAccess.swift; sourceTree = "<group>"; };
@@ -400,6 +404,15 @@
 				066427741BE924DD003EDD41 /* EnumExtensions.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		0615C2FF1BEECFF800E494B8 /* Turnstile */ = {
+			isa = PBXGroup;
+			children = (
+				0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */,
+				0615C3001BEED2F700E494B8 /* SyncTurnstile.swift */,
+			);
+			name = Turnstile;
 			sourceTree = "<group>";
 		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
@@ -623,6 +636,7 @@
 		06E1D4F41BB7699700E07321 /* Actors */ = {
 			isa = PBXGroup;
 			children = (
+				0615C2FF1BEECFF800E494B8 /* Turnstile */,
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
@@ -1284,10 +1298,12 @@
 				066427761BE924E9003EDD41 /* EnumExtensions.swift in Sources */,
 				0624C0421BE861C6001CC738 /* CameraAccess.swift in Sources */,
 				0692845F1BE5C18E00AF4678 /* UIImage+ImageProcessing.m in Sources */,
+				0615C3031BEED40F00E494B8 /* TurnstileMessages.swift in Sources */,
 				069468111BC45D3D00C84503 /* Bank.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
 				0684A2D61BE6E9A600F0B238 /* MonitorStates.swift in Sources */,
 				0692845C1BE5C18E00AF4678 /* Session.swift in Sources */,
+				0615C3011BEED2F700E494B8 /* SyncTurnstile.swift in Sources */,
 				0693BC851BC3405100694512 /* AccountsViewController.swift in Sources */,
 				060B1E261BE7110100077BCC /* BaseViewController.swift in Sources */,
 				0692845D1BE5C18E00AF4678 /* RolePickerController.swift in Sources */,
