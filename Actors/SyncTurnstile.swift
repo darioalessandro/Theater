@@ -22,13 +22,15 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
         super.init(context: context, ref : ref)
     }
     
-    override func withCtrl(ctrl: SyncTurnstileViewController) -> Receive {
+    override func receiveWithCtrl(ctrl: SyncTurnstileViewController) -> Receive {
         
         return {[unowned self] (msg : Message) in
             switch(msg) {
+                
                 case is PowerUp:
                     self.become(self.states.locked, state: self.locked(ctrl))
-    
+                    ^{ctrl.status.text = "Turnstile is locked"}
+                
                 default:
                     self.showAlert("not powered", ctrl: ctrl)
             }
@@ -36,11 +38,11 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
     }
     
     func locked(ctrl: SyncTurnstileViewController) -> Receive {
-        ^{ctrl.status.text = "Turnstile is locked"}
         return {[unowned self] (msg : Message) in
             switch(msg) {
             case is Coin:
                 self.become(self.states.unlocked, state: self.unlocked(ctrl))
+                ^{ctrl.status.text = "Turnstile is unlocked"}
             case is Push:
                 self.showAlert("not opening", ctrl:  ctrl)
             default:
@@ -50,14 +52,14 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
     }
     
     func unlocked(ctrl: SyncTurnstileViewController) -> Receive {
-        ^{ctrl.status.text = "Turnstile is unlocked"}
         return {[unowned self] (msg : Message) in
             switch(msg) {
             case is Coin:
                 self.showAlert("thanks, not doing anything", ctrl:  ctrl)
             case is Push:
                 self.showAlert("have a nice day!", ctrl:  ctrl)
-                self.become(self.states.locked, state: self.locked(ctrl))
+                self.unbecome()
+                ^{ctrl.status.text = "Turnstile is locked"}
             default:
                 self.receive(msg)
             }

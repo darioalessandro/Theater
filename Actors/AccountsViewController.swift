@@ -21,6 +21,7 @@ public class AccountsViewController : UIViewController {
     
     override public func viewDidLoad() {
          bank ! SetViewCtrl(ctrl: self)
+        
     }
     
     override public func viewWillDisappear(animated: Bool) {

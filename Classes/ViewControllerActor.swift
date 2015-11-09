@@ -66,11 +66,35 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
         switch(msg) {
             case let a as SetViewCtrl<A>:
                 unowned let b = a.ctrl
-                self.become(self.withCtrlState, state:self.withCtrl(b))
+                self.become(self.withCtrlState, state:self.receiveWithCtrl(b))
                 
             default:
                 self.receive(msg)
         }
+    }
+    
+    /**
+     Pop states from the statesStack until it finds name
+     - Parameter name: the state that you can to pop to.
+     */
+    
+    public override func popToState(name : String) -> Void {
+        if let (hName, _ ) = self.statesStack.head() {
+            if hName != name && hName != self.withCtrlState {
+                unbecome()
+                popToState(name)
+            }
+        } else {
+            print("unable to find state with name \(name)")
+        }
+    }
+    
+    /**
+     pop to root state
+     */
+    
+    public override func popToRoot() -> Void {
+        popToState(self.withCtrlState)
     }
     
     /**
@@ -79,7 +103,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
      - parameter ctrl : controller that was set to this Actor
     */
     
-    public func withCtrl(ctrl : A) -> Receive {
+    public func receiveWithCtrl(ctrl : A) -> Receive {
         return { (msg : Actor.Message) in }
     }
     

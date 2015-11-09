@@ -16,9 +16,12 @@ prefix operator ^ {}
  Replaces:
  
  ```
- NSOperationQueue.mainQueue().addOperationWithBlock({
+ let blockOp = NSBlockOperation({
  print("blah")
  })
+ 
+ NSOperationQueue.mainQueue().addOperations([blockOp], waitUntilFinished: true)
+ 
  ```
  
  with
@@ -30,5 +33,32 @@ prefix operator ^ {}
  */
 
 public prefix func ^ (block : (Void) -> (Void)) -> Void {
-    NSOperationQueue.mainQueue().addOperationWithBlock(block)
+    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: true)
+}
+
+prefix operator ^^ {}
+
+/**
+ Convenience operator that executes a block with type (Void) -> (Void) in the main queue and blocks until it's finished.
+ 
+ Replaces:
+ 
+
+ 
+ ```
+ NSOperationQueue.mainQueue().addOperationWithBlock({
+ print("blah")
+ })
+ ```
+ 
+ with
+ 
+ ```
+ ^^{print("blah")}
+ ```
+ 
+ */
+
+public prefix func ^^ (block : (Void) -> (Void)) -> Void {
+    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: true)
 }

@@ -23,7 +23,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
         session! ! UICmd.BecomeMonitor(sender: ref)
     }
     
-    override public func withCtrl(ctrl: MonitorViewController) -> Receive {
+    override public func receiveWithCtrl(ctrl: MonitorViewController) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
                 

@@ -99,7 +99,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         }
     }
     
-    override public func withCtrl(ctrl: RolePickerController) -> Receive {
+    override public func receiveWithCtrl(ctrl: RolePickerController) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
             case is UICmd.StartScanning:

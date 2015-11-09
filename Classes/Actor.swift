@@ -58,7 +58,7 @@ public class Actor : NSObject {
     Here we save all the actor states
     */
     
-    final private let statesStack : Stack<(String,Receive)> = Stack()
+    final let statesStack : Stack<(String,Receive)> = Stack()
     
     /**
     Each actor has it's own mailbox to process Actor.Messages.
@@ -117,7 +117,7 @@ public class Actor : NSObject {
     - Parameter name: the state that you can to pop to.
     */
     
-    final public func popToState(name : String) -> Void {
+    public func popToState(name : String) -> Void {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != name {
                 unbecome()
@@ -132,7 +132,7 @@ public class Actor : NSObject {
     pop to root state
     */
      
-    final public func popToRoot() -> Void {
+    public func popToRoot() -> Void {
         while !self.statesStack.isEmpty() {
             unbecome()
         }

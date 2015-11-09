@@ -36,7 +36,7 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
         this ! Transfer(origin: accountA, destination: accountB, sender: this, ammount: 1)
     }
     
-    public override func withCtrl(ctrl : AccountsViewController) -> Receive {
+    public override func receiveWithCtrl(ctrl : AccountsViewController) -> Receive {
         
         ^{
             ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)

@@ -11,16 +11,19 @@ import Theater
 
 class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource, UITableViewDelegate  {
     
-    let wsClient : ActorRef
+    struct States {
+        let connecting = "Connecting"
+        let connected = "Connected"
+        let disconnected = "Disconnected"
+    }
     
-    var url : Optional<NSURL> = Optional.None
+    let states = States()
+    
+    lazy var wsClient : ActorRef = self.context.actorOf(WebSocketClient)
     
     var receivedMessages : [(String, NSDate)] = [(String, NSDate)]()
     
-    required init(context: ActorSystem, ref: ActorRef) {
-        self.wsClient = context.actorOf(WebSocketClient)
-        super.init(context: context, ref: ref)
-    }
+    // MARK: UITableView related methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.receivedMessages.count
@@ -38,98 +41,111 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
         return cell
     }
     
-    func connected(ctrl : WSViewController) -> Receive {
-        
-        return {[unowned self](msg : Actor.Message) in
-            switch(msg) {
-                case let w as WebSocketClient.SendMessage:
-                    ^{
-                        self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
-                        let i = self.receivedMessages.count - 1
-                        let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
-                        ctrl.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
-                        ctrl.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-                    }
-                    self.wsClient ! WebSocketClient.SendMessage(sender: self.this, message: w.message)
-                
-                case let w as WebSocketClient.OnMessage:
-                    ^{
-                        self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
-                        let i = self.receivedMessages.count - 1
-                        let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
-                        ctrl.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
-                        ctrl.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
-                    }
-                    
-                case let w as WebSocketClient.OnDisconnect:
-                    self.onDisconnect(ctrl, msg : w)
-                    
-                default:
-                    self.receive(msg)
-            }
-        }
-    }
+    // MARK: Actor states
     
-    func onDisconnect(ctrl : WSViewController, msg : WebSocketClient.OnDisconnect) -> Void {
-        ^{
-            ctrl.title = "Disconnected"
-            ctrl.navigationItem.prompt = msg.error?.localizedDescription
-            self.unbecome()
-        }
-        
-        self.scheduleOnce(1,block: {
-            if let url = self.url {
-                self.this ! WebSocketClient.Connect(url: url, sender: self.this)
-            }
-        })
-    }
-    
-
-     override func withCtrl(ctrl : WSViewController) -> Receive {
+    override func receiveWithCtrl(ctrl : WSViewController) -> Receive {
         ^{
             ctrl.tableView.dataSource = self
             ctrl.tableView.delegate = self
         }
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
-                case let w as WebSocketClient.Connect:
-                    self.wsClient ! WebSocketClient.Connect(url: w.url, sender: self.this)
-                    self.url = w.url
-                    ^{ ctrl.title = "Connecting"}
-                    break
-                    
-                case is WebSocketClient.OnConnect:
-                    ^{
-                        ctrl.title = "Connected"
-                        ctrl.navigationItem.prompt = nil
-                        ctrl.textField.becomeFirstResponder()
-                        self.become("connected", state:self.connected(ctrl))
-                    }
-                    break
-                    
-                case is Disconnect:
-                    self.wsClient ! Disconnect(sender: self.this)
+            case is WebSocketClient.Connect:
+                self.become(self.states.disconnected, state: self.disconnected(ctrl))
+                self.this ! msg
                 
-                case let m as WebSocketClient.OnDisconnect:
+            default:
+                ctrl.tableView.dataSource = nil
+                ctrl.tableView.delegate = nil
+                self.receive(msg)
+            }
+        }
+    }
+    
+    func disconnected(ctrl : WSViewController) -> Receive {
+        return {[unowned self] (msg : Actor.Message) in
+            switch(msg) {
+            case let w as WebSocketClient.Connect:
+                self.become(self.states.connecting, state: self.connecting(ctrl, url:w.url))
+                self.wsClient ! WebSocketClient.Connect(url: w.url, sender: self.this)
+                ^{ ctrl.title = "Connecting"}
+                
+            case let m as WebSocketClient.OnDisconnect:
+                ^{ctrl.title = "Disconnected"
+                 ctrl.navigationItem.prompt = m.error?.localizedDescription}
+                
+            default:
+                self.receive(msg)
+            }
+        }
+    }
+    
+    func connecting(ctrl : WSViewController, url : NSURL) -> Receive {
+        return {[unowned self] (msg : Actor.Message) in
+            switch(msg) {
+                
+            case is WebSocketClient.OnConnect:
+                ^{ctrl.title = "Connected"
+                  ctrl.navigationItem.prompt = nil
+                  ctrl.textField.becomeFirstResponder()}
+                self.become(self.states.connected, state:self.connected(ctrl, url: url))
+                
+            case let m as WebSocketClient.OnDisconnect:
+                self.unbecome()
+                self.this ! m
+
+                self.scheduleOnce(1,block: {
+                    self.this ! WebSocketClient.Connect(url: url, sender: self.this)
+                })
+            
+            default:
+                self.receive(msg)
+            }
+        
+        }
+    }
+    
+    func connected(ctrl : WSViewController, url : NSURL) -> Receive {
+        
+        return {[unowned self](msg : Actor.Message) in
+            switch(msg) {
+                case let w as WebSocketClient.SendMessage:
+                    self.receivedMessages.append(("You: \(w.message)", NSDate.init()))
+                    let i = self.receivedMessages.count - 1
                     ^{
-                        ctrl.title = "Disconnected"
-                        ctrl.navigationItem.prompt = m.error?.localizedDescription
-                    }
+                      let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
+                      ctrl.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+                      ctrl.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)}
+                    self.wsClient ! WebSocketClient.SendMessage(sender: self.this, message: w.message)
+                
+                case let w as WebSocketClient.OnMessage:
+                    self.receivedMessages.append(("Server: \(w.message)", NSDate.init()))
+                    let i = self.receivedMessages.count - 1
+                    ^{
+                      let lastRow = NSIndexPath.init(forRow: i, inSection: 0)
+                      ctrl.tableView.insertRowsAtIndexPaths([lastRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+                      ctrl.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)}
+                    
+                case let m as WebSocketClient.OnDisconnect:
+                    self.popToState(self.states.disconnected)
+                    self.this ! m
                     self.scheduleOnce(1,block: {
-                        if let url = self.url {
-                            self.this ! WebSocketClient.Connect(url: url, sender: self.this)
-                        }
+                        self.this ! WebSocketClient.Connect(url: url, sender: self.this)
                     })
                     
                 default:
-                    ctrl.tableView.dataSource = nil
-                    ctrl.tableView.delegate = nil
                     self.receive(msg)
             }
-            self.receive(msg)
         }
     }
 
+    required init(context: ActorSystem, ref: ActorRef) {
+        super.init(context: context, ref: ref)
+    }
+    
+    /**
+    Cleanup resources, in this case, destroy the wsClient ActorRef
+    */
     
     deinit {
         self.wsClient ! Harakiri(sender: nil)
@@ -143,9 +159,11 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var send: UIButton!
     @IBOutlet weak var bottomTextField: NSLayoutConstraint!
-    var wsCtrl : ActorRef = AppActorSystem.shared.actorOf(WSRViewController.self, name:  "WSRViewController")
+    
+    let wsCtrl : ActorRef = AppActorSystem.shared.actorOf(WSRViewController.self, name:  "WSRViewController")
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         wsCtrl ! SetViewCtrl(ctrl: self)
         wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "wss://echo.websocket.org")!, sender : nil)
         self.addNotifications()
@@ -183,7 +201,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
         bottomTextField.constant = keyboardSize.height;
         self.view.setNeedsUpdateConstraints()
         
-        UIView.animateWithDuration(0.25) { () in
+        UIView.animateWithDuration(0.25) {
             self.view.layoutIfNeeded()
         }
     }
@@ -192,7 +210,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
         bottomTextField.constant = 0;
         self.view.setNeedsUpdateConstraints()
         
-        UIView.animateWithDuration(0.25) { () in
+        UIView.animateWithDuration(0.25) {
             self.view.layoutIfNeeded()
         }
     }

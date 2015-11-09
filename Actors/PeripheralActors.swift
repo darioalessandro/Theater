@@ -42,7 +42,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
         super.init(context: context, ref: ref)
     }
     
-    override public func withCtrl(ctrl : PeripheralViewController) -> Receive {
+    override public func receiveWithCtrl(ctrl : PeripheralViewController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
                 case is ToggleAdvertising:
@@ -85,7 +85,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                     }
                 
                 default :
-                    self.withCtrl(ctrl)(msg)
+                    self.receiveWithCtrl(ctrl)(msg)
             }
         }
     }
