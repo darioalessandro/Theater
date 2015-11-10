@@ -426,13 +426,13 @@
 			name = LiveDemo;
 			sourceTree = "<group>";
 		};
-		06163DFD1BF0E88900561FAF /* Demos */ = {
+		06163DFD1BF0E88900561FAF /* DemosWithNoUI */ = {
 			isa = PBXGroup;
 			children = (
 				06163DFB1BF0E30500561FAF /* PingPong.swift */,
 				06163DFE1BF0E8A800561FAF /* GreetingActor.swift */,
 			);
-			name = Demos;
+			name = DemosWithNoUI;
 			sourceTree = "<group>";
 		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
@@ -667,7 +667,7 @@
 				068EA7D91BDC5ACE00330714 /* Main.storyboard */,
 				069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */,
 				06E1D5011BB7699800E07321 /* Info.plist */,
-				06163DFD1BF0E88900561FAF /* Demos */,
+				06163DFD1BF0E88900561FAF /* DemosWithNoUI */,
 			);
 			path = Actors;
 			sourceTree = "<group>";
