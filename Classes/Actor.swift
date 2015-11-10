@@ -201,6 +201,16 @@ public class Actor : NSObject {
         self.preStart()
     }
     
+    public init(context : ActorSystem) {
+        mailbox.maxConcurrentOperationCount = 1 //serial queue
+        mailbox.underlyingQueue = dispatch_queue_create("", nil)
+        sender = Optional.None
+        self.context = context
+        self.this = ActorRef(context: context, path: ActorPath(path: ""))
+        super.init()
+        self.preStart()
+    }
+    
     deinit {
         print("killing \(self.this.path.asString)")
     }

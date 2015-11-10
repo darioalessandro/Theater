@@ -23,6 +23,9 @@
 		0615C3031BEED40F00E494B8 /* TurnstileMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */; };
 		06163DFC1BF0E30500561FAF /* PingPong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06163DFB1BF0E30500561FAF /* PingPong.swift */; };
 		06163DFF1BF0E8A800561FAF /* GreetingActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06163DFE1BF0E8A800561FAF /* GreetingActor.swift */; };
+		06163E011BF1936300561FAF /* Props.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06163E001BF1936300561FAF /* Props.swift */; };
+		06163E041BF19AD100561FAF /* NSObject+DumpClassInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */; };
+		06163E051BF19AD100561FAF /* NSObject+DumpClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */; };
 		061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */; };
 		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
 		0624C0411BE8616E001CC738 /* CameraAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0624C0401BE8616E001CC738 /* CameraAccess.swift */; };
@@ -226,6 +229,9 @@
 		0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnstileMessages.swift; sourceTree = "<group>"; };
 		06163DFB1BF0E30500561FAF /* PingPong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingPong.swift; sourceTree = "<group>"; };
 		06163DFE1BF0E8A800561FAF /* GreetingActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreetingActor.swift; sourceTree = "<group>"; };
+		06163E001BF1936300561FAF /* Props.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Props.swift; sourceTree = "<group>"; };
+		06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DumpClassInfo.h"; sourceTree = "<group>"; };
+		06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DumpClassInfo.m"; sourceTree = "<group>"; };
 		061C25431BC2D01F0049D6C9 /* AccountOps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AccountOps.swift; path = ../TheaterTests/AccountOps.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
 		0624C0401BE8616E001CC738 /* CameraAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraAccess.swift; sourceTree = "<group>"; };
@@ -472,6 +478,9 @@
 				068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */,
 				068F802B1BCB0A1A00A10D76 /* Message.swift */,
 				068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */,
+				06163E001BF1936300561FAF /* Props.swift */,
+				06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */,
+				06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -778,6 +787,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06E1D5211BB76EE300E07321 /* Theater.h in Headers */,
+				06163E041BF19AD100561FAF /* NSObject+DumpClassInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1352,6 +1362,7 @@
 			files = (
 				068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */,
 				06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */,
+				06163E051BF19AD100561FAF /* NSObject+DumpClassInfo.m in Sources */,
 				068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */,
 				068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */,
 				068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */,
@@ -1364,6 +1375,7 @@
 				068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */,
 				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
 				066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */,
+				06163E011BF1936300561FAF /* Props.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
