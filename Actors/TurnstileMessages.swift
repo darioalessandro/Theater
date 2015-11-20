@@ -8,12 +8,16 @@
 
 import Theater
 
-extension SyncTurnstileActor {
+extension CoinModule {
+    
+    class InsertCoin : Actor.Message {}
+    
+}
+
+extension MetalArm {
     
     class Push : Actor.Message {}
     
-    class Coin : Actor.Message {}
-    
-    class PowerUp : Actor.Message {}
+    class Unlock : Actor.Message {}
     
 }

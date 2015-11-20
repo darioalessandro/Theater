@@ -9,7 +9,30 @@
 import UIKit
 import Theater
 
-class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
+class CoinModule  : ViewCtrlActor<SyncTurnstileViewController> {
+    
+    required init(context: ActorSystem, ref: ActorRef) {
+        super.init(context: context, ref : ref)
+    }
+    
+    override func receiveWithCtrl(ctrl: SyncTurnstileViewController) -> Receive {
+        return withMetalArm(ctrl.metalArm, ctrl: ctrl)
+    }
+    
+    func withMetalArm(metalArm : ActorRef, ctrl: SyncTurnstileViewController) -> Receive {
+        return { [unowned self](msg : Message) in
+            switch(msg) {
+            case is InsertCoin:
+                metalArm ! MetalArm.Unlock(sender : self.this)
+            default:
+                self.receive(msg)
+            }
+        }
+    }
+    
+}
+
+class MetalArm : ViewCtrlActor<SyncTurnstileViewController> {
     
     class States {
         let locked = "locked"
@@ -23,26 +46,15 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
     }
     
     override func receiveWithCtrl(ctrl: SyncTurnstileViewController) -> Receive {
-        
-        return {[unowned self] (msg : Message) in
-            switch(msg) {
-                
-                case is PowerUp:
-                    self.become(self.states.locked, state: self.locked(ctrl))
-                    ^{ctrl.status.text = "Turnstile is locked"}
-                
-                default:
-                    self.showAlert("not powered", ctrl: ctrl)
-            }
-        }
+        return locked(ctrl)
     }
     
     func locked(ctrl: SyncTurnstileViewController) -> Receive {
+        ^{ctrl.status.text = "Turnstile is locked"}
         return {[unowned self] (msg : Message) in
             switch(msg) {
-            case is Coin:
-                self.become(self.states.unlocked, state: self.unlocked(ctrl))
-                ^{ctrl.status.text = "Turnstile is unlocked"}
+            case is Unlock:
+                self.become(self.states.unlocked, state: self.unlocked(ctrl), discardOld:true)
             case is Push:
                 self.showAlert("not opening", ctrl:  ctrl)
             default:
@@ -52,14 +64,14 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
     }
     
     func unlocked(ctrl: SyncTurnstileViewController) -> Receive {
+        ^{ctrl.status.text = "Turnstile is unlocked"}        
         return {[unowned self] (msg : Message) in
             switch(msg) {
-            case is Coin:
-                self.showAlert("thanks, not doing anything", ctrl:  ctrl)
+            case is CoinModule.InsertCoin:
+                self.showAlert("Already unlocked", ctrl:  ctrl)
             case is Push:
                 self.showAlert("have a nice day!", ctrl:  ctrl)
-                self.unbecome()
-                ^{ctrl.status.text = "Turnstile is locked"}
+                self.become(self.states.unlocked, state: self.locked(ctrl), discardOld:true)
             default:
                 self.receive(msg)
             }
@@ -78,27 +90,31 @@ class SyncTurnstileActor : ViewCtrlActor<SyncTurnstileViewController> {
 
 class SyncTurnstileViewController : UIViewController {
     
-    let turnstileActor : ActorRef = AppActorSystem.shared.actorOf(SyncTurnstileActor.self, name : "SyncTurnstileActor")
+    let coinModule : ActorRef = AppActorSystem.shared.actorOf(CoinModule.self, name : "CoinModule")
+    
+    let metalArm : ActorRef = AppActorSystem.shared.actorOf(MetalArm.self, name : "MetalArm")
     
     @IBOutlet weak var status: UILabel!
     
     @IBAction func onPush(sender: UIButton) {
-        turnstileActor ! SyncTurnstileActor.Push(sender : nil)
+        metalArm ! MetalArm.Push(sender : nil)
     }
     
     @IBAction func onInsertCoin(sender: UIButton) {
-        turnstileActor ! SyncTurnstileActor.Coin(sender : nil)
+        coinModule ! CoinModule.InsertCoin(sender : nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        turnstileActor ! SetViewCtrl(ctrl:self)
-        turnstileActor ! SyncTurnstileActor.PowerUp(sender : nil)
+        metalArm ! SetViewCtrl(ctrl:self)
+        coinModule ! SetViewCtrl(ctrl:self)
+
     }
     
     override func viewDidDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            turnstileActor ! Actor.Harakiri(sender : nil)
+            coinModule ! Actor.Harakiri(sender : nil)
+            metalArm ! Actor.Harakiri(sender : nil)
         }
     }
     

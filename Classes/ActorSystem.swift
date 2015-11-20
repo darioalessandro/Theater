@@ -89,7 +89,7 @@ public class ActorSystem  {
     - warning : this contaings a dic with all the actors that belong to the 'ActorSystem' eventually this will look more like a graph than a dic.
     */
     
-    var actors  = [String : Actor]()
+    private var actors  = [String : Actor]()
     
     /**
      

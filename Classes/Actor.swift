@@ -55,6 +55,12 @@ Which will be called when some other actor tries to ! (tell) you something
 public class Actor : NSObject {
     
     /**
+     
+     */
+    
+    private var children  = [String : ActorRef]()
+    
+    /**
     Here we save all the actor states
     */
     
@@ -92,6 +98,18 @@ public class Actor : NSObject {
     */
     
     final public func become(name : String, state : Receive) -> Void  {
+        become(name, state : state, discardOld : false)
+    }
+    
+    /**
+     Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
+     
+     - Parameter state: the new state to push
+     - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
+     */
+    
+    final public func become(name : String, state : Receive, discardOld : Bool) -> Void  {
+        if discardOld { self.statesStack.pop() }
         self.statesStack.push((name, state))
     }
     
