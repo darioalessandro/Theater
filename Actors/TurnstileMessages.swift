@@ -14,7 +14,7 @@ extension CoinModule {
     
 }
 
-extension MetalArm {
+extension Gate {
     
     class Push : Actor.Message {}
     

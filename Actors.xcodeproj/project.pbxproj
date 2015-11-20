@@ -38,6 +38,10 @@
 		0624C04B1BE8662D001CC738 /* BFDeniedAccessToCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C0491BE8662D001CC738 /* BFDeniedAccessToCameraView.xib */; };
 		0624C04D1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */; };
 		0624C04E1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */; };
+		063B265D1BFEC15E00D6DE90 /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 063B265B1BFEC15E00D6DE90 /* coin.mp3 */; };
+		063B265E1BFEC15E00D6DE90 /* turnstile.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */; };
+		063B26601BFEC37200D6DE90 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */; };
+		063B26621BFEC7C500D6DE90 /* locked.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 063B26611BFEC7C500D6DE90 /* locked.mp3 */; };
 		0650240D1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
 		0650240E1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
 		0650240F1BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */; };
@@ -240,6 +244,10 @@
 		0624C0441BE8636D001CC738 /* BFDeniedAccessToAssetsView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BFDeniedAccessToAssetsView~ipad.xib"; sourceTree = "<group>"; };
 		0624C0491BE8662D001CC738 /* BFDeniedAccessToCameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BFDeniedAccessToCameraView.xib; sourceTree = "<group>"; };
 		0624C04C1BE86636001CC738 /* BFDeniedAccessToCameraView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BFDeniedAccessToCameraView~ipad.xib"; sourceTree = "<group>"; };
+		063B265B1BFEC15E00D6DE90 /* coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coin.mp3; sourceTree = "<group>"; };
+		063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnstile.mp3; sourceTree = "<group>"; };
+		063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		063B26611BFEC7C500D6DE90 /* locked.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = locked.mp3; sourceTree = "<group>"; };
 		065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgmentsViewController.h; sourceTree = "<group>"; };
 		065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgmentsViewController.m; sourceTree = "<group>"; };
 		065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcknowledgmentsViewController.xib; sourceTree = "<group>"; };
@@ -423,6 +431,7 @@
 			children = (
 				0615C3021BEED40F00E494B8 /* TurnstileMessages.swift */,
 				0615C3001BEED2F700E494B8 /* SyncTurnstile.swift */,
+				063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */,
 			);
 			name = Turnstile;
 			sourceTree = "<group>";
@@ -676,6 +685,9 @@
 				06EEA7D51BBB730B005787AE /* BLE Button */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
+				063B265B1BFEC15E00D6DE90 /* coin.mp3 */,
+				063B26611BFEC7C500D6DE90 /* locked.mp3 */,
+				063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */,
 				068EA7D91BDC5ACE00330714 /* Main.storyboard */,
 				069183591BC75CD700BE9B5C /* Actors-Bridging-Header.h */,
 				06E1D5011BB7699800E07321 /* Info.plist */,
@@ -1024,13 +1036,16 @@
 				069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
 				065024131BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */,
+				063B265E1BFEC15E00D6DE90 /* turnstile.mp3 in Resources */,
 				060B1E161BE708F700077BCC /* Media.xcassets in Resources */,
 				06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */,
+				063B265D1BFEC15E00D6DE90 /* coin.mp3 in Resources */,
 				0624C0451BE8636D001CC738 /* BFDeniedAccessToAssetsView.xib in Resources */,
 				069284711BE5C82E00AF4678 /* Localizable.strings in Resources */,
 				069284681BE5C7DB00AF4678 /* Acknowledgments.html in Resources */,
 				06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */,
 				069284591BE5C18E00AF4678 /* Multipeer.storyboard in Resources */,
+				063B26621BFEC7C500D6DE90 /* locked.mp3 in Resources */,
 				0624C04A1BE8662D001CC738 /* BFDeniedAccessToCameraView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1327,6 +1342,7 @@
 				0692845E1BE5C18E00AF4678 /* States.swift in Sources */,
 				0693BC7B1BC33C0E00694512 /* Account.swift in Sources */,
 				0650240D1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */,
+				063B26601BFEC37200D6DE90 /* AudioPlayer.swift in Sources */,
 				0692845A1BE5C18E00AF4678 /* MultipeerMessages.swift in Sources */,
 				065024111BEA407F00311C8A /* CMConfigurationsViewController.mm in Sources */,
 				065024191BEA413900311C8A /* PurchasesRestorer.m in Sources */,
