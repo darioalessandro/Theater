@@ -94,14 +94,6 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
         }
     }
     
-    func showAlert(message : String, ctrl : UIViewController) {
-        ^{
-            let alert = UIAlertController(title: message, message:"", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "ok", style: .Default, handler: nil))
-            ctrl.presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-    
     deinit {
         self.audioPlayer ! Harakiri(sender: self.this)
     }
@@ -109,8 +101,6 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
 }
 
 class SyncTurnstileViewController : UIViewController {
-    
-    let soundManager = CPSoundManager.init()
     
     let coinModule : ActorRef = AppActorSystem.shared.actorOf(CoinModule.self)
     
@@ -130,7 +120,6 @@ class SyncTurnstileViewController : UIViewController {
         super.viewDidLoad()
         gate ! SetViewCtrl(ctrl:self)
         coinModule ! SetViewCtrl(ctrl:self)
-
     }
     
     override func viewDidDisappear(animated: Bool) {
