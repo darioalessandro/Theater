@@ -157,8 +157,8 @@ public class MonitorViewController : iAdViewController {
         self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
         
         self.presentViewController(alert, animated: true) {[unowned self] in
-            self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {[unowned self](t) -> Void in
-                ^{ alert.title = timerAlertTitle(t.timeRemaining())}
+            self.timer.startTimerWithDuration(Int(round(self.timerSlider.value)), withTickHandler: {[unowned self](t) in
+                ^^{ alert.title = timerAlertTitle(t.timeRemaining())}
                 switch(t.timeRemaining()) {
                     case let l where l > 3:
                         self.soundManager.playBeepSound(CPSoundManagerAudioTypeSlow)
@@ -168,9 +168,9 @@ public class MonitorViewController : iAdViewController {
                         break
                 }
                 }, cancelHandler: {(t) in
-                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    ^^{alert.dismissViewControllerAnimated(true, completion: nil)}
                 }, andCompletionHandler: {[unowned self] (t) in
-                    ^{alert.dismissViewControllerAnimated(true, completion: nil)}
+                    ^^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     self.session ! UICmd.TakePicture(sender: Optional.None)
                 })
         }

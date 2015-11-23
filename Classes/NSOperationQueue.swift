@@ -60,5 +60,5 @@ prefix operator ^^ {}
  */
 
 public prefix func ^^ (block : (Void) -> (Void)) -> Void {
-    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: true)
+    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: false)
 }
