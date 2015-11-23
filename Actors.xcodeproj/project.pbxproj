@@ -248,6 +248,7 @@
 		063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnstile.mp3; sourceTree = "<group>"; };
 		063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		063B26611BFEC7C500D6DE90 /* locked.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = locked.mp3; sourceTree = "<group>"; };
+		063B266A1BFED28500D6DE90 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgmentsViewController.h; sourceTree = "<group>"; };
 		065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgmentsViewController.m; sourceTree = "<group>"; };
 		065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcknowledgmentsViewController.xib; sourceTree = "<group>"; };
@@ -450,6 +451,14 @@
 				06163DFE1BF0E8A800561FAF /* GreetingActor.swift */,
 			);
 			name = DemosWithNoUI;
+			sourceTree = "<group>";
+		};
+		063B26691BFED28500D6DE90 /* PingPong */ = {
+			isa = PBXGroup;
+			children = (
+				063B266A1BFED28500D6DE90 /* main.swift */,
+			);
+			path = PingPong;
 			sourceTree = "<group>";
 		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
@@ -656,6 +665,7 @@
 				06E1D5091BB7699800E07321 /* ActorsTests */,
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06E1D52D1BB76EE400E07321 /* TheaterTests */,
+				063B26691BFED28500D6DE90 /* PingPong */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -1724,11 +1734,14 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1755,10 +1768,13 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

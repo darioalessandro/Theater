@@ -179,7 +179,7 @@ public class Actor : NSObject {
     final public func tell(msg : Actor.Message) -> Void {
         mailbox.addOperationWithBlock { () in
             self.sender = msg.sender
-            print("Tell = \(self.sender?.path.asString) \(msg) \(self.this.path.asString) ")
+            print("\(self.sender?.path.asString) told \(msg) to \(self.this.path.asString)")
             if let (name,state) : (String,Receive) = self.statesStack.head() {
                 print("Sending message to state \(name)")
                 state(msg)

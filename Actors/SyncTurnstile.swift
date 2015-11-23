@@ -27,7 +27,7 @@ class CoinModule  : ViewCtrlActor<SyncTurnstileViewController> {
             switch(msg) {
             case is InsertCoin:
                 self.audioPlayer ! AudioPlayer.PlaySound(sender: self.this, name: "coin", ext: "mp3")
-                NSThread.sleepForTimeInterval(1)
+                NSThread.sleepForTimeInterval(0.5)
                 gate ! Gate.Unlock(sender : self.this)
             default:
                 self.receive(msg)
@@ -66,7 +66,7 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
         return {[unowned self] (msg : Message) in
             switch(msg) {
             case is Unlock:
-                self.become(self.states.unlocked, state: self.unlocked(ctrl), discardOld:true)
+                self.become(self.states.unlocked, state: self.unlocked(ctrl, fares: 1), discardOld:true)
             case is Push:
                 self.audioPlayer ! AudioPlayer.PlaySound(sender: self.this, name: "locked", ext: "mp3")
             default:
@@ -75,13 +75,19 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
         }
     }
     
-    func unlocked(ctrl: SyncTurnstileViewController) -> Receive {
-        ^{ctrl.status.text = "Turnstile is unlocked"}
+    func unlocked(ctrl: SyncTurnstileViewController, fares : UInt) -> Receive {
+        ^{ctrl.status.text = "Turnstile is unlocked, fares = \(fares)"}
         return {[unowned self] (msg : Message) in
             switch(msg) {
+            case is Unlock:
+                self.become(self.states.unlocked, state: self.unlocked(ctrl, fares: fares + 1), discardOld:true)
             case is Push:
                 self.audioPlayer ! AudioPlayer.PlaySound(sender: self.this, name: "turnstile", ext: "mp3")
-                self.become(self.states.unlocked, state: self.locked(ctrl), discardOld:true)
+                if fares == 1 {
+                    self.become(self.states.locked, state: self.locked(ctrl), discardOld:true)
+                } else {
+                    self.become(self.states.unlocked, state: self.unlocked(ctrl, fares: fares - 1), discardOld:true)
+                }
             default:
                 self.receive(msg)
             }

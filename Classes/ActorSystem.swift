@@ -134,6 +134,12 @@ public class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
+        
+        //TODO: should we kill or throw an error when user wants to reuse address of actor?
+        
+        if let oldRef = self.selectActor(name) {
+            oldRef ! Actor.Harakiri(sender:nil)
+        }
         let ref = ActorRef(context:self, path:ActorPath(path:name))
         let actorInstance : Actor = clz.init(context: self, ref: ref)
         actors[name] = actorInstance

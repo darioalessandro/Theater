@@ -27,7 +27,6 @@ class Ping : Actor {
                 super.receive(msg)
         }
     }
-    
 }
 
 class Pong : Actor {
@@ -60,7 +59,7 @@ public class PingPong {
     }
     
     func kickOffGame() {
-        ping ! Ball(sender: pong)
+        pong ! Ball(sender: ping)
     }
     
 }
