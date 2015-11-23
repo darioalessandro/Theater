@@ -46,6 +46,4 @@ class GreetingActor: Actor {
             }
         }
     }
-
-    
 }
