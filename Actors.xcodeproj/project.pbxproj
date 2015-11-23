@@ -437,13 +437,6 @@
 			name = Turnstile;
 			sourceTree = "<group>";
 		};
-		06163DF91BF0E29100561FAF /* LiveDemo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = LiveDemo;
-			sourceTree = "<group>";
-		};
 		06163DFD1BF0E88900561FAF /* DemosWithNoUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,7 +651,6 @@
 		06E1D4E91BB7699700E07321 = {
 			isa = PBXGroup;
 			children = (
-				06163DF91BF0E29100561FAF /* LiveDemo */,
 				0692841D1BE5BF5B00AF4678 /* RemoteCam */,
 				069284321BE5BF5C00AF4678 /* RemoteCamTests */,
 				06E1D4F41BB7699700E07321 /* Actors */,
