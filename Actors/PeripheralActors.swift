@@ -36,7 +36,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                                                     CBAdvertisementDataLocalNameKey : "TheaterDemo",
                                                     CBAdvertisementDataServiceUUIDsKey : [BLEData().svc]]
     
-    private let peripheral : ActorRef = AppActorSystem.shared.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
+    lazy var peripheral : ActorRef = self.context.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
     
     required public init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)

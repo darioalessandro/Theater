@@ -137,6 +137,7 @@
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; };
 		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
 		06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */; };
+		06FE714B1C04063800297902 /* BLEAdvertiserWithStatesActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FE714A1C04063800297902 /* BLEAdvertiserWithStatesActor.swift */; };
 		613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; };
 		91F2378CB8D8F85607989EEF /* Pods_ActorsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F387643C93F7B5C8646D47A2 /* Pods_ActorsTests.framework */; };
 		A2A0B37A0A55DF2E27B9B443 /* Pods_RemoteCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E73981FFC950F0C950FDD1 /* Pods_RemoteCam.framework */; };
@@ -337,6 +338,7 @@
 		06EEA7DB1BBB87EE005787AE /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
 		06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = WSViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06FA4AD71BC8B8E9005608E6 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack.framework"; sourceTree = "<group>"; };
+		06FE714A1C04063800297902 /* BLEAdvertiserWithStatesActor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEAdvertiserWithStatesActor.swift; sourceTree = "<group>"; };
 		27B79A6BB7E56A401AD5A495 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheaterTests/Pods-TheaterTests.release.xcconfig"; sourceTree = "<group>"; };
 		2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheaterTests/Pods-TheaterTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,
 				06EEA7D51BBB730B005787AE /* BLE Button */,
+				06FE71491C0405F100297902 /* BLEAdvertiserWithStates */,
 				06E1D4FC1BB7699800E07321 /* Assets.xcassets */,
 				06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */,
 				063B265B1BFEC15E00D6DE90 /* coin.mp3 */,
@@ -748,6 +751,14 @@
 				06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */,
 			);
 			name = WebSockets;
+			sourceTree = "<group>";
+		};
+		06FE71491C0405F100297902 /* BLEAdvertiserWithStates */ = {
+			isa = PBXGroup;
+			children = (
+				06FE714A1C04063800297902 /* BLEAdvertiserWithStatesActor.swift */,
+			);
+			name = BLEAdvertiserWithStates;
 			sourceTree = "<group>";
 		};
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
@@ -1356,6 +1367,7 @@
 				06163DFF1BF0E8A800561FAF /* GreetingActor.swift in Sources */,
 				069468111BC45D3D00C84503 /* Bank.swift in Sources */,
 				06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */,
+				06FE714B1C04063800297902 /* BLEAdvertiserWithStatesActor.swift in Sources */,
 				0684A2D61BE6E9A600F0B238 /* MonitorStates.swift in Sources */,
 				0692845C1BE5C18E00AF4678 /* Session.swift in Sources */,
 				0615C3011BEED2F700E494B8 /* SyncTurnstile.swift in Sources */,

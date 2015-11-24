@@ -219,7 +219,7 @@ public extension BLEPeripheral {
      */
     
     public class FailedToStartAdvertising : Actor.Message {
-        let error : NSError
+        public let error : NSError
         init(sender : Optional<ActorRef>, error : NSError) {
             self.error = error
             super.init(sender: sender)
@@ -337,6 +337,12 @@ public extension BLEPeripheral {
             super.init(sender: sender)
         }
     }
+    
+    /**
+     Remove all Services
+    **/
+     
+    public class RemoveAllServices : Actor.Message {}
     
     /**
      Command to signal BLEPeripheral to update the value of a CBMutableCharacteristic in the given centrals

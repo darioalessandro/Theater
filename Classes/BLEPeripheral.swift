@@ -58,6 +58,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         super.init(context: context, ref: ref)
         self.peripheral = CBPeripheralManager(delegate: self, queue: self.mailbox.underlyingQueue)
         self.peripheral.removeAllServices()
+
     }
     
     override public func preStart() -> Void {
@@ -71,6 +72,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public override func receive(msg : Actor.Message) -> Void {
         switch(msg) {
+            case is PeripheralManagerDidUpdateState:
+                self.broadcast(msg)
+            
             case let m as AddServices:
                 if self.peripheral.state == .PoweredOn {
                     m.svcs.forEach{self.peripheral.addService($0)}
@@ -78,6 +82,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case let m as RemoveServices:
                 m.svcs.forEach{self.peripheral.removeService($0)}
+            
+            case is RemoveAllServices:
+                self.peripheral.removeAllServices()
             
         default:
             super.receive(msg)
@@ -90,6 +97,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public lazy var idle : Receive = {[unowned self] (msg : Actor.Message) in
         switch (msg) {
+            
             case let m as StartAdvertising:
                 self.peripheral.startAdvertising(m.advertisementData)
                 self.addListener(m.sender)
@@ -108,6 +116,11 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public lazy var advertising : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
+            
+            case let m as StartAdvertising:
+                self.peripheral.stopAdvertising()
+                self.peripheral.startAdvertising(m.advertisementData)
+                self.addListener(m.sender)
             
             case is DidStartAdvertising,
                  is DidReceiveWriteRequests,

@@ -150,6 +150,29 @@
                                             <segue destination="ck2-8C-Fry" kind="show" id="bfA-hq-v8b"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="tUr-LD-IfW" style="IBUITableViewCellStyleDefault" id="h3w-Bk-dgN">
+                                        <rect key="frame" x="0.0" y="284" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h3w-Bk-dgN" id="EVu-En-YR0">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="AdvertiserWithStates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tUr-LD-IfW">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <segue destination="2ED-oI-uEk" kind="show" id="g3O-Xn-pGs"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -276,6 +299,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZ6-9m-iHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="900" y="812"/>
+        </scene>
+        <!--Advertiser Ctrl-->
+        <scene sceneID="CW9-at-Fhx">
+            <objects>
+                <viewController id="2ED-oI-uEk" customClass="BLEAdvertiserCtrl" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="95k-il-RtJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="0BZ-to-Yv8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dbx-Bx-FXj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zhx-On-ruW">
+                                <rect key="frame" x="20" y="112" width="560" height="29"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="JH4-wA-pHq"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="1 Service"/>
+                                    <segment title="2 Services"/>
+                                    <segment title="3 Services"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onSegmentedControlClick:" destination="2ED-oI-uEk" eventType="valueChanged" id="Cuj-TB-dDN"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-Ib-d8X">
+                                <rect key="frame" x="20" y="153" width="560" height="89"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="89" id="MA3-1v-ilv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QnX-Ib-d8X" firstAttribute="top" secondItem="zhx-On-ruW" secondAttribute="bottom" constant="13" id="8kU-Rp-8yO"/>
+                            <constraint firstItem="zhx-On-ruW" firstAttribute="leading" secondItem="Dbx-Bx-FXj" secondAttribute="leadingMargin" id="Te9-nM-6Ji"/>
+                            <constraint firstItem="zhx-On-ruW" firstAttribute="trailing" secondItem="Dbx-Bx-FXj" secondAttribute="trailingMargin" id="dYf-6X-amC"/>
+                            <constraint firstItem="zhx-On-ruW" firstAttribute="top" secondItem="95k-il-RtJ" secondAttribute="bottom" constant="48" id="jg1-RE-uIR"/>
+                            <constraint firstItem="QnX-Ib-d8X" firstAttribute="leading" secondItem="Dbx-Bx-FXj" secondAttribute="leadingMargin" id="mOM-ai-QCr"/>
+                            <constraint firstItem="QnX-Ib-d8X" firstAttribute="trailing" secondItem="Dbx-Bx-FXj" secondAttribute="trailingMargin" id="yJ9-n5-Wna"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="segmentedControl" destination="zhx-On-ruW" id="6et-Gg-NTf"/>
+                        <outlet property="statusLabel" destination="QnX-Ib-d8X" id="b0d-q8-7gA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FIq-ah-WWV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-23" y="1029"/>
         </scene>
         <!--Multipeer-->
         <scene sceneID="Fac-Gj-fe4">
