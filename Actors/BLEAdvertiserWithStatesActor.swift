@@ -11,16 +11,35 @@ import Theater
 import CoreBluetooth
 
 extension BLEAdvertiser {
+    class Timeout : Message {
+        let uuid : NSUUID
+        
+        init(sender: Optional<ActorRef>, uuid : NSUUID) {
+            self.uuid = uuid
+            super.init(sender:sender)
+        }
+    }
+    
     class Advertise {
-        class OneSvc : Message {}
-        class TwoSvcs : Message {}
-        class ThreeSvcs : Message {}
+        class OneSvc : MessageWithButtonIndex {}
+        class TwoSvcs : MessageWithButtonIndex {}
+        class ThreeSvcs : MessageWithButtonIndex {}
+        
+        class MessageWithButtonIndex : Message {
+            let idx : NSInteger
+            
+            init(sender: Optional<ActorRef> , idx : NSInteger) {
+                self.idx = idx
+                super.init(sender : sender)
+            }
+        }
     }
     
     struct States {
         let oneSvc = "oneSvc"
         let twoSvcs = "twoSvcs"
         let threeSvcs = "threeSvcs"
+        let transitioningToState = "transitioningToState"
     }
     
     struct Services {
@@ -62,77 +81,98 @@ class BLEAdvertiser : ViewCtrlActor<BLEAdvertiserCtrl> {
     }
     
     override func receiveWithCtrl(ctrl: BLEAdvertiserCtrl) -> Receive {
+        ^{ctrl.statusLabel.text = "not advertising"}
+        return idle(ctrl)
+    }
+    
+    func idle(ctrl : BLEAdvertiserCtrl) -> Receive {
         return {[unowned self](msg : Message) in
             switch(msg) {
-                case is Advertise.OneSvc:
-                    self.become(self.states.oneSvc, state: self.oneSvc(ctrl), discardOld: true)
+            case let m as Advertise.OneSvc:
+                let svcs = self.servicesFromCBUUIDs(self.svcs.oneSvc)
+                self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.oneSvc))
+                self.become(self.states.transitioningToState, state: self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.oneSvc, finalState:{return self.oneSvc(ctrl, selectedSegment: 0)}, sendingTabIndex: m.idx))
                 
-                case is Advertise.TwoSvcs:
-                    self.become(self.states.twoSvcs, state: self.twoSvcs(ctrl), discardOld: true)
+            case let m as Advertise.TwoSvcs:
+                let svcs = self.servicesFromCBUUIDs(self.svcs.twoSvcs)
+                self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.twoSvcs))
+                let state = self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.twoSvcs, finalState: {return self.twoSvcs(ctrl, selectedSegment: 1)}, sendingTabIndex: m.idx)
+                self.become(self.states.transitioningToState, state: state)
                 
-                case is Advertise.ThreeSvcs:
-                    self.become(self.states.threeSvcs, state: self.threeSvcs(ctrl), discardOld: true)
+            case let m as Advertise.ThreeSvcs:
+                let svcs = self.servicesFromCBUUIDs(self.svcs.threeSvcs)
+                self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.threeSvcs))
+                self.become(self.states.transitioningToState, state: self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.threeSvcs, finalState:{ return self.threeSvcs(ctrl, selectedSegment: 2)}, sendingTabIndex: m.idx))
+            default:
+                self.defaultHandler(ctrl, msg: msg)
+            }
+        }
+    }
+    
+    var cmdQueue : [Message] = []
+    
+    func transitioningToState(ctrl: BLEAdvertiserCtrl, wishedServices : [CBMutableService], finalStateName : String, finalState : () -> Receive, sendingTabIndex: NSInteger) -> Receive {
+        let timeoutUUID = NSUUID()
+        self.scheduleOnce(5) {
+            self.this ! Timeout(sender:self.this, uuid:timeoutUUID)
+        }
+        return {[unowned self](msg : Message) in
+            switch(msg) {
+            case is Advertise.OneSvc,
+                 is Advertise.TwoSvcs,
+                 is Advertise.ThreeSvcs:
+                ^{
+                    ctrl.statusLabel.text = "queuing cmd"
+                }
+                self.cmdQueue.insert(msg, atIndex: 0)
+                
+                case let m as BLEPeripheral.DidStartAdvertising:
+                    if m.svcs == wishedServices {
+                        ^{ctrl.statusLabel.text = "transitioning to state \(finalStateName)"}
+                        self.become(finalStateName, state: finalState())
+                    } else {
+                        ^{  ctrl.currentSegmentedIdx = sendingTabIndex
+                            ctrl.statusLabel.text = "epic fail, back to previous state"}
+                        self.unbecome()
+                    }
+                    if let msg = self.cmdQueue.popLast() {self.this ! msg}
+                
+                case let m as BLEPeripheral.FailedToStartAdvertising:
+                    ^{  ctrl.currentSegmentedIdx = sendingTabIndex
+                        ctrl.statusLabel.text = "epic fail, back to previous state \(m.error.debugDescription)"}
+                    self.unbecome()
+                    if let msg = self.cmdQueue.popLast() {self.this ! msg}
+                
+                case let t as Timeout:
+                    if t.uuid == timeoutUUID {
+                        ^{  ctrl.currentSegmentedIdx = sendingTabIndex
+                            ctrl.statusLabel.text = "timeout, back to previous state "}
+                        self.unbecome()
+                        if let msg = self.cmdQueue.popLast() {self.this ! msg}
+                    }
+                
                 default:
-                    self.defaultHandler(ctrl, msg: msg)
+                    print("not handled, I am busy")
             }
         }
     }
     
-    func threeSvcs(ctrl: BLEAdvertiserCtrl) -> Receive {
-        peripheral ! BLEPeripheral.RemoveAllServices(sender:self.this)
-        peripheral ! BLEPeripheral.AddServices(sender: self.this, svcs: servicesFromCBUUIDs(self.svcs.threeSvcs))
-        peripheral ! BLEPeripheral.StartAdvertising(sender: this, advertisementData:self.advertisementDataWithSvcs(self.svcs.threeSvcs))
-        
-        return {[unowned self](msg : Message) in
-            switch(msg) {
-            case is Advertise.OneSvc:
-                self.become(self.states.oneSvc, state: self.oneSvc(ctrl), discardOld: true)
-                
-            case is Advertise.TwoSvcs:
-                self.become(self.states.twoSvcs, state: self.twoSvcs(ctrl), discardOld: true)
-                
-            default:
-                self.defaultHandler(ctrl, msg: msg)
-            }
-
-        }
+    func threeSvcs(ctrl: BLEAdvertiserCtrl, selectedSegment:NSInteger) -> Receive {
+        ^{ctrl.currentSegmentedIdx = selectedSegment}
+        return {self.idle(ctrl)($0)}
     }
     
-    func twoSvcs(ctrl: BLEAdvertiserCtrl) -> Receive {
-        peripheral ! BLEPeripheral.RemoveAllServices(sender:self.this)
-        peripheral ! BLEPeripheral.AddServices(sender: self.this, svcs: servicesFromCBUUIDs(self.svcs.twoSvcs))
-        peripheral ! BLEPeripheral.StartAdvertising(sender: this, advertisementData:self.advertisementDataWithSvcs(self.svcs.twoSvcs))
-        
-        return {[unowned self](msg : Message) in
-            switch(msg) {
-            case is Advertise.OneSvc:
-                self.become(self.states.oneSvc, state: self.oneSvc(ctrl), discardOld: true)
-                
-            case is Advertise.ThreeSvcs:
-                self.become(self.states.threeSvcs, state: self.threeSvcs(ctrl), discardOld: true)
-            default:
-                self.defaultHandler(ctrl, msg: msg)
-            }
-
-        }
+    func twoSvcs(ctrl: BLEAdvertiserCtrl, selectedSegment:NSInteger) -> Receive {
+        ^{ctrl.currentSegmentedIdx = selectedSegment}
+        return {self.idle(ctrl)($0)}
     }
     
-    func oneSvc(ctrl: BLEAdvertiserCtrl) -> Receive {
-        peripheral ! BLEPeripheral.RemoveAllServices(sender:self.this)
-        peripheral ! BLEPeripheral.AddServices(sender: self.this, svcs: servicesFromCBUUIDs(self.svcs.oneSvc))
-        peripheral ! BLEPeripheral.StartAdvertising(sender: this, advertisementData:self.advertisementDataWithSvcs(self.svcs.oneSvc))
-        
-        return {[unowned self](msg : Message) in
-            switch(msg) {
-            case is Advertise.TwoSvcs:
-                self.become(self.states.twoSvcs, state: self.twoSvcs(ctrl), discardOld: true)
-                
-            case is Advertise.ThreeSvcs:
-                self.become(self.states.threeSvcs, state: self.threeSvcs(ctrl), discardOld: true)
-            default:
-                self.defaultHandler(ctrl, msg: msg)
-            }
-        }
+    func oneSvc(ctrl: BLEAdvertiserCtrl, selectedSegment:NSInteger) -> Receive {
+        ^{ctrl.currentSegmentedIdx = selectedSegment}
+        return {self.idle(ctrl)($0)}
     }
     
     func defaultHandler(ctrl: BLEAdvertiserCtrl, msg: Actor.Message) {
@@ -163,14 +203,26 @@ class BLEAdvertiserCtrl : UIViewController {
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    private var oldSegmentedIdx = 0
+    
+    var currentSegmentedIdx = 0 {
+        didSet {
+            self.oldSegmentedIdx = oldValue
+            self.segmentedControl.selectedSegmentIndex = self.currentSegmentedIdx
+        }
+    }
+    
     @IBAction func onSegmentedControlClick(sender: UISegmentedControl) {
+        
+        self.currentSegmentedIdx = sender.selectedSegmentIndex
+        
         switch(sender.selectedSegmentIndex) {
             case 0:
-            bleAdvertiser ! BLEAdvertiser.Advertise.OneSvc(sender: nil)
+                bleAdvertiser ! BLEAdvertiser.Advertise.OneSvc(sender: nil, idx : self.oldSegmentedIdx)
             case 1:
-            bleAdvertiser ! BLEAdvertiser.Advertise.TwoSvcs(sender: nil)
+            bleAdvertiser ! BLEAdvertiser.Advertise.TwoSvcs(sender: nil, idx : self.oldSegmentedIdx)
             default:
-            bleAdvertiser ! BLEAdvertiser.Advertise.ThreeSvcs(sender: nil)
+            bleAdvertiser ! BLEAdvertiser.Advertise.ThreeSvcs(sender: nil, idx : self.oldSegmentedIdx)
         }
     }
     
@@ -183,7 +235,7 @@ class BLEAdvertiserCtrl : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bleAdvertiser ! SetViewCtrl(ctrl: self)
-        bleAdvertiser ! BLEAdvertiser.Advertise.OneSvc(sender: nil)
+        bleAdvertiser ! BLEAdvertiser.Advertise.OneSvc(sender: nil, idx : 0)
     }
     
 }

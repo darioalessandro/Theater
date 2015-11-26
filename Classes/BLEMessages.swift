@@ -206,7 +206,14 @@ public extension BLEPeripheral {
      Actor.Message broadcasted by BLEPeripheral when it starts advertising
     */
     
-    public class DidStartAdvertising : Actor.Message {}
+    public class DidStartAdvertising : Actor.Message {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+            self.svcs = svcs
+            super.init(sender: sender)
+        }
+    }
     
     /**
      Actor.Message broadcasted by BLEPeripheral when it stops advertising
@@ -343,6 +350,19 @@ public extension BLEPeripheral {
     **/
      
     public class RemoveAllServices : Actor.Message {}
+    
+    /**
+     Set all services
+    **/
+     
+    public class SetServices : Actor.Message {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+            self.svcs = svcs
+            super.init(sender: sender)
+        }
+    }
     
     /**
      Command to signal BLEPeripheral to update the value of a CBMutableCharacteristic in the given centrals

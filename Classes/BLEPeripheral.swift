@@ -22,6 +22,12 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     public var listeners : [ActorRef] = []
     
     /**
+     Services configured
+    */
+     
+    public var svcs : [CBMutableService] = []
+    
+    /**
      Centrals subscriptions to CBCharacteristics DB
     */
     
@@ -78,13 +84,24 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             case let m as AddServices:
                 if self.peripheral.state == .PoweredOn {
                     m.svcs.forEach{self.peripheral.addService($0)}
-            }
+                    self.svcs.appendContentsOf(m.svcs)
+                } else {
+                   //TODO: return error
+                }
+            
+            case let m as SetServices:
+                self.peripheral.removeAllServices()
+                self.svcs = []
+                m.svcs.forEach{self.peripheral.addService($0)}
+                self.svcs = m.svcs
             
             case let m as RemoveServices:
                 m.svcs.forEach{self.peripheral.removeService($0)}
+                self.svcs = self.svcs.filter({return !m.svcs.contains($0)})
             
             case is RemoveAllServices:
                 self.peripheral.removeAllServices()
+                self.svcs = []
             
         default:
             super.receive(msg)
@@ -99,6 +116,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         switch (msg) {
             
             case let m as StartAdvertising:
+                NSThread.sleepForTimeInterval(1)
                 self.peripheral.startAdvertising(m.advertisementData)
                 self.addListener(m.sender)
             
@@ -118,6 +136,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         switch (msg) {
             
             case let m as StartAdvertising:
+                NSThread.sleepForTimeInterval(1)
                 self.peripheral.stopAdvertising()
                 self.peripheral.startAdvertising(m.advertisementData)
                 self.addListener(m.sender)
@@ -135,7 +154,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is StopAdvertising:
                 self.peripheral.stopAdvertising()
-                self.peripheral.removeAllServices()
+                self.this ! RemoveAllServices(sender:nil)
                 self.unbecome()
                 self.broadcast(DidStopAdvertising(sender: self.this))
             
@@ -199,7 +218,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             this ! FailedToStartAdvertising(sender: this, error: error)
         } else {
             self.become(self.states.advertising, state: self.advertising)
-            this ! DidStartAdvertising(sender: this)
+            this ! DidStartAdvertising(sender: this, svcs: self.svcs)
         }
     }
     
