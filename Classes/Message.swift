@@ -37,6 +37,12 @@ extension Actor {
     */
 
     public class Harakiri : Message {}
+    
+    /**
+     PoisonPill is the same than Harakiri but for Akka fans, like me.
+     */
+    
+    public class PoisonPill : Message {}
 
     /**
     Convenient Message subclass which has an operationId that can be used to track a transaction or some sort of message that needs to be tracked

@@ -688,8 +688,8 @@
 		06E1D4F41BB7699700E07321 /* Actors */ = {
 			isa = PBXGroup;
 			children = (
-				060F52271C0BEF7000150FC6 /* GreetingActor */,
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
+				060F52271C0BEF7000150FC6 /* GreetingActor */,
 				0615C2FF1BEECFF800E494B8 /* Turnstile */,
 				0693BC7C1BC33C1600694512 /* Accounts */,
 				06EEA7D81BBB84E2005787AE /* WebSockets */,

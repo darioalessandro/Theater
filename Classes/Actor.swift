@@ -157,6 +157,25 @@ public class Actor : NSObject {
     }
     
     /**
+    This method handles all the system related messages, if the message is not system related, then it calls the state at the head position of the statesstack, if the stack is empty, then it calls the receive method
+    */
+     
+    final public func systemReceive(msg : Actor.Message) -> Void {
+        switch msg {
+        case is Harakiri, is PoisonPill:
+            self.context.stop(self.this)
+            
+        default :
+            if let (name,state) : (String,Receive) = self.statesStack.head() {
+                print("Sending message to state \(name)")
+                state(msg)
+            } else {
+                self.receive(msg)
+            }
+        }
+    }
+    
+    /**
     This method will be called when there's an incoming message, notice that if you push a state int the statesStack this method will not be called anymore until you pop all the states from the statesStack.
     
     - Parameter msg: the incoming message
@@ -164,9 +183,6 @@ public class Actor : NSObject {
     
     public func receive(msg : Actor.Message) -> Void {
         switch msg {
-            case is Harakiri:
-                self.context.stop(self.this)
-
             default :
                 print("message not handled \(NSStringFromClass(msg.dynamicType))")
         }
@@ -180,12 +196,7 @@ public class Actor : NSObject {
         mailbox.addOperationWithBlock { () in
             self.sender = msg.sender
             print("\(self.sender?.path.asString) told \(msg) to \(self.this.path.asString)")
-            if let (name,state) : (String,Receive) = self.statesStack.head() {
-                print("Sending message to state \(name)")
-                state(msg)
-            } else {
-                self.receive(msg)
-            }
+            self.systemReceive(msg)
         }
     }
     
