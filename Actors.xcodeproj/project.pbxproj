@@ -112,7 +112,6 @@
 		069284691BE5C7DB00AF4678 /* Acknowledgments.html in Resources */ = {isa = PBXBuildFile; fileRef = 069284671BE5C7DB00AF4678 /* Acknowledgments.html */; };
 		069284711BE5C82E00AF4678 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0692846F1BE5C82E00AF4678 /* Localizable.strings */; };
 		069284721BE5C82E00AF4678 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0692846F1BE5C82E00AF4678 /* Localizable.strings */; };
-		069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 069284701BE5C82E00AF4678 /* InfoPlist.strings */; };
 		069284741BE5C82E00AF4678 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 069284701BE5C82E00AF4678 /* InfoPlist.strings */; };
 		0693BC7A1BC33C0A00694512 /* AccountOps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25431BC2D01F0049D6C9 /* AccountOps.swift */; };
 		0693BC7B1BC33C0E00694512 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D5431BB77D3500E07321 /* Account.swift */; };
@@ -429,6 +428,14 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		060F52271C0BEF7000150FC6 /* GreetingActor */ = {
+			isa = PBXGroup;
+			children = (
+				06163DFE1BF0E8A800561FAF /* GreetingActor.swift */,
+			);
+			name = GreetingActor;
+			sourceTree = "<group>";
+		};
 		0615C2FF1BEECFF800E494B8 /* Turnstile */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,7 +450,6 @@
 			isa = PBXGroup;
 			children = (
 				06163DFB1BF0E30500561FAF /* PingPong.swift */,
-				06163DFE1BF0E8A800561FAF /* GreetingActor.swift */,
 			);
 			name = DemosWithNoUI;
 			sourceTree = "<group>";
@@ -682,6 +688,7 @@
 		06E1D4F41BB7699700E07321 /* Actors */ = {
 			isa = PBXGroup;
 			children = (
+				060F52271C0BEF7000150FC6 /* GreetingActor */,
 				06E1D4F51BB7699700E07321 /* AppDelegate.swift */,
 				0615C2FF1BEECFF800E494B8 /* Turnstile */,
 				0693BC7C1BC33C1600694512 /* Accounts */,
@@ -1046,7 +1053,6 @@
 				0624C0471BE8636D001CC738 /* BFDeniedAccessToAssetsView~ipad.xib in Resources */,
 				0684A2EA1BE704C600F0B238 /* fastBeep.aif in Resources */,
 				0650240F1BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */,
-				069284731BE5C82E00AF4678 /* InfoPlist.strings in Resources */,
 				068EA7DA1BDC5ACE00330714 /* Main.storyboard in Resources */,
 				065024131BEA407F00311C8A /* CMConfigurationsViewController.xib in Resources */,
 				063B265E1BFEC15E00D6DE90 /* turnstile.mp3 in Resources */,

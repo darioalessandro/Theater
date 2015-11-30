@@ -150,6 +150,29 @@
                                             <segue destination="ck2-8C-Fry" kind="show" id="bfA-hq-v8b"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="avQ-JC-tDc" style="IBUITableViewCellStyleDefault" id="wgd-lc-nEJ">
+                                        <rect key="frame" x="0.0" y="284" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wgd-lc-nEJ" id="8Nh-9U-945">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Greeting Actor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="avQ-JC-tDc">
+                                                    <rect key="frame" x="15" y="0.0" width="550" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <segue destination="Eyy-r0-vPB" kind="show" id="eAC-lr-boq"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -275,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZ6-9m-iHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900" y="812"/>
+            <point key="canvasLocation" x="893" y="510"/>
         </scene>
         <!--Advertiser Ctrl-->
         <scene sceneID="CW9-at-Fhx">
@@ -333,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FIq-ah-WWV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="1029"/>
+            <point key="canvasLocation" x="-295" y="1329"/>
         </scene>
         <!--Multipeer-->
         <scene sceneID="Fac-Gj-fe4">
@@ -341,7 +364,89 @@
                 <viewControllerPlaceholder storyboardName="Multipeer" id="ck2-8C-Fry" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFE-nU-OKL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="627" y="1322"/>
+            <point key="canvasLocation" x="627" y="884"/>
+        </scene>
+        <!--Greeting Actor Controller-->
+        <scene sceneID="U8k-Vn-QhC">
+            <objects>
+                <viewController id="Eyy-r0-vPB" customClass="GreetingActorController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fxv-uD-K2Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="Psf-E2-XlO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Z3-vw-NlT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nomouth" translatesAutoresizingMaskIntoConstraints="NO" id="Ohu-fI-OO8">
+                                <rect key="frame" x="180" y="158" width="240" height="240"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="6bZ-v1-frx"/>
+                                    <constraint firstAttribute="width" constant="240" id="F6a-RN-s8t"/>
+                                    <constraint firstAttribute="height" constant="240" id="qn0-Ar-SVX"/>
+                                    <constraint firstAttribute="width" constant="240" id="xu2-Cf-GXY"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="qn0-Ar-SVX"/>
+                                        <exclude reference="xu2-Cf-GXY"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sad" translatesAutoresizingMaskIntoConstraints="NO" id="52a-CO-fMf">
+                                <rect key="frame" x="260" y="294" width="80" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="iar-d9-R1r"/>
+                                    <constraint firstAttribute="height" constant="30" id="uZ3-Rt-Sdl"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ohu-fI-OO8" firstAttribute="leading" secondItem="0Z3-vw-NlT" secondAttribute="leadingMargin" constant="160" id="KhZ-kX-ww1"/>
+                            <constraint firstItem="52a-CO-fMf" firstAttribute="centerY" secondItem="0Z3-vw-NlT" secondAttribute="centerY" constant="31" id="eWj-QX-2ku"/>
+                            <constraint firstItem="Ohu-fI-OO8" firstAttribute="centerY" secondItem="0Z3-vw-NlT" secondAttribute="centerY" id="fk3-cV-wGC"/>
+                            <constraint firstItem="Ohu-fI-OO8" firstAttribute="centerX" secondItem="0Z3-vw-NlT" secondAttribute="centerX" id="oP0-Ku-dxO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ohu-fI-OO8" secondAttribute="trailing" constant="160" id="rEc-WL-Efi"/>
+                            <constraint firstItem="52a-CO-fMf" firstAttribute="centerX" secondItem="0Z3-vw-NlT" secondAttribute="centerX" id="sgG-cz-wBC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KhZ-kX-ww1"/>
+                                <exclude reference="rEc-WL-Efi"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Send Angry" id="WSU-j5-MHm">
+                            <connections>
+                                <action selector="sendAngry" destination="Eyy-r0-vPB" id="ncL-QQ-gHN"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="QHT-Du-V6h"/>
+                        <barButtonItem title="Send Greeting" id="wIb-0j-hst">
+                            <connections>
+                                <action selector="sayHi" destination="Eyy-r0-vPB" id="TOV-IA-b5N"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="GRR-kw-AkL"/>
+                        <barButtonItem title="Send Happy" id="WZI-4h-PoV">
+                            <connections>
+                                <action selector="sendHappy" destination="Eyy-r0-vPB" id="PIm-Tl-GIU"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <connections>
+                        <outlet property="mouth" destination="52a-CO-fMf" id="CyI-8I-AZ1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eOw-ZD-sDJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="893" y="1304"/>
         </scene>
         <!--Sync Turnstile View Controller-->
         <scene sceneID="DDv-RI-aQW">
@@ -433,7 +538,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7W5-HF-CaE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="891" y="-641"/>
+            <point key="canvasLocation" x="893" y="-913"/>
         </scene>
         <!--Bluetooth-->
         <scene sceneID="iZi-zl-GaV">
@@ -441,7 +546,7 @@
                 <viewControllerPlaceholder storyboardName="Bluetooth" id="IOQ-n3-Otb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o5n-56-jMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="363" y="-513"/>
+            <point key="canvasLocation" x="639" y="-553"/>
         </scene>
         <!--Web Socket-->
         <scene sceneID="0g1-Nx-5nE">
@@ -587,11 +692,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VL-XH-rwL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900" y="32"/>
+            <point key="canvasLocation" x="893" y="-168"/>
         </scene>
     </scenes>
     <resources>
         <image name="down.png" width="1000" height="1000"/>
+        <image name="nomouth" width="206" height="206"/>
+        <image name="sad" width="62" height="30"/>
         <image name="turnstile" width="600" height="768"/>
         <image name="up.png" width="1000" height="1000"/>
     </resources>
