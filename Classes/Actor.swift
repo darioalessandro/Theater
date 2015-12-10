@@ -61,7 +61,6 @@ public class Actor : NSObject {
         }else if let selected = self.children[path] {
             return selected
         } else {
-            
             let recursive = self.children.map({ (path, actor) -> Optional<Actor> in
                 return actor.actorForRef(ref)
             })
@@ -79,8 +78,10 @@ public class Actor : NSObject {
     }
     
     public func stop(actorRef : ActorRef) -> Void {
-        let path = actorRef.path.asString
-        self.children.removeValueForKey(path)
+        self.mailbox.addOperationWithBlock { () -> Void in
+            let path = actorRef.path.asString
+            self.children.removeValueForKey(path)
+        }
     }
     
     public func actorOf(clz : Actor.Type) -> ActorRef {

@@ -86,7 +86,7 @@ For convenience, we provide AppActorSystem.shared which provides a default actor
 
 public class ActorSystem  {
     
-    lazy private var supervisor : Actor? = Actor.self.init(context: self, ref: ActorRef(context: self, path: ActorPath(path: "/user")))
+    lazy private var supervisor : Actor? = Actor.self.init(context: self, ref: ActorRef(context: self, path: ActorPath(path: "\(self.name)/user")))
     
     
     /**
@@ -119,6 +119,19 @@ public class ActorSystem  {
     
     public func stop() {
         supervisor!.stop()
+        //TODO: there must be a better way to wait for all actors to die...
+        func shutdown(){
+            dispatch_after(5000, NSOperationQueue.mainQueue().underlyingQueue!) {[unowned self] () -> Void in
+                if(self.supervisor!.children.count > 0) {
+                    shutdown()
+                } else {
+                    self.supervisor = nil
+                }
+            }
+        }
+        shutdown()
+        
+        
     }
     
     /**
@@ -197,6 +210,6 @@ public class ActorSystem  {
     }
     
     deinit {
-        print("bye")
+        print("killing ActorSystem: \(name)")
     }
 }

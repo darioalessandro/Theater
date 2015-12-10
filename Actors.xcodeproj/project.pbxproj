@@ -131,6 +131,7 @@
 		06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D52E1BB76EE400E07321 /* TheaterTests.swift */; };
 		06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
 		06EEA7D41BBB7305005787AE /* BLECentralActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D31BBB7305005787AE /* BLECentralActors.swift */; };
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; };
 		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
@@ -330,6 +331,7 @@
 		06E1D5301BB76EE400E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ActorsDemo.swift; path = ../Actors/ActorsDemo.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06E1D5431BB77D3500E07321 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Account.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06E5A1F91C194100004A8D29 /* InternalActorRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalActorRef.swift; sourceTree = "<group>"; };
 		06EEA7D31BBB7305005787AE /* BLECentralActors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BLECentralActors.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06EEA7D61BBB7360005787AE /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BLEMessages.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06EEA7DB1BBB87EE005787AE /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */,
 				06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */,
 				065B722B1BFA692800C06580 /* TheOneWhoWalksTheBubblesOfSpaceTime.swift */,
+				06E5A1F91C194100004A8D29 /* InternalActorRef.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1407,6 +1410,7 @@
 				068F80371BCB0A1A00A10D76 /* Try.swift in Sources */,
 				068F80311BCB0A1A00A10D76 /* ActorSystem.swift in Sources */,
 				06631A671BDF191D00883344 /* WithListeners.swift in Sources */,
+				06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */,
 				068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */,
 				068F80341BCB0A1A00A10D76 /* Message.swift in Sources */,
 				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
