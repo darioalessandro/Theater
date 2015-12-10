@@ -26,10 +26,9 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
     weak var observationsCtrl : Optional<UITableViewController> = Optional.None
     var selectedIdentifier : Optional<String> = Optional.None
-    let central : ActorRef
+    lazy var central : ActorRef = self.actorOf(BLECentral.self, name:"BLECentral")
     
     required public init(context : ActorSystem, ref : ActorRef) {
-        self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
         self.central ! BLECentral.AddListener(sender: this)
     }

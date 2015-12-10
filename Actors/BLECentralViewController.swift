@@ -12,6 +12,8 @@ import AudioToolbox
 
 class DeviceListController: UITableViewController {
     
+    lazy var system : ActorSystem = ActorSystem(name:"PeripheralSystem")
+    
     let reactive : ActorRef = RemoteCamSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
     
     override func viewDidLoad() {

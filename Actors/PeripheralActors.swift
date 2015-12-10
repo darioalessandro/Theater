@@ -36,7 +36,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                                                     CBAdvertisementDataLocalNameKey : "TheaterDemo",
                                                     CBAdvertisementDataServiceUUIDsKey : [BLEData().svc]]
     
-    lazy var peripheral : ActorRef = self.context.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
+    lazy var peripheral : ActorRef = self.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
     
     required public init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
@@ -113,9 +113,4 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
             }
         }
     }
-    
-    deinit {
-        self.peripheral ! Harakiri(sender: this)
-    }
-    
 }
