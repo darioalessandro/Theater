@@ -79,7 +79,7 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
                 }
             }
             
-            w.sender! ! Harakiri(sender: self.this)
+            self.stop(w.sender!)
             
             case let w as OnBalanceChanged:
             ^{
