@@ -207,10 +207,11 @@ public class Actor : NSObject {
     final public func systemReceive(msg : Actor.Message) -> Void {
         switch msg {
         case is Harakiri, is PoisonPill:
-            self.children.forEach({ (path,actor) -> () in
+            self.willStop()
+            self.children.forEach({ (_,actor) in
                 actor.this ! Harakiri(sender:this)
             })
-            self.context.stop(self.this)
+            self.stop(self.this)
             
         default :
             if let (name,state) : (String,Receive) = self.statesStack.head() {
@@ -252,6 +253,14 @@ public class Actor : NSObject {
     */
      
     public func preStart() -> Void {
+        
+    }
+    
+    /**
+     Method to allow cleanup
+     */
+    
+    public func willStop() -> Void {
         
     }
     

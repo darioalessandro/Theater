@@ -26,6 +26,16 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         super.init(context: context, ref: ref)
     }
     
+    override public func willStop() {
+        if let adv = self.mcAdvertiserAssistant {
+            adv.stop()
+        }
+        self.mcAdvertiserAssistant = nil
+        self.session.delegate = nil
+        self.session = nil
+        self.browser = nil
+    }
+    
     func connected(lobby : RolePickerController,
                     peer : MCPeerID) -> Receive {
         ^{lobby.navigationItem.rightBarButtonItem?.title = lobby.states.disconnect}
