@@ -20,8 +20,6 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
         super.init(context: context, ref: ref)
     }
     
-    
-
     lazy var accountA : ActorRef = self.actorOf(Account.self, name: "AccountA")
     lazy var accountB : ActorRef = self.actorOf(Account.self, name: "AccountB")
     
