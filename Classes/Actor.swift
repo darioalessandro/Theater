@@ -62,11 +62,9 @@ public class Actor : NSObject {
             return selected
         } else {
             //TODO: this is expensive an wasteful
-            let recursive = self.children.map({ (path, actor) -> Optional<Actor> in
-                return actor.actorForRef(ref)
-            })
+            let recursiveSearch = self.children.map({return $0.1.actorForRef(ref)})
             
-            let withoutOpt = recursive.filter({return $0 != nil}).flatMap({return $0})
+            let withoutOpt = recursiveSearch.filter({return $0 != nil}).flatMap({return $0})
             
             return withoutOpt.first
         }
