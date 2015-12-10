@@ -19,7 +19,7 @@ public class PeripheralViewController : UITableViewController {
     
     @IBOutlet weak var advertisingButton: UIButton!
     
-    var peripheral : ActorRef = AppActorSystem.shared.actorOf(PeripheralActor.self, name: "PeripheralActor")
+    var peripheral : ActorRef = RemoteCamSystem.shared.actorOf(PeripheralActor.self, name: "PeripheralActor")
     
     public override func viewWillAppear(animated: Bool) {
         peripheral ! SetViewCtrl(ctrl : self)

@@ -18,6 +18,10 @@ import Theater
  
 */
 
+public class RemoteCamSystem : ActorSystem {
+    static let shared = ActorSystem(name: "RemoteCam")
+}
+
 public class RolePickerController : UIViewController {
 
     let showCameraSegue : String = "showCamera"
@@ -36,7 +40,8 @@ public class RolePickerController : UIViewController {
     @IBOutlet weak var remote: UIButton!
     @IBOutlet weak var camera: UIButton!
     
-    lazy var remoteCamSession : ActorRef = AppActorSystem.shared.actorOf(RemoteCamSession.self, name: "RemoteCam Session")
+    
+    lazy var remoteCamSession : ActorRef = RemoteCamSystem.shared.actorOf(RemoteCamSession.self, name: "RemoteCam Session")
     
     override public func viewDidLoad() {
         super.viewDidLoad()

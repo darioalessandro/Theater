@@ -19,7 +19,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
     
     let states = States()
     
-    lazy var wsClient : ActorRef = self.context.actorOf(WebSocketClient)
+    lazy var wsClient : ActorRef = self.actorOf(WebSocketClient.self, name:"WebSocketClient")
     
     var receivedMessages : [(String, NSDate)] = [(String, NSDate)]()
     
@@ -160,7 +160,9 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var send: UIButton!
     @IBOutlet weak var bottomTextField: NSLayoutConstraint!
     
-    let wsCtrl : ActorRef = AppActorSystem.shared.actorOf(WSRViewController.self, name:  "WSRViewController")
+    lazy var system : ActorSystem = ActorSystem(name:"WS")
+    
+    lazy var wsCtrl : ActorRef = self.system.actorOf(WSRViewController.self, name:  "WSRViewController")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,7 +174,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            wsCtrl ! Actor.Harakiri(sender: nil)
+            system.stop()
         }
     }
     

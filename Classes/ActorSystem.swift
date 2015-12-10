@@ -29,6 +29,8 @@ public class ActorPath {
 
 public class ActorRef {
     
+
+    
     /**
     The actor system that this ActorRef belongs to
     */
@@ -84,12 +86,8 @@ For convenience, we provide AppActorSystem.shared which provides a default actor
 
 public class ActorSystem  {
     
-    /**
-     
-    - warning : this contaings a dic with all the actors that belong to the 'ActorSystem' eventually this will look more like a graph than a dic.
-    */
+    lazy private var supervisor : Actor? = Actor.self.init(context: self, ref: ActorRef(context: self, path: ActorPath(path: "/user")))
     
-    private var actors  = [String : Actor]()
     
     /**
      
@@ -116,7 +114,11 @@ public class ActorSystem  {
     */
     
     public func stop(actorRef : ActorRef) -> Void {
-        self.actors.removeValueForKey(actorRef.path.asString)
+        supervisor!.stop(actorRef)
+    }
+    
+    public func stop() {
+        supervisor!.stop()
     }
     
     /**
@@ -134,16 +136,7 @@ public class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
-        
-        //TODO: should we kill or throw an error when user wants to reuse address of actor?
-        
-        if let oldRef = self.selectActor(name) {
-            oldRef ! Actor.Harakiri(sender:nil)
-        }
-        let ref = ActorRef(context:self, path:ActorPath(path:name))
-        let actorInstance : Actor = clz.init(context: self, ref: ref)
-        actors[name] = actorInstance
-        return ref
+        return supervisor!.actorOf(clz, name: name)
     }
     
     /**
@@ -171,7 +164,7 @@ public class ActorSystem  {
     */
     
     private func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return self.actors[ref.path.asString]
+        return self.supervisor!.actorForRef(ref)
     }
     
     /**
@@ -182,7 +175,7 @@ public class ActorSystem  {
     */
     
     public func selectActor(actorPath : String) -> Optional<ActorRef>{
-        return self.actors[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
+        return self.supervisor!.children[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
     }
     
     /**
@@ -201,5 +194,9 @@ public class ActorSystem  {
         } else {
             print("Dropped message \(msg)")
         }
+    }
+    
+    deinit {
+        print("bye")
     }
 }

@@ -61,7 +61,9 @@ class GreetingActor: ViewCtrlActor<GreetingActorController> {
 
 class GreetingActorController : UIViewController {
     
-    let greetingActor = AppActorSystem.shared.actorOf(GreetingActor.self)
+    lazy var system : ActorSystem = ActorSystem(name : "GreetingActorController")
+    
+    lazy var greetingActor : ActorRef = self.system.actorOf(GreetingActor.self, name:"GreetingActor")
     
     @IBOutlet weak var mouth : UIImageView!
     
@@ -86,7 +88,7 @@ class GreetingActorController : UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            greetingActor ! Actor.Harakiri(sender: nil)
+            system.stop()
             self.navigationController?.toolbarHidden = true
         }
     }

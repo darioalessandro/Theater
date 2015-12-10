@@ -81,7 +81,6 @@
 		068EA7E01BDC5D8800330714 /* PeripheralActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7DF1BDC5D8800330714 /* PeripheralActors.swift */; };
 		068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80271BCB0A1A00A10D76 /* Actor.swift */; };
 		068F80311BCB0A1A00A10D76 /* ActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80281BCB0A1A00A10D76 /* ActorSystem.swift */; };
-		068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */; };
 		068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802A1BCB0A1A00A10D76 /* BLECentral.swift */; };
 		068F80341BCB0A1A00A10D76 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802B1BCB0A1A00A10D76 /* Message.swift */; };
 		068F80351BCB0A1A00A10D76 /* NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */; };
@@ -283,7 +282,6 @@
 		068EA7DF1BDC5D8800330714 /* PeripheralActors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PeripheralActors.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068F80271BCB0A1A00A10D76 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Actor.swift; path = Classes/Actor.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068F80281BCB0A1A00A10D76 /* ActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ActorSystem.swift; path = Classes/ActorSystem.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppActorSystem.swift; path = Classes/AppActorSystem.swift; sourceTree = SOURCE_ROOT; };
 		068F802A1BCB0A1A00A10D76 /* BLECentral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLECentral.swift; path = Classes/BLECentral.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068F802B1BCB0A1A00A10D76 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Message.swift; path = Classes/Message.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSOperationQueue.swift; path = Classes/NSOperationQueue.swift; sourceTree = SOURCE_ROOT; };
@@ -496,7 +494,6 @@
 				06631A661BDF191D00883344 /* WithListeners.swift */,
 				068F80271BCB0A1A00A10D76 /* Actor.swift */,
 				068F80281BCB0A1A00A10D76 /* ActorSystem.swift */,
-				068F80291BCB0A1A00A10D76 /* AppActorSystem.swift */,
 				068F802B1BCB0A1A00A10D76 /* Message.swift */,
 				068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */,
 				06163E001BF1936300561FAF /* Props.swift */,
@@ -1412,7 +1409,6 @@
 				06631A671BDF191D00883344 /* WithListeners.swift in Sources */,
 				068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */,
 				068F80341BCB0A1A00A10D76 /* Message.swift in Sources */,
-				068F80321BCB0A1A00A10D76 /* AppActorSystem.swift in Sources */,
 				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
 				066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */,
 				06163E011BF1936300561FAF /* Props.swift in Sources */,

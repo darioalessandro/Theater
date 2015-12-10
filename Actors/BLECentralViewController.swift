@@ -12,7 +12,7 @@ import AudioToolbox
 
 class DeviceListController: UITableViewController {
     
-    let reactive : ActorRef = AppActorSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
+    let reactive : ActorRef = RemoteCamSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class DeviceListController: UITableViewController {
 
 class ObservationsViewController : UITableViewController {
     
-    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class ObservationsViewController : UITableViewController {
 class DeviceViewController : UITableViewController {
     
     @IBOutlet weak var stateRow: UITableViewCell!
-    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()

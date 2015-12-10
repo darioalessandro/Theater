@@ -11,10 +11,9 @@ import Theater
 
 class CoinModule  : ViewCtrlActor<SyncTurnstileViewController> {
     
-    let audioPlayer : ActorRef
+    lazy var audioPlayer : ActorRef = self.actorOf(AudioPlayer.self, name:"AudioPlayer")
     
     required init(context: ActorSystem, ref: ActorRef) {
-        self.audioPlayer = context.actorOf(AudioPlayer.self)
         super.init(context: context, ref : ref)
     }
     
@@ -35,10 +34,6 @@ class CoinModule  : ViewCtrlActor<SyncTurnstileViewController> {
         }
     }
     
-    deinit {
-        self.audioPlayer ! Harakiri(sender: self.this)
-    }
-    
 }
 
 class Gate : ViewCtrlActor<SyncTurnstileViewController> {
@@ -50,10 +45,9 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
     
     var states = States()
     
-    let audioPlayer : ActorRef
+    lazy var audioPlayer : ActorRef = self.actorOf(AudioPlayer.self, name:"AudioPlayer")
     
     required init(context: ActorSystem, ref: ActorRef) {
-        self.audioPlayer = context.actorOf(AudioPlayer.self)
         super.init(context: context, ref : ref)
     }
     
@@ -94,17 +88,15 @@ class Gate : ViewCtrlActor<SyncTurnstileViewController> {
         }
     }
     
-    deinit {
-        self.audioPlayer ! Harakiri(sender: self.this)
-    }
-    
 }
 
 class SyncTurnstileViewController : UIViewController {
     
-    let coinModule : ActorRef = AppActorSystem.shared.actorOf(CoinModule.self)
+    lazy var system : ActorSystem = ActorSystem(name : "Turnstile")
     
-    let gate : ActorRef = AppActorSystem.shared.actorOf(Gate.self)
+    lazy var coinModule : ActorRef = self.system.actorOf(CoinModule.self, name:"CoinModule")
+    
+    lazy var gate : ActorRef = self.system.actorOf(Gate.self, name: "Gate")
     
     @IBOutlet weak var status: UILabel!
     
@@ -124,10 +116,8 @@ class SyncTurnstileViewController : UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            coinModule ! Actor.Harakiri(sender : nil)
-            gate ! Actor.Harakiri(sender : nil)
+            system.stop()
         }
     }
-    
     
 }

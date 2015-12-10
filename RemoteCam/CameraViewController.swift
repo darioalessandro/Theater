@@ -18,7 +18,7 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
     
     let videoQueue : dispatch_queue_t = dispatch_queue_create("VideoQueue", DISPATCH_QUEUE_SERIAL);
     
-    lazy var remoteCamSession : ActorRef? = AppActorSystem.shared.selectActor("RemoteCam Session")
+    lazy var remoteCamSession : ActorRef? = RemoteCamSystem.shared.selectActor("RemoteCam Session")
     
     public init(delegate : AVCaptureVideoDataOutputSampleBufferDelegate) {
         super.init()
@@ -40,7 +40,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
     
     let stillImageOutput = AVCaptureStillImageOutput()
     
-    var session : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    var session : ActorRef = RemoteCamSystem.shared.selectActor("RemoteCam Session")!
     
     /**
     Default fps, it would be neat if we would adjust this based on network conditions.

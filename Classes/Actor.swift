@@ -54,11 +54,54 @@ Which will be called when some other actor tries to ! (tell) you something
 
 public class Actor : NSObject {
     
+    public func actorForRef(ref : ActorRef) -> Optional<Actor> {
+        let path = ref.path.asString
+        if path == this.path.asString {
+            return self
+        }else if let selected = self.children[path] {
+            return selected
+        } else {
+            
+            let recursive = self.children.map({ (path, actor) -> Optional<Actor> in
+                return actor.actorForRef(ref)
+            })
+            
+            let withoutOpt = recursive.filter({ (optActor) -> Bool in
+                return optActor != nil
+            }).flatMap({return $0})
+            
+            return withoutOpt.first
+        }
+    }
+
+    public func stop() {
+        this ! Harakiri(sender:nil)
+    }
+    
+    public func stop(actorRef : ActorRef) -> Void {
+        let path = actorRef.path.asString
+        self.children.removeValueForKey(path)
+    }
+    
+    public func actorOf(clz : Actor.Type) -> ActorRef {
+        return actorOf(clz, name: NSUUID.init().UUIDString)
+    }
+    
+    public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
+        
+        //TODO: should we kill or throw an error when user wants to reuse address of actor?
+        let completePath = "\(self.this.path.asString)/\(name)"
+        let ref = ActorRef(context:self.context, path:ActorPath(path:completePath))
+        let actorInstance : Actor = clz.init(context: self.context, ref: ref)
+        self.children[completePath] = actorInstance
+        return ref
+    }
+    
     /**
      
      */
     
-    private var children  = [String : ActorRef]()
+    final var children  = [String : Actor]()
     
     /**
     Here we save all the actor states
@@ -163,6 +206,9 @@ public class Actor : NSObject {
     final public func systemReceive(msg : Actor.Message) -> Void {
         switch msg {
         case is Harakiri, is PoisonPill:
+            self.children.forEach({ (path,actor) -> () in
+                actor.this ! Harakiri(sender:this)
+            })
             self.context.stop(self.this)
             
         default :

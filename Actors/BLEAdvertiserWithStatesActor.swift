@@ -197,7 +197,7 @@ class BLEAdvertiser : ViewCtrlActor<BLEAdvertiserCtrl> {
 
 class BLEAdvertiserCtrl : UIViewController {
     
-    let bleAdvertiser : ActorRef = AppActorSystem.shared.actorOf(BLEAdvertiser.self)
+    let bleAdvertiser : ActorRef = RemoteCamSystem.shared.actorOf(BLEAdvertiser.self)
     
     @IBOutlet weak var statusLabel: UILabel!
     
