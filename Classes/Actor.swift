@@ -208,7 +208,7 @@ public class Actor : NSObject {
             self.children.forEach({ (_,actor) in
                 actor.this ! Harakiri(sender:this)
             })
-            self.stop(self.this)
+            self.context.stop(self.this)
             
         default :
             if let (name,state) : (String,Receive) = self.statesStack.head() {
