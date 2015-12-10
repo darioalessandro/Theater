@@ -177,7 +177,11 @@ public class ActorSystem  {
     */
     
     private func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return self.supervisor!.actorForRef(ref)
+        if let s = self.supervisor {
+            return s.actorForRef(ref)
+        } else {
+            return nil
+        }
     }
     
     /**
