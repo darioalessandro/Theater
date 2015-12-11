@@ -96,6 +96,15 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 
+                case let m as BLEPeripheralConnection.DidDiscoverServices:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            ^{
+                                ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                            }
+                }
+
+                
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -111,6 +120,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     }
                 
                 case let m as BLEPeripheralConnection.DidDiscoverCharacteristicsForService:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                        }
+                    }
                     let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
                     })
