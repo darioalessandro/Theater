@@ -295,6 +295,15 @@ public extension BLEPeripheral {
         
     }
     
+    public class DidAddService : Actor.Message {
+        public let svc : CBService
+        
+        public init(svc : CBService, sender: Optional<ActorRef>) {
+            self.svc = svc
+            super.init(sender: sender)
+        }
+    }
+    
     /**
      Message broadcasted when BLEPeripheral receives a write request, user is responsible for responding
      */
@@ -442,6 +451,25 @@ public extension BLEPeripheralConnection {
             RSSI : NSNumber) {
                 self.error = error
                 self.RSSI = RSSI
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    /**
+    DidDiscoverNoServices
+    */
+     
+    public class DidDiscoverNoServices : Actor.Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            error : NSError?) {
+                self.error = error
                 self.peripheral = peripheral
                 super.init(sender: sender)
         }

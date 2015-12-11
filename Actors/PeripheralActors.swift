@@ -90,6 +90,18 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     func advertising(ctrl : PeripheralViewController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
+                
+                case is BLEPeripheral.DidAddService:
+                    let alert = UIAlertController(title: "did add service", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(1, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
+                
                 case is ToggleAdvertising:
                     self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
                     self.unbecome()

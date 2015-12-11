@@ -162,6 +162,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     }
+    
 
     /**
     Message receiver for the advertising state
@@ -213,6 +214,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 }
                 self.broadcast(msg)
                 self.broadcast(SubscriptionsChanged(sender: self.this, subscriptions: self.subscriptions))
+            
+            case let m as DidAddService:
+                self.broadcast(msg)
             
             default :
                 self.receive(msg)
@@ -290,6 +294,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public func peripheralManager(peripheral: CBPeripheralManager, didAddService service: CBService, error: NSError?) {
         self.svcs.append(service)
+        this ! DidAddService(svc:service, sender:this)
     }
     
     deinit {

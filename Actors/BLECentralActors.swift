@@ -97,14 +97,33 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             switch(msg) {
                 
                 case let m as BLEPeripheralConnection.DidDiscoverServices:
+                    if let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            var errorMsg : String? = nil
+                            if let error = m.error {
+                                errorMsg = error.localizedDescription
+                            } else {
+                                errorMsg = "did discover service"
+                            }
+                            let alert = UIAlertController(title: errorMsg, message: nil,                         preferredStyle: .Alert)
+
+                                ctrl.presentViewController(alert, animated:true,  completion: nil)
+                            self.scheduleOnce(1, block: {() in
+                                ^{
+                                    alert.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
+                        }
+                    }
+                    
+                case let m as BLEPeripheralConnection.DidDiscoverNoServices:
                     if let error = m.error,
                         let ctrl : UIViewController = self.deviceViewCtrl {
                             ^{
-                                ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                                ctrl.navigationItem.prompt = "error \(error)"
                             }
-                }
-
-                
+                    }
+   
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -112,7 +131,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         ^{
                         ctrl.presentViewController(alert, animated:true,  completion: nil)
                         }
-                        self.scheduleOnce(3, block: {() in
+                        self.scheduleOnce(2, block: {() in
                             ^{
                                 alert.dismissViewControllerAnimated(true, completion: nil)
                             }
