@@ -133,7 +133,6 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 switch(s.state) {
                     case .PoweredOn:
                         self.peripheral.startAdvertising(advertisementData)
-                        svcs.forEach {self.peripheral.addService($0)}
                     
                     default:
                         print("waiting")
@@ -145,6 +144,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is DidStartAdvertising:
                 self.become(self.states.advertising, state: self.advertising)
+                svcs.forEach {self.peripheral.addService($0)}
                 self.broadcast(msg)
             
             case is FailedToStartAdvertising:

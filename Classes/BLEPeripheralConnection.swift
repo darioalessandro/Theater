@@ -125,7 +125,10 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      */
     
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?){
-        print("didDiscoverServices \(peripheral.services)")
+        peripheral.services?.forEach {
+            print("didDiscoverServices \($0.UUID)")
+        }
+        
         peripheral.services?.forEach({ (service : CBService) in
             peripheral.discoverCharacteristics(nil, forService: service)
         })

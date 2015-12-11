@@ -89,7 +89,7 @@ public extension BLECentral {
         }
         
         /**
-        Actor.Message sent from BLECentral to force disconnecting all peripherals
+        Actor.Message sent from BLECentral to force disconnecting peripheral
         */
         
         public class Disconnect : Actor.Message {

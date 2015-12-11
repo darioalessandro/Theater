@@ -125,6 +125,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         ^{
                             ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
                         }
+                            //self.central ! Peripheral.Disconnect(m.peripheral, sender:self.this)
                     }
                     let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
