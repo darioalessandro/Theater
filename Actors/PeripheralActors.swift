@@ -18,7 +18,6 @@ public extension PeripheralActor {
     
     public class ToggleAdvertising : Actor.Message {}
     
-    public class ToggleService : Actor.Message {}
 }
 
 public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithListeners {
@@ -68,7 +67,10 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                     ^{ctrl.navigationItem.prompt = "\(self.CBStateToString(m.state))"}
                 
                 case is ToggleAdvertising:
-                    self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData)
+                    let svc = CBMutableService(type: BLEData().svc, primary: true)
+                    svc.characteristics = [self.onClickCharacteristic]
+                    
+                    self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData, svcs:[svc])
                     self.addListener(msg.sender)
                 
                 case is BLEPeripheral.DidStartAdvertising:
@@ -82,17 +84,6 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                 default :
                     self.receive(msg)
             }
-        }
-    }
-    
-    public override func receive(msg: Actor.Message) {
-        switch(msg) {
-            case is ToggleService:
-                let svc = CBMutableService(type: BLEData().svc, primary: true)
-                svc.characteristics = [self.onClickCharacteristic]
-                self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
-            default:
-                super.receive(msg)
         }
     }
     

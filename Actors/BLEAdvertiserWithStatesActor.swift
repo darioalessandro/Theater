@@ -90,21 +90,21 @@ class BLEAdvertiser : ViewCtrlActor<BLEAdvertiserCtrl> {
             switch(msg) {
             case let m as Advertise.OneSvc:
                 let svcs = self.servicesFromCBUUIDs(self.svcs.oneSvc)
-                self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
-                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.oneSvc))
+
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.oneSvc), svcs: svcs)
                 self.become(self.states.transitioningToState, state: self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.oneSvc, finalState:{return self.oneSvc(ctrl, selectedSegment: 0)}, sendingTabIndex: m.idx))
                 
             case let m as Advertise.TwoSvcs:
                 let svcs = self.servicesFromCBUUIDs(self.svcs.twoSvcs)
                 self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
-                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.twoSvcs))
+                //self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.twoSvcs))
                 let state = self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.twoSvcs, finalState: {return self.twoSvcs(ctrl, selectedSegment: 1)}, sendingTabIndex: m.idx)
                 self.become(self.states.transitioningToState, state: state)
                 
             case let m as Advertise.ThreeSvcs:
                 let svcs = self.servicesFromCBUUIDs(self.svcs.threeSvcs)
-                self.peripheral ! BLEPeripheral.SetServices(sender: self.this, svcs:svcs)
-                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.threeSvcs))
+
+                self.peripheral ! BLEPeripheral.StartAdvertising(sender: self.this, advertisementData:self.advertisementDataWithSvcs(self.svcs.threeSvcs), svcs:svcs)
                 self.become(self.states.transitioningToState, state: self.transitioningToState(ctrl, wishedServices: svcs, finalStateName: self.states.threeSvcs, finalState:{ return self.threeSvcs(ctrl, selectedSegment: 2)}, sendingTabIndex: m.idx))
             default:
                 self.defaultHandler(ctrl, msg: msg)

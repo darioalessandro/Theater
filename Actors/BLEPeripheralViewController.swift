@@ -19,8 +19,6 @@ public class PeripheralViewController : UITableViewController {
     
     @IBOutlet weak var advertisingButton: UIButton!
     
-    @IBOutlet weak var servicesButton: UIButton!
-    
     lazy var system : ActorSystem = ActorSystem(name:"PeripheralSystem")
     
     lazy var peripheral : ActorRef = self.system.actorOf(PeripheralActor.self, name: "PeripheralActor")
@@ -33,10 +31,6 @@ public class PeripheralViewController : UITableViewController {
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
             self.system.stop()
         }
-    }
-   
-    @IBAction func toggleService(sender: AnyObject) {
-        peripheral ! PeripheralActor.ToggleService(sender : Optional.None)
     }
     
     @IBAction func toggleAdvertising(sender: AnyObject) {

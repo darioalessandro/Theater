@@ -82,9 +82,6 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             case is PeripheralManagerDidUpdateState:
                 self.broadcast(msg)
             
-            case let m as AddServices:
-                m.svcs.forEach{self.peripheral.addService($0)}
-            
             case let m as SetServices:
                 self.peripheral.removeAllServices()
                 self.svcs = []
@@ -118,7 +115,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case let m as StartAdvertising:
                 self.peripheral.startAdvertising(m.advertisementData)
-                self.become(self.states.startingAdvertisement, state: self.startingAdvertisement(m.advertisementData))
+                self.become(self.states.startingAdvertisement, state: self.startingAdvertisement(m.advertisementData, svcs: m.svcs))
                 self.addListener(m.sender)
             
             case is FailedToStartAdvertising:
@@ -129,13 +126,15 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             }
     }
     
-    public func startingAdvertisement(advertisementData : [String : AnyObject]?) -> Receive {
+    public func startingAdvertisement(advertisementData : [String : AnyObject]?, svcs:[CBMutableService]) -> Receive {
             return {[unowned self] (msg : Actor.Message) in
         switch (msg) {
             case let s as PeripheralManagerDidUpdateState:
                 switch(s.state) {
                     case .PoweredOn:
                         self.peripheral.startAdvertising(advertisementData)
+                        svcs.forEach {self.peripheral.addService($0)}
+                    
                     default:
                         print("waiting")
                 }
@@ -190,6 +189,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is StopAdvertising:
                 self.peripheral.stopAdvertising()
+                self.svcs = []
                 self.this ! RemoveAllServices(sender:nil)
                 self.popToState(self.states.idle)
                 self.broadcast(DidStopAdvertising(sender: self.this))

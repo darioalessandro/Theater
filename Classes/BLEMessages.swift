@@ -190,7 +190,10 @@ public extension BLEPeripheral {
     public class StartAdvertising : Actor.Message {
         public let advertisementData : [String : AnyObject]?
         
-        public init(sender: Optional<ActorRef>, advertisementData : [String : AnyObject]?) {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, advertisementData : [String : AnyObject]?, svcs : [CBMutableService]) {
+            self.svcs = svcs
             self.advertisementData = advertisementData
             super.init(sender: sender)
         }
@@ -315,19 +318,6 @@ public extension BLEPeripheral {
         
         public init(sender: Optional<ActorRef>, state : CBPeripheralManagerState) {
             self.state = state
-            super.init(sender: sender)
-        }
-    }
-    
-    /**
-    Command to signal BLEPeripheral to add a CBMutableService to it's GATT
-    */
-    
-    public class AddServices : Actor.Message {
-        public let svcs : [CBMutableService]
-        
-        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
-            self.svcs = svcs
             super.init(sender: sender)
         }
     }
