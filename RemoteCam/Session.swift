@@ -30,10 +30,10 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         if let adv = self.mcAdvertiserAssistant {
             adv.stop()
         }
-        self.mcAdvertiserAssistant = nil
-        self.session.delegate = nil
-        self.session = nil
-        self.browser = nil
+        if let session = self.session {
+            session.disconnect()
+            session.delegate = nil
+        }
     }
     
     func connected(lobby : RolePickerController,
@@ -248,5 +248,4 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     public func session(session: MCSession, didReceiveCertificate certificate: [AnyObject]?, fromPeer peerID: MCPeerID, certificateHandler: (Bool) -> Void) {
             certificateHandler(true)
     }
-    
 }

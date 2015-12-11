@@ -89,7 +89,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
         switch(msg) {
             
             case let p as SetPeripheral:
-                self.become("conencted", state: self.connected(p.peripheral))
+                self.become("connected", state: self.connected(p.peripheral))
             
             default:
                 super.receive(msg)
@@ -194,6 +194,10 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     
     public func peripheral(peripheral: CBPeripheral, didWriteValueForDescriptor descriptor: CBDescriptor, error: NSError?){
         this ! DidWriteValueForDescriptor(sender: this, peripheral: peripheral, descriptor: descriptor, error: error)
+    }
+    
+    deinit {
+        print("bye")
     }
     
 }

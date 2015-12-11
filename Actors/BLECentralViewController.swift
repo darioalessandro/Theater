@@ -34,7 +34,7 @@ class DeviceListController: UITableViewController {
 
 class ObservationsViewController : UITableViewController {
     
-    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +57,7 @@ class ObservationsViewController : UITableViewController {
 class DeviceViewController : UITableViewController {
     
     @IBOutlet weak var stateRow: UITableViewCell!
-    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()

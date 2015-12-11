@@ -19,7 +19,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
     
     public required init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
-        let session : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam Session")
+        let session : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/RemoteCam Session")
         session! ! UICmd.BecomeMonitor(sender: ref)
     }
     
@@ -37,7 +37,7 @@ public class MonitorActor : ViewCtrlActor<MonitorViewController> {
                 self.setFlashMode(ctrl, flashMode:  flash.flashMode)
                 
             case is UICmd.UnbecomeMonitor:
-                let session : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam Session")
+                let session : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/RemoteCam Session")
                 session! ! msg
                 
             case let f as RemoteCmd.OnFrame:
@@ -87,7 +87,7 @@ UI for the monitor.
 
 public class MonitorViewController : iAdViewController {
     
-    let session = RemoteCamSystem.shared.selectActor("RemoteCam Session")!
+    let session = RemoteCamSystem.shared.selectActor("RemoteCam/user/RemoteCam Session")!
     
     let monitor = RemoteCamSystem.shared.actorOf(MonitorActor.self, name: "MonitorActor")
     

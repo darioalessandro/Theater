@@ -17,6 +17,8 @@ public extension PeripheralActor {
     public class OnClick : Actor.Message {}
     
     public class ToggleAdvertising : Actor.Message {}
+    
+    public class ToggleService : Actor.Message {}
 }
 
 public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithListeners {
@@ -42,13 +44,30 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
         super.init(context: context, ref: ref)
     }
     
+    func CBStateToString(state : CBPeripheralManagerState) -> String {
+        switch(state) {
+            case .Unknown:
+                return "Unknown"
+            case .Resetting:
+                return "Resetting"
+            case .Unsupported:
+                return "Unsupported"
+            case .Unauthorized:
+                return "Unauthorized"
+            case .PoweredOff:
+                return "PoweredOff"
+            case .PoweredOn:
+                return "PoweredOn"
+            }
+        }
+    
     override public func receiveWithCtrl(ctrl : PeripheralViewController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
+                case let m as BLEPeripheral.PeripheralManagerDidUpdateState:
+                    ^{ctrl.navigationItem.prompt = "\(self.CBStateToString(m.state))"}
+                
                 case is ToggleAdvertising:
-                    let svc = CBMutableService(type: BLEData().svc, primary: true)
-                    svc.characteristics = [self.onClickCharacteristic]
-                    self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
                     self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData)
                     self.addListener(msg.sender)
                 
@@ -58,10 +77,22 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                 
                 case is BLEPeripheral.DidStopAdvertising:
                     ^{ctrl.advertisingButton.setTitle("Idle", forState: .Normal)}
+            
                 
                 default :
                     self.receive(msg)
             }
+        }
+    }
+    
+    public override func receive(msg: Actor.Message) {
+        switch(msg) {
+            case is ToggleService:
+                let svc = CBMutableService(type: BLEData().svc, primary: true)
+                svc.characteristics = [self.onClickCharacteristic]
+                self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
+            default:
+                super.receive(msg)
         }
     }
     

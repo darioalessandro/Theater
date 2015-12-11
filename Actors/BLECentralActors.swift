@@ -138,7 +138,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     
                 case let m as BLECentral.Peripheral.OnDisconnect:
                     if let d = self.deviceViewCtrl {
-                        ^{d.stateRow.detailTextLabel?.text = "Disconnected"}
+                        ^{d.navigationItem.prompt = "error \(m.error?.localizedDescription)"
+                          d.stateRow.detailTextLabel?.text = "Disconnected"}
                         self.scheduleOnce(1,block: { () in
                            self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
                         })
@@ -195,7 +196,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             if let selected = self.selectedIdentifier,
                 peripherals = self.devices[selected],
                 peripheral = peripherals.first {
-                    self.central ! BLECentral.Peripheral.Connect(sender: Optional.Some(self.this), peripheral: peripheral.peripheral)
+                    self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral: peripheral.peripheral)
             }
             
         case let m as BLECentral.Peripheral.OnConnect:

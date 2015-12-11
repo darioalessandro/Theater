@@ -77,7 +77,7 @@ public extension BLECentral {
         
         public class OnDisconnect : Actor.Message {
             
-            let error : Optional<NSError>
+            public let error : Optional<NSError>
             
             public let peripheral : CBPeripheral
             
@@ -207,9 +207,9 @@ public extension BLEPeripheral {
     */
     
     public class DidStartAdvertising : Actor.Message {
-        public let svcs : [CBMutableService]
+        public let svcs : [CBService]
         
-        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+        public init(sender: Optional<ActorRef>, svcs : [CBService]) {
             self.svcs = svcs
             super.init(sender: sender)
         }

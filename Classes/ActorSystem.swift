@@ -122,9 +122,7 @@ public class ActorSystem  {
         //TODO: there must be a better way to wait for all actors to die...
         func shutdown(){
             dispatch_after(5000, NSOperationQueue.mainQueue().underlyingQueue!) {[unowned self] () -> Void in
-                if(self.supervisor!.children.count > 0) {
-                    shutdown()
-                } else {
+                if(self.supervisor!.children.count == 0) {
                     self.supervisor = nil
                 }
             }
