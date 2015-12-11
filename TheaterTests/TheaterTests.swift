@@ -65,7 +65,7 @@ public class ChrisRedfield : Actor {
         
         init(expectation : XCTestExpectation) {
             self.expectation = expectation
-            super.init(sender: Optional.None)
+            super.init(sender: nil)
         }
     }
     

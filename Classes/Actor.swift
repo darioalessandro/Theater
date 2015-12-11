@@ -276,7 +276,7 @@ public class Actor : NSObject {
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create(ref.path.asString, nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ref
         super.init()
@@ -286,7 +286,7 @@ public class Actor : NSObject {
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create("", nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
         super.init()

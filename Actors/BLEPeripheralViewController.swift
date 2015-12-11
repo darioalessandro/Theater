@@ -34,10 +34,10 @@ public class PeripheralViewController : UITableViewController {
     }
     
     @IBAction func toggleAdvertising(sender: AnyObject) {
-        peripheral ! PeripheralActor.ToggleAdvertising(sender : Optional.None)
+        peripheral ! PeripheralActor.ToggleAdvertising(sender : nil)
     }
     
     @IBAction func onClick(sender: UIButton) {
-        peripheral ! PeripheralActor.OnClick(sender : Optional.None)
+        peripheral ! PeripheralActor.OnClick(sender : nil)
     }
 }

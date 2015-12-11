@@ -16,7 +16,7 @@ extension RemoteCamSession {
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Requesting flash toggle",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             return {[unowned self] (msg : Actor.Message) in
                 switch(msg) {
@@ -70,7 +70,7 @@ extension RemoteCamSession {
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Requesting camera toggle",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             
             return {[unowned self] (msg : Actor.Message) in

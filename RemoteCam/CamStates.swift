@@ -16,7 +16,7 @@ extension RemoteCamSession {
         ctrl : CameraViewController,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Taking picture",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             
             ^{lobby.presentViewController(alert, animated: true, completion: nil)}

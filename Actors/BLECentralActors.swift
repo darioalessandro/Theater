@@ -22,10 +22,10 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     var devices : BLECentral.PeripheralObservations = BLECentral.PeripheralObservations()
     var identifiers : [String] = [String]()
-    weak var ctrl : Optional<UITableViewController> = Optional.None
-    weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
-    weak var observationsCtrl : Optional<UITableViewController> = Optional.None
-    var selectedIdentifier : Optional<String> = Optional.None
+    weak var ctrl : Optional<UITableViewController> = nil
+    weak var deviceViewCtrl : Optional<DeviceViewController> = nil
+    weak var observationsCtrl : Optional<UITableViewController> = nil
+    var selectedIdentifier : Optional<String> = nil
     lazy var central : ActorRef = self.actorOf(BLECentral.self, name:"BLECentral")
     
     required public init(context : ActorSystem, ref : ActorRef) {
@@ -173,8 +173,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             ^{ () in
                 self.observationsCtrl?.tableView.delegate = nil
                 self.observationsCtrl?.tableView.dataSource = nil
-                self.observationsCtrl = Optional.None
-                self.selectedIdentifier = Optional.None
+                self.observationsCtrl = nil
+                self.selectedIdentifier = nil
             }
             
         case let w as SetDeviceListController:

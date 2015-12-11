@@ -171,7 +171,7 @@ public class MonitorViewController : iAdViewController {
                     ^^{alert.dismissViewControllerAnimated(true, completion: nil)}
                 }, andCompletionHandler: {[unowned self] (t) in
                     ^^{alert.dismissViewControllerAnimated(true, completion: nil)}
-                    self.session ! UICmd.TakePicture(sender: Optional.None)
+                    self.session ! UICmd.TakePicture(sender: nil)
                 })
         }
     }
