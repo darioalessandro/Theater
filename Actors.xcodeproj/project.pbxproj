@@ -124,7 +124,6 @@
 		06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		06C862561C1D04C0009A89B6 /* ActorsGraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
 		06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */; };
@@ -319,7 +318,6 @@
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLECentralViewController.swift; sourceTree = "<group>"; };
 		06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
-		06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorsGraphTests.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* ActorsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActorsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4FC1BB7699800E07321 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -731,7 +729,6 @@
 			isa = PBXGroup;
 			children = (
 				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
-				06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */,
 				06E1D52E1BB76EE400E07321 /* TheaterTests.swift */,
 				06E1D5301BB76EE400E07321 /* Info.plist */,
 				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
@@ -1421,7 +1418,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06C862561C1D04C0009A89B6 /* ActorsGraphTests.swift in Sources */,
 				061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */,
 				060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */,
 				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,
