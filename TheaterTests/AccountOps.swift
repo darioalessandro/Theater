@@ -36,7 +36,7 @@ public class Deposit: BankOp {}
 
 public class PrintBalance: Actor.MessageWithOperationId {
     public init(operationId : NSUUID) {
-        super.init(sender: Optional.None, operationId : operationId)
+        super.init(sender: nil, operationId : operationId)
     }
 }
 

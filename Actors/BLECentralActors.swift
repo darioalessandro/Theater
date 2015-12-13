@@ -22,10 +22,10 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     var devices : BLECentral.PeripheralObservations = BLECentral.PeripheralObservations()
     var identifiers : [String] = [String]()
-    weak var ctrl : Optional<UITableViewController> = Optional.None
-    weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
-    weak var observationsCtrl : Optional<UITableViewController> = Optional.None
-    var selectedIdentifier : Optional<String> = Optional.None
+    weak var ctrl : Optional<UITableViewController> = nil
+    weak var deviceViewCtrl : Optional<DeviceViewController> = nil
+    weak var observationsCtrl : Optional<UITableViewController> = nil
+    var selectedIdentifier : Optional<String> = nil
     lazy var central : ActorRef = self.actorOf(BLECentral.self, name:"BLECentral")
     
     required public init(context : ActorSystem, ref : ActorRef) {
@@ -96,6 +96,15 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 
+                case let m as BLEPeripheralConnection.DidDiscoverServices:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            ^{
+                                ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                            }
+                }
+
+                
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -111,6 +120,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     }
                 
                 case let m as BLEPeripheralConnection.DidDiscoverCharacteristicsForService:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                        }
+                    }
                     let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
                     })
@@ -173,8 +188,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             ^{ () in
                 self.observationsCtrl?.tableView.delegate = nil
                 self.observationsCtrl?.tableView.dataSource = nil
-                self.observationsCtrl = Optional.None
-                self.selectedIdentifier = Optional.None
+                self.observationsCtrl = nil
+                self.selectedIdentifier = nil
             }
             
         case let w as SetDeviceListController:

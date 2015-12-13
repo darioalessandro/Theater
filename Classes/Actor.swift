@@ -101,6 +101,15 @@ public class Actor : NSObject {
     
     final var children  = [String : Actor]()
     
+    public func getChildren() -> [String: ActorRef] {
+        var newDict : [String:ActorRef] = [String : ActorRef]()
+        
+        for (k,v) in self.children {
+            newDict[k] = v.this
+        }
+        return newDict
+    }
+    
     /**
     Here we save all the actor states
     */
@@ -276,7 +285,7 @@ public class Actor : NSObject {
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create(ref.path.asString, nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ref
         super.init()
@@ -286,7 +295,7 @@ public class Actor : NSObject {
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create("", nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
         super.init()

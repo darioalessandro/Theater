@@ -7,6 +7,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 pod 'Starscream', '~> 1.0.0'
+
 def gallery
     pod 'BFGallery' , :git => "https://github.com/darioalessandro/BlackFireGallery.git", :tag => "0.1.2"
 end
@@ -16,7 +17,7 @@ def testing_pods
     pod 'Nimble', '3.0.0'
 end
 
-target 'Actors' do
+target 'ActorsDemo' do
     pod 'Starscream', '~> 1.0.0'
     gallery
 end

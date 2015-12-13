@@ -23,12 +23,12 @@ class DeviceListController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive ! BLECentral.StartScanning(services: [BLEData().svc], sender: Optional.None)
+        reactive ! BLECentral.StartScanning(services: [BLEData().svc], sender: nil)
     }
     
     deinit {
-        reactive ! BLECentral.StopScanning(sender: Optional.None)
-        reactive ! Actor.Harakiri(sender: Optional.None)
+        reactive ! BLECentral.StopScanning(sender: nil)
+        reactive ! Actor.Harakiri(sender: nil)
     }
 }
 
@@ -43,7 +43,7 @@ class ObservationsViewController : UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive! ! BLECentral.StartScanning(services: [BLEData().svc], sender: Optional.None)
+        reactive! ! BLECentral.StartScanning(services: [BLEData().svc], sender: nil)
     }
     
     internal override func viewWillDisappear(animated: Bool) {

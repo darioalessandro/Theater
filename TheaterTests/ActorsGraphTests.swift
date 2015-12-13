@@ -15,11 +15,14 @@ class ActorGraphTests: QuickSpec {
     
     override func spec() {
         
-        describe("BLEPeripheral") {
-            it("should stop when requested") {
-                expect(true)
-             //expect(system.selectActor("BLEPeripheral1")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "peripheral never died")
+        describe("Crowd test system") {
+            describe("11") {
+                it("should create a 2 level system with 3 children on each node") {
+                    print("")
+                    expect(4).to(beIdenticalTo(5))
+                }
             }
+
         }
     }
 

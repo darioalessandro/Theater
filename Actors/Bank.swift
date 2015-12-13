@@ -23,8 +23,8 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
     lazy var accountA : ActorRef = self.actorOf(Account.self, name: "AccountA")
     lazy var accountB : ActorRef = self.actorOf(Account.self, name: "AccountB")
     
-    var accountALabel : Optional<UILabel> = Optional.None
-    var accountBLabel : Optional<UILabel> = Optional.None
+    var accountALabel : Optional<UILabel> = nil
+    var accountBLabel : Optional<UILabel> = nil
     
     public var transfers : [String:(Transfer, Optional<TransferResult>)] = [String : (Transfer, Optional<TransferResult>)]()
     
@@ -60,7 +60,7 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
         switch(msg) {
             case let w as Transfer:
             if self.transfers.keys.contains(w.operationId.UUIDString) == false {
-                self.transfers[w.operationId.UUIDString] = (w,Optional.None)
+                self.transfers[w.operationId.UUIDString] = (w,nil)
                 let wireTransfer = self.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
                 wireTransfer ! w
             }
