@@ -61,7 +61,7 @@ public class Actor : NSObject {
         }else if let selected = self.children[path] {
             return selected
         } else {
-            //TODO: this is expensive an wasteful
+            //TODO: this is expensive and wasteful
             let recursiveSearch = self.children.map({return $0.1.actorForRef(ref)})
             
             let withoutOpt = recursiveSearch.filter({return $0 != nil}).flatMap({return $0})
