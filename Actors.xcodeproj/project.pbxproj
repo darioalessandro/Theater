@@ -41,6 +41,7 @@
 		063B265E1BFEC15E00D6DE90 /* turnstile.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */; };
 		063B26601BFEC37200D6DE90 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */; };
 		063B26621BFEC7C500D6DE90 /* locked.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 063B26611BFEC7C500D6DE90 /* locked.mp3 */; };
+		064BE9DA1C1D1BF300249912 /* ActorTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BE9D91C1D1BF300249912 /* ActorTree.swift */; };
 		0650240D1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
 		0650240E1BEA407F00311C8A /* AcknowledgmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */; };
 		0650240F1BEA407F00311C8A /* AcknowledgmentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */; };
@@ -251,6 +252,7 @@
 		063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnstile.mp3; sourceTree = "<group>"; };
 		063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		063B26611BFEC7C500D6DE90 /* locked.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = locked.mp3; sourceTree = "<group>"; };
+		064BE9D91C1D1BF300249912 /* ActorTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorTree.swift; sourceTree = "<group>"; };
 		065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgmentsViewController.h; sourceTree = "<group>"; };
 		065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgmentsViewController.m; sourceTree = "<group>"; };
 		065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcknowledgmentsViewController.xib; sourceTree = "<group>"; };
@@ -728,6 +730,7 @@
 		06E1D52D1BB76EE400E07321 /* TheaterTests */ = {
 			isa = PBXGroup;
 			children = (
+				064BE9D91C1D1BF300249912 /* ActorTree.swift */,
 				06E1D53F1BB76F4B00E07321 /* ActorsDemo.swift */,
 				06E1D52E1BB76EE400E07321 /* TheaterTests.swift */,
 				06E1D5301BB76EE400E07321 /* Info.plist */,
@@ -1418,6 +1421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				064BE9DA1C1D1BF300249912 /* ActorTree.swift in Sources */,
 				061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */,
 				060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */,
 				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,

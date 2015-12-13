@@ -101,7 +101,7 @@ public class Actor : NSObject {
     
     final var children  = [String : Actor]()
     
-    public func getChildren() -> [String: ActorRef] {
+    public func getChildrenActors() -> [String: ActorRef] {
         var newDict : [String:ActorRef] = [String : ActorRef]()
         
         for (k,v) in self.children {
