@@ -40,7 +40,7 @@ class ActorTree: QuickSpec {
 
         describe("ActorTree2") {
             let system  = TestActorSystem(name: "ActorTree")
-            it("Create 10 actors") {
+            it("Create 25 actors") {
                 let root = system.actorOf(ActorTreeGuy.self)
                     root ! ActorTreeGuy.CreateChildren(count:4, sender:nil)
                 
