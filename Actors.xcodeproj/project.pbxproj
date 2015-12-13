@@ -123,6 +123,7 @@
 		06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		06C862561C1D04C0009A89B6 /* ActorsGraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
 		06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */; };
@@ -248,7 +249,6 @@
 		063B265C1BFEC15E00D6DE90 /* turnstile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnstile.mp3; sourceTree = "<group>"; };
 		063B265F1BFEC37200D6DE90 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		063B26611BFEC7C500D6DE90 /* locked.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = locked.mp3; sourceTree = "<group>"; };
-		063B266A1BFED28500D6DE90 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		065024071BEA407F00311C8A /* AcknowledgmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcknowledgmentsViewController.h; sourceTree = "<group>"; };
 		065024081BEA407F00311C8A /* AcknowledgmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcknowledgmentsViewController.m; sourceTree = "<group>"; };
 		065024091BEA407F00311C8A /* AcknowledgmentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcknowledgmentsViewController.xib; sourceTree = "<group>"; };
@@ -316,6 +316,7 @@
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLECentralViewController.swift; sourceTree = "<group>"; };
 		06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActorsGraphTests.swift; sourceTree = "<group>"; };
 		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4FC1BB7699800E07321 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -452,14 +453,6 @@
 				06163DFB1BF0E30500561FAF /* PingPong.swift */,
 			);
 			name = DemosWithNoUI;
-			sourceTree = "<group>";
-		};
-		063B26691BFED28500D6DE90 /* PingPong */ = {
-			isa = PBXGroup;
-			children = (
-				063B266A1BFED28500D6DE90 /* main.swift */,
-			);
-			path = PingPong;
 			sourceTree = "<group>";
 		};
 		064CB77E1BD077DB00FEBA29 /* Bluetooth */ = {
@@ -665,7 +658,6 @@
 				06E1D5091BB7699800E07321 /* ActorsTests */,
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06E1D52D1BB76EE400E07321 /* TheaterTests */,
-				063B26691BFED28500D6DE90 /* PingPong */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -738,6 +730,7 @@
 				06E1D5301BB76EE400E07321 /* Info.plist */,
 				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
 				060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */,
+				06C862551C1D04C0009A89B6 /* ActorsGraphTests.swift */,
 			);
 			path = TheaterTests;
 			sourceTree = "<group>";
@@ -1423,6 +1416,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06C862561C1D04C0009A89B6 /* ActorsGraphTests.swift in Sources */,
 				061C25401BC2CB520049D6C9 /* ActorsDemo.swift in Sources */,
 				060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */,
 				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,
