@@ -21,8 +21,10 @@ extension WebSocketClient {
 
     public class Connect : Actor.Message {
         public let url : NSURL
+        public let headers : Dictionary<String,String>?
         
-        public init(url : NSURL, sender : ActorRef?) {
+        public init(url : NSURL, headers : Dictionary<String,String>?, sender : ActorRef?) {
+            self.headers = headers
             self.url = url
             super.init(sender: sender)
         }
@@ -158,6 +160,9 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
             self.socket = socket
             socket.delegate = self
             self.addListener(c.sender)
+            if let headers = c.headers {
+                socket.headers = headers
+            }
             socket.connect()
             
         default:
@@ -195,9 +200,9 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
     */
     
     deinit {
-        //TODO: evil hack to kill socket
-        if let state = self.statesStack.head() {
-            state.1(Disconnect(sender: nil))
+        if let socket = self.socket {
+            socket.disconnect()
+            socket.delegate = nil
         }
     }
     

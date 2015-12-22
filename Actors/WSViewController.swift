@@ -66,8 +66,8 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
             case let w as WebSocketClient.Connect:
-                self.become(self.states.connecting, state: self.connecting(ctrl, url:w.url))
-                self.wsClient ! WebSocketClient.Connect(url: w.url, sender: self.this)
+                self.become(self.states.connecting, state: self.connecting(ctrl, url:w.url,  headers : w.headers))
+                self.wsClient ! WebSocketClient.Connect(url: w.url, headers: w.headers, sender: self.this)
                 ^{ ctrl.title = "Connecting"}
                 
             case let m as WebSocketClient.OnDisconnect:
@@ -80,7 +80,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
         }
     }
     
-    func connecting(ctrl : WSViewController, url : NSURL) -> Receive {
+    func connecting(ctrl : WSViewController, url : NSURL, headers : Dictionary<String,String>?) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch(msg) {
                 
@@ -88,14 +88,14 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
                 ^{ctrl.title = "Connected"
                   ctrl.navigationItem.prompt = nil
                   ctrl.textField.becomeFirstResponder()}
-                self.become(self.states.connected, state:self.connected(ctrl, url: url))
+                self.become(self.states.connected, state:self.connected(ctrl, url: url, headers: headers))
                 
             case let m as WebSocketClient.OnDisconnect:
                 self.unbecome()
                 self.this ! m
 
                 self.scheduleOnce(1,block: {
-                    self.this ! WebSocketClient.Connect(url: url, sender: self.this)
+                    self.this ! WebSocketClient.Connect(url: url, headers: headers, sender: self.this)
                 })
             
             default:
@@ -105,7 +105,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
         }
     }
     
-    func connected(ctrl : WSViewController, url : NSURL) -> Receive {
+    func connected(ctrl : WSViewController, url : NSURL, headers : Dictionary<String,String>?) -> Receive {
         
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
@@ -130,7 +130,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
                     self.popToState(self.states.disconnected)
                     self.this ! m
                     self.scheduleOnce(1,block: {
-                        self.this ! WebSocketClient.Connect(url: url, sender: self.this)
+                        self.this ! WebSocketClient.Connect(url: url, headers : headers, sender: self.this)
                     })
                     
                 default:
@@ -167,7 +167,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         wsCtrl ! SetViewCtrl(ctrl: self)
-        wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "http://localhost:9000")!, sender : nil)
+        wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "http://localhost:9000")!, headers: ["tina":"coneja"], sender : nil)
         self.addNotifications()
         send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
     }
