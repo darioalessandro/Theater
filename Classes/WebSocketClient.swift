@@ -99,6 +99,10 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
 
     public var listeners : [ActorRef] = [ActorRef]()
     
+    public required init(context: ActorSystem, ref: ActorRef) {
+        super.init(context: context, ref:ref)
+    }
+    
     override public func preStart() {
         super.preStart()
         become("disconnected", state: disconnected)
@@ -166,7 +170,7 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
      */
     
     func connected(socket: WebSocket) -> Receive {
-        return {[unowned self](msg : Actor.Message) in
+        return {[weak self](msg : Actor.Message) in
             switch(msg) {
             case let c as SendMessage:
                 socket.writeString(c.message)
@@ -174,10 +178,14 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
             case is Disconnect:
                 socket.disconnect()
                 socket.delegate = nil
-                self.unbecome()
+                if let selfo = self {
+                    selfo.unbecome()
+                }
                 
             default:
-                self.receive(msg)
+                if let selfo = self {
+                    selfo.receive(msg)
+                }
             }
         }
     }
@@ -187,7 +195,10 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
     */
     
     deinit {
-        self.this ! Disconnect(sender: nil)
+        //TODO: evil hack to kill socket
+        if let state = self.statesStack.head() {
+            state.1(Disconnect(sender: nil))
+        }
     }
     
 }
