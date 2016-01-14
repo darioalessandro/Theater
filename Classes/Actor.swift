@@ -101,6 +101,15 @@ public class Actor : NSObject {
     
     final var children  = [String : Actor]()
     
+    public func getChildrenActors() -> [String: ActorRef] {
+        var newDict : [String:ActorRef] = [String : ActorRef]()
+        
+        for (k,v) in self.children {
+            newDict[k] = v.this
+        }
+        return newDict
+    }
+    
     /**
     Here we save all the actor states
     */
