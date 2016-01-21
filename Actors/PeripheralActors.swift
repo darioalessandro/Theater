@@ -24,7 +24,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     
     public var listeners : [ActorRef] = []
     
-    var onClickCharacteristic = CBMutableCharacteristic(type:  BLEData().characteristic, properties: [.Read , .Notify], value: nil, permissions: [.Readable])
+    var onClickCharacteristic = CBMutableCharacteristic(type:  BLEData().characteristic, properties: [.Read , .NotifyEncryptionRequired, .Write], value: nil, permissions: [.ReadEncryptionRequired, .WriteEncryptionRequired])
     
     struct States {
         let connected = "connected"
@@ -131,6 +131,20 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                     if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
                         self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: [central], value: data)
                     }
+                
+                case let m as BLEPeripheral.DidReceiveWriteRequests:
+                    m.requests.forEach { (request) in
+                    self.peripheral ! BLEPeripheral.RespondToRequest(sender: self.this, request: request, result: .Success)
+                    }
+                    let alert = UIAlertController(title: "did receive click", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(1, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
         
                 case let m as BLEPeripheral.DidReceiveReadRequest:
                     m.request.value = self.onClickCharacteristic.value

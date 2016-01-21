@@ -20,6 +20,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     let states = States()
     
+    var char : CBCharacteristic?
     var devices : BLECentral.PeripheralObservations = BLECentral.PeripheralObservations()
     var identifiers : [String] = [String]()
     weak var ctrl : Optional<UITableViewController> = nil
@@ -54,6 +55,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if let deviceViewCtrl = self.deviceViewCtrl {
+            if tableView.isEqual(deviceViewCtrl.tableView) {
+                return
+            }
+        }
         
         if let obsCtrl = self.observationsCtrl,
             _ = self.selectedIdentifier {
@@ -95,6 +102,27 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     func connected(peripheral : CBPeripheral) -> Receive {
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
+                
+                case is PeripheralActor.OnClick:
+                    
+                    if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding), char = self.char {
+                    peripheral.writeValue(data, forCharacteristic: char, type: .WithResponse)
+                    }
+                
+            case let m as BLEPeripheralConnection.DidWriteValueForCharacteristic:
+                
+                if let ctrl : UIViewController = self.deviceViewCtrl {
+                    let alert = UIAlertController(title: "did write to \(peripheral.name), error: \(m.error.debugDescription)", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(2, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
+                }
+
                 
                 case let m as BLEPeripheralConnection.DidDiscoverServices:
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -151,6 +179,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     })
                 
                     if let char : CBCharacteristic = chars.first {
+                        self.char = char
                         peripheral.setNotifyValue(true, forCharacteristic: char)
                     }
                 

@@ -60,8 +60,6 @@
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
 		066427751BE924DD003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
 		066427761BE924E9003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
-		0667642C1C1B052500AB75A3 /* Pods_Actors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; };
-		0667642D1C1B052500AB75A3 /* Pods_Actors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
 		0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
 		0684A2D31BE6E98A00F0B238 /* CamStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D21BE6E98A00F0B238 /* CamStates.swift */; };
@@ -211,7 +209,6 @@
 			files = (
 				06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */,
 				06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */,
-				0667642D1C1B052500AB75A3 /* Pods_Actors.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,7 +380,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0667642C1C1B052500AB75A3 /* Pods_Actors.framework in Frameworks */,
 				060B1E211BE70CCB00077BCC /* AdSupport.framework in Frameworks */,
 				06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */,
 				613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */,
