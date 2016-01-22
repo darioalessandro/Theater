@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "06E1D4F11BB7699700E07321"
-               BuildableName = "ActorsDemo.app"
-               BlueprintName = "ActorsDemo"
-               ReferencedContainer = "container:Actors.xcodeproj">
+               BuildableName = "Actors.app"
+               BlueprintName = "Actors"
+               ReferencedContainer = "container:TheaterActors.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "06E1D5051BB7699800E07321"
                BuildableName = "ActorsTests.xctest"
                BlueprintName = "ActorsTests"
-               ReferencedContainer = "container:Actors.xcodeproj">
+               ReferencedContainer = "container:TheaterActors.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "06E1D5261BB76EE400E07321"
                BuildableName = "TheaterTests.xctest"
                BlueprintName = "TheaterTests"
-               ReferencedContainer = "container:Actors.xcodeproj">
+               ReferencedContainer = "container:TheaterActors.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "06E1D4F11BB7699700E07321"
-            BuildableName = "ActorsDemo.app"
-            BlueprintName = "ActorsDemo"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            BuildableName = "Actors.app"
+            BlueprintName = "Actors"
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "06E1D4F11BB7699700E07321"
-            BuildableName = "ActorsDemo.app"
-            BlueprintName = "ActorsDemo"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            BuildableName = "Actors.app"
+            BlueprintName = "Actors"
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "06E1D4F11BB7699700E07321"
-            BuildableName = "ActorsDemo.app"
-            BlueprintName = "ActorsDemo"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            BuildableName = "Actors.app"
+            BlueprintName = "Actors"
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

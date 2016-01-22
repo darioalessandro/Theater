@@ -37,10 +37,35 @@ class ActorTreeGuy: Actor {
 class ActorTree: QuickSpec {
     
     override func spec() {
+        
+        describe("find a children in a remote node") {
+            
+            
+            it("should be able to find a children in a fifth level") {
+                let system = TestActorSystem(name: "World")
+                let firstRef = system.actorOf(Actor.self, name : "first")
+                let first = system.actorForRef(firstRef)!
+                
+                let secondRef = first.actorOf(Actor.self, name: "second")
+                let second = system.actorForRef(secondRef)!
+                
+                let thirdRef = second.actorOf(Actor.self, name: "third")
+                let third = system.actorForRef(thirdRef)!
+                
+                let fourthRef = third.actorOf(Actor.self, name: "fourth")
+                let fourth = system.actorForRef(fourthRef)!
+                
+                let fifthRef = fourth.actorOf(Actor.self, name: "fifth")
+                let fifth = system.actorForRef(fifthRef)!
+                
+                expect(system.actorForRef(fifthRef)).toEventually(beIdenticalTo(fifth), timeout: 10, pollInterval: 1, description: "Unable to create children")
+            }
+            
+        }
 
         describe("ActorTree2") {
             let system  = TestActorSystem(name: "ActorTree")
-            it("Create 10 actors") {
+            it("Create 25 actors") {
                 let root = system.actorOf(ActorTreeGuy.self)
                     root ! ActorTreeGuy.CreateChildren(count:4, sender:nil)
                 

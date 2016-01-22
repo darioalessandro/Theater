@@ -17,7 +17,7 @@
                BlueprintIdentifier = "06E1D51D1BB76EE300E07321"
                BuildableName = "Theater.framework"
                BlueprintName = "Theater"
-               ReferencedContainer = "container:Actors.xcodeproj">
+               ReferencedContainer = "container:TheaterActors.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "06E1D5261BB76EE400E07321"
                BuildableName = "TheaterTests.xctest"
                BlueprintName = "TheaterTests"
-               ReferencedContainer = "container:Actors.xcodeproj">
+               ReferencedContainer = "container:TheaterActors.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -45,7 +45,7 @@
             BlueprintIdentifier = "06E1D51D1BB76EE300E07321"
             BuildableName = "Theater.framework"
             BlueprintName = "Theater"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "06E1D51D1BB76EE300E07321"
             BuildableName = "Theater.framework"
             BlueprintName = "Theater"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -85,7 +85,7 @@
             BlueprintIdentifier = "06E1D51D1BB76EE300E07321"
             BuildableName = "Theater.framework"
             BlueprintName = "Theater"
-            ReferencedContainer = "container:Actors.xcodeproj">
+            ReferencedContainer = "container:TheaterActors.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

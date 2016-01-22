@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03D346DA25D4212087115F09 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */; };
+		0602918C1C28D83500A95250 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602918B1C28D83500A95250 /* Pods_Theater.framework */; };
 		060B1E151BE708A200077BCC /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
 		060B1E161BE708F700077BCC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 069284651BE5C71800AF4678 /* Media.xcassets */; };
 		060B1E201BE70CC000077BCC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 060B1E1F1BE70CC000077BCC /* AdSupport.framework */; };
@@ -122,7 +123,6 @@
 		069FA81E1BBA2A0900B470FD /* BLECentralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */; };
 		06B3A4EC1BE9B2BE00EB1F57 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
 		06B6CE951BE9B0B100F5B5B7 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */; };
-		06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		06E1D4F61BB7699700E07321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D4F51BB7699700E07321 /* AppDelegate.swift */; };
 		06E1D4FD1BB7699800E07321 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FC1BB7699800E07321 /* Assets.xcassets */; };
 		06E1D5001BB7699800E07321 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06E1D4FE1BB7699800E07321 /* LaunchScreen.storyboard */; };
@@ -134,14 +134,11 @@
 		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
 		06EEA7D41BBB7305005787AE /* BLECentralActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D31BBB7305005787AE /* BLECentralActors.swift */; };
 		06EEA7D71BBB7360005787AE /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7D61BBB7360005787AE /* BLEMessages.swift */; };
-		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
 		06EEA7DE1BBB8CE2005787AE /* WSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06EEA7DD1BBB8CE2005787AE /* WSViewController.swift */; };
 		06FE714B1C04063800297902 /* BLEAdvertiserWithStatesActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FE714A1C04063800297902 /* BLEAdvertiserWithStatesActor.swift */; };
-		613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B79A6BB7E56A401AD5A495 /* Pods.framework */; };
 		91F2378CB8D8F85607989EEF /* Pods_ActorsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F387643C93F7B5C8646D47A2 /* Pods_ActorsTests.framework */; };
 		A2A0B37A0A55DF2E27B9B443 /* Pods_RemoteCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E73981FFC950F0C950FDD1 /* Pods_RemoteCam.framework */; };
-		AC08338A9F760340A3B3C914 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26DDC475791D92720DC4C29 /* Pods_Theater.framework */; };
-		FBBAD9C9C282699F45D2FFDE /* Pods_ActorsDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB6137800928D81F1A79C6 /* Pods_ActorsDemo.framework */; };
+		B8EC80AAD66C961FEE87C946 /* Pods_Actors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,7 +204,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				06C30E441BDED38A0055CBF4 /* Pods.framework in Embed Frameworks */,
 				06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -217,6 +213,8 @@
 
 /* Begin PBXFileReference section */
 		0512CCB0939AAABE96F23F13 /* Pods-ActorsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsTests/Pods-ActorsTests.release.xcconfig"; sourceTree = "<group>"; };
+		0602918B1C28D83500A95250 /* Pods_Theater.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Theater.framework; path = "Pods/../build/Debug-iphoneos/Pods_Theater.framework"; sourceTree = "<group>"; };
+		0602918D1C28D87D00A95250 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
 		0602E4EA1BEA4FC90015A988 /* BFGallery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BFGallery.framework; path = "Pods/../build/Debug-iphoneos/BFGallery.framework"; sourceTree = "<group>"; };
 		0602E4EC1BEA4FDE0015A988 /* BFGallery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BFGallery.framework; path = "Pods/../build/Debug-iphoneos/BFGallery.framework"; sourceTree = "<group>"; };
 		0602E4EE1BEA504D0015A988 /* BFGallery.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BFGallery.framework; path = "Pods/../build/Debug-iphoneos/BFGallery.framework"; sourceTree = "<group>"; };
@@ -317,7 +315,7 @@
 		069468101BC45D3D00C84503 /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Bank.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		069FA81D1BBA2A0900B470FD /* BLECentralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLECentralViewController.swift; sourceTree = "<group>"; };
 		06B6CE941BE9B0B100F5B5B7 /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
-		06E1D4F21BB7699700E07321 /* ActorsDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActorsDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		06E1D4F21BB7699700E07321 /* Actors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Actors.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D4F51BB7699700E07321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06E1D4FC1BB7699800E07321 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		06E1D4FF1BB7699800E07321 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -344,9 +342,11 @@
 		2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheaterTests/Pods-TheaterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		46B360E32D276B7FED08D679 /* Pods-RemoteCam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RemoteCam.release.xcconfig"; path = "Pods/Target Support Files/Pods-RemoteCam/Pods-RemoteCam.release.xcconfig"; sourceTree = "<group>"; };
 		513E00B1656D167B80F3A032 /* Pods-RemoteCam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RemoteCam.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RemoteCam/Pods-RemoteCam.debug.xcconfig"; sourceTree = "<group>"; };
+		5A80ADCC38D68D7071A561D6 /* Pods-Actors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Actors.release.xcconfig"; path = "Pods/Target Support Files/Pods-Actors/Pods-Actors.release.xcconfig"; sourceTree = "<group>"; };
 		62E73981FFC950F0C950FDD1 /* Pods_RemoteCam.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RemoteCam.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Actors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		84D606F8A925BE06FE958DD4 /* Pods-Actors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Actors.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Actors/Pods-Actors.debug.xcconfig"; sourceTree = "<group>"; };
 		91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheaterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C26DDC475791D92720DC4C29 /* Pods_Theater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Theater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -382,8 +382,7 @@
 			files = (
 				060B1E211BE70CCB00077BCC /* AdSupport.framework in Frameworks */,
 				06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */,
-				613D1014C781FCEB9D9D8AC4 /* Pods.framework in Frameworks */,
-				FBBAD9C9C282699F45D2FFDE /* Pods_ActorsDemo.framework in Frameworks */,
+				B8EC80AAD66C961FEE87C946 /* Pods_Actors.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,8 +398,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */,
-				AC08338A9F760340A3B3C914 /* Pods_Theater.framework in Frameworks */,
+				0602918C1C28D83500A95250 /* Pods_Theater.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,7 +666,7 @@
 		06E1D4F31BB7699700E07321 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				06E1D4F21BB7699700E07321 /* ActorsDemo.app */,
+				06E1D4F21BB7699700E07321 /* Actors.app */,
 				06E1D5061BB7699800E07321 /* ActorsTests.xctest */,
 				06E1D51E1BB76EE300E07321 /* Theater.framework */,
 				06E1D5271BB76EE400E07321 /* TheaterTests.xctest */,
@@ -765,6 +763,8 @@
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0602918D1C28D87D00A95250 /* Starscream.framework */,
+				0602918B1C28D83500A95250 /* Pods_Theater.framework */,
 				0615C2F61BEE7E3900E494B8 /* Pods.framework */,
 				0602E4FA1BEA54420015A988 /* Pods_Actors.framework */,
 				0602E4F81BEA54380015A988 /* BFGallery.framework */,
@@ -805,6 +805,8 @@
 				46B360E32D276B7FED08D679 /* Pods-RemoteCam.release.xcconfig */,
 				DAD37B55B79523C4A0F32206 /* Pods-Theater.debug.xcconfig */,
 				D8BD0D0628C205A2CECBE50B /* Pods-Theater.release.xcconfig */,
+				84D606F8A925BE06FE958DD4 /* Pods-Actors.debug.xcconfig */,
+				5A80ADCC38D68D7071A561D6 /* Pods-Actors.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -864,9 +866,9 @@
 			productReference = 0692842F1BE5BF5C00AF4678 /* RemoteCamTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		06E1D4F11BB7699700E07321 /* ActorsDemo */ = {
+		06E1D4F11BB7699700E07321 /* Actors */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "ActorsDemo" */;
+			buildConfigurationList = 06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "Actors" */;
 			buildPhases = (
 				98D4B7229D75C4F8A6A27E42 /* Check Pods Manifest.lock */,
 				06E1D4EE1BB7699700E07321 /* Sources */,
@@ -881,9 +883,9 @@
 			dependencies = (
 				06E1D5321BB76EE400E07321 /* PBXTargetDependency */,
 			);
-			name = ActorsDemo;
+			name = Actors;
 			productName = Actors;
-			productReference = 06E1D4F21BB7699700E07321 /* ActorsDemo.app */;
+			productReference = 06E1D4F21BB7699700E07321 /* Actors.app */;
 			productType = "com.apple.product-type.application";
 		};
 		06E1D5051BB7699800E07321 /* ActorsTests */ = {
@@ -969,7 +971,7 @@
 					};
 					06E1D4F11BB7699700E07321 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = 8DPYD7M3EU;
+						DevelopmentTeam = 9BAHU39A66;
 					};
 					06E1D5051BB7699800E07321 = {
 						CreatedOnToolsVersion = 7.0;
@@ -984,7 +986,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "Actors" */;
+			buildConfigurationList = 06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "TheaterActors" */;
 			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -997,7 +999,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				06E1D4F11BB7699700E07321 /* ActorsDemo */,
+				06E1D4F11BB7699700E07321 /* Actors */,
 				06E1D5051BB7699800E07321 /* ActorsTests */,
 				06E1D51D1BB76EE300E07321 /* Theater */,
 				06E1D5261BB76EE400E07321 /* TheaterTests */,
@@ -1159,7 +1161,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ActorsDemo/Pods-ActorsDemo-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Actors/Pods-Actors-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7014C0E363C836CDEBFF5ED4 /* Check Pods Manifest.lock */ = {
@@ -1234,7 +1236,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ActorsDemo/Pods-ActorsDemo-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Actors/Pods-Actors-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		98D4B7229D75C4F8A6A27E42 /* Check Pods Manifest.lock */ = {
@@ -1440,7 +1442,7 @@
 		};
 		06E1D5081BB7699800E07321 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 06E1D4F11BB7699700E07321 /* ActorsDemo */;
+			target = 06E1D4F11BB7699700E07321 /* Actors */;
 			targetProxy = 06E1D5071BB7699800E07321 /* PBXContainerItemProxy */;
 		};
 		06E1D52A1BB76EE400E07321 /* PBXTargetDependency */ = {
@@ -1450,7 +1452,7 @@
 		};
 		06E1D52C1BB76EE400E07321 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 06E1D4F11BB7699700E07321 /* ActorsDemo */;
+			target = 06E1D4F11BB7699700E07321 /* Actors */;
 			targetProxy = 06E1D52B1BB76EE400E07321 /* PBXContainerItemProxy */;
 		};
 		06E1D5321BB76EE400E07321 /* PBXTargetDependency */ = {
@@ -1595,6 +1597,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1634,12 +1637,13 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
 		06E1D5101BB7699800E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 84D606F8A925BE06FE958DD4 /* Pods-Actors.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1653,6 +1657,7 @@
 				INFOPLIST_FILE = Actors/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1663,7 +1668,7 @@
 		};
 		06E1D5111BB7699800E07321 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */;
+			baseConfigurationReference = 5A80ADCC38D68D7071A561D6 /* Pods-Actors.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1677,6 +1682,7 @@
 				INFOPLIST_FILE = Actors/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Actors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1739,14 +1745,14 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "$(inherited)";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1773,13 +1779,13 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dario.Theater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "$(inherited)";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1838,7 +1844,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "Actors" */ = {
+		06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "TheaterActors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06E1D50D1BB7699800E07321 /* Debug */,
@@ -1847,7 +1853,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "ActorsDemo" */ = {
+		06E1D50F1BB7699800E07321 /* Build configuration list for PBXNativeTarget "Actors" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06E1D5101BB7699800E07321 /* Debug */,

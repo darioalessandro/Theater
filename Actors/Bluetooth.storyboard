@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="43B-mG-aeN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="43B-mG-aeN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -99,7 +99,7 @@
         <!--Peripheral View Controller-->
         <scene sceneID="ITf-kt-YfM">
             <objects>
-                <tableViewController id="suH-TL-gAb" customClass="PeripheralViewController" customModule="ActorsDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="suH-TL-gAb" customClass="PeripheralViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="bID-fM-ivi">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -198,7 +198,7 @@
         <!--Device List Controller-->
         <scene sceneID="3Z1-Bt-oWA">
             <objects>
-                <tableViewController id="8XD-hq-Wgz" customClass="DeviceListController" customModule="ActorsDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="8XD-hq-Wgz" customClass="DeviceListController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0UT-cP-xOp">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -248,7 +248,7 @@
         <!--Observations View Controller-->
         <scene sceneID="fBg-hM-5Ud">
             <objects>
-                <tableViewController id="eUp-J8-vgZ" customClass="ObservationsViewController" customModule="ActorsDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="eUp-J8-vgZ" customClass="ObservationsViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eR5-NY-CFG">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -300,7 +300,7 @@
         <!--Device View Controller-->
         <scene sceneID="4YR-aS-cb8">
             <objects>
-                <tableViewController id="YNg-sE-VNP" customClass="DeviceViewController" customModule="ActorsDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="YNg-sE-VNP" customClass="DeviceViewController" customModule="Actors" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yK2-0f-kD1">
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
