@@ -8,5 +8,4 @@ language: objective-c
 
 xcode_workspace: TheaterActors.xcworkspace
 xcode_scheme: Actors
-xcode_sdk: iphonesimulator9.2
-xcode_destination: 'name=iPhone 6s,OS=9.2’
+xcode_sdk: iphoneos9.2
