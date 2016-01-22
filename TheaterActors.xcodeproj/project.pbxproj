@@ -61,8 +61,6 @@
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
 		066427751BE924DD003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
 		066427761BE924E9003EDD41 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066427741BE924DD003EDD41 /* EnumExtensions.swift */; };
-		0667642C1C1B052500AB75A3 /* Pods_Actors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; };
-		0667642D1C1B052500AB75A3 /* Pods_Actors.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
 		0684A2D11BE65A9800F0B238 /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D01BE65A9800F0B238 /* OrientationUtils.swift */; };
 		0684A2D31BE6E98A00F0B238 /* CamStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0684A2D21BE6E98A00F0B238 /* CamStates.swift */; };
@@ -140,6 +138,7 @@
 		06FE714B1C04063800297902 /* BLEAdvertiserWithStatesActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06FE714A1C04063800297902 /* BLEAdvertiserWithStatesActor.swift */; };
 		91F2378CB8D8F85607989EEF /* Pods_ActorsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F387643C93F7B5C8646D47A2 /* Pods_ActorsTests.framework */; };
 		A2A0B37A0A55DF2E27B9B443 /* Pods_RemoteCam.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62E73981FFC950F0C950FDD1 /* Pods_RemoteCam.framework */; };
+		B8EC80AAD66C961FEE87C946 /* Pods_Actors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 696C16215ABF6178D2D24ED4 /* Pods_Actors.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,7 +205,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				06E1D5341BB76EE400E07321 /* Theater.framework in Embed Frameworks */,
-				0667642D1C1B052500AB75A3 /* Pods_Actors.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,9 +380,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0667642C1C1B052500AB75A3 /* Pods_Actors.framework in Frameworks */,
 				060B1E211BE70CCB00077BCC /* AdSupport.framework in Frameworks */,
 				06E1D5331BB76EE400E07321 /* Theater.framework in Frameworks */,
+				B8EC80AAD66C961FEE87C946 /* Pods_Actors.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

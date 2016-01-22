@@ -56,6 +56,10 @@ class ObservationsViewController : UITableViewController {
 
 class DeviceViewController : UITableViewController {
     
+    @IBAction func onClick(sender: UIButton) {
+        reactive! ! PeripheralActor.OnClick(sender : nil)
+    }
+    
     @IBOutlet weak var stateRow: UITableViewCell!
     let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/BLEControllersActor")
     

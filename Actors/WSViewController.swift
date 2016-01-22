@@ -167,7 +167,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         wsCtrl ! SetViewCtrl(ctrl: self)
-        wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "http://localhost:9000")!, headers: ["tina":"coneja"], sender : nil)
+        wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "ws://echo.websocket.org")!, headers: nil, sender : nil)
         self.addNotifications()
         send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
     }

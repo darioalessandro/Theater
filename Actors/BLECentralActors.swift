@@ -20,6 +20,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     let states = States()
     
+    var char : CBCharacteristic?
     var devices : BLECentral.PeripheralObservations = BLECentral.PeripheralObservations()
     var identifiers : [String] = [String]()
     weak var ctrl : Optional<UITableViewController> = nil
@@ -54,6 +55,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if let deviceViewCtrl = self.deviceViewCtrl {
+            if tableView.isEqual(deviceViewCtrl.tableView) {
+                return
+            }
+        }
         
         if let obsCtrl = self.observationsCtrl,
             _ = self.selectedIdentifier {
@@ -96,15 +103,55 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 
-                case let m as BLEPeripheralConnection.DidDiscoverServices:
-                    if let error = m.error,
-                        let ctrl : UIViewController = self.deviceViewCtrl {
-                            ^{
-                                ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
-                            }
+                case is PeripheralActor.OnClick:
+                    
+                    if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding), char = self.char {
+                    peripheral.writeValue(data, forCharacteristic: char, type: .WithResponse)
+                    }
+                
+            case let m as BLEPeripheralConnection.DidWriteValueForCharacteristic:
+                
+                if let ctrl : UIViewController = self.deviceViewCtrl {
+                    let alert = UIAlertController(title: "did write to \(peripheral.name), error: \(m.error.debugDescription)", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(2, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
                 }
 
                 
+                case let m as BLEPeripheralConnection.DidDiscoverServices:
+                    if let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            var errorMsg : String? = nil
+                            if let error = m.error {
+                                errorMsg = error.localizedDescription
+                            } else {
+                                errorMsg = "did discover service"
+                            }
+                            let alert = UIAlertController(title: errorMsg, message: nil,                         preferredStyle: .Alert)
+
+                                ctrl.presentViewController(alert, animated:true,  completion: nil)
+                            self.scheduleOnce(1, block: {() in
+                                ^{
+                                    alert.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
+                        }
+                    }
+                    
+                case let m as BLEPeripheralConnection.DidDiscoverNoServices:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            ^{
+                                ctrl.navigationItem.prompt = "error \(error)"
+                            }
+                    }
+   
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -112,7 +159,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         ^{
                         ctrl.presentViewController(alert, animated:true,  completion: nil)
                         }
-                        self.scheduleOnce(3, block: {() in
+                        self.scheduleOnce(2, block: {() in
                             ^{
                                 alert.dismissViewControllerAnimated(true, completion: nil)
                             }
@@ -125,12 +172,14 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         ^{
                             ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
                         }
+                            //self.central ! Peripheral.Disconnect(m.peripheral, sender:self.this)
                     }
                     let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
                     })
                 
                     if let char : CBCharacteristic = chars.first {
+                        self.char = char
                         peripheral.setNotifyValue(true, forCharacteristic: char)
                     }
                 

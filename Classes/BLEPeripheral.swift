@@ -133,7 +133,6 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 switch(s.state) {
                     case .PoweredOn:
                         self.peripheral.startAdvertising(advertisementData)
-                        svcs.forEach {self.peripheral.addService($0)}
                     
                     default:
                         print("waiting")
@@ -145,6 +144,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is DidStartAdvertising:
                 self.become(self.states.advertising, state: self.advertising)
+                svcs.forEach {self.peripheral.addService($0)}
                 self.broadcast(msg)
             
             case is FailedToStartAdvertising:
@@ -162,6 +162,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         }
     }
     }
+    
 
     /**
     Message receiver for the advertising state
@@ -213,6 +214,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 }
                 self.broadcast(msg)
                 self.broadcast(SubscriptionsChanged(sender: self.this, subscriptions: self.subscriptions))
+            
+            case let m as DidAddService:
+                self.broadcast(msg)
             
             default :
                 self.receive(msg)
@@ -290,6 +294,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public func peripheralManager(peripheral: CBPeripheralManager, didAddService service: CBService, error: NSError?) {
         self.svcs.append(service)
+        this ! DidAddService(svc:service, sender:this)
     }
     
     deinit {

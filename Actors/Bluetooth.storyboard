@@ -332,6 +332,29 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HHh-F1-52O">
+                                        <rect key="frame" x="0.0" y="44" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HHh-F1-52O" id="cod-GI-YQb">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4D3-Wm-oWq">
+                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                                    <state key="normal" title="Click"/>
+                                                    <connections>
+                                                        <action selector="onClick:" destination="YNg-sE-VNP" eventType="touchUpInside" id="g3V-Lz-V4a"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="4D3-Wm-oWq" firstAttribute="leading" secondItem="cod-GI-YQb" secondAttribute="leadingMargin" id="2ni-22-fOh"/>
+                                                <constraint firstItem="4D3-Wm-oWq" firstAttribute="top" secondItem="cod-GI-YQb" secondAttribute="topMargin" constant="-1" id="PWp-sQ-y6p"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="4D3-Wm-oWq" secondAttribute="bottom" constant="-1.5" id="TwC-eO-klP"/>
+                                                <constraint firstItem="4D3-Wm-oWq" firstAttribute="trailing" secondItem="cod-GI-YQb" secondAttribute="trailingMargin" id="alu-vC-3wr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

@@ -125,11 +125,22 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      */
     
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?){
-        print("didDiscoverServices \(peripheral.services)")
-        peripheral.services?.forEach({ (service : CBService) in
-            peripheral.discoverCharacteristics(nil, forService: service)
-        })
-        this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
+        if let svcs = peripheral.services {
+            if svcs.count > 0  {
+                peripheral.services?.forEach {
+                    print("didDiscoverServices \($0.UUID)")
+                }
+                
+                peripheral.services?.forEach({ (service : CBService) in
+                    peripheral.discoverCharacteristics(nil, forService: service)
+                })
+                this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
+            } else {
+                this ! DidDiscoverNoServices(sender: this, peripheral: peripheral, error: error)
+            }
+        } else {
+            this ! DidDiscoverNoServices(sender: this, peripheral: peripheral, error: error)
+        }
     }
     
     /**
