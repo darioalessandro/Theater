@@ -49,7 +49,7 @@ public class Stack<A> {
             self.array.removeFirst()
             return first
         } else {
-            return Optional.None
+            return nil
         }
     }
     

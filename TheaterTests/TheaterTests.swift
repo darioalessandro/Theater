@@ -22,7 +22,7 @@ class TheaterTests: XCTestCase {
     
     func testTestSending10Msg() {
         let expectation = expectationWithDescription("Swift Expectations")
-        let system = AppActorSystem.shared
+        let system = ActorSystem(name: "narnia")
         
         let ping = system.actorOf(TestActor)
         let pong = system.actorOf(TestActor)
@@ -37,13 +37,13 @@ class TheaterTests: XCTestCase {
     
     func testThatDeadLettersAreGeneratedWhenTryingToReachADeathActor() {
         let expectation = expectationWithDescription("Swift Expectations")
-        let system = AppActorSystem.shared
+        let system = ActorSystem(name: "Zombieees")
         
         let medium = system.actorOf(ChrisRedfield.self, name: "Medium")
         let zombie = system.actorOf(Actor.self, name: "Zombie")
-        
-        medium ! ChrisRedfield.SetExpectation(expectation: expectation)
         system.stop(zombie)
+        NSThread.sleepForTimeInterval(1) //TODO: how to do this in an async way
+        medium ! ChrisRedfield.SetExpectation(expectation: expectation)
         zombie ! Actor.Message(sender: medium)
         
         self.waitForExpectationsWithTimeout(2) { (error) -> Void in
@@ -65,7 +65,7 @@ public class ChrisRedfield : Actor {
         
         init(expectation : XCTestExpectation) {
             self.expectation = expectation
-            super.init(sender: Optional.None)
+            super.init(sender: nil)
         }
     }
     

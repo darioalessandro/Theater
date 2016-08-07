@@ -19,12 +19,12 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
     required public init(context : ActorSystem, ref : ActorRef) {
         super.init(context: context, ref: ref)
     }
-
-    let accountA : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountA")
-    let accountB : ActorRef = AppActorSystem.shared.actorOf(Account.self, name: "AccountB")
     
-    var accountALabel : Optional<UILabel> = Optional.None
-    var accountBLabel : Optional<UILabel> = Optional.None
+    lazy var accountA : ActorRef = self.actorOf(Account.self, name: "AccountA")
+    lazy var accountB : ActorRef = self.actorOf(Account.self, name: "AccountB")
+    
+    var accountALabel : Optional<UILabel> = nil
+    var accountBLabel : Optional<UILabel> = nil
     
     public var transfers : [String:(Transfer, Optional<TransferResult>)] = [String : (Transfer, Optional<TransferResult>)]()
     
@@ -39,8 +39,8 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
     public override func receiveWithCtrl(ctrl : AccountsViewController) -> Receive {
         
         ^{
-            ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)
-            ctrl.aToB.addTarget(self, action: "onClickAtoB:", forControlEvents: .TouchUpInside)
+            ctrl.bToA.addTarget(self, action: #selector(Bank.onClickBtoA(_:)), forControlEvents: .TouchUpInside)
+            ctrl.aToB.addTarget(self, action: #selector(Bank.onClickAtoB(_:)), forControlEvents: .TouchUpInside)
             self.accountALabel = ctrl.accountABalance
             self.accountBLabel = ctrl.accountBBalance
         }
@@ -60,8 +60,8 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
         switch(msg) {
             case let w as Transfer:
             if self.transfers.keys.contains(w.operationId.UUIDString) == false {
-                self.transfers[w.operationId.UUIDString] = (w,Optional.None)
-                let wireTransfer = self.context.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
+                self.transfers[w.operationId.UUIDString] = (w,nil)
+                let wireTransfer = self.actorOf(WireTransferWorker.self, name:"WorkerId\(w.operationId.UUIDString)") //TODO: We need to add timeout
                 wireTransfer ! w
             }
             
@@ -77,7 +77,7 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
                 }
             }
             
-            w.sender! ! Harakiri(sender: self.this)
+            self.stop(w.sender!)
             
             case let w as OnBalanceChanged:
             ^{

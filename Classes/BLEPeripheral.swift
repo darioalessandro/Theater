@@ -25,7 +25,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
      Services configured
     */
      
-    public var svcs : [CBMutableService] = []
+    public var svcs : [CBService] = []
     
     /**
      Centrals subscriptions to CBCharacteristics DB
@@ -41,6 +41,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
         public let idle = "idle"
         public let connected = "connected"
         public let advertising = "advertising"
+        public let startingAdvertisement = "startingAdvertisement"
     }
     
     /**
@@ -81,23 +82,16 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             case is PeripheralManagerDidUpdateState:
                 self.broadcast(msg)
             
-            case let m as AddServices:
-                if self.peripheral.state == .PoweredOn {
-                    m.svcs.forEach{self.peripheral.addService($0)}
-                    self.svcs.appendContentsOf(m.svcs)
-                } else {
-                   //TODO: return error
-                }
-            
             case let m as SetServices:
                 self.peripheral.removeAllServices()
                 self.svcs = []
                 m.svcs.forEach{self.peripheral.addService($0)}
-                self.svcs = m.svcs
+            
             
             case let m as RemoveServices:
+                //TODO: have to check if this works
                 m.svcs.forEach{self.peripheral.removeService($0)}
-                self.svcs = self.svcs.filter({return !m.svcs.contains($0)})
+//                self.svcs = self.svcs.filter({return !m.svcs.contains($0)})
             
             case is RemoveAllServices:
                 self.peripheral.removeAllServices()
@@ -115,9 +109,13 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     public lazy var idle : Receive = {[unowned self] (msg : Actor.Message) in
         switch (msg) {
             
+            case is DidStartAdvertising:
+                self.become(self.states.advertising, state: self.advertising)
+                self.broadcast(msg)
+            
             case let m as StartAdvertising:
-                NSThread.sleepForTimeInterval(1)
                 self.peripheral.startAdvertising(m.advertisementData)
+                self.become(self.states.startingAdvertisement, state: self.startingAdvertisement(m.advertisementData, svcs: m.svcs))
                 self.addListener(m.sender)
             
             case is FailedToStartAdvertising:
@@ -128,6 +126,44 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             }
     }
     
+    public func startingAdvertisement(advertisementData : [String : AnyObject]?, svcs:[CBMutableService]) -> Receive {
+            return {[unowned self] (msg : Actor.Message) in
+        switch (msg) {
+            case let s as PeripheralManagerDidUpdateState:
+                switch(s.state) {
+                    case .PoweredOn:
+                        self.peripheral.startAdvertising(advertisementData)
+                    
+                    default:
+                        print("waiting")
+                }
+                self.broadcast(s)
+            
+            case is StartAdvertising:
+                print("already starting")
+            
+            case is DidStartAdvertising:
+                self.become(self.states.advertising, state: self.advertising)
+                svcs.forEach {self.peripheral.addService($0)}
+                self.broadcast(msg)
+            
+            case is FailedToStartAdvertising:
+                self.popToState(self.states.idle)
+                self.broadcast(msg)
+            
+            case is StopAdvertising:
+                self.peripheral.stopAdvertising()
+                self.this ! RemoveAllServices(sender:nil)
+                self.popToState(self.states.idle)
+                self.broadcast(DidStopAdvertising(sender: self.this))
+            
+            default :
+                self.receive(msg)
+        }
+    }
+    }
+    
+
     /**
     Message receiver for the advertising state
     */
@@ -154,8 +190,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
             
             case is StopAdvertising:
                 self.peripheral.stopAdvertising()
+                self.svcs = []
                 self.this ! RemoveAllServices(sender:nil)
-                self.unbecome()
+                self.popToState(self.states.idle)
                 self.broadcast(DidStopAdvertising(sender: self.this))
             
             case let m as CentralDidSubscribeToCharacteristic:
@@ -177,6 +214,9 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 }
                 self.broadcast(msg)
                 self.broadcast(SubscriptionsChanged(sender: self.this, subscriptions: self.subscriptions))
+            
+            case let m as DidAddService:
+                self.broadcast(msg)
             
             default :
                 self.receive(msg)
@@ -214,10 +254,8 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
         if let error = error {
-            self.popToState(self.states.idle)
             this ! FailedToStartAdvertising(sender: this, error: error)
         } else {
-            self.become(self.states.advertising, state: self.advertising)
             this ! DidStartAdvertising(sender: this, svcs: self.svcs)
         }
     }
@@ -252,6 +290,11 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     public func peripheralManager(peripheral: CBPeripheralManager, willRestoreState dict: [String : AnyObject]) {
         //TODO: what is this for?
+    }
+    
+    public func peripheralManager(peripheral: CBPeripheralManager, didAddService service: CBService, error: NSError?) {
+        self.svcs.append(service)
+        this ! DidAddService(svc:service, sender:this)
     }
     
     deinit {

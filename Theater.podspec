@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
- 
+
   s.name         = "Theater"
-  s.version      = "0.1.14"
+  s.version      = "0.5.2"
   s.summary      = "Swift framework to help write async, resilient and responsive applications."
   s.description  = <<-DESC
   
@@ -120,6 +120,5 @@ got Hello
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
   s.source_files  = "Classes/*.swift"
-  s.dependency  'Starscream', '~> 1.0.0'
  
 end

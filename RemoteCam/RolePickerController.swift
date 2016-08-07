@@ -18,6 +18,10 @@ import Theater
  
 */
 
+public class RemoteCamSystem : ActorSystem {
+    static let shared = ActorSystem(name: "RemoteCam")
+}
+
 public class RolePickerController : UIViewController {
 
     let showCameraSegue : String = "showCamera"
@@ -36,11 +40,12 @@ public class RolePickerController : UIViewController {
     @IBOutlet weak var remote: UIButton!
     @IBOutlet weak var camera: UIButton!
     
-    lazy var remoteCamSession : ActorRef = AppActorSystem.shared.actorOf(RemoteCamSession.self, name: "RemoteCam Session")
+    
+    lazy var remoteCamSession : ActorRef = RemoteCamSystem.shared.actorOf(RemoteCamSession.self, name: "RemoteCam Session")
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: states.connect, style: .Done, target: self, action: "toggleConnect:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: states.connect, style: .Done, target: self, action: #selector(RolePickerController.toggleConnect(_:)))
         self.navigationItem.prompt = "Select camera or remote:"
         self.remoteCamSession ! SetViewCtrl(ctrl: self)
         self.remoteCamSession ! UICmd.StartScanning(sender : nil)
@@ -55,8 +60,8 @@ public class RolePickerController : UIViewController {
     override public func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
-            remoteCamSession ! Disconnect(sender:Optional.None)
-            remoteCamSession ! Actor.Harakiri(sender: Optional.None)
+            remoteCamSession ! Disconnect(sender:nil)
+            remoteCamSession ! Actor.Harakiri(sender: nil)
         }
     }
     

@@ -77,7 +77,7 @@ public extension BLECentral {
         
         public class OnDisconnect : Actor.Message {
             
-            let error : Optional<NSError>
+            public let error : Optional<NSError>
             
             public let peripheral : CBPeripheral
             
@@ -89,7 +89,7 @@ public extension BLECentral {
         }
         
         /**
-        Actor.Message sent from BLECentral to force disconnecting all peripherals
+        Actor.Message sent from BLECentral to force disconnecting peripheral
         */
         
         public class Disconnect : Actor.Message {
@@ -190,7 +190,10 @@ public extension BLEPeripheral {
     public class StartAdvertising : Actor.Message {
         public let advertisementData : [String : AnyObject]?
         
-        public init(sender: Optional<ActorRef>, advertisementData : [String : AnyObject]?) {
+        public let svcs : [CBMutableService]
+        
+        public init(sender: Optional<ActorRef>, advertisementData : [String : AnyObject]?, svcs : [CBMutableService]) {
+            self.svcs = svcs
             self.advertisementData = advertisementData
             super.init(sender: sender)
         }
@@ -207,9 +210,9 @@ public extension BLEPeripheral {
     */
     
     public class DidStartAdvertising : Actor.Message {
-        public let svcs : [CBMutableService]
+        public let svcs : [CBService]
         
-        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
+        public init(sender: Optional<ActorRef>, svcs : [CBService]) {
             self.svcs = svcs
             super.init(sender: sender)
         }
@@ -292,6 +295,15 @@ public extension BLEPeripheral {
         
     }
     
+    public class DidAddService : Actor.Message {
+        public let svc : CBService
+        
+        public init(svc : CBService, sender: Optional<ActorRef>) {
+            self.svc = svc
+            super.init(sender: sender)
+        }
+    }
+    
     /**
      Message broadcasted when BLEPeripheral receives a write request, user is responsible for responding
      */
@@ -315,19 +327,6 @@ public extension BLEPeripheral {
         
         public init(sender: Optional<ActorRef>, state : CBPeripheralManagerState) {
             self.state = state
-            super.init(sender: sender)
-        }
-    }
-    
-    /**
-    Command to signal BLEPeripheral to add a CBMutableService to it's GATT
-    */
-    
-    public class AddServices : Actor.Message {
-        public let svcs : [CBMutableService]
-        
-        public init(sender: Optional<ActorRef>, svcs : [CBMutableService]) {
-            self.svcs = svcs
             super.init(sender: sender)
         }
     }
@@ -452,6 +451,25 @@ public extension BLEPeripheralConnection {
             RSSI : NSNumber) {
                 self.error = error
                 self.RSSI = RSSI
+                self.peripheral = peripheral
+                super.init(sender: sender)
+        }
+    }
+    
+    /**
+    DidDiscoverNoServices
+    */
+     
+    public class DidDiscoverNoServices : Actor.Message {
+        
+        public let peripheral : CBPeripheral
+        
+        public let error : NSError?
+        
+        public init(sender: Optional<ActorRef>,
+            peripheral : CBPeripheral,
+            error : NSError?) {
+                self.error = error
                 self.peripheral = peripheral
                 super.init(sender: sender)
         }

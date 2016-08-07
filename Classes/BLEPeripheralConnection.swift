@@ -89,7 +89,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
         switch(msg) {
             
             case let p as SetPeripheral:
-                self.become("conencted", state: self.connected(p.peripheral))
+                self.become("connected", state: self.connected(p.peripheral))
             
             default:
                 super.receive(msg)
@@ -125,11 +125,22 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      */
     
     public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?){
-        print("didDiscoverServices \(peripheral.services)")
-        peripheral.services?.forEach({ (service : CBService) in
-            peripheral.discoverCharacteristics(nil, forService: service)
-        })
-        this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
+        if let svcs = peripheral.services {
+            if svcs.count > 0  {
+                peripheral.services?.forEach {
+                    print("didDiscoverServices \($0.UUID)")
+                }
+                
+                peripheral.services?.forEach({ (service : CBService) in
+                    peripheral.discoverCharacteristics(nil, forService: service)
+                })
+                this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
+            } else {
+                this ! DidDiscoverNoServices(sender: this, peripheral: peripheral, error: error)
+            }
+        } else {
+            this ! DidDiscoverNoServices(sender: this, peripheral: peripheral, error: error)
+        }
     }
     
     /**
@@ -194,6 +205,10 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     
     public func peripheral(peripheral: CBPeripheral, didWriteValueForDescriptor descriptor: CBDescriptor, error: NSError?){
         this ! DidWriteValueForDescriptor(sender: this, peripheral: peripheral, descriptor: descriptor, error: error)
+    }
+    
+    deinit {
+        print("bye")
     }
     
 }

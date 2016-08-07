@@ -16,7 +16,7 @@ extension RemoteCamSession {
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Requesting flash toggle",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             return {[unowned self] (msg : Actor.Message) in
                 switch(msg) {
@@ -70,7 +70,7 @@ extension RemoteCamSession {
         peer : MCPeerID,
         lobby : RolePickerController) -> Receive {
             let alert = UIAlertController(title: "Requesting camera toggle",
-                message: Optional.None,
+                message: nil,
                 preferredStyle: .Alert)
             
             return {[unowned self] (msg : Actor.Message) in
@@ -140,7 +140,7 @@ extension RemoteCamSession {
                     
                 case let picResp as RemoteCmd.TakePicResp:
                     if let imageData = picResp.pic, image = UIImage(data: imageData) {
-                        UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+                        UIImageWriteToSavedPhotosAlbum(image, self, Selector("image:didFinishSavingWithError:contextInfo:"), nil)
                         ^{alert.dismissViewControllerAnimated(true, completion: nil)}
                     }else if let error = picResp.error {
                         ^{alert.dismissViewControllerAnimated(true, completion:{ () in

@@ -28,7 +28,7 @@ class BLEPeripheralTests: QuickSpec {
                 it("should start with no listeners") {
                     expect(peripheral.listeners).to(beEmpty())
                     expect(peripheral.context).to(beIdenticalTo(system))
-                    expect(system.selectActor("BLEPeripheral1")).toEventually(beIdenticalTo(peripheral.this), timeout: 10, pollInterval: 1, description: "peripheral never died")
+                    expect(system.selectActor("testo/user/BLEPeripheral1")).toEventually(beIdenticalTo(peripheral.this), timeout: 10, pollInterval: 1, description: "peripheral never died")
                 }
                 
                 it("should stop when requested") {

@@ -16,8 +16,8 @@ public class AccountsViewController : UIViewController {
     @IBOutlet weak var aToB: UIButton!
     @IBOutlet weak var accountBBalance: UILabel!
     
-    let bank : ActorRef = AppActorSystem.shared.actorOf(Bank.self, name: "Bank")
-    
+    lazy var system = ActorSystem(name : "BankSystem")
+    lazy var bank : ActorRef = self.system.actorOf(Bank.self, name: "Bank")
     
     override public func viewDidLoad() {
          bank ! SetViewCtrl(ctrl: self)
@@ -25,7 +25,7 @@ public class AccountsViewController : UIViewController {
     
     override public func viewWillDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            bank ! Actor.Harakiri(sender: nil)
+            system.stop()
         }
     }
     

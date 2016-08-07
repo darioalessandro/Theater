@@ -17,7 +17,7 @@ public struct BLEData {
 }
 
 public class RemoveObservationController : Actor.Message {
-    init () {super.init(sender: Optional.None)}
+    init () {super.init(sender: nil)}
 }
 
 public class SetDeviceListController: Actor.Message {
@@ -26,7 +26,7 @@ public class SetDeviceListController: Actor.Message {
     
     init(ctrl : UITableViewController) {
         self.ctrl = ctrl
-        super.init(sender : Optional.None)
+        super.init(sender : nil)
     }
 }
 
@@ -36,7 +36,7 @@ public class SetObservationsController: Actor.Message {
     
     init(ctrl : UITableViewController) {
         self.ctrl = ctrl
-        super.init(sender : Optional.None)
+        super.init(sender : nil)
     }
 }
 
@@ -48,6 +48,6 @@ public class SetDeviceViewController : Actor.Message {
     
     init(ctrl : DeviceViewController) {
         self.ctrl = ctrl
-        super.init(sender : Optional.None)
+        super.init(sender : nil)
     }
 }

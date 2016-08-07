@@ -158,6 +158,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                 
             case let m as StartScanning:
                 self.become(self.states.scanning, state: self.scanning(m.services))
+                self.addListener(m.sender)
                 self.this ! m
 
             case is StopScanning:

@@ -19,7 +19,9 @@ public class PeripheralViewController : UITableViewController {
     
     @IBOutlet weak var advertisingButton: UIButton!
     
-    var peripheral : ActorRef = AppActorSystem.shared.actorOf(PeripheralActor.self, name: "PeripheralActor")
+    lazy var system : ActorSystem = ActorSystem(name:"PeripheralSystem")
+    
+    lazy var peripheral : ActorRef = self.system.actorOf(PeripheralActor.self, name: "PeripheralActor")
     
     public override func viewWillAppear(animated: Bool) {
         peripheral ! SetViewCtrl(ctrl : self)
@@ -27,19 +29,15 @@ public class PeripheralViewController : UITableViewController {
     
     public override func viewWillDisappear(animated: Bool) {
         if(self.isBeingDismissed() || self.isMovingFromParentViewController()){
-            
+            self.system.stop()
         }
     }
     
     @IBAction func toggleAdvertising(sender: AnyObject) {
-        peripheral ! PeripheralActor.ToggleAdvertising(sender : Optional.None)
+        peripheral ! PeripheralActor.ToggleAdvertising(sender : nil)
     }
     
     @IBAction func onClick(sender: UIButton) {
-        peripheral ! PeripheralActor.OnClick(sender : Optional.None)
-    }
-    
-    deinit {
-        peripheral ! Actor.Harakiri(sender: Optional.None)
+        peripheral ! PeripheralActor.OnClick(sender : nil)
     }
 }

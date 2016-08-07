@@ -54,11 +54,61 @@ Which will be called when some other actor tries to ! (tell) you something
 
 public class Actor : NSObject {
     
+    public func actorForRef(ref : ActorRef) -> Optional<Actor> {
+        let path = ref.path.asString
+        if path == this.path.asString {
+            return self
+        }else if let selected = self.children[path] {
+            return selected
+        } else {
+            //TODO: this is expensive an wasteful
+            let recursiveSearch = self.children.map({return $0.1.actorForRef(ref)})
+            
+            let withoutOpt = recursiveSearch.filter({return $0 != nil}).flatMap({return $0})
+            
+            return withoutOpt.first
+        }
+    }
+
+    public func stop() {
+        this ! Harakiri(sender:nil)
+    }
+    
+    public func stop(actorRef : ActorRef) -> Void {
+        self.mailbox.addOperationWithBlock { () -> Void in
+            let path = actorRef.path.asString
+            self.children.removeValueForKey(path)
+        }
+    }
+    
+    public func actorOf(clz : Actor.Type) -> ActorRef {
+        return actorOf(clz, name: NSUUID.init().UUIDString)
+    }
+    
+    public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
+        
+        //TODO: should we kill or throw an error when user wants to reuse address of actor?
+        let completePath = "\(self.this.path.asString)/\(name)"
+        let ref = ActorRef(context:self.context, path:ActorPath(path:completePath))
+        let actorInstance : Actor = clz.init(context: self.context, ref: ref)
+        self.children[completePath] = actorInstance
+        return ref
+    }
+    
     /**
      
      */
     
-    private var children  = [String : ActorRef]()
+    final var children  = [String : Actor]()
+    
+    public func getChildrenActors() -> [String: ActorRef] {
+        var newDict : [String:ActorRef] = [String : ActorRef]()
+        
+        for (k,v) in self.children {
+            newDict[k] = v.this
+        }
+        return newDict
+    }
     
     /**
     Here we save all the actor states
@@ -163,6 +213,10 @@ public class Actor : NSObject {
     final public func systemReceive(msg : Actor.Message) -> Void {
         switch msg {
         case is Harakiri, is PoisonPill:
+            self.willStop()
+            self.children.forEach({ (_,actor) in
+                actor.this ! Harakiri(sender:this)
+            })
             self.context.stop(self.this)
             
         default :
@@ -209,6 +263,14 @@ public class Actor : NSObject {
     }
     
     /**
+     Method to allow cleanup
+     */
+    
+    public func willStop() -> Void {
+        
+    }
+    
+    /**
     Schedule Once is a timer that executes the code in block after seconds
     */
      
@@ -223,7 +285,7 @@ public class Actor : NSObject {
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create(ref.path.asString, nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ref
         super.init()
@@ -233,7 +295,7 @@ public class Actor : NSObject {
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
         mailbox.underlyingQueue = dispatch_queue_create("", nil)
-        sender = Optional.None
+        sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
         super.init()

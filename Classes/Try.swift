@@ -39,7 +39,7 @@ public class Try<T> : NSCoder {
     public func isSuccess() -> Bool {e.raise(); return false}
     
     /**
-    Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
+    Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> nil, that way, we can use it like this
       ```
         wsResult : Try<Number> = getNumberOfLikes()
         .
@@ -55,7 +55,7 @@ public class Try<T> : NSCoder {
     */
     
     public func toOptional() -> Optional<T> {
-        return  Optional.None
+        return  nil
     }
     
     public func get() -> T { e.raise(); return NSObject() as! T}
@@ -146,7 +146,7 @@ public class Success<T> : Try<T> {
     }
     
     /**
-    Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> Optional.None, that way, we can use it like this
+    Convenience method to transform Try<T> into Optional<T> if Success<T> -> Optional.Some(T) else Failure<T> -> nil, that way, we can use it like this
          ```
         wsResult : Try<Number> = getNumberOfLikes()
         .

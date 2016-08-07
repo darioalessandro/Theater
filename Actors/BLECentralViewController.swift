@@ -12,7 +12,9 @@ import AudioToolbox
 
 class DeviceListController: UITableViewController {
     
-    let reactive : ActorRef = AppActorSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
+    lazy var system : ActorSystem = ActorSystem(name:"PeripheralSystem")
+    
+    let reactive : ActorRef = RemoteCamSystem.shared.actorOf(BLEControllersActor.self, name: "BLEControllersActor")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,18 +23,18 @@ class DeviceListController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive ! BLECentral.StartScanning(services: [BLEData().svc], sender: Optional.None)
+        reactive ! BLECentral.StartScanning(services: [BLEData().svc], sender: nil)
     }
     
     deinit {
-        reactive ! BLECentral.StopScanning(sender: Optional.None)
-        reactive ! Actor.Harakiri(sender: Optional.None)
+        reactive ! BLECentral.StopScanning(sender: nil)
+        reactive ! Actor.Harakiri(sender: nil)
     }
 }
 
 class ObservationsViewController : UITableViewController {
     
-    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,7 @@ class ObservationsViewController : UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reactive! ! BLECentral.StartScanning(services: [BLEData().svc], sender: Optional.None)
+        reactive! ! BLECentral.StartScanning(services: [BLEData().svc], sender: nil)
     }
     
     internal override func viewWillDisappear(animated: Bool) {
@@ -54,8 +56,12 @@ class ObservationsViewController : UITableViewController {
 
 class DeviceViewController : UITableViewController {
     
+    @IBAction func onClick(sender: UIButton) {
+        reactive! ! PeripheralActor.OnClick(sender : nil)
+    }
+    
     @IBOutlet weak var stateRow: UITableViewCell!
-    let reactive : Optional<ActorRef> = AppActorSystem.shared.selectActor("BLEControllersActor")
+    let reactive : Optional<ActorRef> = RemoteCamSystem.shared.selectActor("RemoteCam/user/BLEControllersActor")
     
     internal override func viewDidLoad() {
         super.viewDidLoad()

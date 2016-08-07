@@ -19,7 +19,7 @@ class WSRViewController : ViewCtrlActor<WSViewController>, UITableViewDataSource
     
     let states = States()
     
-    lazy var wsClient : ActorRef = self.context.actorOf(WebSocketClient)
+    lazy var wsClient : ActorRef = self.actorOf(WebSocketClient.self, name:"WebSocketClient")
     
     var receivedMessages : [(String, NSDate)] = [(String, NSDate)]()
     
@@ -160,19 +160,21 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var send: UIButton!
     @IBOutlet weak var bottomTextField: NSLayoutConstraint!
     
-    let wsCtrl : ActorRef = AppActorSystem.shared.actorOf(WSRViewController.self, name:  "WSRViewController")
+    lazy var system : ActorSystem = ActorSystem(name:"WS")
+    
+    lazy var wsCtrl : ActorRef = self.system.actorOf(WSRViewController.self, name:  "WSRViewController")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wsCtrl ! SetViewCtrl(ctrl: self)
         wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "wss://echo.websocket.org")!, sender : nil)
         self.addNotifications()
-        send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
+        send.addTarget(self, action: #selector(WSViewController.onClick(_:)), forControlEvents: .TouchUpInside)
     }
     
     override func viewWillDisappear(animated: Bool) {
         if self.isBeingDismissed() || self.isMovingFromParentViewController() {
-            wsCtrl ! Actor.Harakiri(sender: nil)
+            system.stop()
         }
     }
     
@@ -181,8 +183,8 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     }
     
     func addNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(WSViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(WSViewController.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

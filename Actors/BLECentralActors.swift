@@ -20,16 +20,16 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     
     let states = States()
     
+    var char : CBCharacteristic?
     var devices : BLECentral.PeripheralObservations = BLECentral.PeripheralObservations()
     var identifiers : [String] = [String]()
-    weak var ctrl : Optional<UITableViewController> = Optional.None
-    weak var deviceViewCtrl : Optional<DeviceViewController> = Optional.None
-    weak var observationsCtrl : Optional<UITableViewController> = Optional.None
-    var selectedIdentifier : Optional<String> = Optional.None
-    let central : ActorRef
+    weak var ctrl : Optional<UITableViewController> = nil
+    weak var deviceViewCtrl : Optional<DeviceViewController> = nil
+    weak var observationsCtrl : Optional<UITableViewController> = nil
+    var selectedIdentifier : Optional<String> = nil
+    lazy var central : ActorRef = self.actorOf(BLECentral.self, name:"BLECentral")
     
     required public init(context : ActorSystem, ref : ActorRef) {
-        self.central = context.actorOf(BLECentral)
         super.init(context: context, ref: ref)
         self.central ! BLECentral.AddListener(sender: this)
     }
@@ -55,6 +55,12 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if let deviceViewCtrl = self.deviceViewCtrl {
+            if tableView.isEqual(deviceViewCtrl.tableView) {
+                return
+            }
+        }
         
         if let obsCtrl = self.observationsCtrl,
             _ = self.selectedIdentifier {
@@ -97,6 +103,70 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
         return {[unowned self](msg : Actor.Message) in
             switch(msg) {
                 
+                case is PeripheralActor.OnClick:
+                    
+                    if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding), char = self.char {
+                    peripheral.writeValue(data, forCharacteristic: char, type: .WithResponse)
+                    }
+                
+            case let m as BLEPeripheralConnection.DidWriteValueForCharacteristic:
+                
+                if let ctrl : UIViewController = self.deviceViewCtrl {
+                    let alert = UIAlertController(title: "did write to \(peripheral.name), error: \(m.error.debugDescription)", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(2, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
+                }
+
+                
+                case let m as BLEPeripheralConnection.DidDiscoverServices:
+                    if let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            var errorMsg : String? = nil
+                            if let error = m.error {
+                                errorMsg = error.localizedDescription
+                            } else {
+                                errorMsg = "did discover service"
+                            }
+                            let alert = UIAlertController(title: errorMsg, message: nil,                         preferredStyle: .Alert)
+
+                                ctrl.presentViewController(alert, animated:true,  completion: nil)
+                            self.scheduleOnce(1, block: {() in
+                                ^{
+                                    alert.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
+                        }
+                    }
+                    
+                case let m as BLEPeripheralConnection.DidDiscoverNoServices:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            ^{
+                                ctrl.navigationItem.prompt = "error \(error)"
+                            }
+                    }
+                
+                case let m as BLEPeripheralConnection.DidUpdateNotificationStateForCharacteristic:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            let alert = UIAlertController(title: "error \(error)", message: nil,                         preferredStyle: .Alert)
+                            ^{
+                                ctrl.presentViewController(alert, animated:true,  completion: nil)
+                            }
+                            self.scheduleOnce(2, block: {() in
+                                ^{
+                                    alert.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
+                }
+                
+   
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                     if let ctrl : UIViewController = self.deviceViewCtrl {
@@ -104,7 +174,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                         ^{
                         ctrl.presentViewController(alert, animated:true,  completion: nil)
                         }
-                        self.scheduleOnce(3, block: {() in
+                        self.scheduleOnce(2, block: {() in
                             ^{
                                 alert.dismissViewControllerAnimated(true, completion: nil)
                             }
@@ -112,11 +182,19 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     }
                 
                 case let m as BLEPeripheralConnection.DidDiscoverCharacteristicsForService:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                        ^{
+                            ctrl.navigationItem.prompt = "error \(error.localizedDescription)"
+                        }
+                            //self.central ! Peripheral.Disconnect(m.peripheral, sender:self.this)
+                    }
                     let chars = m.service.characteristics!.filter({ (char) -> Bool in
                         return char.UUID == BLEData().characteristic
                     })
                 
                     if let char : CBCharacteristic = chars.first {
+                        self.char = char
                         peripheral.setNotifyValue(true, forCharacteristic: char)
                     }
                 
@@ -139,7 +217,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                     
                 case let m as BLECentral.Peripheral.OnDisconnect:
                     if let d = self.deviceViewCtrl {
-                        ^{d.stateRow.detailTextLabel?.text = "Disconnected"}
+                        ^{d.navigationItem.prompt = "error \(m.error?.localizedDescription)"
+                          d.stateRow.detailTextLabel?.text = "Disconnected"}
                         self.scheduleOnce(1,block: { () in
                            self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral : m.peripheral)
                         })
@@ -173,8 +252,8 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             ^{ () in
                 self.observationsCtrl?.tableView.delegate = nil
                 self.observationsCtrl?.tableView.dataSource = nil
-                self.observationsCtrl = Optional.None
-                self.selectedIdentifier = Optional.None
+                self.observationsCtrl = nil
+                self.selectedIdentifier = nil
             }
             
         case let w as SetDeviceListController:
@@ -196,7 +275,7 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
             if let selected = self.selectedIdentifier,
                 peripherals = self.devices[selected],
                 peripheral = peripherals.first {
-                    self.central ! BLECentral.Peripheral.Connect(sender: Optional.Some(self.this), peripheral: peripheral.peripheral)
+                    self.central ! BLECentral.Peripheral.Connect(sender: self.this, peripheral: peripheral.peripheral)
             }
             
         case let m as BLECentral.Peripheral.OnConnect:

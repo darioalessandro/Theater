@@ -18,7 +18,7 @@ public class ActorOutput : AVCaptureVideoDataOutput, AVCaptureVideoDataOutputSam
     
     let videoQueue : dispatch_queue_t = dispatch_queue_create("VideoQueue", DISPATCH_QUEUE_SERIAL);
     
-    lazy var remoteCamSession : ActorRef? = AppActorSystem.shared.selectActor("RemoteCam Session")
+    lazy var remoteCamSession : ActorRef? = RemoteCamSystem.shared.selectActor("RemoteCam/user/RemoteCam Session")
     
     public init(delegate : AVCaptureVideoDataOutputSampleBufferDelegate) {
         super.init()
@@ -40,7 +40,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
     
     let stillImageOutput = AVCaptureStillImageOutput()
     
-    var session : ActorRef = AppActorSystem.shared.selectActor("RemoteCam Session")!
+    var session : ActorRef = RemoteCamSystem.shared.selectActor("RemoteCam/user/RemoteCam Session")!
     
     /**
     Default fps, it would be neat if we would adjust this based on network conditions.
@@ -51,7 +51,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.setupCamera()
-        session ! UICmd.BecomeCamera(sender: Optional.None, ctrl: self)
+        session ! UICmd.BecomeCamera(sender: nil, ctrl: self)
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -65,7 +65,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
             if let cs = captureSession {
                 cs.stopRunning()
             }
-            session ! UICmd.UnbecomeCamera(sender : Optional.None)
+            session ! UICmd.UnbecomeCamera(sender : nil)
         }
     }
     
@@ -182,7 +182,7 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
             let filtered : [AVCaptureDevice] = videoDevices.filter { return $0.position == position}
             return filtered.first
         } else {
-            return Optional.None
+            return nil
         }
     }
 
@@ -206,10 +206,10 @@ public class CameraViewController : UIViewController, AVCaptureVideoDataOutputSa
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {[unowned self]
                 (imageSampleBuffer, error) in
                 if imageSampleBuffer == nil {
-                    self.session ! UICmd.OnPicture(sender: Optional.None, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
+                    self.session ! UICmd.OnPicture(sender: nil, error: NSError(domain: "Unable to take picture", code: 0, userInfo: nil))
                 } else {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
-                    self.session ! UICmd.OnPicture(sender: Optional.None, pic:imageData)
+                    self.session ! UICmd.OnPicture(sender: nil, pic:imageData)
                 }
             }
         }

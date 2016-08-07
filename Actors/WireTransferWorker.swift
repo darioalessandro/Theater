@@ -11,8 +11,8 @@ import Theater
 
 public class WireTransferWorker : Actor {
     
-    var transfer : Optional<Transfer> = Optional.None
-    var bank : Optional<ActorRef> = Optional.None
+    var transfer : Optional<Transfer> = nil
+    var bank : Optional<ActorRef> = nil
     
     
     lazy var transfering : Receive = {[unowned self](msg : Actor.Message) in
@@ -44,7 +44,7 @@ public class WireTransferWorker : Actor {
         switch (msg) {
         case let transfer as Transfer:
             if let _ = self.transfer {} else {
-                self.transfer = Optional.Some(transfer)
+                self.transfer = transfer
                 self.bank = self.transfer!.sender
                 become("transfering", state:transfering)
                 transfer.origin ! Withdraw(sender: this, ammount: transfer.ammount, operationId: NSUUID())

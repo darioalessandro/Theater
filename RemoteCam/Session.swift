@@ -26,6 +26,16 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
         super.init(context: context, ref: ref)
     }
     
+    override public func willStop() {
+        if let adv = self.mcAdvertiserAssistant {
+            adv.stop()
+        }
+        if let session = self.session {
+            session.disconnect()
+            session.delegate = nil
+        }
+    }
+    
     func connected(lobby : RolePickerController,
                     peer : MCPeerID) -> Receive {
         ^{lobby.navigationItem.rightBarButtonItem?.title = lobby.states.disconnect}
@@ -65,7 +75,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     
     func popAndStartScanning() {
         self.popToState(self.states.scanning)
-        self.this ! BLECentral.StartScanning(services: Optional.None, sender: this)
+        self.this ! BLECentral.StartScanning(services: nil, sender: this)
     }
     
     func scanning(lobby : RolePickerController) -> Receive {
@@ -86,7 +96,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
                 self.mcAdvertiserAssistant.stop()
                 
             case is Disconnect:
-                self.this ! BLECentral.StartScanning(services: Optional.None, sender: self.this)
+                self.this ! BLECentral.StartScanning(services: nil, sender: self.this)
                 
             case is UICmd.BecomeCamera,
              is UICmd.BecomeMonitor,
@@ -104,7 +114,7 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
             switch(msg) {
             case is UICmd.StartScanning:
                 self.become(self.states.scanning, state:self.scanning(ctrl))
-                self.this ! BLECentral.StartScanning(services: Optional.None, sender: self.this)
+                self.this ! BLECentral.StartScanning(services: nil, sender: self.this)
                 
             default:
                 self.receive(msg)
@@ -238,5 +248,4 @@ public class RemoteCamSession : ViewCtrlActor<RolePickerController>, MCSessionDe
     public func session(session: MCSession, didReceiveCertificate certificate: [AnyObject]?, fromPeer peerID: MCPeerID, certificateHandler: (Bool) -> Void) {
             certificateHandler(true)
     }
-    
 }

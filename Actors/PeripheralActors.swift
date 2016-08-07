@@ -17,13 +17,14 @@ public extension PeripheralActor {
     public class OnClick : Actor.Message {}
     
     public class ToggleAdvertising : Actor.Message {}
+    
 }
 
 public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithListeners {
     
     public var listeners : [ActorRef] = []
     
-    var onClickCharacteristic = CBMutableCharacteristic(type:  BLEData().characteristic, properties: [.Read , .Notify], value: nil, permissions: [.Readable])
+    var onClickCharacteristic = CBMutableCharacteristic(type:  BLEData().characteristic, properties: [.Read , .NotifyEncryptionRequired, .Write], value: nil, permissions: [.ReadEncryptionRequired, .WriteEncryptionRequired])
     
     struct States {
         let connected = "connected"
@@ -36,20 +37,40 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                                                     CBAdvertisementDataLocalNameKey : "TheaterDemo",
                                                     CBAdvertisementDataServiceUUIDsKey : [BLEData().svc]]
     
-    lazy var peripheral : ActorRef = self.context.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
+    lazy var peripheral : ActorRef = self.actorOf(BLEPeripheral.self, name: "BLEPeripheral")
     
     required public init(context: ActorSystem, ref: ActorRef) {
         super.init(context: context, ref: ref)
     }
     
+    func CBStateToString(state : CBPeripheralManagerState) -> String {
+        switch(state) {
+            case .Unknown:
+                return "Unknown"
+            case .Resetting:
+                return "Resetting"
+            case .Unsupported:
+                return "Unsupported"
+            case .Unauthorized:
+                return "Unauthorized"
+            case .PoweredOff:
+                return "PoweredOff"
+            case .PoweredOn:
+                return "PoweredOn"
+            }
+        }
+    
     override public func receiveWithCtrl(ctrl : PeripheralViewController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
+                case let m as BLEPeripheral.PeripheralManagerDidUpdateState:
+                    ^{ctrl.navigationItem.prompt = "\(self.CBStateToString(m.state))"}
+                
                 case is ToggleAdvertising:
                     let svc = CBMutableService(type: BLEData().svc, primary: true)
                     svc.characteristics = [self.onClickCharacteristic]
-                    self.peripheral ! BLEPeripheral.AddServices(sender : self.this, svcs:[svc])
-                    self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData)
+                    
+                    self.peripheral ! BLEPeripheral.StartAdvertising(sender:self.this, advertisementData:self.advertisementData, svcs:[svc])
                     self.addListener(msg.sender)
                 
                 case is BLEPeripheral.DidStartAdvertising:
@@ -58,6 +79,7 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                 
                 case is BLEPeripheral.DidStopAdvertising:
                     ^{ctrl.advertisingButton.setTitle("Idle", forState: .Normal)}
+            
                 
                 default :
                     self.receive(msg)
@@ -68,6 +90,18 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
     func advertising(ctrl : PeripheralViewController) -> Receive {
         return {[unowned self] (msg : Actor.Message) in
             switch (msg) {
+                
+                case is BLEPeripheral.DidAddService:
+                    let alert = UIAlertController(title: "did add service", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(1, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
+                
                 case is ToggleAdvertising:
                     self.peripheral ! BLEPeripheral.StopAdvertising(sender: self.this)
                     self.unbecome()
@@ -97,6 +131,20 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
                     if let data = NSDate.init().debugDescription.dataUsingEncoding(NSUTF8StringEncoding) {
                         self.peripheral ! BLEPeripheral.UpdateCharacteristicValue(sender: self.this, char: self.onClickCharacteristic, centrals: [central], value: data)
                     }
+                
+                case let m as BLEPeripheral.DidReceiveWriteRequests:
+                    m.requests.forEach { (request) in
+                    self.peripheral ! BLEPeripheral.RespondToRequest(sender: self.this, request: request, result: .Success)
+                    }
+                    let alert = UIAlertController(title: "did receive click", message: nil,                         preferredStyle: .Alert)
+                    ^{
+                        ctrl.presentViewController(alert, animated:true,  completion: nil)
+                    }
+                    self.scheduleOnce(1, block: {() in
+                        ^{
+                            alert.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
         
                 case let m as BLEPeripheral.DidReceiveReadRequest:
                     m.request.value = self.onClickCharacteristic.value
@@ -113,9 +161,4 @@ public class PeripheralActor : ViewCtrlActor<PeripheralViewController>, WithList
             }
         }
     }
-    
-    deinit {
-        self.peripheral ! Harakiri(sender: this)
-    }
-    
 }
