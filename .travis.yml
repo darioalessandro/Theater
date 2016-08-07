@@ -6,6 +6,10 @@ before_install:
 osx_image: xcode7.3
 language: objective-c
 
-xcode_workspace: Actors.xcworkspace
-xcode_scheme: Theater
-xcode_sdk: iphonesimulator9.3
+#xcode_workspace: Actors.xcworkspace
+#xcode_scheme: Theater
+#xcode_sdk: iphonesimulator9.3
+
+script:
+- set -o pipefail && xcodebuild test -workspace Actors.xcworkspace -scheme TheaterTests -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+- pod lib lint
