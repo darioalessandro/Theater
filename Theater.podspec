@@ -120,5 +120,5 @@ got Hello
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
   s.source_files  = "Classes/*.swift"
- 
+  s.dependency  'Starscream', '~> 1.1.3'
 end
