@@ -28,7 +28,8 @@ extension RemoteCamSession {
                     
                     if let imageData = t.pic,
                                image = UIImage(data: imageData) {
-                        UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
+                        //#selector(Bank.onClickBtoA(_:)
+                        UIImageWriteToSavedPhotosAlbum(image, self, Selector("image:didFinishSavingWithError:contextInfo:"), nil)
                     }
                     
                     ^{alert.dismissViewControllerAnimated(true, completion: nil)}

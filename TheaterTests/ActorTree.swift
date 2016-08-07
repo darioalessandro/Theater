@@ -51,6 +51,7 @@ class ActorTree: QuickSpec {
                 if let r = system.actorForRef(root2) {                    expect(r.getChildrenActors().count).toEventually(equal(Int(19)), timeout: 10, pollInterval: 1, description: "Unable to create children")
                 }
             }
+        
             
             it ("should stop when required"){
                 system.stop()

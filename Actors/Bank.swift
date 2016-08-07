@@ -39,8 +39,8 @@ public class Bank : ViewCtrlActor<AccountsViewController> {
     public override func receiveWithCtrl(ctrl : AccountsViewController) -> Receive {
         
         ^{
-            ctrl.bToA.addTarget(self, action: "onClickBtoA:", forControlEvents: .TouchUpInside)
-            ctrl.aToB.addTarget(self, action: "onClickAtoB:", forControlEvents: .TouchUpInside)
+            ctrl.bToA.addTarget(self, action: #selector(Bank.onClickBtoA(_:)), forControlEvents: .TouchUpInside)
+            ctrl.aToB.addTarget(self, action: #selector(Bank.onClickAtoB(_:)), forControlEvents: .TouchUpInside)
             self.accountALabel = ctrl.accountABalance
             self.accountBLabel = ctrl.accountBBalance
         }

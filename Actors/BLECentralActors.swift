@@ -151,6 +151,21 @@ public class BLEControllersActor : Actor, UITableViewDataSource, UITableViewDele
                                 ctrl.navigationItem.prompt = "error \(error)"
                             }
                     }
+                
+                case let m as BLEPeripheralConnection.DidUpdateNotificationStateForCharacteristic:
+                    if let error = m.error,
+                        let ctrl : UIViewController = self.deviceViewCtrl {
+                            let alert = UIAlertController(title: "error \(error)", message: nil,                         preferredStyle: .Alert)
+                            ^{
+                                ctrl.presentViewController(alert, animated:true,  completion: nil)
+                            }
+                            self.scheduleOnce(2, block: {() in
+                                ^{
+                                    alert.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
+                }
+                
    
                 case is BLEPeripheralConnection.DidUpdateValueForCharacteristic:
                      AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))

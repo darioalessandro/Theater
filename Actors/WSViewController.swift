@@ -169,7 +169,7 @@ class WSViewController : UIViewController, UITextFieldDelegate {
         wsCtrl ! SetViewCtrl(ctrl: self)
         wsCtrl ! WebSocketClient.Connect(url: NSURL(string: "wss://echo.websocket.org")!, sender : nil)
         self.addNotifications()
-        send.addTarget(self, action: "onClick:", forControlEvents: .TouchUpInside)
+        send.addTarget(self, action: #selector(WSViewController.onClick(_:)), forControlEvents: .TouchUpInside)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -183,8 +183,8 @@ class WSViewController : UIViewController, UITextFieldDelegate {
     }
     
     func addNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(WSViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(WSViewController.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

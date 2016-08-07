@@ -38,7 +38,7 @@ public class iAdViewController : UIViewController, ADBannerViewDelegate {
         } else {
             self.shouldHideBanner()
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "ShouldHideiAds:", name: "ShouldHideiAds", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(iAdViewController.ShouldHideiAds(_:)), name: "ShouldHideiAds", object: nil)
     }
     
     func layoutBanners() {
