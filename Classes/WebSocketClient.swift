@@ -150,7 +150,7 @@ public class WebSocketClient : Actor , WebSocketDelegate,  WithListeners {
     lazy var disconnected : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
         case let c as Connect:
-            let socket = WebSocket(url: NSURL(string: c.url.absoluteString)!)
+            let socket = WebSocket(url: NSURL(string: c.url.absoluteString!)!)
             self.socket = socket
             socket.delegate = self
             self.addListener(c.sender)

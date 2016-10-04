@@ -194,7 +194,7 @@ public class Failure<T> : Try<T> {
     Failure reason
     */
     
-    public let error : NSError
+    public let tryError : NSError
     
     /**
     Public constructor
@@ -203,7 +203,7 @@ public class Failure<T> : Try<T> {
     */
     
     public init(error : NSError) {
-        self.error = error
+        self.tryError = error
         super.init()
     }
     
@@ -224,7 +224,7 @@ public class Failure<T> : Try<T> {
     */
     
     override public func get() -> T {
-        NSException.raise(self.error.description, format: "", arguments: getVaList([""]))
+        NSException.raise(self.tryError.description, format: "", arguments: getVaList([""]))
         return NSObject() as! T
     }
     
@@ -234,7 +234,7 @@ public class Failure<T> : Try<T> {
     */
     
     override public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.error, forKey:"exception")
+        aCoder.encodeObject(self.tryError, forKey:"exception")
     }
     
     /**
@@ -242,7 +242,7 @@ public class Failure<T> : Try<T> {
      */
     
     override public init?(coder aDecoder: NSCoder) {
-        self.error = aDecoder.decodeObjectForKey("exception") as! NSError
+        self.tryError = aDecoder.decodeObjectForKey("exception") as! NSError
         super.init()
     }
     

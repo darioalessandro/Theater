@@ -7,14 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03D346DA25D4212087115F09 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */; };
-		060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
 		06163E011BF1936300561FAF /* Props.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06163E001BF1936300561FAF /* Props.swift */; };
 		06163E041BF19AD100561FAF /* NSObject+DumpClassInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */; };
 		06163E051BF19AD100561FAF /* NSObject+DumpClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */; };
-		061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
-		063F82491D56D95B000309CA /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063F82481D56D95B000309CA /* ActorsDemo.swift */; };
-		064BE9DA1C1D1BF300249912 /* ActorTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BE9D91C1D1BF300249912 /* ActorTree.swift */; };
 		06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06545B991BE40716004A2D5F /* ViewControllerActor.swift */; };
 		065B722C1BFA692900C06580 /* TheOneWhoWalksTheBubblesOfSpaceTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065B722B1BFA692800C06580 /* TheOneWhoWalksTheBubblesOfSpaceTime.swift */; };
 		06631A671BDF191D00883344 /* WithListeners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A661BDF191D00883344 /* WithListeners.swift */; };
@@ -29,16 +24,20 @@
 		068F80361BCB0A1A00A10D76 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802D1BCB0A1A00A10D76 /* Stack.swift */; };
 		068F80371BCB0A1A00A10D76 /* Try.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802E1BCB0A1A00A10D76 /* Try.swift */; };
 		068F80381BCB0A1A00A10D76 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */; };
+		06CCA7C91DA3FE7300AF0655 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
+		06CCA7CF1DA3FE8100AF0655 /* ActorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063F82481D56D95B000309CA /* ActorsDemo.swift */; };
+		06CCA7D01DA3FE8100AF0655 /* ActorTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064BE9D91C1D1BF300249912 /* ActorTree.swift */; };
+		06CCA7D11DA3FE8100AF0655 /* TryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061C25451BC2ECC90049D6C9 /* TryTests.swift */; };
+		06CCA7D21DA3FE8100AF0655 /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */; };
 		06E1D5211BB76EE300E07321 /* Theater.h in Headers */ = {isa = PBXBuildFile; fileRef = 06E1D5201BB76EE300E07321 /* Theater.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		06E1D5281BB76EE400E07321 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
-		06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E1D52E1BB76EE400E07321 /* TheaterTests.swift */; };
 		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
 		06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06EEA7DB1BBB87EE005787AE /* Starscream.framework */; };
+		5D6B3D6F48383A66F8F37DEF /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91CB91CB0CFD5DC3573C9F73 /* Pods_TheaterTests.framework */; };
 		AC08338A9F760340A3B3C914 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26DDC475791D92720DC4C29 /* Pods_Theater.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		06E1D5291BB76EE400E07321 /* PBXContainerItemProxy */ = {
+		06CCA7CA1DA3FE7300AF0655 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
 			proxyType = 1;
@@ -85,12 +84,11 @@
 		068F802D1BCB0A1A00A10D76 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stack.swift; path = Classes/Stack.swift; sourceTree = SOURCE_ROOT; };
 		068F802E1BCB0A1A00A10D76 /* Try.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Try.swift; path = Classes/Try.swift; sourceTree = SOURCE_ROOT; };
 		068F802F1BCB0A1A00A10D76 /* WebSocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = WebSocketClient.swift; path = Classes/WebSocketClient.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		06CCA7C41DA3FE7300AF0655 /* TheaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheaterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		06CCA7D31DA3FEA100AF0655 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E1D51E1BB76EE300E07321 /* Theater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Theater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E1D5201BB76EE300E07321 /* Theater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Theater.h; sourceTree = "<group>"; };
 		06E1D5221BB76EE300E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06E1D5271BB76EE400E07321 /* TheaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheaterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		06E1D52E1BB76EE400E07321 /* TheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TheaterTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06E1D5301BB76EE400E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E5A1F91C194100004A8D29 /* InternalActorRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalActorRef.swift; sourceTree = "<group>"; };
 		06EEA7DB1BBB87EE005787AE /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Pods/../build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
 		06FA4AD71BC8B8E9005608E6 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack.framework"; sourceTree = "<group>"; };
@@ -115,21 +113,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		06CCA7C11DA3FE7300AF0655 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06CCA7C91DA3FE7300AF0655 /* Theater.framework in Frameworks */,
+				5D6B3D6F48383A66F8F37DEF /* Pods_TheaterTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D51A1BB76EE300E07321 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				06EEA7DC1BBB87EE005787AE /* Starscream.framework in Frameworks */,
 				AC08338A9F760340A3B3C914 /* Pods_Theater.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		06E1D5241BB76EE400E07321 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				06E1D5281BB76EE400E07321 /* Theater.framework in Frameworks */,
-				03D346DA25D4212087115F09 /* Pods_TheaterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,11 +187,23 @@
 			name = UIKit;
 			sourceTree = "<group>";
 		};
+		06CCA7C51DA3FE7300AF0655 /* TheaterTests */ = {
+			isa = PBXGroup;
+			children = (
+				06CCA7D31DA3FEA100AF0655 /* Info.plist */,
+				063F82481D56D95B000309CA /* ActorsDemo.swift */,
+				064BE9D91C1D1BF300249912 /* ActorTree.swift */,
+				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
+				060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */,
+			);
+			path = TheaterTests;
+			sourceTree = "<group>";
+		};
 		06E1D4E91BB7699700E07321 = {
 			isa = PBXGroup;
 			children = (
 				06E1D51F1BB76EE300E07321 /* Theater */,
-				06E1D52D1BB76EE400E07321 /* TheaterTests */,
+				06CCA7C51DA3FE7300AF0655 /* TheaterTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -204,7 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				06E1D51E1BB76EE300E07321 /* Theater.framework */,
-				06E1D5271BB76EE400E07321 /* TheaterTests.xctest */,
+				06CCA7C41DA3FE7300AF0655 /* TheaterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,19 +232,6 @@
 				06807FCE1D14368B00A25F3D /* MyPlayground.playground */,
 			);
 			path = Theater;
-			sourceTree = "<group>";
-		};
-		06E1D52D1BB76EE400E07321 /* TheaterTests */ = {
-			isa = PBXGroup;
-			children = (
-				063F82481D56D95B000309CA /* ActorsDemo.swift */,
-				064BE9D91C1D1BF300249912 /* ActorTree.swift */,
-				06E1D52E1BB76EE400E07321 /* TheaterTests.swift */,
-				06E1D5301BB76EE400E07321 /* Info.plist */,
-				061C25451BC2ECC90049D6C9 /* TryTests.swift */,
-				060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */,
-			);
-			path = TheaterTests;
 			sourceTree = "<group>";
 		};
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
@@ -301,6 +298,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		06CCA7C31DA3FE7300AF0655 /* TheaterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 06CCA7CC1DA3FE7300AF0655 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
+			buildPhases = (
+				E50DA7B8755E7B870E99915A /* [CP] Check Pods Manifest.lock */,
+				06CCA7C01DA3FE7300AF0655 /* Sources */,
+				06CCA7C11DA3FE7300AF0655 /* Frameworks */,
+				06CCA7C21DA3FE7300AF0655 /* Resources */,
+				F546A7D36D9B175DCF3C5305 /* [CP] Embed Pods Frameworks */,
+				52A35B955DDEE72ECF0BF24A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06CCA7CB1DA3FE7300AF0655 /* PBXTargetDependency */,
+			);
+			name = TheaterTests;
+			productName = TheaterTests;
+			productReference = 06CCA7C41DA3FE7300AF0655 /* TheaterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		06E1D51D1BB76EE300E07321 /* Theater */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06E1D5351BB76EE400E07321 /* Build configuration list for PBXNativeTarget "Theater" */;
@@ -321,43 +339,22 @@
 			productReference = 06E1D51E1BB76EE300E07321 /* Theater.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		06E1D5261BB76EE400E07321 /* TheaterTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 06E1D5391BB76EE400E07321 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
-			buildPhases = (
-				83557F552A5B38BC8BCA25F0 /* [CP] Check Pods Manifest.lock */,
-				06E1D5231BB76EE400E07321 /* Sources */,
-				06E1D5241BB76EE400E07321 /* Frameworks */,
-				06E1D5251BB76EE400E07321 /* Resources */,
-				D8F40B64FEE5C65994B71A5E /* [CP] Embed Pods Frameworks */,
-				15D52F0D1E9D801C72C060EC /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				06E1D52A1BB76EE400E07321 /* PBXTargetDependency */,
-			);
-			name = TheaterTests;
-			productName = TheaterTests;
-			productReference = 06E1D5271BB76EE400E07321 /* TheaterTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		06E1D4EA1BB7699700E07321 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = dario;
 				TargetAttributes = {
+					06CCA7C31DA3FE7300AF0655 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
 					06E1D51D1BB76EE300E07321 = {
 						CreatedOnToolsVersion = 7.0;
-					};
-					06E1D5261BB76EE400E07321 = {
-						CreatedOnToolsVersion = 7.0;
-						TestTargetID = 06E1D4F11BB7699700E07321;
 					};
 				};
 			};
@@ -375,20 +372,20 @@
 			projectRoot = "";
 			targets = (
 				06E1D51D1BB76EE300E07321 /* Theater */,
-				06E1D5261BB76EE400E07321 /* TheaterTests */,
+				06CCA7C31DA3FE7300AF0655 /* TheaterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		06E1D51C1BB76EE300E07321 /* Resources */ = {
+		06CCA7C21DA3FE7300AF0655 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		06E1D5251BB76EE400E07321 /* Resources */ = {
+		06E1D51C1BB76EE300E07321 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -398,7 +395,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		15D52F0D1E9D801C72C060EC /* [CP] Copy Pods Resources */ = {
+		52A35B955DDEE72ECF0BF24A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -425,7 +422,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		74B6F91F55058078A2CD135E /* [CP] Copy Pods Resources */ = {
@@ -443,7 +440,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Theater/Pods-Theater-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		83557F552A5B38BC8BCA25F0 /* [CP] Check Pods Manifest.lock */ = {
+		E50DA7B8755E7B870E99915A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -455,10 +452,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D8F40B64FEE5C65994B71A5E /* [CP] Embed Pods Frameworks */ = {
+		F546A7D36D9B175DCF3C5305 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -476,6 +473,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		06CCA7C01DA3FE7300AF0655 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06CCA7CF1DA3FE8100AF0655 /* ActorsDemo.swift in Sources */,
+				06CCA7D01DA3FE8100AF0655 /* ActorTree.swift in Sources */,
+				06CCA7D21DA3FE8100AF0655 /* BLEPeripheralTests.swift in Sources */,
+				06CCA7D11DA3FE8100AF0655 /* TryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06E1D5191BB76EE300E07321 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -500,29 +508,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		06E1D5231BB76EE400E07321 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				064BE9DA1C1D1BF300249912 /* ActorTree.swift in Sources */,
-				060E28521BE1A3C500D73ACB /* BLEPeripheralTests.swift in Sources */,
-				061C25461BC2ECC90049D6C9 /* TryTests.swift in Sources */,
-				06E1D52F1BB76EE400E07321 /* TheaterTests.swift in Sources */,
-				063F82491D56D95B000309CA /* ActorsDemo.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		06E1D52A1BB76EE400E07321 /* PBXTargetDependency */ = {
+		06CCA7CB1DA3FE7300AF0655 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 06E1D51D1BB76EE300E07321 /* Theater */;
-			targetProxy = 06E1D5291BB76EE400E07321 /* PBXContainerItemProxy */;
+			targetProxy = 06CCA7CA1DA3FE7300AF0655 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		06CCA7CD1DA3FE7300AF0655 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = TheaterTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dario.TheaterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		06CCA7CE1DA3FE7300AF0655 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = TheaterTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = dario.TheaterTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
 		06E1D50D1BB7699800E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -565,6 +597,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -603,6 +636,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -633,6 +667,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -663,41 +698,25 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		06E1D53A1BB76EE400E07321 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = TheaterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = dario.TheaterTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Actors.app/Actors";
-			};
-			name = Debug;
-		};
-		06E1D53B1BB76EE400E07321 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = TheaterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = dario.TheaterTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Actors.app/Actors";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		06CCA7CC1DA3FE7300AF0655 /* Build configuration list for PBXNativeTarget "TheaterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06CCA7CD1DA3FE7300AF0655 /* Debug */,
+				06CCA7CE1DA3FE7300AF0655 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "Theater" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -712,15 +731,6 @@
 			buildConfigurations = (
 				06E1D5361BB76EE400E07321 /* Debug */,
 				06E1D5371BB76EE400E07321 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		06E1D5391BB76EE400E07321 /* Build configuration list for PBXNativeTarget "TheaterTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				06E1D53A1BB76EE400E07321 /* Debug */,
-				06E1D53B1BB76EE400E07321 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

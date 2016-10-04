@@ -229,7 +229,8 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
     
     
     public func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
-        this ! PeripheralManagerDidUpdateState(sender : this, state : peripheral.state)
+        //Fuck tou apple
+        this ! PeripheralManagerDidUpdateState(sender : this, state : CBPeripheralManagerState.init(rawValue: peripheral.state.rawValue)!)
     }
     
     /**

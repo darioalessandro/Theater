@@ -73,15 +73,15 @@ class TryTests: XCTestCase {
         let number3Try : Try<Int> = TryGenerator(n: 2).isItBiggerThan3()
         
         if let  n1 = number1Try.toOptional(),
-                n2 = number2Try.toOptional(),
-                n3 = number3Try.toOptional() {
+                let n2 = number2Try.toOptional(),
+                let n3 = number3Try.toOptional() {
             XCTAssertTrue(false, "\(n1), \(n2) \(n3)")
         } else {
             XCTAssertTrue(true)
         }
         
         if let  op1 = TryGenerator(n: 5).isItBiggerThan3().toOptional(),
-                n2 = TryGenerator(n: op1 - 1).isItBiggerThan3().toOptional() {
+                let n2 = TryGenerator(n: op1 - 1).isItBiggerThan3().toOptional() {
             XCTAssertEqual(n2, 4)
         } else {
              XCTAssertTrue(false)

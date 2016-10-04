@@ -111,7 +111,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
             switch (msg) {
                 
                 case is StateChanged:
-                    if self.central.state == CBCentralManagerState.PoweredOn {
+                    if self.central.state == .PoweredOn {
                         self.this ! StartScanning(services: services, sender: self.this)
                     }
                 
@@ -183,7 +183,8 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManagerDidUpdateState(central: CBCentralManager) {
-        let stateChanged = StateChanged(sender: this, state: central.state)
+        let state = CBCentralManagerState.init(rawValue: central.state.rawValue)!
+        let stateChanged = StateChanged(sender: this, state: state)
         this ! stateChanged
         listeners.forEach { (listener) in listener ! stateChanged }
     }
