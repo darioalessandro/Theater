@@ -137,7 +137,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                     if let c = self.connections[id] {
                         c ! Harakiri(sender: self.this)
                     }
-                    self.connections.removeValue(forKey: <#T##UUID#>)(m.peripheral.identifier)
+                    self.connections.removeValue(forKey:m.peripheral.identifier)
                     self.broadcast(msg: m)
                     
                 case let m as Peripheral.Disconnect:
