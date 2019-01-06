@@ -103,7 +103,7 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
      - parameter ctrl : controller that was set to this Actor
     */
     
-    public func receiveWithCtrl(ctrl : A) -> Receive {
+    open func receiveWithCtrl(ctrl : A) -> Receive {
         return { (msg : Actor.Message) in }
     }
     
