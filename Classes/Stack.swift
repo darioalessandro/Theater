@@ -41,7 +41,7 @@ public class Stack<A> {
     }
     
     /**
-    Pop an element from the Stack, if the stack is emplty, it returns None
+    Pop an element from the Stack, if the stack is empty, it returns None
     */
     
     public func pop() -> Optional<A> {
@@ -50,6 +50,16 @@ public class Stack<A> {
             return first
         } else {
             return nil
+        }
+    }
+    
+    /**
+     Pop an element from the Stack if not empty
+     */
+    
+    public func popAndThrowAway() -> Void {
+        if !self.isEmpty() {
+            self.array.removeFirst()
         }
     }
     

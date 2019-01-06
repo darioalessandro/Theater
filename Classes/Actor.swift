@@ -52,7 +52,7 @@ Which will be called when some other actor tries to ! (tell) you something
 
 */
 
-public class Actor : NSObject {
+open class Actor : NSObject {
     
     public func actorForRef(ref : ActorRef) -> Optional<Actor> {
         let path = ref.path.asString
@@ -62,7 +62,7 @@ public class Actor : NSObject {
             return selected
         } else {
             //TODO: this is expensive an wasteful
-            let recursiveSearch = self.children.map({return $0.1.actorForRef(ref)})
+            let recursiveSearch = self.children.map({return $0.1.actorForRef(ref:ref)})
             
             let withoutOpt = recursiveSearch.filter({return $0 != nil}).flatMap({return $0})
             
@@ -147,7 +147,7 @@ public class Actor : NSObject {
     - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
     */
     
-    final public func become(name : String, state : Receive) -> Void  {
+    final public func become(name : String, state : @escaping Receive) -> Void  {
         become(name: name, state : state, discardOld : false)
     }
     
@@ -158,8 +158,8 @@ public class Actor : NSObject {
      - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
      */
     
-    final public func become(name : String, state : Receive, discardOld : Bool) -> Void  {
-        if discardOld { self.statesStack.pop() }
+    final public func become(name : String, state : @escaping Receive, discardOld : Bool) -> Void  {
+        if discardOld { self.statesStack.popAndThrowAway() }
         self.statesStack.push(element: (name, state))
     }
     
@@ -168,7 +168,7 @@ public class Actor : NSObject {
     */
     
     final public func unbecome() {
-        self.statesStack.pop()
+        self.statesStack.popAndThrowAway()
     }
     
     /**
@@ -235,7 +235,7 @@ public class Actor : NSObject {
     - Parameter msg: the incoming message
     */
     
-    public func receive(msg : Actor.Message) -> Void {
+    open func receive(msg : Actor.Message) -> Void {
         switch msg {
             default :
                 print("message not handled \(NSStringFromClass(type(of: msg)))")
@@ -258,7 +258,7 @@ public class Actor : NSObject {
      Is called when an Actor is started. Actors are automatically started asynchronously when created. Empty default implementation.
     */
      
-    public func preStart() -> Void {
+    open func preStart() -> Void {
         
     }
     
@@ -266,7 +266,7 @@ public class Actor : NSObject {
      Method to allow cleanup
      */
     
-    public func willStop() -> Void {
+    open func willStop() -> Void {
         
     }
     
@@ -274,8 +274,8 @@ public class Actor : NSObject {
     Schedule Once is a timer that executes the code in block after seconds
     */
      
-    final public func scheduleOnce(seconds:Double, block : () -> Void) {
-        dispatch_after(dispatch_time(dispatch_time_t(DispatchTime.now()), Int64(seconds * Double(NSEC_PER_SEC))), self.mailbox.underlyingQueue!, block)
+    final public func scheduleOnce(seconds:Double, block : @escaping () -> Void) {
+        self.mailbox.underlyingQueue!.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(seconds)), execute: block)
     }
     
     /**

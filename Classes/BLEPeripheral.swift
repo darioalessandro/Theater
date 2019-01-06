@@ -183,7 +183,7 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 self.broadcast(msg: msg)
             
             case let m as RespondToRequest:
-                self.peripheral.respondToRequest(m.request, withResult : m.result)
+                self.peripheral.respond(to: m.request, withResult : CBATTError.Code(rawValue: m.result.errorCode)!)
             
             case let m as UpdateCharacteristicValue:
                 self.peripheral.updateValue(m.value, for:m.char, onSubscribedCentrals: m.centrals)
