@@ -84,7 +84,7 @@ For convenience, we provide AppActorSystem.shared which provides a default actor
 
 */
 
-public class ActorSystem  {
+open class ActorSystem  {
     
     lazy private var supervisor : Actor? = Actor.self.init(context: self, ref: ActorRef(context: self, path: ActorPath(path: "\(self.name)/user")))
     
