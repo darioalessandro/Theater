@@ -1,9 +1,10 @@
 Pod::Spec.new do |s|
 
-  s.name         = "Theater"
-  s.version      = "0.7"
-  s.summary      = "Swift framework to help write async, resilient and responsive applications."
-  s.description  = <<-DESC
+  s.name          = "Theater"
+  s.version       = "0.8"
+  s.swift_version = "4.2"
+  s.summary       = "Swift framework to help write async, resilient and responsive applications."
+  s.description   = <<-DESC
   
 Writing async, resilient and responsive applications is too hard. 
 

@@ -10,6 +10,10 @@ import Foundation
 import XCTest
 import Theater
 
+enum NotLarger: Error {
+    case than(Int)
+}
+
 public class TryGenerator {
     private let n : Int
     
@@ -21,7 +25,7 @@ public class TryGenerator {
         if self.n > 3 {
             return Success(value: self.n)
         } else {
-            return Failure(error: NSError(domain: "No it is not", code: 0, userInfo: nil))
+            return Failure(error: NotLarger.than(3))
         }
     }
     
@@ -91,7 +95,7 @@ class TryTests: XCTestCase {
     
     func testGetOrElse() {
         
-        let elseClojure : (Void) -> (Int) = {() -> Int in return 10 * 4}
+        let elseClojure : () -> (Int) = {() -> Int in return 10 * 4}
         
         let number1Try : Int = TryGenerator(n: 2).isItBiggerThan3().getOrElse {elseClojure()}
         XCTAssertEqual(number1Try, 40)

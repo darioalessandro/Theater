@@ -59,7 +59,7 @@ public class ActorRef {
     */
 
     public func tell (msg : Actor.Message) -> Void {
-        self.context.tell(msg, recipient:self)
+        self.context.tell(msg: msg, recipient:self)
     }
     
 }
@@ -70,7 +70,7 @@ The first rule about actors is that you should not access them directly, you alw
 
 public class TestActorSystem : ActorSystem {
     public override func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return super.actorForRef(ref)
+        return super.actorForRef(ref: ref)
     }
 }
 
@@ -114,18 +114,19 @@ public class ActorSystem  {
     */
     
     public func stop(actorRef : ActorRef) -> Void {
-        supervisor!.stop(actorRef)
+        supervisor!.stop(actorRef: actorRef)
     }
     
     public func stop() {
         supervisor!.stop()
         //TODO: there must be a better way to wait for all actors to die...
         func shutdown(){
-            dispatch_after(5000, NSOperationQueue.mainQueue().underlyingQueue!) {[unowned self] () -> Void in
+            // FIXME: This is a big hack.
+            OperationQueue.main.underlyingQueue?.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 5000), execute: {
                 if(self.supervisor!.children.count == 0) {
                     self.supervisor = nil
                 }
-            }
+            })
         }
         shutdown()
         
@@ -147,7 +148,7 @@ public class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
-        return supervisor!.actorOf(clz, name: name)
+        return supervisor!.actorOf(clz: clz, name: name)
     }
     
     /**
@@ -165,7 +166,7 @@ public class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz, name: NSUUID.init().UUIDString)
+        return actorOf(clz: clz, name: UUID.init().uuidString)
     }
     
     /**
@@ -174,9 +175,9 @@ public class ActorSystem  {
      - parameter ref: reference to resolve
     */
     
-    private func actorForRef(ref : ActorRef) -> Optional<Actor> {
+    func actorForRef(ref : ActorRef) -> Optional<Actor> {
         if let s = self.supervisor {
-            return s.actorForRef(ref)
+            return s.actorForRef(ref: ref)
         } else {
             return nil
         }
@@ -202,9 +203,9 @@ public class ActorSystem  {
     
     public func tell(msg : Actor.Message, recipient : ActorRef) -> Void {
         
-        if let actor = actorForRef(recipient) {
-            actor.tell(msg)
-        } else if let sender = msg.sender, _ = actorForRef(sender) {
+        if let actor = actorForRef(ref: recipient) {
+            actor.tell(msg: msg)
+        } else if let sender = msg.sender, let _ = actorForRef(ref: sender) {
             sender ! Actor.DeadLetter(message: msg, sender:recipient)
         } else {
             print("Dropped message \(msg)")

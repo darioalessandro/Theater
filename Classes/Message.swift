@@ -14,7 +14,7 @@ extension Actor {
     Actor send and receive objects that must subclass Message, the Message class provides a sender, which Actors can use to reply.
     */
 
-    @objc public class Message : NSObject {
+    @objc open class Message : NSObject {
         
         /**
         The ActorRef of the Actor that sent this message
@@ -55,9 +55,9 @@ extension Actor {
         The operationId used to track the Operation
          
         */
-        public let operationId : NSUUID
+        public let operationId : UUID
         
-        public init(sender: Optional<ActorRef>, operationId : NSUUID) {
+        public init(sender: Optional<ActorRef>, operationId : UUID) {
             self.operationId = operationId
             super.init(sender : sender)
         }

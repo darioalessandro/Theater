@@ -57,7 +57,7 @@ extension WithListeners {
     public func addListener(sender : ActorRef?) {
         if let s = sender {
             
-            if (listeners.contains({ a -> Bool in return s.path.asString == a.path.asString}) == false) {
+            if (listeners.contains(where: { a -> Bool in return s.path.asString == a.path.asString}) == false) {
                 listeners.append(s)
             }
         }
@@ -71,7 +71,7 @@ extension WithListeners {
     
     public func removeListener(sender : ActorRef?) {
         if let l = sender,
-            n = listeners.indexOf({ a -> Bool in  return l.path.asString == a.path.asString}) {
+            let n = listeners.firstIndex(where:{ a -> Bool in  return l.path.asString == a.path.asString}) {
                 listeners.removeFirst(n)
         }
     }
@@ -79,8 +79,8 @@ extension WithListeners {
     /**
     Send message to all listeners
      
-    -parameter m : message to send
+    -parameter msg : message to send
     */
     
-    public func broadcast(m : Actor.Message) { listeners.forEach { $0 ! m} }
+    public func broadcast(msg : Actor.Message) { listeners.forEach { $0 ! msg} }
 }

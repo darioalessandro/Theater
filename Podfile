@@ -7,23 +7,23 @@ platform :ios, '8.0'
 use_frameworks!
 
 def testing_pods
-    pod 'Quick', '~> 0.9.3'
-    pod 'Nimble', '4.1.0'
+    pod 'Quick', '~> 1.3.2'
+    pod 'Nimble', '7.3.1'
 end
 
 target 'Theater' do
-    pod 'Starscream', '~> 1.1.3'
+    pod 'Starscream', '~> 3.0.6'
 end
 
 target 'TheaterTests' do
-    pod 'Starscream', '~> 1.1.3'
+    pod 'Starscream', '~> 3.0.6'
     testing_pods
 end
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '2.3'
+            config.build_settings['SWIFT_VERSION'] = '3.0'
         end
     end
 end

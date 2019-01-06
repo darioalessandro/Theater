@@ -24,7 +24,7 @@ public class Try<T> : NSCoder {
     Exception used in case that developers try to use this class directly, Success or Failure should be used instead, I'll try to replace this for a protocol when Apple supports generics on protocols.
     */
     
-    private let e : NSException = NSException(name: "invalid usage", reason: "please do not use this class directly, use Success || Failure", userInfo: nil)
+    private let e : NSException = NSException(name: NSExceptionName(rawValue: "invalid usage"), reason: "please do not use this class directly, use Success || Failure", userInfo: nil)
 
     /**
     flag to determine if the computation was successful or not
@@ -66,7 +66,7 @@ public class Try<T> : NSCoder {
     
     public func map<U>(f : (T) -> (U)) -> Try<U> {return Try<U>()}
     
-    public func getOrElse(d : (Void) -> T) -> T {
+    public func getOrElse(d : () -> T) -> T {
         if self.isSuccess() {
             return get()
         }else{
@@ -78,7 +78,7 @@ public class Try<T> : NSCoder {
         do {
             let s = Success(value : r)
             return s
-        } catch let error as NSError {
+        } catch let error as Error {
             return Failure(error : error)
         }
     }
@@ -142,7 +142,7 @@ public class Success<T> : Try<T> {
     */
     
     override public func map<U>(f : (T) -> (U)) -> Try<U> {
-        return Try<U>.gen(f(self.value))
+        return Try<U>.gen(r: f(self.value))
     }
     
     /**
@@ -162,7 +162,7 @@ public class Success<T> : Try<T> {
     */
     
     override public func toOptional() -> Optional<T> {
-        return  Optional.Some(self.value)
+        return  Optional.some(self.value)
     }
     
     /**
@@ -170,7 +170,7 @@ public class Success<T> : Try<T> {
      */
     
     override public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.value as! NSObject, forKey:"value")
+        aCoder.encode(self.value as! NSObject, forKey:"value")
     }
     
     /**
@@ -178,7 +178,7 @@ public class Success<T> : Try<T> {
      */
     
     override public init?(coder aDecoder: NSCoder) {
-        self.value = aDecoder.decodeObjectForKey("value") as! T
+        self.value = aDecoder.decodeObject(forKey: "value") as! T
         super.init()
     }
     
@@ -194,7 +194,7 @@ public class Failure<T> : Try<T> {
     Failure reason
     */
     
-    public let tryError : NSError
+    public let tryError : Error
     
     /**
     Public constructor
@@ -202,7 +202,7 @@ public class Failure<T> : Try<T> {
      - parameter error : failure reason
     */
     
-    public init(error : NSError) {
+    public init(error : Error) {
         self.tryError = error
         super.init()
     }
@@ -224,7 +224,7 @@ public class Failure<T> : Try<T> {
     */
     
     override public func get() -> T {
-        NSException.raise(self.tryError.description, format: "", arguments: getVaList([""]))
+        NSException.raise(NSExceptionName(rawValue: self.tryError.localizedDescription), format: "", arguments: getVaList([""]))
         return NSObject() as! T
     }
     
@@ -234,7 +234,7 @@ public class Failure<T> : Try<T> {
     */
     
     override public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.tryError, forKey:"exception")
+        aCoder.encode(self.tryError, forKey:"exception")
     }
     
     /**
@@ -242,7 +242,7 @@ public class Failure<T> : Try<T> {
      */
     
     override public init?(coder aDecoder: NSCoder) {
-        self.tryError = aDecoder.decodeObjectForKey("exception") as! NSError
+        self.tryError = aDecoder.decodeObject(forKey: "exception") as! Error
         super.init()
     }
     

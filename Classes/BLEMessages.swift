@@ -22,11 +22,11 @@ public extension BLECentral {
     public class BLEPeripheralObservation {
         
         public let peripheral: CBPeripheral
-        public let advertisementData: [String : AnyObject]
+        public let advertisementData: [String : Any]
         public let RSSI: NSNumber
-        public let timestamp : NSDate
+        public let timestamp : Date
         
-        init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : NSDate) {
+        init(peripheral: CBPeripheral,advertisementData: [String : Any],RSSI: NSNumber,timestamp : Date) {
             self.peripheral = peripheral
             self.advertisementData = advertisementData
             self.RSSI = RSSI
@@ -36,7 +36,7 @@ public extension BLECentral {
     
     typealias PeripheralObservations = [String : [BLEPeripheralObservation]]
     
-    typealias PeripheralConnections = [NSUUID : ActorRef]    
+    typealias PeripheralConnections = [UUID : ActorRef]    
     
     /**
     Namespace for Peripheral related messages
@@ -77,11 +77,11 @@ public extension BLECentral {
         
         public class OnDisconnect : Actor.Message {
             
-            public let error : Optional<NSError>
+            public let error : Optional<Error>
             
             public let peripheral : CBPeripheral
             
-            public init(sender: Optional<ActorRef>, peripheral: CBPeripheral, error : Optional<NSError>) {
+            public init(sender: Optional<ActorRef>, peripheral: CBPeripheral, error : Optional<Error>) {
                 self.peripheral = peripheral
                 self.error = error
                 super.init(sender: sender)
@@ -229,8 +229,8 @@ public extension BLEPeripheral {
      */
     
     public class FailedToStartAdvertising : Actor.Message {
-        public let error : NSError
-        init(sender : Optional<ActorRef>, error : NSError) {
+        public let error : Error
+        init(sender : Optional<ActorRef>, error : Error) {
             self.error = error
             super.init(sender: sender)
         }
@@ -370,12 +370,12 @@ public extension BLEPeripheral {
     public class UpdateCharacteristicValue : Actor.Message {
         public let char : CBMutableCharacteristic
         public let centrals : [CBCentral]?
-        public let value : NSData
+        public let value : Data
         
         public init(sender: Optional<ActorRef>,
             char : CBMutableCharacteristic,
             centrals : [CBCentral]?,
-            value : NSData) {
+            value : Data) {
                 self.char = char
                 self.centrals = centrals
                 self.value = value
@@ -441,13 +441,13 @@ public extension BLEPeripheralConnection {
         
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let RSSI : NSNumber
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
-            error : NSError?,
+            error : Error?,
             RSSI : NSNumber) {
                 self.error = error
                 self.RSSI = RSSI
@@ -464,11 +464,11 @@ public extension BLEPeripheralConnection {
         
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
-            error : NSError?) {
+            error : Error?) {
                 self.error = error
                 self.peripheral = peripheral
                 super.init(sender: sender)
@@ -483,11 +483,11 @@ public extension BLEPeripheralConnection {
         
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
-            error : NSError?) {
+            error : Error?) {
                 self.error = error
                 self.peripheral = peripheral
                 super.init(sender: sender)
@@ -516,14 +516,14 @@ public extension BLEPeripheralConnection {
         
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let service: CBService
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             service : CBService,
-            error : NSError?) {
+            error : Error?) {
                 self.service = service
                 self.error = error
                 self.peripheral = peripheral
@@ -538,14 +538,14 @@ public extension BLEPeripheralConnection {
     public class DidDiscoverCharacteristicsForService : Actor.Message {
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let service: CBService
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             service : CBService,
-            error : NSError?) {
+            error : Error?) {
                 self.service = service
                 self.error = error
                 self.peripheral = peripheral
@@ -561,14 +561,14 @@ public extension BLEPeripheralConnection {
         
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let characteristic: CBCharacteristic
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             characteristic: CBCharacteristic,
-            error : NSError?) {
+            error : Error?) {
                 self.characteristic = characteristic
                 self.error = error
                 self.peripheral = peripheral
@@ -583,14 +583,14 @@ public extension BLEPeripheralConnection {
     public class DidWriteValueForCharacteristic : Actor.Message {
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let characteristic: CBCharacteristic
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             characteristic: CBCharacteristic,
-            error : NSError?) {
+            error : Error?) {
                 self.characteristic = characteristic
                 self.error = error
                 self.peripheral = peripheral
@@ -605,14 +605,14 @@ public extension BLEPeripheralConnection {
     public class DidUpdateNotificationStateForCharacteristic : Actor.Message {
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let characteristic: CBCharacteristic
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             characteristic: CBCharacteristic,
-            error : NSError?) {
+            error : Error?) {
                 self.characteristic = characteristic
                 self.error = error
                 self.peripheral = peripheral
@@ -627,14 +627,14 @@ public extension BLEPeripheralConnection {
     public class DidDiscoverDescriptorsForCharacteristic : Actor.Message {
         public let peripheral : CBPeripheral
         
-        public let error : NSError?
+        public let error : Error?
         
         public let characteristic: CBCharacteristic
         
         public init(sender: Optional<ActorRef>,
             peripheral : CBPeripheral,
             characteristic: CBCharacteristic,
-            error : NSError?) {
+            error : Error?) {
                 self.characteristic = characteristic
                 self.error = error
                 self.peripheral = peripheral
@@ -649,12 +649,12 @@ public extension BLEPeripheralConnection {
     public class DidUpdateValueForDescriptor : Actor.Message {
         public let peripheral: CBPeripheral
         public let descriptor: CBDescriptor
-        public let error: NSError?
+        public let error: Error?
         
         public init(sender: Optional<ActorRef>,
             peripheral: CBPeripheral,
             descriptor: CBDescriptor,
-            error: NSError?) {
+            error: Error?) {
                 self.peripheral = peripheral
                 self.descriptor = descriptor
                 self.error = error
@@ -669,12 +669,12 @@ public extension BLEPeripheralConnection {
     public class DidWriteValueForDescriptor : Actor.Message {
         public let peripheral: CBPeripheral
         public let descriptor: CBDescriptor
-        public let error: NSError?
+        public let error: Error?
         
         public init(sender: Optional<ActorRef>,
             peripheral: CBPeripheral,
             descriptor: CBDescriptor,
-            error: NSError?) {
+            error: Error?) {
                 self.peripheral = peripheral
                 self.descriptor = descriptor
                 self.error = error
