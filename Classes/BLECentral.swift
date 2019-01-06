@@ -192,7 +192,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
     
-    @objc public func centralManager(central: CBCentralManager, willRestoreState dict: [String : AnyObject]) {
+    @objc public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         
     }
     
@@ -200,8 +200,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
     
-    @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        
+    @objc public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: Date.init())
         if var historyOfDevice = self.observations[peripheral.identifier.uuidString], let lastObv = historyOfDevice.first {
             let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20

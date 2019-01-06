@@ -22,11 +22,11 @@ public extension BLECentral {
     public class BLEPeripheralObservation {
         
         public let peripheral: CBPeripheral
-        public let advertisementData: [String : AnyObject]
+        public let advertisementData: [String : Any]
         public let RSSI: NSNumber
         public let timestamp : Date
         
-        init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : Date) {
+        init(peripheral: CBPeripheral,advertisementData: [String : Any],RSSI: NSNumber,timestamp : Date) {
             self.peripheral = peripheral
             self.advertisementData = advertisementData
             self.RSSI = RSSI
