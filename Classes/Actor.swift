@@ -8,7 +8,11 @@
 
 import Foundation
 
-infix operator ! {associativity left precedence 130}
+infix operator ! : SendMessagePrecedence
+
+precedencegroup SendMessagePrecedence {
+    associativity: left
+}
 
 /**
  
@@ -64,7 +68,7 @@ open class Actor : NSObject {
             //TODO: this is expensive an wasteful
             let recursiveSearch = self.children.map({return $0.1.actorForRef(ref:ref)})
             
-            let withoutOpt = recursiveSearch.filter({return $0 != nil}).flatMap({return $0})
+            let withoutOpt = recursiveSearch.filter({return $0 != nil}).compactMap({return $0})
             
             return withoutOpt.first
         }
