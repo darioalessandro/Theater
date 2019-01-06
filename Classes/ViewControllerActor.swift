@@ -53,7 +53,7 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
     By default, the ViewCtrlActor instances go to the waitingForCtrl state.
     */
     
-    override public func preStart() {
+    override open func preStart() {
         super.preStart()
         self.become(name: self.waitingForCtrlState, state: self.waitingForCtrl)
     }
