@@ -35,7 +35,7 @@ public class SetViewCtrl<T : UIViewController> : Actor.Message {
  Convenience subclass of Actor to bind a UIViewController, which is very common when dealing with UIKit.
 */
 
-public class ViewCtrlActor<A : UIViewController> : Actor {
+open class ViewCtrlActor<A : UIViewController> : Actor {
     
     public let waitingForCtrlState = "waitingForCtrl"
     
