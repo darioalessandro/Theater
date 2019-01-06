@@ -37,7 +37,7 @@ public class Stack<A> {
     */
     
     public func push(element : A) -> Void {
-        self.array.insert(element, atIndex: 0)
+        self.array.insert(element, at: 0)
     }
     
     /**

@@ -21,7 +21,7 @@ public class TryGenerator {
         if self.n > 3 {
             return Success(value: self.n)
         } else {
-            return Failure(error: NSError(domain: "No it is not", code: 0, userInfo: nil))
+            return Failure(error: Error(domain: "No it is not", code: 0, userInfo: nil))
         }
     }
     

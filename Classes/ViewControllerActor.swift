@@ -55,7 +55,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
     
     override public func preStart() {
         super.preStart()
-        self.become(self.waitingForCtrlState, state: self.waitingForCtrl)
+        self.become(name: self.waitingForCtrlState, state: self.waitingForCtrl)
     }
     
     /**
@@ -66,10 +66,10 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
         switch(msg) {
             case let a as SetViewCtrl<A>:
                 unowned let b = a.ctrl
-                self.become(self.withCtrlState, state:self.receiveWithCtrl(b))
+                self.become(name: self.withCtrlState, state:self.receiveWithCtrl(ctrl:b))
                 
             default:
-                self.receive(msg)
+                self.receive(msg: msg)
         }
     }
     
@@ -82,7 +82,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != name && hName != self.withCtrlState {
                 unbecome()
-                popToState(name)
+                popToState(name: name)
             }
         } else {
             print("unable to find state with name \(name)")
@@ -94,7 +94,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
      */
     
     public override func popToRoot() -> Void {
-        popToState(self.withCtrlState)
+        popToState(name: self.withCtrlState)
     }
     
     /**

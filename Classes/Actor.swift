@@ -27,7 +27,7 @@ infix operator ! {associativity left precedence 130}
  */
 
 public func !(actorRef : ActorRef, msg : Actor.Message) -> Void {
-    actorRef.tell(msg)
+    actorRef.tell(msg: msg)
 }
 
 public typealias Receive = (Actor.Message) -> (Void)
@@ -75,14 +75,14 @@ public class Actor : NSObject {
     }
     
     public func stop(actorRef : ActorRef) -> Void {
-        self.mailbox.addOperationWithBlock { () -> Void in
+        self.mailbox.addOperation { () -> Void in
             let path = actorRef.path.asString
-            self.children.removeValueForKey(path)
+            self.children.removeValue(forKey:path)
         }
     }
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz, name: NSUUID.init().UUIDString)
+        return actorOf(clz: clz, name: NSUUID.init().uuidString)
     }
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
@@ -120,7 +120,7 @@ public class Actor : NSObject {
     Each actor has it's own mailbox to process Actor.Messages.
     */
     
-    final public let mailbox : NSOperationQueue = NSOperationQueue()
+    final public let mailbox : OperationQueue = OperationQueue()
     
     /**
     Sender has a reference to the last actor ref that sent this actor a message
@@ -148,7 +148,7 @@ public class Actor : NSObject {
     */
     
     final public func become(name : String, state : Receive) -> Void  {
-        become(name, state : state, discardOld : false)
+        become(name: name, state : state, discardOld : false)
     }
     
     /**
@@ -160,7 +160,7 @@ public class Actor : NSObject {
     
     final public func become(name : String, state : Receive, discardOld : Bool) -> Void  {
         if discardOld { self.statesStack.pop() }
-        self.statesStack.push((name, state))
+        self.statesStack.push(element: (name, state))
     }
     
     /**
@@ -189,7 +189,7 @@ public class Actor : NSObject {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != name {
                 unbecome()
-                popToState(name)
+                popToState(name: name)
             }
         } else {
             print("unable to find state with name \(name)")
@@ -217,14 +217,14 @@ public class Actor : NSObject {
             self.children.forEach({ (_,actor) in
                 actor.this ! Harakiri(sender:this)
             })
-            self.context.stop(self.this)
+            self.context.stop(actorRef: self.this)
             
         default :
             if let (name,state) : (String,Receive) = self.statesStack.head() {
                 print("Sending message to state \(name)")
                 state(msg)
             } else {
-                self.receive(msg)
+                self.receive(msg: msg)
             }
         }
     }
@@ -238,7 +238,7 @@ public class Actor : NSObject {
     public func receive(msg : Actor.Message) -> Void {
         switch msg {
             default :
-                print("message not handled \(NSStringFromClass(msg.dynamicType))")
+                print("message not handled \(NSStringFromClass(type(of: msg)))")
         }
     }
     
@@ -247,10 +247,10 @@ public class Actor : NSObject {
     */
     
     final public func tell(msg : Actor.Message) -> Void {
-        mailbox.addOperationWithBlock { () in
+        mailbox.addOperation { () in
             self.sender = msg.sender
-            print("\(self.sender?.path.asString) told \(msg) to \(self.this.path.asString)")
-            self.systemReceive(msg)
+            print("\(self.sender?.path.asString ?? "No Sender") told \(msg) to \(self.this.path.asString)")
+            self.systemReceive(msg: msg)
         }
     }
     
@@ -274,8 +274,8 @@ public class Actor : NSObject {
     Schedule Once is a timer that executes the code in block after seconds
     */
      
-    final public func scheduleOnce(seconds:Double, block : Void -> Void) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC))), self.mailbox.underlyingQueue!, block)
+    final public func scheduleOnce(seconds:Double, block : () -> Void) {
+        dispatch_after(dispatch_time(dispatch_time_t(DispatchTime.now()), Int64(seconds * Double(NSEC_PER_SEC))), self.mailbox.underlyingQueue!, block)
     }
     
     /**
@@ -284,7 +284,7 @@ public class Actor : NSObject {
     
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = dispatch_queue_create(ref.path.asString, nil)
+        mailbox.underlyingQueue = DispatchQueue(label: ref.path.asString)
         sender = nil
         self.context = context
         self.this = ref
@@ -294,7 +294,7 @@ public class Actor : NSObject {
     
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = dispatch_queue_create("", nil)
+        mailbox.underlyingQueue = DispatchQueue(label: "")
         sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))

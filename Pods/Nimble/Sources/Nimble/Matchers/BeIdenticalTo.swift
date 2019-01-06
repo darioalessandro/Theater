@@ -1,21 +1,35 @@
 import Foundation
 
-
 /// A Nimble matcher that succeeds when the actual value is the same instance
 /// as the expected instance.
-public func beIdenticalTo(expected: AnyObject?) -> NonNilMatcherFunc<AnyObject> {
-    return NonNilMatcherFunc { actualExpression, failureMessage in
-        let actual = try actualExpression.evaluate()
-        failureMessage.actualValue = "\(identityAsString(actual))"
-        failureMessage.postfixMessage = "be identical to \(identityAsString(expected))"
-        return actual === expected && actual !== nil
+public func beIdenticalTo(_ expected: Any?) -> Predicate<Any> {
+    return Predicate.define { actualExpression in
+        #if os(Linux)
+            let actual = try actualExpression.evaluate() as? AnyObject
+        #else
+            let actual = try actualExpression.evaluate() as AnyObject?
+        #endif
+
+        let bool: Bool
+        #if os(Linux)
+            bool = actual === (expected as? AnyObject) && actual !== nil
+        #else
+            bool = actual === (expected as AnyObject?) && actual !== nil
+        #endif
+        return PredicateResult(
+            bool: bool,
+            message: .expectedCustomValueTo(
+                "be identical to \(identityAsString(expected))",
+                "\(identityAsString(actual))"
+            )
+        )
     }
 }
 
-public func ===(lhs: Expectation<AnyObject>, rhs: AnyObject?) {
+public func === (lhs: Expectation<Any>, rhs: Any?) {
     lhs.to(beIdenticalTo(rhs))
 }
-public func !==(lhs: Expectation<AnyObject>, rhs: AnyObject?) {
+public func !== (lhs: Expectation<Any>, rhs: Any?) {
     lhs.toNot(beIdenticalTo(rhs))
 }
 
@@ -23,16 +37,16 @@ public func !==(lhs: Expectation<AnyObject>, rhs: AnyObject?) {
 /// as the expected instance.
 ///
 /// Alias for "beIdenticalTo".
-public func be(expected: AnyObject?) -> NonNilMatcherFunc<AnyObject> {
+public func be(_ expected: Any?) -> Predicate<Any> {
     return beIdenticalTo(expected)
 }
 
-#if _runtime(_ObjC)
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
 extension NMBObjCMatcher {
-    public class func beIdenticalToMatcher(expected: NSObject?) -> NMBObjCMatcher {
+    @objc public class func beIdenticalToMatcher(_ expected: NSObject?) -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
-            let aExpr = actualExpression.cast { $0 as AnyObject? }
-            return try! beIdenticalTo(expected).matches(aExpr, failureMessage: failureMessage)
+            let aExpr = actualExpression.cast { $0 as Any? }
+            return try beIdenticalTo(expected).matches(aExpr, failureMessage: failureMessage)
         }
     }
 }

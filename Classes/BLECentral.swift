@@ -45,7 +45,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManager scanner options, this will be exposed as a message in new versions of Theater
     */
     
-    private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(bool: true)]
+    private let bleOptions = [CBCentralManagerScanOptionAllowDuplicatesKey : NSNumber(value: true)]
     
     /**
     This collection stores all peripheral observations, it would be nice to add a method to purge it.
@@ -97,7 +97,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     override public func preStart() {
         super.preStart()
-        self.become(self.states.notScanning, state: self.notScanning)
+        self.become(name: self.states.notScanning, state: self.notScanning)
     }
     
     /**
@@ -111,26 +111,26 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
             switch (msg) {
                 
                 case is StateChanged:
-                    if self.central.state == .PoweredOn {
+                    if self.central.state == .poweredOn {
                         self.this ! StartScanning(services: services, sender: self.this)
                     }
                 
                 case is StartScanning:
-                    self.central.scanForPeripheralsWithServices(services, options: self.bleOptions)
+                    self.central.scanForPeripherals(withServices: services, options: self.bleOptions)
                 
                 case is StopScanning:
                     self.central.stopScan()
-                    self.popToState(self.states.notScanning)
+                    self.popToState(name: self.states.notScanning)
                     
                 case let m as Peripheral.Connect:
-                    self.central.connectPeripheral(m.peripheral, options: self.peripheralConnectionOptions)
+                    self.central.connect(m.peripheral, options: self.peripheralConnectionOptions)
                 
                 case let m as Peripheral.OnConnect:
                     let id = m.peripheral.identifier
-                    let c = self.context.actorOf(BLEPeripheralConnection.self, name: id.UUIDString)
+                    let c = self.context.actorOf(clz: BLEPeripheralConnection.self, name: id.uuidString)
                     self.connections[id] = c
                     c ! BLEPeripheralConnection.SetPeripheral(sender: self.this, peripheral: m.peripheral)
-                    self.broadcast(Peripheral.OnConnect(sender: self.this, peripheral: m.peripheral, peripheralConnection: c))
+                    self.broadcast(msg: Peripheral.OnConnect(sender: self.this, peripheral: m.peripheral, peripheralConnection: c))
                 
                 case let m as Peripheral.OnDisconnect:
                     let id = m.peripheral.identifier
@@ -138,7 +138,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                         c ! Harakiri(sender: self.this)
                     }
                     self.connections.removeValueForKey(m.peripheral.identifier)
-                    self.broadcast(m)                
+                    self.broadcast(msg: m)
                     
                 case let m as Peripheral.Disconnect:
                     self.central.cancelPeripheralConnection(m.peripheral)
@@ -157,21 +157,21 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         switch (msg) {
                 
             case let m as StartScanning:
-                self.become(self.states.scanning, state: self.scanning(m.services))
-                self.addListener(m.sender)
+                self.become(name: self.states.scanning, state: self.scanning(services: m.services))
+                self.addListener(sender: m.sender)
                 self.this ! m
 
             case is StopScanning:
                 print("not scanning")
 
             case let m as RemoveListener:
-                self.removeListener(m.sender)
+                self.removeListener(sender: m.sender)
 
             case let m as AddListener:
-                self.addListener(m.sender)
+                self.addListener(sender: m.sender)
 
             case is Harakiri:
-                self.context.stop(self.this)
+                self.context.stop(actorRef: self.this)
 
             default:
                 print("not handled")
@@ -182,7 +182,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
     
-    @objc public func centralManagerDidUpdateState(central: CBCentralManager) {
+    @objc public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         let state = CBCentralManagerState.init(rawValue: central.state.rawValue)!
         let stateChanged = StateChanged(sender: this, state: state)
         this ! stateChanged
@@ -204,22 +204,22 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
         let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
-        if var historyOfDevice = self.observations[peripheral.identifier.UUIDString], let lastObv = historyOfDevice.first {
+        if var historyOfDevice = self.observations[peripheral.identifier.uuidString], let lastObv = historyOfDevice.first {
             let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20
             let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSinceDate(lastObv.timestamp)) > threshold
             if  areRSSIDifferent || isThereEnoughTimeBetweenSamples {
-                historyOfDevice.insert(bleDevice, atIndex: 0)
-                self.observations[peripheral.identifier.UUIDString] = historyOfDevice
+                historyOfDevice.insert(bleDevice, at: 0)
+                self.observations[peripheral.identifier.uuidString] = historyOfDevice
             }
         } else {
-            self.observations[peripheral.identifier.UUIDString] = [bleDevice]
+            self.observations[peripheral.identifier.uuidString] = [bleDevice]
         }
         
         if shouldWait { return }
         
         shouldWait = true
         
-        self.scheduleOnce(1,block: { () in
+        self.scheduleOnce(seconds: 1,block: { () in
             self.shouldWait = false
         })
         
@@ -240,7 +240,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
     
-    @objc public func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    @objc public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         this ! Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     
@@ -248,7 +248,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     CBCentralManagerDelegate methods, BLECentral hides this methods so that messages can interact with BLE devices using actors
     */
 
-    @objc public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+    @objc public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         this ! Peripheral.OnDisconnect(sender: this, peripheral: peripheral, error: error)
     }
     

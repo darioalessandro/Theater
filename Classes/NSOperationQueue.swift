@@ -8,7 +8,7 @@
 
 import Foundation
 
-prefix operator ^ {}
+prefix operator ^
 
 /**
  Convenience operator that executes a block with type (Void) -> (Void) in the main queue.
@@ -32,11 +32,11 @@ prefix operator ^ {}
  
  */
 
-public prefix func ^ (block : (Void) -> (Void)) -> Void {
-    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: true)
+public prefix func ^ (block : @escaping () -> (Void)) -> Void {
+    OperationQueue.main.addOperations([BlockOperation(block: block)], waitUntilFinished: true)
 }
 
-prefix operator ^^ {}
+prefix operator ^^
 
 /**
  Convenience operator that executes a block with type (Void) -> (Void) in the main queue and blocks until it's finished.
@@ -59,6 +59,6 @@ prefix operator ^^ {}
  
  */
 
-public prefix func ^^ (block : (Void) -> (Void)) -> Void {
-    NSOperationQueue.mainQueue().addOperations([NSBlockOperation(block: block)], waitUntilFinished: false)
+public prefix func ^^ (block : @escaping () -> (Void)) -> Void {
+    OperationQueue.main.addOperations([BlockOperation(block: block)], waitUntilFinished: false)
 }

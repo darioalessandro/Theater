@@ -33,43 +33,43 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
                 peripheral.discoverServices(m.services)
             
             case is AddListener:
-                self.addListener(msg.sender)
+                self.addListener(sender: msg.sender)
             
             case is PeripheralDidUpdateName:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
             
             case is DidModifyServices:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidReadRSSI:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidDiscoverServices:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidDiscoverIncludedServicesForService:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidDiscoverCharacteristicsForService:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidUpdateValueForCharacteristic:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidWriteValueForCharacteristic:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidUpdateNotificationStateForCharacteristic:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidDiscoverDescriptorsForCharacteristic:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidUpdateValueForDescriptor:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             case is DidWriteValueForDescriptor:
-                self.broadcast(msg)
+                self.broadcast(msg: msg)
                 
             default:
                 print("ignored")
@@ -89,10 +89,10 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
         switch(msg) {
             
             case let p as SetPeripheral:
-                self.become("connected", state: self.connected(p.peripheral))
+                self.become(name: "connected", state: self.connected(peripheral: p.peripheral))
             
             default:
-                super.receive(msg)
+                super.receive(msg: msg)
         }
     }
     
@@ -100,7 +100,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
     CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
     */
     
-    public func peripheralDidUpdateName(peripheral: CBPeripheral){
+    public func peripheralDidUpdateName(_ peripheral: CBPeripheral){
         this ! PeripheralDidUpdateName(sender: this, peripheral: peripheral)
     }
 
@@ -108,7 +108,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]){
+    public func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]){
         this ! DidModifyServices(sender: this, peripheral: peripheral, invalidatedServices: invalidatedServices)
     }
     
@@ -116,7 +116,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?){
         this ! DidReadRSSI(sender: this, peripheral: peripheral, error: error, RSSI: RSSI)
     }
     
@@ -124,11 +124,11 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?){
         if let svcs = peripheral.services {
             if svcs.count > 0  {
                 peripheral.services?.forEach {
-                    print("didDiscoverServices \($0.UUID)")
+                    print("didDiscoverServices \($0.uuid)")
                 }
                 
                 peripheral.services?.forEach({ (service : CBService) in
@@ -147,7 +147,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didDiscoverIncludedServicesForService service: CBService, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?){
         this ! DidDiscoverIncludedServicesForService(sender: this, peripheral: peripheral, service: service, error: error)
     }
     
@@ -155,7 +155,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?){
         this ! DidDiscoverCharacteristicsForService(sender: this, peripheral: peripheral, service: service, error: error)
     }
     
@@ -163,7 +163,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?){
         this ! DidUpdateValueForCharacteristic(sender: this, peripheral: peripheral, characteristic: characteristic, error: error)
     }
     
@@ -171,7 +171,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?){
         this ! DidWriteValueForCharacteristic(sender: this, peripheral: peripheral, characteristic: characteristic, error: error)
     }
     
@@ -179,7 +179,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?){
         this ! DidUpdateNotificationStateForCharacteristic(sender: this, peripheral: peripheral, characteristic: characteristic, error: error)
     }
     
@@ -187,7 +187,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didDiscoverDescriptorsForCharacteristic characteristic: CBCharacteristic, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?){
         this ! DidDiscoverDescriptorsForCharacteristic(sender: this, peripheral: peripheral, characteristic: characteristic, error: error)
     }
     
@@ -195,7 +195,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
 
-    public func peripheral(peripheral: CBPeripheral, didUpdateValueForDescriptor descriptor: CBDescriptor, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?){
         this ! DidUpdateValueForDescriptor(sender: this, peripheral: peripheral, descriptor: descriptor, error: error)
     }
     
@@ -203,7 +203,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
      CBPeripheralDelegate forwarded message, this method is exposed through an Actor.Message subclass
      */
     
-    public func peripheral(peripheral: CBPeripheral, didWriteValueForDescriptor descriptor: CBDescriptor, error: NSError?){
+    public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?){
         this ! DidWriteValueForDescriptor(sender: this, peripheral: peripheral, descriptor: descriptor, error: error)
     }
     
