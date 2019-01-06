@@ -48,7 +48,7 @@ extension Actor {
     Convenient Message subclass which has an operationId that can be used to track a transaction or some sort of message that needs to be tracked
     */
 
-    final class MessageWithOperationId : Message {
+    open class MessageWithOperationId : Message {
         
         /**
          
