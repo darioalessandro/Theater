@@ -82,7 +82,7 @@ public class Actor : NSObject {
     }
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz: clz, name: NSUUID.init().uuidString)
+        return actorOf(clz: clz, name: UUID.init().uuidString)
     }
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {

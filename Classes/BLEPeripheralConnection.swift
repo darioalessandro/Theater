@@ -132,7 +132,7 @@ public class BLEPeripheralConnection : Actor, WithListeners, CBPeripheralDelegat
                 }
                 
                 peripheral.services?.forEach({ (service : CBService) in
-                    peripheral.discoverCharacteristics(nil, forService: service)
+                    peripheral.discoverCharacteristics(nil, for: service)
                 })
                 this ! DidDiscoverServices(sender: this, peripheral: peripheral, error: error)
             } else {

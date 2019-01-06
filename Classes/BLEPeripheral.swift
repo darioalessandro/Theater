@@ -206,8 +206,8 @@ public final class BLEPeripheral : Actor, CBPeripheralManagerDelegate, WithListe
                 
             case let m as CentralDidUnsubscribeFromCharacteristic:
                 if var subs = self.subscriptions[m.central],
-                    let i = subs.indexOf(m.characteristic) {
-                        subs.removeAtIndex(i)
+                    let i = subs.firstIndex(of:m.characteristic) {
+                        subs.remove(at:i)
                         if subs.count == 0 {
                             self.subscriptions.removeValue(forKey: m.central)
                         }

@@ -137,7 +137,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
                     if let c = self.connections[id] {
                         c ! Harakiri(sender: self.this)
                     }
-                    self.connections.removeValueForKey(m.peripheral.identifier)
+                    self.connections.removeValue(forKey: <#T##UUID#>)(m.peripheral.identifier)
                     self.broadcast(msg: m)
                     
                 case let m as Peripheral.Disconnect:
@@ -155,7 +155,6 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     lazy private var notScanning : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
-                
             case let m as StartScanning:
                 self.become(name: self.states.scanning, state: self.scanning(services: m.services))
                 self.addListener(sender: m.sender)
@@ -203,10 +202,10 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     
     @objc public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         
-        let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: NSDate.init())
+        let bleDevice = BLEPeripheralObservation(peripheral: peripheral, advertisementData: advertisementData, RSSI: RSSI, timestamp: Date.init())
         if var historyOfDevice = self.observations[peripheral.identifier.uuidString], let lastObv = historyOfDevice.first {
             let areRSSIDifferent = abs(lastObv.RSSI.doubleValue - bleDevice.RSSI.doubleValue) > 20
-            let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSinceDate(lastObv.timestamp)) > threshold
+            let isThereEnoughTimeBetweenSamples = Double(bleDevice.timestamp.timeIntervalSince(lastObv.timestamp)) > threshold
             if  areRSSIDifferent || isThereEnoughTimeBetweenSamples {
                 historyOfDevice.insert(bleDevice, at: 0)
                 self.observations[peripheral.identifier.uuidString] = historyOfDevice

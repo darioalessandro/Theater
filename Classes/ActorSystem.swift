@@ -69,8 +69,8 @@ The first rule about actors is that you should not access them directly, you alw
 */
 
 public class TestActorSystem : ActorSystem {
-    public func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return super.actorForRef(ref)
+    public override func actorForRef(ref : ActorRef) -> Optional<Actor> {
+        return super.actorForRef(ref: ref)
     }
 }
 
@@ -121,11 +121,12 @@ public class ActorSystem  {
         supervisor!.stop()
         //TODO: there must be a better way to wait for all actors to die...
         func shutdown(){
-            dispatch_after(5000, OperationQueue.main.underlyingQueue!) {[unowned self] () -> Void in
+            // FIXME: This is a big hack.
+            OperationQueue.main.underlyingQueue?.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 5000), execute: {
                 if(self.supervisor!.children.count == 0) {
                     self.supervisor = nil
                 }
-            }
+            })
         }
         shutdown()
         
@@ -165,7 +166,7 @@ public class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz: clz, name: NSUUID.init().uuidString)
+        return actorOf(clz: clz, name: UUID.init().uuidString)
     }
     
     /**
@@ -174,7 +175,7 @@ public class ActorSystem  {
      - parameter ref: reference to resolve
     */
     
-    private func actorForRef(ref : ActorRef) -> Optional<Actor> {
+    func actorForRef(ref : ActorRef) -> Optional<Actor> {
         if let s = self.supervisor {
             return s.actorForRef(ref: ref)
         } else {

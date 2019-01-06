@@ -24,9 +24,9 @@ public extension BLECentral {
         public let peripheral: CBPeripheral
         public let advertisementData: [String : AnyObject]
         public let RSSI: NSNumber
-        public let timestamp : NSDate
+        public let timestamp : Date
         
-        init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : NSDate) {
+        init(peripheral: CBPeripheral,advertisementData: [String : AnyObject],RSSI: NSNumber,timestamp : Date) {
             self.peripheral = peripheral
             self.advertisementData = advertisementData
             self.RSSI = RSSI
@@ -36,7 +36,7 @@ public extension BLECentral {
     
     typealias PeripheralObservations = [String : [BLEPeripheralObservation]]
     
-    typealias PeripheralConnections = [NSUUID : ActorRef]    
+    typealias PeripheralConnections = [UUID : ActorRef]    
     
     /**
     Namespace for Peripheral related messages

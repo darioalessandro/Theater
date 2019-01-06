@@ -71,7 +71,7 @@ extension WithListeners {
     
     public func removeListener(sender : ActorRef?) {
         if let l = sender,
-            let n = listeners.indexOf({ a -> Bool in  return l.path.asString == a.path.asString}) {
+            let n = listeners.firstIndex(where:{ a -> Bool in  return l.path.asString == a.path.asString}) {
                 listeners.removeFirst(n)
         }
     }

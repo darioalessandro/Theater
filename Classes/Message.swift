@@ -55,9 +55,9 @@ extension Actor {
         The operationId used to track the Operation
          
         */
-        public let operationId : NSUUID
+        public let operationId : UUID
         
-        public init(sender: Optional<ActorRef>, operationId : NSUUID) {
+        public init(sender: Optional<ActorRef>, operationId : UUID) {
             self.operationId = operationId
             super.init(sender : sender)
         }
