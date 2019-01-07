@@ -46,11 +46,11 @@ static void dumpClassInfo(Class c, int inheritanceDepth)
 }
 
 @implementation NSObject (DumpClassInfo)
-
+    
 - (void)dumpClassInfo
-{
-    Class c =  object_getClass(self);
-    dumpClassInfo(c, 0);
-}
-
-@end
+    {
+        Class c =  object_getClass(self);
+        dumpClassInfo(c, 0);
+    }
+    
+    @end

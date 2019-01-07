@@ -9,8 +9,8 @@
 import Foundation
 
 /**
-This is the supervisor actor for all our actor systems.
-*/
+ This is the supervisor actor for all our actor systems.
+ */
 
 class TheOneWhoWalksTheBubblesOfSpaceTime : Actor {
     
