@@ -284,10 +284,10 @@ public extension BLEPeripheral {
      */
     
     public class RespondToRequest : Actor.Message {
-        public let result : CBATTError
+        public let result : CBATTError.Code
         public let request: CBATTRequest
         
-        public init(sender: Optional<ActorRef>, request : CBATTRequest, result : CBATTError) {
+        public init(sender: Optional<ActorRef>, request : CBATTRequest, result : CBATTError.Code) {
             self.result = result
             self.request = request
             super.init(sender: sender)
