@@ -88,6 +88,11 @@ open class ActorSystem  {
     
     lazy private var supervisor : Actor? = Actor.self.init(context: self, ref: ActorRef(context: self, path: ActorPath(path: "\(self.name)/user")))
     
+    /**
+    DispatchQueue used to perform general maintanence operations.
+    */
+    private let dispatchQueue : DispatchQueue
+    
     
     /**
      
@@ -105,6 +110,7 @@ open class ActorSystem  {
     
     public init(name : String) {
         self.name = name
+        self.dispatchQueue = DispatchQueue(label: name)
     }
     
     /**
@@ -121,16 +127,13 @@ open class ActorSystem  {
         supervisor!.stop()
         //TODO: there must be a better way to wait for all actors to die...
         func shutdown(){
-            // FIXME: This is a big hack.
-            OperationQueue.main.underlyingQueue?.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 5000), execute: {
+            self.dispatchQueue.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 5000), execute: {
                 if(self.supervisor!.children.count == 0) {
                     self.supervisor = nil
                 }
             })
         }
         shutdown()
-        
-        
     }
     
     /**

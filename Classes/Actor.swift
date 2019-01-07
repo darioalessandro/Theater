@@ -288,7 +288,6 @@ open class Actor : NSObject {
     
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = DispatchQueue(label: ref.path.asString)
         sender = nil
         self.context = context
         self.this = ref
@@ -298,7 +297,6 @@ open class Actor : NSObject {
     
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = DispatchQueue(label: "")
         sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
