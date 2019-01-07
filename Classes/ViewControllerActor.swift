@@ -35,7 +35,7 @@ public class SetViewCtrl<T : UIViewController> : Actor.Message {
  Convenience subclass of Actor to bind a UIViewController, which is very common when dealing with UIKit.
 */
 
-public class ViewCtrlActor<A : UIViewController> : Actor {
+open class ViewCtrlActor<A : UIViewController> : Actor {
     
     public let waitingForCtrlState = "waitingForCtrl"
     
@@ -53,7 +53,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
     By default, the ViewCtrlActor instances go to the waitingForCtrl state.
     */
     
-    override public func preStart() {
+    override open func preStart() {
         super.preStart()
         self.become(name: self.waitingForCtrlState, state: self.waitingForCtrl)
     }
@@ -103,7 +103,7 @@ public class ViewCtrlActor<A : UIViewController> : Actor {
      - parameter ctrl : controller that was set to this Actor
     */
     
-    public func receiveWithCtrl(ctrl : A) -> Receive {
+    open func receiveWithCtrl(ctrl : A) -> Receive {
         return { (msg : Actor.Message) in }
     }
     
