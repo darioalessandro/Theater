@@ -16,8 +16,8 @@
 		06631A691BDF192600883344 /* BLEPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06631A681BDF192600883344 /* BLEPeripheral.swift */; };
 		066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066805951BE05C190048085B /* BLEPeripheralConnection.swift */; };
 		0670612B251ED31B004300F5 /* Theater.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0670612A251ED31B004300F5 /* Theater.podspec */; };
-		06706138251ED7E1004300F5 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06706137251ED7E1004300F5 /* TheaterTests.swift */; };
-		0670613A251ED7E1004300F5 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
+		067061A3251EDBBD004300F5 /* TheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067061A2251EDBBD004300F5 /* TheaterTests.swift */; };
+		067061A5251EDBBD004300F5 /* Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E1D51E1BB76EE300E07321 /* Theater.framework */; };
 		068EA7D51BDC51AE00330714 /* BLEMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EA7D31BDC51AE00330714 /* BLEMessages.swift */; };
 		068F80301BCB0A1A00A10D76 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80271BCB0A1A00A10D76 /* Actor.swift */; };
 		068F80311BCB0A1A00A10D76 /* ActorSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F80281BCB0A1A00A10D76 /* ActorSystem.swift */; };
@@ -30,11 +30,10 @@
 		06E1D5211BB76EE300E07321 /* Theater.h in Headers */ = {isa = PBXBuildFile; fileRef = 06E1D5201BB76EE300E07321 /* Theater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
 		5729F5FEA92C37EC964BFE34 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9E8B63807C0DC1864EA0E4 /* Pods_Theater.framework */; };
-		A96D5BBF4DC5E384C10581C4 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F8B488FF2FA348E33A0149 /* Pods_TheaterTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0670613B251ED7E1004300F5 /* PBXContainerItemProxy */ = {
+		067061A6251EDBBD004300F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06E1D4EA1BB7699700E07321 /* Project object */;
 			proxyType = 1;
@@ -59,9 +58,9 @@
 		06631A681BDF192600883344 /* BLEPeripheral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEPeripheral.swift; path = Classes/BLEPeripheral.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		066805951BE05C190048085B /* BLEPeripheralConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEPeripheralConnection.swift; path = Classes/BLEPeripheralConnection.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0670612A251ED31B004300F5 /* Theater.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Theater.podspec; sourceTree = "<group>"; };
-		06706135251ED7E1004300F5 /* TheaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheaterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		06706137251ED7E1004300F5 /* TheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterTests.swift; sourceTree = "<group>"; };
-		06706139251ED7E1004300F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		067061A0251EDBBD004300F5 /* TheaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheaterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		067061A2251EDBBD004300F5 /* TheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterTests.swift; sourceTree = "<group>"; };
+		067061A4251EDBBD004300F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06807FCE1D14368B00A25F3D /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		068EA7D31BDC51AE00330714 /* BLEMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BLEMessages.swift; path = Classes/BLEMessages.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		068F80271BCB0A1A00A10D76 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = Actor.swift; path = Classes/Actor.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -92,12 +91,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		06706132251ED7E1004300F5 /* Frameworks */ = {
+		0670619D251EDBBD004300F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0670613A251ED7E1004300F5 /* Theater.framework in Frameworks */,
-				A96D5BBF4DC5E384C10581C4 /* Pods_TheaterTests.framework in Frameworks */,
+				067061A5251EDBBD004300F5 /* Theater.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,11 +163,11 @@
 			name = UIKit;
 			sourceTree = "<group>";
 		};
-		06706136251ED7E1004300F5 /* TheaterTests */ = {
+		067061A1251EDBBD004300F5 /* TheaterTests */ = {
 			isa = PBXGroup;
 			children = (
-				06706137251ED7E1004300F5 /* TheaterTests.swift */,
-				06706139251ED7E1004300F5 /* Info.plist */,
+				067061A2251EDBBD004300F5 /* TheaterTests.swift */,
+				067061A4251EDBBD004300F5 /* Info.plist */,
 			);
 			path = TheaterTests;
 			sourceTree = "<group>";
@@ -191,7 +189,7 @@
 				0670612A251ED31B004300F5 /* Theater.podspec */,
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				06CCA7C51DA3FE7300AF0655 /* TheaterTests */,
-				06706136251ED7E1004300F5 /* TheaterTests */,
+				067061A1251EDBBD004300F5 /* TheaterTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
 				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
@@ -202,7 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				06E1D51E1BB76EE300E07321 /* Theater.framework */,
-				06706135251ED7E1004300F5 /* TheaterTests.xctest */,
+				067061A0251EDBBD004300F5 /* TheaterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,24 +264,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		06706134251ED7E1004300F5 /* TheaterTests */ = {
+		0670619F251EDBBD004300F5 /* TheaterTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0670613D251ED7E1004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
+			buildConfigurationList = 067061A8251EDBBD004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
 			buildPhases = (
-				04CC872B52083F953A019E63 /* [CP] Check Pods Manifest.lock */,
-				06706131251ED7E1004300F5 /* Sources */,
-				06706132251ED7E1004300F5 /* Frameworks */,
-				06706133251ED7E1004300F5 /* Resources */,
-				81A5A2CB352F318ED2EC3FB4 /* [CP] Embed Pods Frameworks */,
+				0670619C251EDBBD004300F5 /* Sources */,
+				0670619D251EDBBD004300F5 /* Frameworks */,
+				0670619E251EDBBD004300F5 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0670613C251ED7E1004300F5 /* PBXTargetDependency */,
+				067061A7251EDBBD004300F5 /* PBXTargetDependency */,
 			);
 			name = TheaterTests;
 			productName = TheaterTests;
-			productReference = 06706135251ED7E1004300F5 /* TheaterTests.xctest */;
+			productReference = 067061A0251EDBBD004300F5 /* TheaterTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		06E1D51D1BB76EE300E07321 /* Theater */ = {
@@ -315,7 +311,7 @@
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = dario;
 				TargetAttributes = {
-					06706134251ED7E1004300F5 = {
+					0670619F251EDBBD004300F5 = {
 						CreatedOnToolsVersion = 12.0;
 					};
 					06E1D51D1BB76EE300E07321 = {
@@ -339,13 +335,13 @@
 			projectRoot = "";
 			targets = (
 				06E1D51D1BB76EE300E07321 /* Theater */,
-				06706134251ED7E1004300F5 /* TheaterTests */,
+				0670619F251EDBBD004300F5 /* TheaterTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		06706133251ED7E1004300F5 /* Resources */ = {
+		0670619E251EDBBD004300F5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -363,28 +359,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		04CC872B52083F953A019E63 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TheaterTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7014C0E363C836CDEBFF5ED4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -403,31 +377,14 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		81A5A2CB352F318ED2EC3FB4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		06706131251ED7E1004300F5 /* Sources */ = {
+		0670619C251EDBBD004300F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06706138251ED7E1004300F5 /* TheaterTests.swift in Sources */,
+				067061A3251EDBBD004300F5 /* TheaterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,17 +415,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0670613C251ED7E1004300F5 /* PBXTargetDependency */ = {
+		067061A7251EDBBD004300F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 06E1D51D1BB76EE300E07321 /* Theater */;
-			targetProxy = 0670613B251ED7E1004300F5 /* PBXContainerItemProxy */;
+			targetProxy = 067061A6251EDBBD004300F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0670613E251ED7E1004300F5 /* Debug */ = {
+		067061A9251EDBBD004300F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -477,6 +433,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J5A8XNQSV9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TheaterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -495,9 +452,8 @@
 			};
 			name = Debug;
 		};
-		0670613F251ED7E1004300F5 /* Release */ = {
+		067061AA251EDBBD004300F5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -506,6 +462,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J5A8XNQSV9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TheaterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -558,7 +515,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = "arm64-apple-ios-simulator arm64";
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -618,7 +575,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = "arm64-apple-ios-simulator arm64";
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -649,7 +606,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXCLUDED_ARCHS = "arm64-apple-ios-simulator arm64";
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -686,7 +643,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXCLUDED_ARCHS = "arm64-apple-ios-simulator arm64";
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -713,11 +670,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0670613D251ED7E1004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */ = {
+		067061A8251EDBBD004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0670613E251ED7E1004300F5 /* Debug */,
-				0670613F251ED7E1004300F5 /* Release */,
+				067061A9251EDBBD004300F5 /* Debug */,
+				067061AA251EDBBD004300F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
