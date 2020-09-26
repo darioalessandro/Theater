@@ -10,5 +10,5 @@ before_install:
 # - gem install cocoapods # Since Travis is not always on latest version
 - pod install --repo-update
 script:
-- set -o pipefail && xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=iOS Simulator,OS: 14.0,name=iPhone SE" -enableCodeCoverage YES | xcpretty
+- set -o pipefail && xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=iOS Simulator,OS=14.0,name=iPhone SE" -enableCodeCoverage YES | xcpretty
 - pod lib lint --allow-warnings
