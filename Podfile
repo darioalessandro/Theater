@@ -8,10 +8,7 @@ use_frameworks!
 target 'Theater' do
     pod 'Starscream', '~> 4.0.4'
 
-    abstract_target 'tests' do
-        platform :ios, '9.0'
-        target 'TheaterTests'
-      
+    target 'TheaterTests' do
         inherit! :search_paths
         pod 'Quick', '~> 2.2.1'
         pod 'Nimble', '9.0.0-rc.3'

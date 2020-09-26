@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06CCA7C31DA3FE7300AF0655"
+               BlueprintIdentifier = "06706134251ED7E1004300F5"
                BuildableName = "TheaterTests.xctest"
                BlueprintName = "TheaterTests"
                ReferencedContainer = "container:Theater.xcodeproj">
@@ -116,7 +116,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06CCA7C31DA3FE7300AF0655"
+               BlueprintIdentifier = "06706134251ED7E1004300F5"
                BuildableName = "TheaterTests.xctest"
                BlueprintName = "TheaterTests"
                ReferencedContainer = "container:Theater.xcodeproj">
