@@ -49,7 +49,7 @@
 
 /**
  Returns the currently executing spec. Use in specs that require XCTestCase
- methods, e.g. expectationWithDescription.
+ methds, e.g. expectationWithDescription.
 */
 @property (class, nonatomic, readonly) QuickSpec *current;
 

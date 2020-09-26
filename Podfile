@@ -5,12 +5,12 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'Theater' do
-    pod 'Starscream', '~> 4.0.4'
+    pod 'Starscream', '~> 3.0.6'
 
     target 'TheaterTests' do
         inherit! :search_paths
-        pod 'Quick', '~> 2.2.1'
-        pod 'Nimble', '9.0.0-rc.3'
+        pod 'Quick', '~> 1.3.2'
+        pod 'Nimble', '8.1.2'
     end
 end
 

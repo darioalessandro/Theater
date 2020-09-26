@@ -1,12 +1,16 @@
 import Foundation
 
-#if canImport(Darwin)
-// swiftlint:disable type_name
-@objcMembers
-public class _ExampleMetadataBase: NSObject {}
+// `#if swift(>=3.2) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE`
+// does not work as expected.
+#if swift(>=3.2)
+    #if (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE
+    @objcMembers
+    public class _ExampleMetadataBase: NSObject {}
+    #else
+    public class _ExampleMetadataBase: NSObject {}
+    #endif
 #else
 public class _ExampleMetadataBase: NSObject {}
-// swiftlint:enable type_name
 #endif
 
 /**

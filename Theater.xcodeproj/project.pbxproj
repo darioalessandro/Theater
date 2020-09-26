@@ -30,6 +30,7 @@
 		06E1D5211BB76EE300E07321 /* Theater.h in Headers */ = {isa = PBXBuildFile; fileRef = 06E1D5201BB76EE300E07321 /* Theater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
 		5729F5FEA92C37EC964BFE34 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9E8B63807C0DC1864EA0E4 /* Pods_Theater.framework */; };
+		88808B9D2770922642E9E8CE /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F8B488FF2FA348E33A0149 /* Pods_TheaterTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				067061A5251EDBBD004300F5 /* Theater.framework in Frameworks */,
+				88808B9D2770922642E9E8CE /* Pods_TheaterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,9 +270,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 067061A8251EDBBD004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
 			buildPhases = (
+				E0916F5B768B3EB51626E1BB /* [CP] Check Pods Manifest.lock */,
 				0670619C251EDBBD004300F5 /* Sources */,
 				0670619D251EDBBD004300F5 /* Frameworks */,
 				0670619E251EDBBD004300F5 /* Resources */,
+				379600D780239C5B6BE7111A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -359,6 +363,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		379600D780239C5B6BE7111A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7014C0E363C836CDEBFF5ED4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -371,6 +392,28 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Theater-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0916F5B768B3EB51626E1BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TheaterTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -425,6 +468,7 @@
 /* Begin XCBuildConfiguration section */
 		067061A9251EDBBD004300F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -454,6 +498,7 @@
 		};
 		067061AA251EDBBD004300F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

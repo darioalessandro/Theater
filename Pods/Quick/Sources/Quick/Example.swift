@@ -1,12 +1,19 @@
 import Foundation
 
-#if canImport(Darwin)
-// swiftlint:disable type_name
-@objcMembers
-public class _ExampleBase: NSObject {}
+private var numberOfExamplesRun = 0
+private var numberOfIncludedExamples = 0
+
+// `#if swift(>=3.2) && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE`
+// does not work as expected.
+#if swift(>=3.2)
+    #if (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE
+    @objcMembers
+    public class _ExampleBase: NSObject {}
+    #else
+    public class _ExampleBase: NSObject {}
+    #endif
 #else
 public class _ExampleBase: NSObject {}
-// swiftlint:enable type_name
 #endif
 
 /**
@@ -64,11 +71,15 @@ final public class Example: _ExampleBase {
     public func run() {
         let world = World.sharedWorld
 
-        if world.numberOfExamplesRun == 0 {
+        if numberOfIncludedExamples == 0 {
+            numberOfIncludedExamples = world.includedExampleCount
+        }
+
+        if numberOfExamplesRun == 0 {
             world.suiteHooks.executeBefores()
         }
 
-        let exampleMetadata = ExampleMetadata(example: self, exampleIndex: world.numberOfExamplesRun)
+        let exampleMetadata = ExampleMetadata(example: self, exampleIndex: numberOfExamplesRun)
         world.currentExampleMetadata = exampleMetadata
         defer {
             world.currentExampleMetadata = nil
@@ -90,9 +101,9 @@ final public class Example: _ExampleBase {
         group!.phase = .aftersFinished
         world.exampleHooks.executeAfters(exampleMetadata)
 
-        world.numberOfExamplesRun += 1
+        numberOfExamplesRun += 1
 
-        if !world.isRunningAdditionalSuites && world.numberOfExamplesRun >= world.cachedIncludedExampleCount {
+        if !world.isRunningAdditionalSuites && numberOfExamplesRun >= numberOfIncludedExamples {
             world.suiteHooks.executeAfters()
         }
     }

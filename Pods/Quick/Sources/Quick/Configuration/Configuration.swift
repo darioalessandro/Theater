@@ -19,24 +19,20 @@ public typealias ExampleFilter = (_ example: Example) -> Bool
 final public class Configuration: NSObject {
     internal let exampleHooks = ExampleHooks()
     internal let suiteHooks = SuiteHooks()
-    internal var exclusionFilters: [ExampleFilter] = [
-        { example in // swiftlint:disable:this opening_brace
-            if let pending = example.filterFlags[Filter.pending] {
-                return pending
-            } else {
-                return false
-            }
-        },
-    ]
-    internal var inclusionFilters: [ExampleFilter] = [
-        { example in // swiftlint:disable:this opening_brace
-            if let focused = example.filterFlags[Filter.focused] {
-                return focused
-            } else {
-                return false
-            }
-        },
-    ]
+    internal var exclusionFilters: [ExampleFilter] = [ { example in
+        if let pending = example.filterFlags[Filter.pending] {
+            return pending
+        } else {
+            return false
+        }
+    }]
+    internal var inclusionFilters: [ExampleFilter] = [ { example in
+        if let focused = example.filterFlags[Filter.focused] {
+            return focused
+        } else {
+            return false
+        }
+    }]
 
     /**
         Run all examples if none match the configured filters. True by default.
@@ -76,7 +72,7 @@ final public class Configuration: NSObject {
         provided with metadata on the example that the closure is being run
         prior to.
     */
-#if canImport(Darwin)
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
     @objc(beforeEachWithMetadata:)
     public func beforeEach(_ closure: @escaping BeforeExampleWithMetadataClosure) {
         exampleHooks.appendBefore(closure)
@@ -92,13 +88,13 @@ final public class Configuration: NSObject {
         given closure before each example that is run. The closure
         passed to this method is executed before each example Quick runs,
         globally across the test suite. You may call this method multiple
-        times across multiple +[QuickConfigure configure:] methods in order
+        times across mulitple +[QuickConfigure configure:] methods in order
         to define several closures to run before each example.
 
         Note that, since Quick makes no guarantee as to the order in which
         +[QuickConfiguration configure:] methods are evaluated, there is no
         guarantee as to the order in which beforeEach closures are evaluated
-        either. Multiple beforeEach defined on a single configuration, however,
+        either. Mulitple beforeEach defined on a single configuration, however,
         will be executed in the order they're defined.
 
         - parameter closure: The closure to be executed before each example
@@ -113,7 +109,7 @@ final public class Configuration: NSObject {
         is provided with metadata on the example that the closure is being
         run after.
     */
-#if canImport(Darwin)
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
     @objc(afterEachWithMetadata:)
     public func afterEach(_ closure: @escaping AfterExampleWithMetadataClosure) {
         exampleHooks.appendAfter(closure)
@@ -129,13 +125,13 @@ final public class Configuration: NSObject {
         given closure after each example that is run. The closure
         passed to this method is executed after each example Quick runs,
         globally across the test suite. You may call this method multiple
-        times across multiple +[QuickConfigure configure:] methods in order
+        times across mulitple +[QuickConfigure configure:] methods in order
         to define several closures to run after each example.
 
         Note that, since Quick makes no guarantee as to the order in which
         +[QuickConfiguration configure:] methods are evaluated, there is no
         guarantee as to the order in which afterEach closures are evaluated
-        either. Multiple afterEach defined on a single configuration, however,
+        either. Mulitple afterEach defined on a single configuration, however,
         will be executed in the order they're defined.
 
         - parameter closure: The closure to be executed before each example
