@@ -182,7 +182,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
     */
     
     @objc public func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        let state = CBCentralManagerState.init(rawValue: central.state.rawValue)!
+        let state = CBManagerState.init(rawValue: central.state.rawValue)!
         let stateChanged = StateChanged(sender: this, state: state)
         this ! stateChanged
         listeners.forEach { (listener) in listener ! stateChanged }
