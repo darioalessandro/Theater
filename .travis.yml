@@ -2,13 +2,13 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode10
-language: objective-c
+osx_image: xcode12
+language: swift
 # cache: cocoapods
 # podfile: Example/Podfile
-before_install:
+# before_install:
 # - gem install cocoapods # Since Travis is not always on latest version
-- pod install --repo-update
+# - pod install --repo
 script:
-- set -o pipefail && xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=iOS Simulator,name=iPhone XR" -enableCodeCoverage YES | xcpretty
+- set -o pipefail && xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=iOS Simulator,OS=13.5,name=iPhone XR" -enableCodeCoverage YES | xcpretty
 - pod lib lint --allow-warnings
