@@ -1,5 +1,4 @@
-# Uncomment this line to define a global platform for your project
-# pod trunk push Theater.podspec --allow-warnings 
+# pod trunk push Theater.podspec --allow-warnings
 
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
