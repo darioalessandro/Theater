@@ -8,33 +8,30 @@
 #import "NSObject+DumpClassInfo.h"
 #import <objc/runtime.h>
 
-static void dumpClassInfo(Class c, int inheritanceDepth)
-{
+static void dumpClassInfo(Class c, int inheritanceDepth) {
     Class superClass = class_getSuperclass(c);
-    if (superClass != Nil)
-    {
+    if (superClass != Nil) {
         dumpClassInfo(superClass, (inheritanceDepth + 1));
     }
-    
+
     int i = 0;
     unsigned int mc = 0;
-    
-    const char* className = class_getName(c);
-    
-    Method* mlist = class_copyMethodList(c, &mc);
-    for (i = 0; i < mc; i++)
-    {
+
+    const char *className = class_getName(c);
+
+    Method *mlist = class_copyMethodList(c, &mc);
+    for (i = 0; i < mc; i++) {
         Method method = mlist[i];
         SEL methodSelector = method_getName(method);
-        const char* methodName = sel_getName(methodSelector);
-        
+        const char *methodName = sel_getName(methodSelector);
+
         const char *typeEncodings = method_getTypeEncoding(method);
-        
+
         char returnType[80];
         method_getReturnType(method, returnType, 80);
-        
+
         NSLog(@"%2.2d %s ==> %s (%s)", inheritanceDepth, className, methodName, (typeEncodings == Nil) ? "" : typeEncodings);
-        
+
         int ac = method_getNumberOfArguments(method);
         int a = 0;
         for (a = 0; a < ac; a++) {
@@ -47,9 +44,8 @@ static void dumpClassInfo(Class c, int inheritanceDepth)
 
 @implementation NSObject (DumpClassInfo)
 
-- (void)dumpClassInfo
-{
-    Class c =  object_getClass(self);
+- (void)dumpClassInfo {
+    Class c = object_getClass(self);
     dumpClassInfo(c, 0);
 }
 
