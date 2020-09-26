@@ -140,9 +140,9 @@ public extension BLECentral {
     */
     
     class StateChanged : Actor.Message {
-        let state : CBCentralManagerState
+        let state : CBManagerState
         
-        init(sender : ActorRef, state : CBCentralManagerState) {
+        init(sender : ActorRef, state : CBManagerState) {
             self.state = state
             super.init(sender: sender)
         }
@@ -318,14 +318,14 @@ public extension BLEPeripheral {
     }
     
     /**
-     Message broadcasted when BLEPeripheral changes it CBPeripheralManagerState
+     Message broadcasted when BLEPeripheral changes it CBManagerState
     */
     
     class PeripheralManagerDidUpdateState : Actor.Message {
         
-        public let state : CBPeripheralManagerState
+        public let state : CBManagerState
         
-        public init(sender: Optional<ActorRef>, state : CBPeripheralManagerState) {
+        public init(sender: Optional<ActorRef>, state : CBManagerState) {
             self.state = state
             super.init(sender: sender)
         }
