@@ -1,24 +1,24 @@
 PODS:
-  - Nimble (7.3.1)
-  - Quick (1.3.2)
-  - Starscream (3.0.6)
+  - Nimble (9.0.0-rc.3)
+  - Quick (2.2.1)
+  - Starscream (4.0.4)
 
 DEPENDENCIES:
-  - Nimble (= 7.3.1)
-  - Quick (~> 1.3.2)
-  - Starscream (~> 3.0.6)
+  - Nimble (= 9.0.0-rc.3)
+  - Quick (~> 2.2.1)
+  - Starscream (~> 4.0.4)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Nimble
     - Quick
     - Starscream
 
 SPEC CHECKSUMS:
-  Nimble: 04f732da099ea4d153122aec8c2a88fd0c7219ae
-  Quick: 2623cb30d7a7f41ca62f684f679586558f483d46
-  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  Nimble: 1b5fa99320d0d87ed72bb0add38dc696aa77f556
+  Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 2a95ac777ca0f72442e3686301f383ec2ec98505
+PODFILE CHECKSUM: ee607d9622143529383318588ca52ebfbdfb29b0
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3
