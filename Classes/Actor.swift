@@ -145,6 +145,12 @@ open class Actor : NSObject {
     public let context : ActorSystem
     
     /**
+    DispatchQueue that the actor runs on
+    */
+    
+    public let underlyingQueue: DispatchQueue
+    
+    /**
     Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
     
     - Parameter state: the new state to push
@@ -288,7 +294,8 @@ open class Actor : NSObject {
     
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = DispatchQueue(label: ref.path.asString)
+        underlyingQueue = DispatchQueue(label: ref.path.asString)
+        mailbox.underlyingQueue = underlyingQueue
         sender = nil
         self.context = context
         self.this = ref
@@ -298,7 +305,8 @@ open class Actor : NSObject {
     
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        mailbox.underlyingQueue = DispatchQueue(label: "")
+        underlyingQueue = DispatchQueue(label: "")
+        mailbox.underlyingQueue = underlyingQueue
         sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
