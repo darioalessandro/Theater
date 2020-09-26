@@ -125,7 +125,6 @@ public class WebSocketClientWrapper : Actor , WebSocketDelegate,  WithListeners 
     /**
      websocketDidReceiveMessage
      */
-    
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         self.broadcast(msg: OnMessage(sender: this, message: text))
     }
@@ -150,7 +149,7 @@ public class WebSocketClientWrapper : Actor , WebSocketDelegate,  WithListeners 
     lazy var disconnected : Receive = {[unowned self](msg : Actor.Message) in
         switch (msg) {
         case let c as Connect:
-            let socket = WebSocket(url: URL(string: c.url.absoluteString!)!)
+            let socket = WebSocket(request:URLRequest(url:URL(string: c.url.absoluteString!)!))
             self.socket = socket
             socket.delegate = self
             self.addListener(sender: c.sender)
