@@ -187,7 +187,7 @@ open class Actor : NSObject {
     */
      
     final public func currentState() -> (String,Receive)? {
-        return self.statesStack.head()
+        self.statesStack.head()
     }
     
     /**

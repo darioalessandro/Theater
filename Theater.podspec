@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name          = "Theater"
-  s.version       = "0.9"
-  s.swift_version = "4.2"
+  s.version       = "0.10"
+  s.swift_version = "5"
   s.summary       = "Swift framework to help write async, resilient and responsive applications."
   s.description   = <<-DESC
   
@@ -116,9 +116,9 @@ got Hello
   s.homepage     = "https://github.com/darioalessandro/Theater"
   s.screenshots  = "https://raw.githubusercontent.com/darioalessandro/Theater/master/theaterlogo.jpg"
   s.license      = { :type => "Apache2", :file => "License.txt" }
-  s.author             = { "Dario Lencina" => "darioalessandrolencina@gmail.com" }
+  s.author             = { "Dario Lencina" => "dario@securityunion.dev" }
   s.social_media_url   = "https://twitter.com/theaterfwk"
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "10.0"
   s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
   s.source_files  = "Classes/*.swift"
   s.dependency  'Starscream', '~> 3.0.6'

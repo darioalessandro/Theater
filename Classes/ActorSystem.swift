@@ -70,7 +70,7 @@ The first rule about actors is that you should not access them directly, you alw
 
 public class TestActorSystem : ActorSystem {
     public override func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        return super.actorForRef(ref: ref)
+        super.actorForRef(ref: ref)
     }
 }
 
@@ -148,7 +148,7 @@ open class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
-        return supervisor!.actorOf(clz: clz, name: name)
+        supervisor!.actorOf(clz: clz, name: name)
     }
     
     /**
@@ -166,7 +166,7 @@ open class ActorSystem  {
     */
     
     public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz: clz, name: UUID.init().uuidString)
+        actorOf(clz: clz, name: UUID.init().uuidString)
     }
     
     /**
@@ -176,11 +176,7 @@ open class ActorSystem  {
     */
     
     func actorForRef(ref : ActorRef) -> Optional<Actor> {
-        if let s = self.supervisor {
-            return s.actorForRef(ref: ref)
-        } else {
-            return nil
-        }
+        self.supervisor?.actorForRef(ref: ref)
     }
     
     /**
@@ -191,7 +187,7 @@ open class ActorSystem  {
     */
     
     public func selectActor(actorPath : String) -> Optional<ActorRef>{
-        return self.supervisor!.children[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
+        self.supervisor!.children[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
     }
     
     /**
