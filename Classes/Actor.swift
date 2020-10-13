@@ -37,24 +37,24 @@ public func !(actorRef : ActorRef, msg : Actor.Message) -> Void {
 public typealias Receive = (Actor.Message) -> (Void)
 
 /**
-
-'Actor'
-
-Actors are the central elements of Theater.
-
-## Subclassing notes
-
-You must subclass Actor to implement your own actor classes such as: BankAccount, Device, Person etc.
-
-the single most important to override is
  
-```
-public func receive(msg : Actor.Message) -> Void
-```
+ 'Actor'
  
-Which will be called when some other actor tries to ! (tell) you something
-
-*/
+ Actors are the central elements of Theater.
+ 
+ ## Subclassing notes
+ 
+ You must subclass Actor to implement your own actor classes such as: BankAccount, Device, Person etc.
+ 
+ the single most important to override is
+ 
+ ```
+ public func receive(msg : Actor.Message) -> Void
+ ```
+ 
+ Which will be called when some other actor tries to ! (tell) you something
+ 
+ */
 
 open class Actor : NSObject {
     
@@ -73,7 +73,7 @@ open class Actor : NSObject {
             return withoutOpt.first
         }
     }
-
+    
     public func stop() {
         this ! Harakiri(sender:nil)
     }
@@ -115,47 +115,41 @@ open class Actor : NSObject {
     }
     
     /**
-    Here we save all the actor states
-    */
+     Here we save all the actor states
+     */
     
     final let statesStack : Stack<(String,Receive)> = Stack()
     
     /**
-    Each actor has it's own mailbox to process Actor.Messages.
-    */
+     Each actor has it's own mailbox to process Actor.Messages.
+     */
     
-    final public let mailbox : OperationQueue = OperationQueue()
+    open var mailbox : OperationQueue = OperationQueue()
     
     /**
-    Sender has a reference to the last actor ref that sent this actor a message
-    */
+     Sender has a reference to the last actor ref that sent this actor a message
+     */
     
     public var sender : Optional<ActorRef>
     
     /**
-    Reference to the ActorRef of the current actor
-    */
+     Reference to the ActorRef of the current actor
+     */
     
     public let this : ActorRef
     
     /**
-    Context refers to the Actor System that this actor belongs to.
-    */
+     Context refers to the Actor System that this actor belongs to.
+     */
     
     public let context : ActorSystem
     
     /**
-    DispatchQueue that the actor runs on
-    */
-    
-    public let underlyingQueue: DispatchQueue
-    
-    /**
-    Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
-    
-    - Parameter state: the new state to push
-    - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
-    */
+     Actors can adopt diferent behaviours or states, you can "push" a new state into the statesStack by using this method.
+     
+     - Parameter state: the new state to push
+     - Parameter name: The name of the new state, it is used in the logs which is very useful for debugging
+     */
     
     final public func become(name : String, state : @escaping Receive) -> Void  {
         become(name: name, state : state, discardOld : false)
@@ -171,29 +165,31 @@ open class Actor : NSObject {
     final public func become(name : String, state : @escaping Receive, discardOld : Bool) -> Void  {
         if discardOld { self.statesStack.popAndThrowAway() }
         self.statesStack.push(element: (name, state))
+        this ! OnEnter()
     }
     
     /**
-    Pop the state at the head of the statesStack and go to the previous stored state
-    */
+     Pop the state at the head of the statesStack and go to the previous stored state
+     */
     
     final public func unbecome() {
         self.statesStack.popAndThrowAway()
+        this ! OnEnter()
     }
     
     /**
-    Current state
-    - Returns: The state at the top of the statesStack
-    */
-     
+     Current state
+     - Returns: The state at the top of the statesStack
+     */
+    
     final public func currentState() -> (String,Receive)? {
-        self.statesStack.head()
+        return self.statesStack.head()
     }
     
     /**
-    Pop states from the statesStack until it finds name
-    - Parameter name: the state that you can to pop to.
-    */
+     Pop states from the statesStack until it finds name
+     - Parameter name: the state that you can to pop to.
+     */
     
     public func popToState(name : String) -> Void {
         if let (hName, _ ) = self.statesStack.head() {
@@ -207,9 +203,9 @@ open class Actor : NSObject {
     }
     
     /**
-    pop to root state
-    */
-     
+     pop to root state
+     */
+    
     public func popToRoot() -> Void {
         while !self.statesStack.isEmpty() {
             unbecome()
@@ -217,9 +213,9 @@ open class Actor : NSObject {
     }
     
     /**
-    This method handles all the system related messages, if the message is not system related, then it calls the state at the head position of the statesstack, if the stack is empty, then it calls the receive method
-    */
-     
+     This method handles all the system related messages, if the message is not system related, then it calls the state at the head position of the statesstack, if the stack is empty, then it calls the receive method
+     */
+    
     final public func systemReceive(msg : Actor.Message) -> Void {
         switch msg {
         case is Harakiri, is PoisonPill:
@@ -231,7 +227,9 @@ open class Actor : NSObject {
             
         default :
             if let (name,state) : (String,Receive) = self.statesStack.head() {
+                #if DEBUG
                 print("Sending message to state \(name)")
+                #endif
                 state(msg)
             } else {
                 self.receive(msg: msg)
@@ -240,34 +238,36 @@ open class Actor : NSObject {
     }
     
     /**
-    This method will be called when there's an incoming message, notice that if you push a state int the statesStack this method will not be called anymore until you pop all the states from the statesStack.
-    
-    - Parameter msg: the incoming message
-    */
+     This method will be called when there's an incoming message, notice that if you push a state int the statesStack this method will not be called anymore until you pop all the states from the statesStack.
+     
+     - Parameter msg: the incoming message
+     */
     
     open func receive(msg : Actor.Message) -> Void {
         switch msg {
-            default :
-                print("message not handled \(NSStringFromClass(type(of: msg)))")
+        default :
+            print("message not handled \(NSStringFromClass(type(of: msg)))")
         }
     }
     
     /**
-    This method is used by the ActorSystem to communicate with the actors, do not override.
-    */
+     This method is used by the ActorSystem to communicate with the actors, do not override.
+     */
     
     final public func tell(msg : Actor.Message) -> Void {
         mailbox.addOperation { () in
             self.sender = msg.sender
+            #if DEBUG
             print("\(self.sender?.path.asString ?? "No Sender") told \(msg) to \(self.this.path.asString)")
+            #endif
             self.systemReceive(msg: msg)
         }
     }
     
     /**
      Is called when an Actor is started. Actors are automatically started asynchronously when created. Empty default implementation.
-    */
-     
+     */
+    
     open func preStart() -> Void {
         
     }
@@ -281,21 +281,19 @@ open class Actor : NSObject {
     }
     
     /**
-    Schedule Once is a timer that executes the code in block after seconds
-    */
-     
+     Schedule Once is a timer that executes the code in block after seconds
+     */
+    
     final public func scheduleOnce(seconds:Double, block : @escaping () -> Void) {
         self.mailbox.underlyingQueue!.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(seconds)), execute: block)
     }
     
     /**
-    Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  actorOf in the ActorSystem to create a new actor
-    */
+     Default constructor used by the ActorSystem to create a new actor, you should not call this directly, use  actorOf in the ActorSystem to create a new actor
+     */
     
     required public init(context : ActorSystem, ref : ActorRef) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        underlyingQueue = DispatchQueue(label: ref.path.asString)
-        mailbox.underlyingQueue = underlyingQueue
         sender = nil
         self.context = context
         self.this = ref
@@ -305,8 +303,6 @@ open class Actor : NSObject {
     
     public init(context : ActorSystem) {
         mailbox.maxConcurrentOperationCount = 1 //serial queue
-        underlyingQueue = DispatchQueue(label: "")
-        mailbox.underlyingQueue = underlyingQueue
         sender = nil
         self.context = context
         self.this = ActorRef(context: context, path: ActorPath(path: ""))
@@ -317,5 +313,5 @@ open class Actor : NSObject {
     deinit {
         print("killing \(self.this.path.asString)")
     }
-
+    
 }
