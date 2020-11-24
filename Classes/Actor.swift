@@ -68,7 +68,7 @@ open class Actor : NSObject {
             return self
 
         } else if let selected = self.children[path] {
-            return selected as! Actor
+            return selected as? Actor
         } else {
             //TODO: this is expensive an wasteful
             let recursiveSearch = self.children.map({($0.1 as! Actor).actorForRef(ref:ref)})
@@ -113,7 +113,7 @@ open class Actor : NSObject {
     }
     
     /**
-     
+    Good old NSDictionary is inmutable and thread safe, so lets use that to avoid concurrency issues.
      */
     
     final var children = NSDictionary()
