@@ -115,7 +115,6 @@ open class Actor : NSObject {
     /**
     Good old NSDictionary is inmutable and thread safe, so lets use that to avoid concurrency issues.
      */
-    
     final var children = NSDictionary()
     
     public func getChildrenActors() -> [String: ActorRef] {

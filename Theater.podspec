@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Theater"
-  s.version       = "0.11"
+  s.version       = "0.12"
   s.swift_version = "5"
   s.summary       = "Swift framework to help write async, resilient and responsive applications."
   s.description   = <<-DESC
