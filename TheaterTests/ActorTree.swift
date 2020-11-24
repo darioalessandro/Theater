@@ -45,13 +45,13 @@ class ActorTree: QuickSpec {
                 guy1 ! ActorTreeGuy.CreateChildren(count: 4, sender: nil)
 
                 let guy2 = system.actorOf(clz: ActorTreeGuy.self, name: "ActorTreeGuy2")!
-                guy2 ! ActorTreeGuy.CreateChildren(count: 19, sender: nil)
+                guy2 ! ActorTreeGuy.CreateChildren(count: 1000, sender: nil)
                 
                 if let r = system.actorForRef(ref: guy1) {
                     expect(r.getChildrenActors().count).toEventually(equal(Int(4)), timeout: 10, pollInterval: 1, description: "Unable to create children")
                 }
                 if let r = system.actorForRef(ref: guy2) {
-                    expect(r.getChildrenActors().count).toEventually(equal(Int(19)), timeout: 10, pollInterval: 1, description: "Unable to create children")
+                    expect(r.getChildrenActors().count).toEventually(equal(Int(1000)), timeout: 10, pollInterval: 1, description: "Unable to create children")
                 }
             }
 

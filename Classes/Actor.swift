@@ -67,14 +67,12 @@ open class Actor : NSObject {
         if path == this.path.asString {
             return self
 
-        }else if let selected = self.children[path] {
-            return selected
+        } else if let selected = self.children[path] {
+            return selected as! Actor
         } else {
             //TODO: this is expensive an wasteful
-            let recursiveSearch = self.children.map({$0.1.actorForRef(ref:ref)})
-            
-            let withoutOpt = recursiveSearch.filter({$0 != nil}).compactMap({return $0})
-            
+            let recursiveSearch = self.children.map({($0.1 as! Actor).actorForRef(ref:ref)})
+            let withoutOpt = recursiveSearch.filter({$0 != nil}).compactMap({$0})
             return withoutOpt.first
         }
     }
@@ -85,8 +83,13 @@ open class Actor : NSObject {
     
     public func stop(actorRef : ActorRef) -> Void {
         self.mailbox.addOperation { [weak self] in
+            guard let self = self else {
+                return
+            }
             let path = actorRef.path.asString
-            self?.children.removeValue(forKey:path)
+            let mutableDict = NSMutableDictionary(dictionary: self.children)
+            mutableDict.removeObject(forKey:path)
+            self.children = NSDictionary(dictionary: mutableDict)
         }
     }
     
@@ -102,7 +105,10 @@ open class Actor : NSObject {
         }
         let ref = ActorRef(context:self.context, path:ActorPath(path:completePath))
         let actorInstance : Actor = clz.init(context: self.context, ref: ref)
-        self.children[completePath] = actorInstance
+        let mutableDict = NSMutableDictionary(dictionary: self.children)
+        mutableDict.setValue(actorInstance, forKey: completePath)
+        self.children = NSDictionary(dictionary: mutableDict)
+        
         return Success(ref)
     }
     
@@ -110,13 +116,13 @@ open class Actor : NSObject {
      
      */
     
-    final var children  = [String : Actor]()
+    final var children = NSDictionary()
     
     public func getChildrenActors() -> [String: ActorRef] {
         var newDict : [String:ActorRef] = [String : ActorRef]()
         
         for (k,v) in self.children {
-            newDict[k] = v.this
+            newDict[k as! String] = (v as! Actor).this
         }
         return newDict
     }
@@ -228,7 +234,7 @@ open class Actor : NSObject {
         case is Harakiri, is PoisonPill:
             self.willStop()
             self.children.forEach({ (_,actor) in
-                actor.this ! Harakiri(sender:this)
+                (actor as! Actor).this ! Harakiri(sender:this)
             })
             self.context.stop(actorRef: self.this)
             

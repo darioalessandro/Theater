@@ -175,7 +175,7 @@ open class ActorSystem  {
     */
     
     public func selectActor(actorPath : String) -> ActorRef? {
-        self.supervisor?.children[actorPath].map({ (a : Actor) -> ActorRef in return a.this})
+        self.supervisor?.children[actorPath].map({  ($0 as! Actor).this })
     }
     
     /**
