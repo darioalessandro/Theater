@@ -10,6 +10,10 @@ import Foundation
 
 infix operator ! : SendMessagePrecedence
 
+enum ActorCreationError: Error {
+    case reason(String)
+}
+
 precedencegroup SendMessagePrecedence {
     associativity: left
 }
@@ -58,17 +62,18 @@ public typealias Receive = (Actor.Message) -> (Void)
 
 open class Actor : NSObject {
     
-    public func actorForRef(ref : ActorRef) -> Optional<Actor> {
+    public func actorForRef(ref : ActorRef) -> Actor? {
         let path = ref.path.asString
         if path == this.path.asString {
             return self
+
         }else if let selected = self.children[path] {
             return selected
         } else {
             //TODO: this is expensive an wasteful
-            let recursiveSearch = self.children.map({return $0.1.actorForRef(ref:ref)})
+            let recursiveSearch = self.children.map({$0.1.actorForRef(ref:ref)})
             
-            let withoutOpt = recursiveSearch.filter({return $0 != nil}).compactMap({return $0})
+            let withoutOpt = recursiveSearch.filter({$0 != nil}).compactMap({return $0})
             
             return withoutOpt.first
         }
@@ -79,24 +84,26 @@ open class Actor : NSObject {
     }
     
     public func stop(actorRef : ActorRef) -> Void {
-        self.mailbox.addOperation { () -> Void in
+        self.mailbox.addOperation { [weak self] in
             let path = actorRef.path.asString
-            self.children.removeValue(forKey:path)
+            self?.children.removeValue(forKey:path)
         }
     }
     
-    public func actorOf(clz : Actor.Type) -> ActorRef {
-        return actorOf(clz: clz, name: UUID.init().uuidString)
+    public func actorOf(clz : Actor.Type) -> Try<ActorRef> {
+        actorOf(clz: clz, name: UUID.init().uuidString)
     }
     
-    public func actorOf(clz : Actor.Type, name : String) -> ActorRef {
-        
+    public func actorOf(clz : Actor.Type, name : String) -> Try<ActorRef> {
         //TODO: should we kill or throw an error when user wants to reuse address of actor?
         let completePath = "\(self.this.path.asString)/\(name)"
+        if self.children[completePath] != nil {
+            return Failure(error: ActorCreationError.reason("Actor exists"))
+        }
         let ref = ActorRef(context:self.context, path:ActorPath(path:completePath))
         let actorInstance : Actor = clz.init(context: self.context, ref: ref)
         self.children[completePath] = actorInstance
-        return ref
+        return Success(ref)
     }
     
     /**
@@ -130,7 +137,7 @@ open class Actor : NSObject {
      Sender has a reference to the last actor ref that sent this actor a message
      */
     
-    public var sender : Optional<ActorRef>
+    public var sender : ActorRef?
     
     /**
      Reference to the ActorRef of the current actor
@@ -255,7 +262,13 @@ open class Actor : NSObject {
      */
     
     final public func tell(msg : Actor.Message) -> Void {
-        mailbox.addOperation { () in
+        mailbox.addOperation { [weak self] in
+            guard let self = self else {
+                #if DEBUG
+                print("dropping \(msg) because I am dead")
+                #endif
+                return
+            }
             self.sender = msg.sender
             #if DEBUG
             print("\(self.sender?.path.asString ?? "No Sender") told \(msg) to \(self.this.path.asString)")

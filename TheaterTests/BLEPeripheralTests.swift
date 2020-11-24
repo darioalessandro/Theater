@@ -22,7 +22,7 @@ class BLEPeripheralTests: QuickSpec {
 
             describe("lifecycle", {
 
-                let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral1"))!
+                let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral1")!)!
                 let peripheral = actor as! BLEPeripheral
 
                 it("should start with no listeners") {
@@ -41,7 +41,7 @@ class BLEPeripheralTests: QuickSpec {
             describe("states", {
 
                 it("should start with in idle state") {
-                    let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral2"))!
+                    let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral2")!)!
                     let peripheral = actor as! BLEPeripheral
                     let idle = peripheral.currentState()!.0
                     expect(idle).to(equal(peripheral.states.idle), description: "Failed to switch state")
@@ -49,7 +49,7 @@ class BLEPeripheralTests: QuickSpec {
 
                 it("should transition to advertising if it is forced to and then stop if required") {
                     //Simulating CoreBluetooth message
-                    let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral3"))!
+                    let actor: Actor = system.actorForRef(ref: system.actorOf(clz: BLEPeripheral.self, name: "BLEPeripheral3")!)!
                     let peripheral = actor as! BLEPeripheral
                     peripheral.peripheralManagerDidStartAdvertising(CBPeripheralManager(), error: nil)
                     expect(peripheral.currentState()!.0).toEventually(equal(peripheral.states.advertising), timeout: 5, pollInterval: 1, description: "Failed to switch state")
