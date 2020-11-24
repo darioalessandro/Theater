@@ -23,7 +23,7 @@ public class TryGenerator {
 
     public func isItBiggerThan3() -> Try<Int> {
         if self.n > 3 {
-            return Success(value: self.n)
+            return Success(self.n)
         } else {
             return Failure(error: NotLarger.than(3))
         }

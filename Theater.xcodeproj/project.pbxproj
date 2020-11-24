@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06163E011BF1936300561FAF /* Props.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06163E001BF1936300561FAF /* Props.swift */; };
 		06163E041BF19AD100561FAF /* NSObject+DumpClassInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */; };
 		06163E051BF19AD100561FAF /* NSObject+DumpClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */; };
 		06545B9A1BE40716004A2D5F /* ViewControllerActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06545B991BE40716004A2D5F /* ViewControllerActor.swift */; };
@@ -51,7 +50,6 @@
 		0512CCB0939AAABE96F23F13 /* Pods-ActorsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsTests/Pods-ActorsTests.release.xcconfig"; sourceTree = "<group>"; };
 		060B1E1F1BE70CC000077BCC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BLEPeripheralTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		06163E001BF1936300561FAF /* Props.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Props.swift; sourceTree = "<group>"; };
 		06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DumpClassInfo.h"; sourceTree = "<group>"; };
 		06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DumpClassInfo.m"; sourceTree = "<group>"; };
 		061C25451BC2ECC90049D6C9 /* TryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryTests.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				068F80281BCB0A1A00A10D76 /* ActorSystem.swift */,
 				068F802B1BCB0A1A00A10D76 /* Message.swift */,
 				068F802C1BCB0A1A00A10D76 /* NSOperationQueue.swift */,
-				06163E001BF1936300561FAF /* Props.swift */,
 				06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */,
 				06163E031BF19AD100561FAF /* NSObject+DumpClassInfo.m */,
 				065B722B1BFA692800C06580 /* TheOneWhoWalksTheBubblesOfSpaceTime.swift */,
@@ -308,7 +305,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = dario;
 				TargetAttributes = {
 					0670619F251EDBBD004300F5 = {
@@ -322,10 +319,9 @@
 			};
 			buildConfigurationList = 06E1D4ED1BB7699700E07321 /* Build configuration list for PBXProject "Theater" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -451,7 +447,6 @@
 				068F80341BCB0A1A00A10D76 /* Message.swift in Sources */,
 				068F80331BCB0A1A00A10D76 /* BLECentral.swift in Sources */,
 				066805961BE05C190048085B /* BLEPeripheralConnection.swift in Sources */,
-				06163E011BF1936300561FAF /* Props.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,7 +575,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -661,7 +656,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -698,7 +693,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Theater/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
