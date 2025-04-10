@@ -255,7 +255,7 @@ public class BLECentral : Actor, CBCentralManagerDelegate, WithListeners {
         print("called deinit in BLECentral \(this.path.asString)")
     }
     
-    public func receive(msg: Actor.Message) {
+    public override func receive(msg: Actor.Message) {
         // ... existing code ...
     }
     
