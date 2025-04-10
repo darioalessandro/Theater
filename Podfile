@@ -19,10 +19,9 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
       
-      # Enable module stability for all pods
-      config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
-      config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
-      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      # Enable Mac Catalyst support for all pods
+      config.build_settings['SUPPORTS_MACCATALYST'] = 'YES'
+      config.build_settings['SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD'] = 'YES'
       
       # Configure Nimble with proper XCTest framework linking
       if target.name == 'Nimble'

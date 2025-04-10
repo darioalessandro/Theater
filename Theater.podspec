@@ -125,4 +125,10 @@ got Hello
   s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
   s.source_files  = "Classes/*.swift"
   s.dependency  'Starscream', '~> 4.0.8'
+  
+  # Enable Mac Catalyst support
+  s.pod_target_xcconfig = {
+    'SUPPORTS_MACCATALYST' => 'YES',
+    'SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD' => 'YES'
+  }
 end
