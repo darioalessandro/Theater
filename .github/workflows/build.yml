@@ -58,16 +58,15 @@ jobs:
         xcode-version: '15.4'
         
     - name: Run iOS Tests
-      run: bundle exec fastlane test
+      run: |
+        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' -configuration Debug
         
     - name: Upload iOS Test Results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: ios-test-results
-        path: |
-          fastlane/reports
-          fastlane/logs
+        path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
 
   macos:
     needs: setup
