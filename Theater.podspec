@@ -1,27 +1,30 @@
 Pod::Spec.new do |s|
 
   s.name          = "Theater"
-  s.version       = "0.13"
+  s.version       = "1.0"
   s.swift_version = "5"
-  s.summary       = "Swift framework to help write async, resilient and responsive applications."
+  s.summary       = "A powerful Swift framework for building concurrent, resilient, and responsive applications using the Actor Model."
   s.description   = <<-DESC
-  
-Writing async, resilient and responsive applications is too hard. 
+Theater is a modern Swift framework that simplifies the development of concurrent, resilient, and responsive applications by leveraging the Actor Model pattern.
 
-In the case of iOS, is because we've been using the wrong abstraction level: NSOperationQueues, dispatch_semaphore_create, dispatch_semaphore_wait and other low level GCD functions and structures.
+Traditional iOS development often relies on low-level concurrency primitives like OperationQueues, dispatch semaphores, and GCD functions, which can lead to complex and error-prone code. Theater elevates the abstraction level by implementing the Actor Model, providing a more intuitive and robust platform for building scalable concurrent applications.
 
-Using the Actor Model, we raise the abstraction level and provide a better platform to build correct concurrent and scalable applications.
+Key Features:
+- Actor-based concurrency model
+- Message-passing communication
+- Built-in actor system
+- Simple and intuitive API
+- Inspired by Akka's design patterns
 
-Theater is Open Source and available under the Apache 2 License.
+Theater is open source and available under the Apache 2 License.
 
-Theater is inspired by Akka.
+Connect with us:
+- Email: [dario@securityunion.dev](mailto:dario@securityunion.dev)
+- GitHub: [darioalessandro/Theater](https://github.com/darioalessandro/Theater)
 
-Twitter = [@TheaterFwk](https://twitter.com/TheaterFwk)
+### Quick Start
 
-### How to get started
-
-- install via [CocoaPods](http://cocoapods.org)
-
+Install via CocoaPods:
 ```ruby
 pod 'Theater'
 ```
@@ -121,5 +124,11 @@ got Hello
   s.platform     = :ios, "10.0"
   s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
   s.source_files  = "Classes/*.swift"
-  s.dependency  'Starscream', '~> 4.0.4'
+  s.dependency  'Starscream', '~> 4.0.8'
+  
+  # Enable Mac Catalyst support
+  s.pod_target_xcconfig = {
+    'SUPPORTS_MACCATALYST' => 'YES',
+    'SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD' => 'YES'
+  }
 end

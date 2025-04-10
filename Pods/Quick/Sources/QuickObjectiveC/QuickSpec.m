@@ -18,45 +18,16 @@ static QuickSpec *currentSpec = nil;
 #pragma mark - XCTestCase Overrides
 
 /**
- The runtime sends initialize to each class in a program just before the class, or any class
- that inherits from it, is sent its first message from within the program. QuickSpec hooks into
- this event to compile the example groups for this spec subclass.
-
- If an exception occurs when compiling the examples, report it to the user. Chances are they
- included an expectation outside of a "it", "describe", or "context" block.
- */
-+ (void)initialize {
-    [QuickConfiguration initialize];
-
-    World *world = [World sharedWorld];
-    [world performWithCurrentExampleGroup:[world rootExampleGroupForSpecClass:self] closure:^{
-        QuickSpec *spec = [self new];
-
-        @try {
-            [spec spec];
-        }
-        @catch (NSException *exception) {
-            [NSException raise:NSInternalInconsistencyException
-                        format:@"An exception occurred when building Quick's example groups.\n"
-             @"Some possible reasons this might happen include:\n\n"
-             @"- An 'expect(...).to' expectation was evaluated outside of "
-             @"an 'it', 'context', or 'describe' block\n"
-             @"- 'sharedExamples' was called twice with the same name\n"
-             @"- 'itBehavesLike' was called with a name that is not registered as a shared example\n\n"
-             @"Here's the original exception: '%@', reason: '%@', userInfo: '%@'",
-             exception.name, exception.reason, exception.userInfo];
-        }
-        [self testInvocations];
-    }];
-}
-
-/**
  Invocations for each test method in the test case. QuickSpec overrides this method to define a
  new method for each example defined in +[QuickSpec spec].
 
  @return An array of invocations that execute the newly defined example methods.
  */
 + (NSArray *)testInvocations {
+    // Xcode 13.3 hack, see this issue for more info: https://github.com/Quick/Quick/issues/1123
+    // In case of fix in later versions next line can be removed
+    [[QuickTestObservation sharedInstance] buildAllExamplesIfNeeded];
+
     NSArray *examples = [[World sharedWorld] examplesForSpecClass:[self class]];
     NSMutableArray *invocations = [NSMutableArray arrayWithCapacity:[examples count]];
     
@@ -84,6 +55,42 @@ static QuickSpec *currentSpec = nil;
 }
 
 #pragma mark - Internal Methods
+
+/**
+ Runs the `spec` method and builds the examples for this class.
+
+ It's safe to call this method multiple times. If the examples for the class have been built, invocation
+ of this method has no effect.
+ */
++ (void)buildExamplesIfNeeded {
+    [QuickConfiguration class];
+    World *world = [World sharedWorld];
+
+    if ([world isRootExampleGroupInitializedForSpecClass:[self class]]) {
+        // The examples for this subclass have been already built. Skipping.
+        return;
+    }
+
+    ExampleGroup *rootExampleGroup = [world rootExampleGroupForSpecClass:[self class]];
+    [world performWithCurrentExampleGroup:rootExampleGroup closure:^{
+        QuickSpec *spec = [self new];
+
+        @try {
+            [spec spec];
+        }
+        @catch (NSException *exception) {
+            [NSException raise:NSInternalInconsistencyException
+                        format:@"An exception occurred when building Quick's example groups.\n"
+             @"Some possible reasons this might happen include:\n\n"
+             @"- An 'expect(...).to' expectation was evaluated outside of "
+             @"an 'it', 'context', or 'describe' block\n"
+             @"- 'sharedExamples' was called twice with the same name\n"
+             @"- 'itBehavesLike' was called with a name that is not registered as a shared example\n\n"
+             @"Here's the original exception: '%@', reason: '%@', userInfo: '%@'",
+             exception.name, exception.reason, exception.userInfo];
+        }
+    }];
+}
 
 /**
  QuickSpec uses this method to dynamically define a new instance method for the
@@ -132,18 +139,33 @@ static QuickSpec *currentSpec = nil;
  and teardown. By default, the failure will be reported as an
  XCTest failure, and the example will be highlighted in Xcode.
  */
-- (void)recordFailureWithDescription:(NSString *)description
-                              inFile:(NSString *)filePath
-                              atLine:(NSUInteger)lineNumber
-                            expected:(BOOL)expected {
-    if (self.example.isSharedExample) {
-        filePath = self.example.callsite.file;
-        lineNumber = self.example.callsite.line;
+- (void)recordIssue:(XCTIssue *)issue {
+    if (self != [QuickSpec current]) {
+        [[QuickSpec current] recordIssue:issue];
+        return;
     }
-    [currentSpec.testRun recordFailureWithDescription:description
-                                               inFile:filePath
-                                               atLine:lineNumber
-                                             expected:expected];
+
+    if (self.example.isSharedExample) {
+        XCTSourceCodeLocation *location = [[XCTSourceCodeLocation alloc] initWithFilePath:self.example.callsite.file
+                                                                               lineNumber:self.example.callsite.line];
+        XCTSourceCodeContext *sourceCodeContext = [[XCTSourceCodeContext alloc] initWithLocation:location];
+        XCTIssue *newIssue = [[XCTIssue alloc] initWithType:issue.type
+                                         compactDescription:issue.compactDescription
+                                        detailedDescription:issue.detailedDescription
+                                          sourceCodeContext:sourceCodeContext
+                                            associatedError:issue.associatedError
+                                                attachments:issue.attachments];
+        [super recordIssue:newIssue];
+    } else {
+        [super recordIssue:issue];
+    }
 }
 
 @end
+
+#pragma mark - Test Observation
+
+__attribute__((constructor))
+static void registerQuickTestObservation(void) {
+    [[XCTestObservationCenter sharedTestObservationCenter] addTestObserver:[QuickTestObservation sharedInstance]];
+}

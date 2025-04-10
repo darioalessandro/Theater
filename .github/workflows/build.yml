@@ -1,0 +1,100 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  setup:
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.4'
+        
+    - name: Install Dependencies
+      run: bundle exec pod install
+        
+    - name: Cache CocoaPods
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cocoapods
+          Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+          
+    - name: Cache Xcode Derived Data
+      uses: actions/cache@v3
+      with:
+        path: ~/Library/Developer/Xcode/DerivedData
+        key: ${{ runner.os }}-derived-data-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-derived-data-
+
+  ios:
+    needs: setup
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.4'
+        
+    - name: Run iOS Tests
+      run: |
+        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' -configuration Debug
+        
+    - name: Upload iOS Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-test-results
+        path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
+
+  macos:
+    needs: setup
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.4'
+        
+    - name: Build macOS
+      run: |
+        xcodebuild -workspace Theater.xcworkspace -scheme Theater -destination "platform=macOS" -configuration Debug
+        
+    - name: Upload macOS Build Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-build-results
+        path: ~/Library/Developer/Xcode/DerivedData
+
+  validate:
+    needs: [ios, macos]
+    runs-on: macos-14
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.4'
+        
+    - name: Validate Podspec
+      run: pod spec lint Theater.podspec --allow-warnings
+        
+    - name: Pod Lib Lint
+      run: pod lib lint --allow-warnings 

@@ -12,7 +12,7 @@ import Foundation
  Generic protocol so that Actors can have a collection of observers.
 */
 
-public protocol WithListeners : class {
+public protocol WithListeners : AnyObject {
     
     var listeners : [ActorRef] { get set }
     
