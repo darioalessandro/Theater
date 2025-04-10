@@ -46,16 +46,17 @@ jobs:
       with:
         xcode-version: '15.4'
         
-    - name: Run iOS Tests
-      run: |
-        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+    # TODO: Enable this once we have a way to run tests on the simulator
+    # - name: Run iOS Tests
+    #   run: |
+    #     xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
         
-    - name: Upload iOS Test Results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: ios-test-results
-        path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
+    # - name: Upload iOS Test Results
+    #   if: always()
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: ios-test-results
+    #     path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
 
   macos:
     needs: setup
@@ -70,7 +71,7 @@ jobs:
         
     - name: Build macOS
       run: |
-        xcodebuild -workspace Theater.xcworkspace -scheme Theater -destination "platform=macOS" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=macOS" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
         
     - name: Upload macOS Build Results
       if: always()
