@@ -129,9 +129,4 @@ DESC
   s.pod_target_xcconfig = { 'ARCHS' => 'arm64' }
   s.user_target_xcconfig = { 'ARCHS' => 'arm64' }
 
-  # Enable Mac Catalyst support
-  s.pod_target_xcconfig = {
-    'SUPPORTS_MACCATALYST' => 'YES',
-    'SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD' => 'YES'
-  }
 end
