@@ -114,18 +114,21 @@ Tell = Optional("dude1") <Actors.Hi: 0x7bf951a0> dude2
 Tell = Optional("dude2") <Actors.Hello: 0x7be4bc00> dude1 
 got Hello
 ```
-                   DESC
- 
-  s.homepage     = "https://github.com/darioalessandro/Theater"
-  s.screenshots  = "https://raw.githubusercontent.com/darioalessandro/Theater/master/theaterlogo.jpg"
-  s.license      = { :type => "Apache2", :file => "License.txt" }
-  s.author             = { "Dario Lencina" => "dario@securityunion.dev" }
-  s.social_media_url   = "https://twitter.com/theaterfwk"
-  s.platform     = :ios, "10.0"
-  s.source       = { :git => "https://github.com/darioalessandro/Theater.git", :tag => s.version }
-  s.source_files  = "Classes/*.swift"
-  s.dependency  'Starscream', '~> 4.0.8'
-  
+DESC
+
+  s.homepage      = "https://github.com/darioalessandro/Theater"
+  s.screenshots   = "https://raw.githubusercontent.com/darioalessandro/Theater/master/theaterlogo.jpg"
+  s.license       = { :type => "Apache 2", :file => "LICENSE" }
+  s.author        = { "Dario Alessandro" => "dario@securityunion.dev" }
+  s.social_media_url = "https://youtube.com/@dario.lencina"
+  s.platform      = :ios, "14.0"
+  s.platform      = :osx, "14.0"
+  s.source        = { :git => "https://github.com/darioalessandro/Theater.git", :tag => "#{s.version}" }
+  s.source_files  = "Classes/**/*"
+  s.dependency    "Starscream", "~> 4.0.8"
+  s.pod_target_xcconfig = { 'ARCHS' => 'arm64' }
+  s.user_target_xcconfig = { 'ARCHS' => 'arm64' }
+
   # Enable Mac Catalyst support
   s.pod_target_xcconfig = {
     'SUPPORTS_MACCATALYST' => 'YES',
