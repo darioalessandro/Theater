@@ -177,4 +177,7 @@ public class WebSocketClientWrapper : Actor , WebSocketDelegate,  WithListeners 
         self.this ! Disconnect(sender: nil)
     }
     
+    public func receive(msg: Actor.Message) {
+        // ... existing code ...
+    }
 }

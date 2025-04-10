@@ -32,8 +32,8 @@
 		068F80381BCB0A1A00A10D76 /* WebSocketClientWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068F802F1BCB0A1A00A10D76 /* WebSocketClientWrapper.swift */; };
 		06E1D5211BB76EE300E07321 /* Theater.h in Headers */ = {isa = PBXBuildFile; fileRef = 06E1D5201BB76EE300E07321 /* Theater.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		06E5A1FA1C194100004A8D29 /* InternalActorRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E5A1F91C194100004A8D29 /* InternalActorRef.swift */; };
-		5729F5FEA92C37EC964BFE34 /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9E8B63807C0DC1864EA0E4 /* Pods_Theater.framework */; };
-		88808B9D2770922642E9E8CE /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F8B488FF2FA348E33A0149 /* Pods_TheaterTests.framework */; };
+		540B9A1FA9808D830F05E3EF /* Pods_Theater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96AABFFC6AB06C41AB10D519 /* Pods_Theater.framework */; };
+		BBA604266A880546E5178F67 /* Pods_TheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6514F36466E22F65BA0697C /* Pods_TheaterTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0512CCB0939AAABE96F23F13 /* Pods-ActorsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsTests/Pods-ActorsTests.release.xcconfig"; sourceTree = "<group>"; };
+		03B8C3EBA2FAF5C7E05D7461 /* Pods-Theater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Theater.debug.xcconfig"; path = "Target Support Files/Pods-Theater/Pods-Theater.debug.xcconfig"; sourceTree = "<group>"; };
 		060B1E1F1BE70CC000077BCC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		060E28511BE1A3C500D73ACB /* BLEPeripheralTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BLEPeripheralTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		06163E021BF19AD100561FAF /* NSObject+DumpClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DumpClassInfo.h"; sourceTree = "<group>"; };
@@ -78,19 +78,11 @@
 		06E1D5201BB76EE300E07321 /* Theater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Theater.h; sourceTree = "<group>"; };
 		06E1D5221BB76EE300E07321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06E5A1F91C194100004A8D29 /* InternalActorRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalActorRef.swift; sourceTree = "<group>"; };
-		27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TheaterTests/Pods-TheaterTests.release.xcconfig"; sourceTree = "<group>"; };
-		2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TheaterTests/Pods-TheaterTests.debug.xcconfig"; sourceTree = "<group>"; };
-		46B360E32D276B7FED08D679 /* Pods-RemoteCam.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RemoteCam.release.xcconfig"; path = "Pods/Target Support Files/Pods-RemoteCam/Pods-RemoteCam.release.xcconfig"; sourceTree = "<group>"; };
-		4C8A9E476AE568C4EF0B56F2 /* Pods-ActorsDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsDemo/Pods-ActorsDemo.release.xcconfig"; sourceTree = "<group>"; };
-		513E00B1656D167B80F3A032 /* Pods-RemoteCam.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RemoteCam.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RemoteCam/Pods-RemoteCam.debug.xcconfig"; sourceTree = "<group>"; };
-		57F8B488FF2FA348E33A0149 /* Pods_TheaterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheaterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		804EC824A5887C3C5F84190A /* Pods-ActorsDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsDemo/Pods-ActorsDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		8F9E8B63807C0DC1864EA0E4 /* Pods_Theater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Theater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		D723620601C8A5A185F148F3 /* Pods-ActorsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ActorsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ActorsTests/Pods-ActorsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D8BD0D0628C205A2CECBE50B /* Pods-Theater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Theater.release.xcconfig"; path = "Pods/Target Support Files/Pods-Theater/Pods-Theater.release.xcconfig"; sourceTree = "<group>"; };
-		DAD37B55B79523C4A0F32206 /* Pods-Theater.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Theater.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Theater/Pods-Theater.debug.xcconfig"; sourceTree = "<group>"; };
+		292D34340274A759E158E708 /* Pods-TheaterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.release.xcconfig"; path = "Target Support Files/Pods-TheaterTests/Pods-TheaterTests.release.xcconfig"; sourceTree = "<group>"; };
+		682423AA16505D8E3AB0C5C2 /* Pods-Theater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Theater.release.xcconfig"; path = "Target Support Files/Pods-Theater/Pods-Theater.release.xcconfig"; sourceTree = "<group>"; };
+		6B9D7C159ACEE7646ED681D6 /* Pods-TheaterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheaterTests.debug.xcconfig"; path = "Target Support Files/Pods-TheaterTests/Pods-TheaterTests.debug.xcconfig"; sourceTree = "<group>"; };
+		96AABFFC6AB06C41AB10D519 /* Pods_Theater.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Theater.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6514F36466E22F65BA0697C /* Pods_TheaterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheaterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				067061A5251EDBBD004300F5 /* Theater.framework in Frameworks */,
-				88808B9D2770922642E9E8CE /* Pods_TheaterTests.framework in Frameworks */,
+				BBA604266A880546E5178F67 /* Pods_TheaterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5729F5FEA92C37EC964BFE34 /* Pods_Theater.framework in Frameworks */,
+				540B9A1FA9808D830F05E3EF /* Pods_Theater.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,8 +178,8 @@
 				06E1D51F1BB76EE300E07321 /* Theater */,
 				067061A1251EDBBD004300F5 /* TheaterTests */,
 				06E1D4F31BB7699700E07321 /* Products */,
-				2B697B2D042E1A6218E1B076 /* Pods */,
 				1FEBF1D32E8FD6506AAEDD87 /* Frameworks */,
+				1BA90EF70802AE76C3F694DF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,33 +207,26 @@
 			path = Theater;
 			sourceTree = "<group>";
 		};
+		1BA90EF70802AE76C3F694DF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				03B8C3EBA2FAF5C7E05D7461 /* Pods-Theater.debug.xcconfig */,
+				682423AA16505D8E3AB0C5C2 /* Pods-Theater.release.xcconfig */,
+				6B9D7C159ACEE7646ED681D6 /* Pods-TheaterTests.debug.xcconfig */,
+				292D34340274A759E158E708 /* Pods-TheaterTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		1FEBF1D32E8FD6506AAEDD87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				060B1E1F1BE70CC000077BCC /* AdSupport.framework */,
-				8F9E8B63807C0DC1864EA0E4 /* Pods_Theater.framework */,
-				57F8B488FF2FA348E33A0149 /* Pods_TheaterTests.framework */,
+				96AABFFC6AB06C41AB10D519 /* Pods_Theater.framework */,
+				D6514F36466E22F65BA0697C /* Pods_TheaterTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2B697B2D042E1A6218E1B076 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CDE31BDDDDFA13FD46B91A62 /* Pods.debug.xcconfig */,
-				766A8C017AE74FE9944AAE3F /* Pods.release.xcconfig */,
-				D723620601C8A5A185F148F3 /* Pods-ActorsTests.debug.xcconfig */,
-				0512CCB0939AAABE96F23F13 /* Pods-ActorsTests.release.xcconfig */,
-				2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */,
-				27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */,
-				513E00B1656D167B80F3A032 /* Pods-RemoteCam.debug.xcconfig */,
-				46B360E32D276B7FED08D679 /* Pods-RemoteCam.release.xcconfig */,
-				DAD37B55B79523C4A0F32206 /* Pods-Theater.debug.xcconfig */,
-				D8BD0D0628C205A2CECBE50B /* Pods-Theater.release.xcconfig */,
-				804EC824A5887C3C5F84190A /* Pods-ActorsDemo.debug.xcconfig */,
-				4C8A9E476AE568C4EF0B56F2 /* Pods-ActorsDemo.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,11 +248,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 067061A8251EDBBD004300F5 /* Build configuration list for PBXNativeTarget "TheaterTests" */;
 			buildPhases = (
-				E0916F5B768B3EB51626E1BB /* [CP] Check Pods Manifest.lock */,
+				7C5BE0884A344B877B8E4E6A /* [CP] Check Pods Manifest.lock */,
 				0670619C251EDBBD004300F5 /* Sources */,
 				0670619D251EDBBD004300F5 /* Frameworks */,
 				0670619E251EDBBD004300F5 /* Resources */,
-				379600D780239C5B6BE7111A /* [CP] Embed Pods Frameworks */,
+				0EE5BDB279BBCBBE4EBE184B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -283,7 +268,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06E1D5351BB76EE400E07321 /* Build configuration list for PBXNativeTarget "Theater" */;
 			buildPhases = (
-				7014C0E363C836CDEBFF5ED4 /* [CP] Check Pods Manifest.lock */,
+				7FBBCEA6F040C26175E2AB31 /* [CP] Check Pods Manifest.lock */,
 				06E1D5191BB76EE300E07321 /* Sources */,
 				06E1D51A1BB76EE300E07321 /* Frameworks */,
 				06E1D51B1BB76EE300E07321 /* Headers */,
@@ -355,7 +340,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		379600D780239C5B6BE7111A /* [CP] Embed Pods Frameworks */ = {
+		0EE5BDB279BBCBBE4EBE184B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -372,25 +357,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheaterTests/Pods-TheaterTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7014C0E363C836CDEBFF5ED4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Theater-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E0916F5B768B3EB51626E1BB /* [CP] Check Pods Manifest.lock */ = {
+		7C5BE0884A344B877B8E4E6A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -406,6 +373,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-TheaterTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7FBBCEA6F040C26175E2AB31 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Theater-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -463,7 +452,7 @@
 /* Begin XCBuildConfiguration section */
 		067061A9251EDBBD004300F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C45EBDFCE7B5585496C7B43 /* Pods-TheaterTests.debug.xcconfig */;
+			baseConfigurationReference = 6B9D7C159ACEE7646ED681D6 /* Pods-TheaterTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -494,7 +483,7 @@
 		};
 		067061AA251EDBBD004300F5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27CAB1D41135DDFAA545861D /* Pods-TheaterTests.release.xcconfig */;
+			baseConfigurationReference = 292D34340274A759E158E708 /* Pods-TheaterTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -642,7 +631,7 @@
 		};
 		06E1D5361BB76EE400E07321 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAD37B55B79523C4A0F32206 /* Pods-Theater.debug.xcconfig */;
+			baseConfigurationReference = 03B8C3EBA2FAF5C7E05D7461 /* Pods-Theater.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -679,7 +668,7 @@
 		};
 		06E1D5371BB76EE400E07321 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8BD0D0628C205A2CECBE50B /* Pods-Theater.release.xcconfig */;
+			baseConfigurationReference = 682423AA16505D8E3AB0C5C2 /* Pods-Theater.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
