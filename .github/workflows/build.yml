@@ -16,17 +16,9 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: '15.4'
-      
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.0'
-        bundler-cache: true
         
     - name: Install Dependencies
-      run: |
-        bundle install
-        bundle exec pod install
+      run: bundle exec pod install
         
     - name: Cache CocoaPods
       uses: actions/cache@v3
@@ -96,14 +88,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
       with:
-        ruby-version: '3.0'
-        bundler-cache: true
+        xcode-version: '15.4'
         
     - name: Validate Podspec
-      run: bundle exec pod spec lint Theater.podspec --allow-warnings
+      run: pod spec lint Theater.podspec --allow-warnings
         
     - name: Pod Lib Lint
-      run: bundle exec pod lib lint --allow-warnings 
+      run: pod lib lint --allow-warnings 
