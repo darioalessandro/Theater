@@ -121,8 +121,8 @@ DESC
   s.license       = { :type => "Apache 2", :file => "LICENSE" }
   s.author        = { "Dario Alessandro" => "dario@securityunion.dev" }
   s.social_media_url = "https://youtube.com/@dario.lencina"
-  s.platform      = :ios, "14.0"
-  s.platform      = :osx, "14.0"
+  s.ios.deployment_target = '12.0'
+  s.osx.deployment_target = '14.0'
   s.source        = { :git => "https://github.com/darioalessandro/Theater.git", :tag => "#{s.version}" }
   s.source_files  = "Classes/**/*"
   s.dependency    "Starscream", "~> 4.0.8"
