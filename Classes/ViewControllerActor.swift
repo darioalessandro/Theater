@@ -47,7 +47,7 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
     
     public let waitingForCtrlState = "waitingForCtrl"
     
-    public let withCtrlState = "withCtrl"
+    public let withCtrlState = "withCtrl9"
     
     /**
     Subclasses must override this constructor.
@@ -101,7 +101,7 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
      pop to root state
      */
     
-    public override func popToRootState() -> Void {
+    public func popToRootState() -> Void {
         if let (hName, _ ) = self.statesStack.head() {
             if hName != self.withCtrlState {
                 unbecome()
