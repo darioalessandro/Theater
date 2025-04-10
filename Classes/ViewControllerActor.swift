@@ -6,6 +6,7 @@
 //  Copyright © 2015 Dario. All rights reserved.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public class Weak<T: AnyObject> {
@@ -100,18 +101,27 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
      pop to root state
      */
     
-    public override func popToRoot() -> Void {
-        popToState(name: self.withCtrlState)
+    public override func popToRootState() -> Void {
+        if let (hName, _ ) = self.statesStack.head() {
+            if hName != self.withCtrlState {
+                unbecome()
+                popToRootState()
+            }
+        } else {
+            print("unable to find root state")
+        }
     }
     
     /**
-     Subclasses of ViewCtrlActor must override this method to handle messages.
-     
-     - parameter ctrl : controller that was set to this Actor
-    */
+     This method is called when the actor is in the withCtrl state.
+     - Parameter ctrl: the view controller
+     - Returns: a Receive function
+     */
     
     open func receiveWithCtrl(ctrl : Weak<A>) -> Receive {
-        return { (msg : Actor.Message) in }
+        return {[unowned self](msg : Actor.Message) in
+            self.receive(msg: msg)
+        }
     }
     
     deinit {
@@ -119,4 +129,5 @@ open class ViewCtrlActor<A : UIViewController> : Actor {
     }
     
 }
+#endif
 
