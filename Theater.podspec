@@ -120,7 +120,7 @@ DESC
   s.screenshots   = "https://raw.githubusercontent.com/darioalessandro/Theater/master/theaterlogo.jpg"
   s.license       = { :type => "Apache 2", :file => "LICENSE" }
   s.author        = { "Dario Alessandro" => "dario@securityunion.dev" }
-  s.social_media_url = "https://twitter.com/theaterfwk"
+  s.social_media_url = "https://youtube.com/@dario.lencina"
   s.platform      = :ios, "14.0"
   s.platform      = :osx, "14.0"
   s.source        = { :git => "https://github.com/darioalessandro/Theater.git", :tag => "#{s.version}" }
