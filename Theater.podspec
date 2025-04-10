@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Theater"
-  s.version       = "1.0"
+  s.version       = "1.1"
   s.swift_version = "5"
   s.summary       = "A powerful Swift framework for building concurrent, resilient, and responsive applications using the Actor Model."
   s.description   = <<-DESC
@@ -121,17 +121,12 @@ DESC
   s.license       = { :type => "Apache 2", :file => "LICENSE" }
   s.author        = { "Dario Alessandro" => "dario@securityunion.dev" }
   s.social_media_url = "https://youtube.com/@dario.lencina"
-  s.platform      = :ios, "14.0"
-  s.platform      = :osx, "14.0"
+  s.ios.deployment_target = '12.0'
+  s.osx.deployment_target = '14.0'
   s.source        = { :git => "https://github.com/darioalessandro/Theater.git", :tag => "#{s.version}" }
   s.source_files  = "Classes/**/*"
   s.dependency    "Starscream", "~> 4.0.8"
   s.pod_target_xcconfig = { 'ARCHS' => 'arm64' }
   s.user_target_xcconfig = { 'ARCHS' => 'arm64' }
 
-  # Enable Mac Catalyst support
-  s.pod_target_xcconfig = {
-    'SUPPORTS_MACCATALYST' => 'YES',
-    'SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD' => 'YES'
-  }
 end
