@@ -107,7 +107,7 @@ public class WebSocketClientWrapper : Actor , WebSocketDelegate,  WithListeners 
     /**
          Websocket events
      */
-    public func didReceive(event: WebSocketEvent, client: WebSocket) {
+    public func didReceive(event: Starscream.WebSocketEvent, client: any Starscream.WebSocketClient) {
         switch event {
         case .connected(_):
             self.broadcast(msg: OnConnect(sender: this))

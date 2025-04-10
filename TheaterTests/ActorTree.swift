@@ -48,17 +48,17 @@ class ActorTree: QuickSpec {
                 guy2 ! ActorTreeGuy.CreateChildren(count: 1000, sender: nil)
                 
                 if let r = system.actorForRef(ref: guy1) {
-                    expect(r.getChildrenActors().count).toEventually(equal(Int(4)), timeout: 10, pollInterval: 1, description: "Unable to create children")
+                    expect(r.getChildrenActors().count).toEventually(equal(Int(4)), timeout: DispatchTimeInterval.seconds(10), pollInterval: DispatchTimeInterval.milliseconds(10), description: "Unable to create children")
                 }
                 if let r = system.actorForRef(ref: guy2) {
-                    expect(r.getChildrenActors().count).toEventually(equal(Int(1000)), timeout: 10, pollInterval: 1, description: "Unable to create children")
+                    expect(r.getChildrenActors().count).toEventually(equal(Int(1000)), timeout: DispatchTimeInterval.seconds(10), pollInterval: DispatchTimeInterval.milliseconds(10), description: "Unable to create children")
                 }
             }
 
 
             it("should stop when required") {
                 system.stop()
-                expect(system.selectActor(actorPath: "ActorTree/user")).toEventually(beNil(), timeout: 10, pollInterval: 1, description: "Unable to create children")
+                expect(system.selectActor(actorPath: "ActorTree/user")).toEventually(beNil(), timeout: DispatchTimeInterval.seconds(10), pollInterval: DispatchTimeInterval.milliseconds(10), description: "Unable to create children")
             }
         }
     }
