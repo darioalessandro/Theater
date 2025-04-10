@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "Theater"
-  s.version       = "1.0"
+  s.version       = "1.1"
   s.swift_version = "5"
   s.summary       = "A powerful Swift framework for building concurrent, resilient, and responsive applications using the Actor Model."
   s.description   = <<-DESC
