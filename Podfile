@@ -19,11 +19,15 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
       
+      # Enable module stability for all pods
+      config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
+      config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Onone'
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      
       # Configure Nimble with proper XCTest framework linking
       if target.name == 'Nimble'
         config.build_settings['OTHER_LDFLAGS'] = '$(inherited) -framework XCTest'
         config.build_settings['FRAMEWORK_SEARCH_PATHS'] = '$(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks'
-        # Remove any references to swiftXCTest
         config.build_settings['OTHER_LDFLAGS'] = config.build_settings['OTHER_LDFLAGS'].gsub('-lswiftXCTest', '')
       end
     end
