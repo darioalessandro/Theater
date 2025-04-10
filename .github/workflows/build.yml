@@ -16,10 +16,17 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode.app
       
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+        
     - name: Install CocoaPods
-      run: |
-        gem install cocoapods
-        pod install
+      run: gem install cocoapods -v 1.16.2
+        
+    - name: Install Pods
+      run: pod install
         
     - name: Build and Test
       run: |
