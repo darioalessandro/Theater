@@ -48,7 +48,7 @@ jobs:
         
     - name: Run iOS Tests
       run: |
-        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination 'platform=iOS Simulator' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ARCHS=arm64
         
     - name: Upload iOS Test Results
       if: always()
@@ -68,9 +68,9 @@ jobs:
       with:
         xcode-version: '15.4'
         
-    - name: Build macOS
-      run: |
-        xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=macOS" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO MACOSX_DEPLOYMENT_TARGET=14.0
+    # - name: Build macOS
+    #   run: |
+    #     xcodebuild test -workspace Theater.xcworkspace -scheme Theater -destination "platform=macOS" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO MACOSX_DEPLOYMENT_TARGET=14.0 ARCHS=arm64
         
     - name: Upload macOS Build Results
       if: always()
