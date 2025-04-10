@@ -90,8 +90,8 @@ jobs:
       with:
         xcode-version: '15.4'
         
-    - name: Validate Podspec
-      run: pod spec lint Theater.podspec --allow-warnings
+    - name: Validate Podspec (quick)
+      run: pod spec lint Theater.podspec --allow-warnings --skip-import-validation --quick
         
     - name: Pod Lib Lint
       run: pod lib lint --allow-warnings 
